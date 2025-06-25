@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block title %}Quiz Game - Home{% endblock %}
+
+{% block content %}
+<h1>🎯 Quiz Game</h1>
+
+<div class="text-center">
+    <h2>Welcome to the Quiz Game!</h2>
+    <p>Create a new game session or join an existing one.</p>
+
+    <div style="margin: 30px 0;">
+        <a href="{% url 'game_sessions:create_game' %}" class="btn btn-success">
+            🎮 Create New Game
+        </a>
+
+        <a href="{% url 'game_sessions:join_game' %}" class="btn">
+            🚪 Join Game
+        </a>
+    </div>
+</div>
+
+{% if recent_games %}
+<div class="player-list">
+    <h3>🎮 Recent Active Games (Game Master)</h3>
+    <p style="font-size: 14px; color: #666; margin-bottom: 15px;">
+        Click to reconnect to a game you created
+    </p>
+
+    {% for game in recent_games %}
+        <div class="player-item" style="display: flex; justify-content: space-between; align-items: center;">
+            <div>
+                <strong>Game {{ game.game_code }}</strong>
+                <span class="status status-{{ game.status }}">
+                    {{ game.get_status_display }}
+                </span>
+                <br>
+                <small style="color: #666;">
+                    {{ game.player_count }} player{{ game.player_count|pluralize }} •
+                    Created {{ game.created_at|date:"H:i" }}
+                </small>
+            </div>
+            <div>
+                <a href="{% url 'game_sessions:game_master' game.game_code %}" class="btn" style="margin: 0;">
+                    Reconnect
+                </a>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+{% endif %}
+{% endblock %}

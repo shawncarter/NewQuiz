@@ -1,0 +1,767 @@
+{% extends 'base.html' %}
+
+{% block title %}Playing - {{ game_session.game_code }}{% endblock %}
+
+{% block content %}
+<div id="game-interface">
+    {% if current_round %}
+        <div class="game-header">
+            <h2>Round {{ current_round.round_number }}</h2>
+            <div class="game-code-small">Game: {{ game_session.game_code }}</div>
+        </div>
+        
+        {% if current_round.is_active %}
+            <div class="prompt-display">
+                A {{ current_round.category.name|lower }} that starts with '{{ current_round.prompt_letter }}'
+            </div>
+            
+            <div id="countdown-small" class="countdown-small">
+                <span id="timer">{% if config %}{{ config.round_time_seconds }}{% else %}30{% endif %}</span>s
+            </div>
+            
+            <div class="answer-input-container">
+                <input type="text" 
+                       id="answer-input" 
+                       placeholder="Type your answer here..."
+                       maxlength="100"
+                       autocomplete="off"
+                       autocapitalize="words">
+                
+                <div class="input-help">
+                    Your answer will be automatically submitted when time runs out
+                </div>
+            </div>
+            
+            <div id="answer-status" class="answer-status" style="display: none;">
+                <div class="status-icon">✓</div>
+                <div class="status-text">Answer saved!</div>
+            </div>
+        {% else %}
+            <div class="waiting-display">
+                <h3>⏳ Round {{ current_round.round_number }} Finished</h3>
+                
+                {% if player_answer %}
+                    <div class="your-answer">
+                        <strong>Your answer:</strong> {{ player_answer.answer_text }}
+                    </div>
+                    
+                    <div id="score-display" class="score-display" style="display: none;">
+                        <div class="score-points">+<span id="points">0</span> points</div>
+                        <div class="score-reason" id="score-reason"></div>
+                        <div class="total-score" id="total-score"></div>
+                    </div>
+                {% else %}
+                    <div class="no-answer">
+                        You didn't submit an answer for this round
+                    </div>
+                {% endif %}
+                
+                <div class="waiting-message">
+                    <div class="waiting-icon">⏳</div>
+                    <div>Game master is reviewing answers...</div>
+                    <div class="sub-message">Please wait for the next round</div>
+                </div>
+            </div>
+        {% endif %}
+    {% else %}
+        <div class="waiting-display">
+            <h2>🎮 Get Ready!</h2>
+            <p>The game master is about to start the first round.</p>
+            <div class="game-code-display">Game: {{ game_session.game_code }}</div>
+        </div>
+    {% endif %}
+</div>
+
+<style>
+body {
+    font-size: 18px; /* Larger base font for mobile */
+}
+
+.game-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.game-header h2 {
+    margin: 0;
+    font-size: 2em;
+}
+
+.game-code-small {
+    font-size: 0.9em;
+    color: #666;
+    margin-top: 5px;
+}
+
+.prompt-display {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 25px;
+    border-radius: 15px;
+    text-align: center;
+    font-size: 1.4em;
+    font-weight: bold;
+    margin: 20px 0;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+}
+
+.countdown-small {
+    text-align: center;
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #dc3545;
+    margin: 15px 0;
+}
+
+.answer-input-container {
+    margin: 30px 0;
+}
+
+#answer-input {
+    width: 100%;
+    padding: 20px;
+    font-size: 1.3em;
+    border: 3px solid #007bff;
+    border-radius: 10px;
+    text-align: center;
+    box-sizing: border-box;
+    background: #f8f9fa;
+}
+
+#answer-input:focus {
+    outline: none;
+    border-color: #0056b3;
+    background: white;
+    box-shadow: 0 0 10px rgba(0, 123, 255, 0.3);
+}
+
+.input-help {
+    text-align: center;
+    font-size: 0.9em;
+    color: #666;
+    margin-top: 10px;
+}
+
+.answer-status {
+    text-align: center;
+    background: #d4edda;
+    color: #155724;
+    padding: 15px;
+    border-radius: 10px;
+    margin: 20px 0;
+}
+
+.status-icon {
+    font-size: 2em;
+    margin-bottom: 5px;
+}
+
+.waiting-display {
+    text-align: center;
+    padding: 30px 0;
+}
+
+.your-answer {
+    background: #e7f3ff;
+    padding: 15px;
+    border-radius: 10px;
+    margin: 20px 0;
+    font-size: 1.1em;
+}
+
+.score-display {
+    background: #d4edda;
+    padding: 20px;
+    border-radius: 10px;
+    margin: 20px 0;
+    text-align: center;
+}
+
+.score-points {
+    font-size: 2em;
+    font-weight: bold;
+    color: #28a745;
+}
+
+.score-reason {
+    font-size: 1.1em;
+    margin-top: 10px;
+    color: #155724;
+}
+
+.total-score {
+    font-size: 0.9em;
+    margin-top: 5px;
+    color: #6c757d;
+    font-weight: normal;
+}
+
+.no-answer {
+    background: #f8d7da;
+    color: #721c24;
+    padding: 15px;
+    border-radius: 10px;
+    margin: 20px 0;
+}
+
+.waiting-message {
+    font-size: 1.2em;
+    color: #666;
+    margin-top: 20px;
+}
+
+.waiting-icon {
+    font-size: 2em;
+    margin-bottom: 10px;
+}
+
+.sub-message {
+    font-size: 0.9em;
+    color: #999;
+    margin-top: 5px;
+}
+
+.game-code-display {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #007bff;
+    margin-top: 20px;
+}
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+    
+    .prompt-display {
+        font-size: 1.2em;
+        padding: 20px;
+    }
+    
+    #answer-input {
+        font-size: 1.4em;
+        padding: 25px;
+    }
+}
+</style>
+
+<script>
+// Parse player_id and game_code from URL
+function parsePlayerInfoFromURL() {
+    const pathParts = window.location.pathname.split('/');
+    // Expecting /players/game/<game_code>/<player_id>/
+    let idx = pathParts.indexOf('game');
+    if (idx !== -1 && pathParts.length > idx + 2) {
+        return {
+            game_code: pathParts[idx + 1],
+            player_id: parseInt(pathParts[idx + 2])
+        };
+    }
+    return {game_code: null, player_id: null};
+}
+const PLAYER_INFO = parsePlayerInfoFromURL();
+const PLAYER_ID_FROM_URL = PLAYER_INFO.player_id;
+const GAME_CODE_FROM_URL = PLAYER_INFO.game_code;
+
+// Set window.playerId for websocket identify handshake
+window.playerId = PLAYER_ID_FROM_URL;
+
+document.addEventListener('DOMContentLoaded', () => {
+    let gameSocket;
+    let lastSubmittedAnswer = "";
+    let debounceTimer;
+
+    function escapeHTML(str) {
+        if (typeof str !== 'string') {
+            if (str === undefined || str === null) return '';
+            str = String(str);
+        }
+        return str.replace(/[&<>'"\/]/g, function (tag) {
+            const chars = {
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                "'": '&#39;',
+                '"': '&quot;',
+                '/': '&#x2F;'
+            };
+            return chars[tag] || tag;
+        });
+    }
+
+    function initWebSocket() {
+        const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+        const wsUrl = `${protocol}//${window.location.host}/ws/game/{{ game_session.game_code }}/`;
+
+        gameSocket = new WebSocket(wsUrl);
+
+        gameSocket.onopen = () => {
+            // Send identify message with player_id
+            if (window.playerId) {
+                gameSocket.send(JSON.stringify({type: 'identify', player_id: window.playerId}));
+            }
+            console.log('Player WebSocket connected');
+        };
+
+        gameSocket.onclose = (e) => {
+            console.error('Player WebSocket closed unexpectedly. Attempting to reconnect in 3 seconds...');
+            setTimeout(initWebSocket, 3000);
+        };
+
+        gameSocket.onerror = (error) => {
+            console.error('Player WebSocket Error:', error);
+            gameSocket.close();
+        };
+
+        gameSocket.onmessage = (e) => {
+    console.log('[Player WebSocket] Raw message:', e.data);
+            try {
+                const data = JSON.parse(e.data);
+                console.log('Player received message:', data);
+                console.log('Player message type:', data.type);
+
+                switch(data.type) {
+                    case 'timer_update':
+                        updateTimer(data.data.time_remaining);
+                        break;
+                    case 'round_started':
+                        handleRoundStarted(data.data);
+                        break;
+                    case 'round_ended':
+                        handleRoundEnded(data.data);
+                        break;
+                    case 'score_update':
+                        handleScoreUpdate(data.data);
+                        break;
+                    case 'game_complete':
+                        handleGameComplete(data.data);
+                        break;
+                    case 'game_update':
+                        console.log('Received game_update (player):', data.data);
+                        handleGameUpdate(data.data);
+                        break;
+                    case 'game_restart_confirmation':
+                        console.log('Received game_restart_confirmation (player):', data.data);
+                        handleGameRestartConfirmation(data.data);
+                        break;
+                    case 'game_state_sync':
+                        console.log('Received game_state_sync (player):', data.data);
+                        handleGameStateSync(data.data);
+                        break;
+                    case 'game_started':
+                        handleGameStarted(data.data);
+                        break;
+                    case 'game_restarted':
+                        handleGameRestarted(data.data);
+                        break;
+                    default:
+                        console.log('Unknown message type for player:', data.type);
+                        console.log('Full message data:', data);
+                }
+            } catch (error) {
+                console.error('Error handling player WebSocket message:', error, e.data);
+            }
+        };
+    }
+
+    function saveAnswer(answer) {
+        lastSubmittedAnswer = answer;
+        if (gameSocket && gameSocket.readyState === WebSocket.OPEN) {
+            gameSocket.send(JSON.stringify({
+                type: 'submit_answer',
+                data: {
+                    answer: answer,
+                    player_id: PLAYER_ID_FROM_URL
+                }
+            }));
+            showAnswerSaved();
+        } else {
+            console.error('WebSocket is not connected. Cannot save answer.');
+        }
+    }
+
+    function showAnswerSaved() {
+        const statusElement = document.getElementById('answer-status');
+        if (statusElement) {
+            statusElement.style.display = 'block';
+            setTimeout(() => {
+                if (statusElement) statusElement.style.display = 'none';
+            }, 2000);
+        }
+    }
+
+    function updateTimer(timeRemaining) {
+        const timerElement = document.getElementById('timer');
+        if (timerElement) {
+            timerElement.textContent = timeRemaining;
+            
+            // When timer reaches 0, submit final answer and disable input
+            if (timeRemaining <= 0) {
+                const answerInput = document.getElementById('answer-input');
+                if (answerInput && answerInput.value && answerInput.value !== lastSubmittedAnswer) {
+                    console.log('[Player] Submitting final answer on timer expiry:', answerInput.value);
+                    saveAnswer(answerInput.value);
+                    lastSubmittedAnswer = answerInput.value;
+                }
+                
+                // Disable input to prevent further changes
+                if (answerInput) {
+                    answerInput.disabled = true;
+                }
+            }
+        }
+    }
+
+    function handleRoundStarted(data) {
+    console.log('[Player] handleRoundStarted data:', data);
+        const gameInterface = document.getElementById('game-interface');
+        if (!gameInterface) return;
+
+        lastSubmittedAnswer = "";
+
+        const newRoundHTML = `
+            <div class="game-header">
+                <h2>Round ${escapeHTML(data.round_number)}</h2>
+                <div class="game-code-small">Game: {{ game_session.game_code }}</div>
+            </div>
+            <div class="prompt-display">
+                A ${escapeHTML(data.category.toLowerCase())} that starts with '${escapeHTML(data.letter)}'
+            </div>
+            <div id="countdown-small" class="countdown-small">
+                <span id="timer">${escapeHTML(data.total_time)}</span>s
+            </div>
+            <div class="answer-input-container">
+                <input type="text"
+                       id="answer-input"
+                       placeholder="Type your answer here..."
+                       maxlength="100"
+                       autocomplete="off"
+                       autocapitalize="words"
+                       autofocus>
+                <div class="input-help">Your answer is saved as you type.</div>
+            </div>
+            <div id="answer-status" class="answer-status" style="display: none;">
+                <div class="status-icon">✓</div>
+                <div class="status-text">Answer saved!</div>
+            </div>
+        `;
+        gameInterface.innerHTML = newRoundHTML;
+        attachAnswerInputListener();
+        
+        // Re-enable input for new round
+        const answerInput = document.getElementById('answer-input');
+        if (answerInput) {
+            answerInput.disabled = false;
+        }
+    }
+
+    function handleRoundEnded(data) {
+    console.log('[Player] handleRoundEnded data:', data);
+    if (data.answers) console.log('[Player] Answers received:', data.answers);
+        
+        // Submit final answer if there's text in the input that hasn't been submitted yet
+        const answerInput = document.getElementById('answer-input');
+        if (answerInput && answerInput.value && answerInput.value !== lastSubmittedAnswer) {
+            console.log('[Player] Submitting final answer on round end:', answerInput.value);
+            saveAnswer(answerInput.value);
+            lastSubmittedAnswer = answerInput.value;
+        }
+        
+        // Disable input to prevent further changes
+        if (answerInput) {
+            answerInput.disabled = true;
+        }
+        
+        const gameInterface = document.getElementById('game-interface');
+        if (!gameInterface) return;
+
+        let yourAnswerHTML = `
+            <div class="no-answer">You didn't submit an answer for this round.</div>
+        `;
+        if (lastSubmittedAnswer) {
+            yourAnswerHTML = `
+                <div class="your-answer">
+                    <strong>Your answer:</strong> ${escapeHTML(lastSubmittedAnswer)}
+                </div>
+            `;
+        }
+
+        const waitingHTML = `
+            <div class="waiting-display">
+                <h3>⏳ Round Finished</h3>
+                ${yourAnswerHTML}
+                <div id="score-display" class="score-display" style="display: none;">
+                    <div class="score-points">+<span id="points">0</span> points</div>
+                    <div class="score-reason" id="score-reason"></div>
+                    <div class="total-score" id="total-score"></div>
+                </div>
+                <div class="waiting-message">
+                    <div class="waiting-icon">⏳</div>
+                    <div>Game master is reviewing answers...</div>
+                    <div class="sub-message">Please wait for the next round</div>
+                </div>
+            </div>
+        `;
+        gameInterface.innerHTML = waitingHTML;
+    }
+
+    function handleScoreUpdate(data) {
+        if (data.player_id.toString() !== '{{ player.id }}') {
+            return; // Not for me
+        }
+        const scoreDisplay = document.getElementById('score-display');
+        if (scoreDisplay) {
+            // Show points awarded for this round, not total score
+            const pointsAwarded = data.points_awarded || 0;
+            document.getElementById('points').textContent = pointsAwarded;
+            
+            // Create descriptive reason based on points awarded
+            let displayReason = '';
+            if (pointsAwarded === 10) {
+                displayReason = 'Correct & Unique Answer!';
+            } else if (pointsAwarded === 5) {
+                displayReason = 'Correct Answer (duplicate)';
+            } else if (pointsAwarded === 0) {
+                displayReason = 'Incorrect Answer';
+            } else {
+                displayReason = data.reason || 'Manual scoring';
+            }
+            
+            document.getElementById('score-reason').textContent = displayReason;
+            
+            // Show total score separately if available
+            if (data.points !== undefined) {
+                const totalScoreElement = document.getElementById('total-score');
+                if (totalScoreElement) {
+                    totalScoreElement.textContent = `Total: ${data.points} points`;
+                }
+            }
+            
+            scoreDisplay.style.display = 'block';
+        }
+    }
+
+    function handleGameComplete(data) {
+        const gameInterface = document.getElementById('game-interface');
+        if (!gameInterface) return;
+        
+        // Find current player's final score
+        let finalScore = 'N/A';
+        let playerRank = 'N/A';
+        let allScores = '';
+        
+        if (data.final_scores && Array.isArray(data.final_scores)) {
+            // Find current player's score
+            const currentPlayerName = '{{ player.name }}';
+            const playerResult = data.final_scores.find(score => score.player_name === currentPlayerName);
+            if (playerResult) {
+                finalScore = playerResult.total_score;
+                playerRank = data.final_scores.indexOf(playerResult) + 1;
+            }
+            
+            // Create leaderboard display
+            allScores = data.final_scores.map((score, index) => 
+                `<div style="margin: 5px 0; ${score.player_name === currentPlayerName ? 'font-weight: bold; color: #007bff;' : ''}">
+                    ${index + 1}. ${escapeHTML(score.player_name)}: ${score.total_score} points
+                </div>`
+            ).join('');
+        }
+        
+        gameInterface.innerHTML = `
+            <div class="waiting-display">
+                <h2>🏁 Game Complete!</h2>
+                <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; margin: 20px 0;">
+                    <h3>Your Final Score: ${escapeHTML(finalScore)} points</h3>
+                    <p>You finished in position: <strong>${playerRank}</strong></p>
+                </div>
+                <div style="background: white; padding: 15px; border-radius: 10px; margin: 20px 0;">
+                    <h4>Final Leaderboard:</h4>
+                    ${allScores}
+                </div>
+                <p>${escapeHTML(data.message || 'Thanks for playing!')}</p>
+            </div>
+        `;
+    }
+
+    function handleGameStateSync(data) {
+        console.log('[Player] handleGameStateSync - syncing state:', data);
+        
+        // This is called when connecting/reconnecting - sync player state with current game state
+        if (data.game_status === 'waiting') {
+            // Game hasn't started yet - show waiting state
+            const gameInterface = document.getElementById('game-interface');
+            if (gameInterface) {
+                const waitingHTML = `
+                    <div class="waiting-display">
+                        <h2>🎮 Get Ready!</h2>
+                        <p>The game master is about to start the game.</p>
+                        <div class="game-code-display">Game: {{ game_session.game_code }}</div>
+                    </div>
+                `;
+                gameInterface.innerHTML = waitingHTML;
+            }
+        } else if (data.game_status === 'active') {
+            if (data.current_round && data.current_round.is_active) {
+                // Round is active - show round interface
+                handleRoundStarted({
+                    round_number: data.current_round.round_number,
+                    category: data.current_round.category,
+                    letter: data.current_round.letter,
+                    total_time: data.current_round.total_time
+                });
+            } else if (data.current_round && !data.current_round.is_active) {
+                // Round has ended - show waiting for next round
+                const gameInterface = document.getElementById('game-interface');
+                if (gameInterface) {
+                    const waitingHTML = `
+                        <div class="waiting-display">
+                            <h3>⏳ Round ${escapeHTML(data.current_round.round_number)} Finished</h3>
+                            <div class="waiting-message">
+                                <div class="waiting-icon">⏳</div>
+                                <div>Game master is reviewing answers...</div>
+                                <div class="sub-message">Please wait for the next round</div>
+                            </div>
+                        </div>
+                    `;
+                    gameInterface.innerHTML = waitingHTML;
+                }
+            } else {
+                // Game active but no round yet - show game started state
+                handleGameStarted({message: 'Game is active! Waiting for first round...'});
+            }
+        }
+    }
+
+    function handleGameStarted(data) {
+        console.log('[Player] handleGameStarted data:', data);
+        console.log('[Player] GAME STARTED MESSAGE RECEIVED!');
+        const gameInterface = document.getElementById('game-interface');
+        if (gameInterface) {
+            const gameStartedHTML = `
+                <div class="waiting-display">
+                    <h2>🎮 Game Started!</h2>
+                    <p>${escapeHTML(data.message || 'The game has begun!')}</p>
+                    <div class="waiting-message">
+                        <div class="waiting-icon">🎯</div>
+                        <div>Get ready for the first round...</div>
+                        <div class="sub-message">The game master will start the round shortly</div>
+                    </div>
+                </div>
+            `;
+            gameInterface.innerHTML = gameStartedHTML;
+        }
+    }
+
+    function handleGameUpdate(data) {
+        console.log('[Player] handleGameUpdate data:', data);
+        console.log('[Player] Game status:', data.game_status);
+        console.log('[Player] Current round:', data.current_round);
+        
+        // Check if this game_update contains current round information
+        if (data.current_round && data.current_round.is_active) {
+            // This is essentially a round start via game_update
+            console.log('[Player] Game update contains active round, starting round UI');
+            handleRoundStarted({
+                round_number: data.current_round.round_number,
+                category: data.current_round.category,
+                letter: data.current_round.letter,
+                total_time: data.current_round.total_time || data.current_round.time_remaining
+            });
+        } else if (data.current_round && !data.current_round.is_active) {
+            // Round has ended, show waiting state
+            console.log('[Player] Game update shows round ended, showing waiting state');
+            const gameInterface = document.getElementById('game-interface');
+            if (gameInterface) {
+                const waitingHTML = `
+                    <div class="waiting-display">
+                        <h3>⏳ Round ${escapeHTML(data.current_round.round_number)} Finished</h3>
+                        <div class="waiting-message">
+                            <div class="waiting-icon">⏳</div>
+                            <div>Game master is reviewing answers...</div>
+                            <div class="sub-message">Please wait for the next round</div>
+                        </div>
+                    </div>
+                `;
+                gameInterface.innerHTML = waitingHTML;
+            }
+        } else if (data.game_status === 'waiting' && (data.current_round === null || !data.current_round)) {
+            // Game has been restarted, redirect to lobby
+            console.log('[Player] Game restarted, redirecting to lobby');
+            
+            // Show notification message
+            const gameInterface = document.getElementById('game-interface');
+            if (gameInterface) {
+                gameInterface.innerHTML = `
+                    <div class="waiting-display">
+                        <h2>🔄 Game Restarted!</h2>
+                        <p>${data.message || 'Game restarted! Returning to lobby...'}</p>
+                        <div class="waiting-message">
+                            <div class="waiting-icon">🔄</div>
+                            <div>Redirecting to lobby...</div>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            setTimeout(() => {
+                window.location.href = "{% url 'players:player_lobby_with_id' game_code=game_session.game_code player_id=player.id %}";
+            }, 2000);
+        } else if (data.game_status === 'finished') {
+            // Game has finished, trigger game complete handling
+            console.log('[Player] Game finished via game_update');
+            handleGameComplete(data);
+        }
+    }
+
+    function handleGameRestartConfirmation(data) {
+        console.log('[Player] handleGameRestartConfirmation:', data);
+        
+        // Show confirmation message
+        const gameInterface = document.getElementById('game-interface');
+        if (gameInterface) {
+            gameInterface.innerHTML = `
+                <div class="waiting-display">
+                    <h2>🔄 Game Restarted!</h2>
+                    <p>${data.message || 'Game restarted! Returning to lobby...'}</p>
+                    <div class="waiting-message">
+                        <div class="waiting-icon">🔄</div>
+                        <div>If you're not redirected automatically, please refresh the page.</div>
+                    </div>
+                </div>
+            `;
+        }
+        
+        // Force redirect to lobby
+        setTimeout(() => {
+            window.location.href = "{% url 'players:player_lobby_with_id' game_code=game_session.game_code player_id=player.id %}";
+        }, 1000);
+    }
+
+    function handleGameRestarted(data) {
+        alert('The game has been restarted by the Game Master. You will be returned to the join screen.');
+        window.location.href = "{% url 'game_sessions:home' %}";
+    }
+
+    function attachAnswerInputListener() {
+        const answerInput = document.getElementById('answer-input');
+        if (answerInput) {
+            answerInput.addEventListener('input', (e) => {
+                clearTimeout(debounceTimer);
+                const currentAnswer = e.target.value;
+                debounceTimer = setTimeout(() => {
+                    saveAnswer(currentAnswer);
+                }, 300); // 300ms debounce
+            });
+            answerInput.focus();
+        }
+    }
+
+    // Initial setup
+    initWebSocket();
+    if (document.getElementById('answer-input')) {
+        attachAnswerInputListener();
+    }
+});
+</script>
+{% endblock %}

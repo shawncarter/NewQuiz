@@ -1,0 +1,1021 @@
+{% extends 'base.html' %}
+
+{% block title %}Game Active - {{ game_session.game_code }}{% endblock %}
+
+{% block content %}
+<style>
+/* Override base template container constraints for full width */
+.container {
+    max-width: none !important;
+    padding: 5px !important;
+    margin: 0 !important;
+    width: 100% !important;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+/* Make round header more compact and full width */
+.round-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.round-title h2 {
+    margin: 0;
+    font-size: 1.3em;
+}
+
+.player-count {
+    color: #6c757d;
+    font-weight: bold;
+    font-size: 0.9em;
+}
+</style>
+
+<div id="game-state">
+    {% if game_session.current_round_number > 0 %}
+        {% with round_info=game_session.get_current_round_info %}
+            <div id="round-display">
+                <div class="round-header">
+                    <div class="round-title">
+                        <h2>Round {{ round_info.round_number }} of {{ config.num_rounds }}</h2>
+                        <span class="player-count">{{ player_count }} players</span>
+                    </div>
+                    <div class="round-details">
+                        <span class="category">{{ round_info.category.name }}</span>
+                        <span class="letter">Letter: {{ round_info.prompt_letter }}</span>
+                    </div>
+                </div>
+                <div class="game-prompt">
+                    {{ round_info.category.name }} that start with {{ round_info.prompt_letter }}
+                </div>
+
+                {% if round_info.is_active %}
+                    <div id="countdown-display" class="countdown">
+                        <span id="countdown-timer">{{ config.round_time_seconds }}</span> seconds remaining
+                    </div>
+
+                    <button id="end-round-btn" class="btn">
+                        ⏹️ End Round Early
+                    </button>
+                {% else %}
+                    <div class="alert alert-success">
+                        Round {{ round_info.round_number }} completed!
+                    </div>
+
+                    <div id="answers-display" style="display: none;">
+                        <h3>Player Answers</h3>
+                        <div id="answers-grid" class="answers-grid">
+                            <!-- Answers will be populated here -->
+                        </div>
+
+                        <div class="text-center" style="margin-top: 20px;">
+                            {% if round_info.round_number < config.num_rounds %}
+                                <button id="next-round-btn" class="btn btn-success">
+                                    ▶️ Start Next Round
+                                </button>
+                            {% else %}
+                                <button id="show-final-scores-btn" class="btn btn-success">
+                                    🏆 Show Final Scores
+                                </button>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="text-center">
+                        <button id="show-answers-btn" class="btn btn-success">
+                            👁️ Show Answers
+                        </button>
+                    </div>
+                {% endif %}
+            </div>
+        {% endwith %}
+    {% else %}
+        <div class="text-center">
+            <h2>Ready to Start!</h2>
+            <p>{{ player_count }} players connected</p>
+            
+            <button id="start-first-round-btn" class="btn btn-success">
+                🚀 Start First Round
+            </button>
+        </div>
+    {% endif %}
+</div>
+
+<div class="text-center" style="margin-top: 30px;">
+    <button id="restart-game-btn" class="btn">
+        🔄 Restart Game (Dev)
+    </button>
+    
+    <a href="{% url 'game_sessions:home' %}" class="btn">← Back to Home</a>
+</div>
+
+<style>
+/* Removed redundant header styles since we removed the header */
+
+.round-header {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.round-header h2 {
+    margin: 0 0 10px 0;
+    color: #495057;
+}
+
+.round-details {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    font-size: 1.1em;
+    color: #6c757d;
+}
+
+.category {
+    background: #e9ecef;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-weight: bold;
+}
+
+.letter {
+    background: #fff3cd;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-weight: bold;
+    color: #856404;
+}
+
+.game-prompt {
+    font-size: 2em;
+    font-weight: bold;
+    text-align: center;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 25px;
+    border-radius: 15px;
+    margin: 20px 0;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.countdown {
+    font-size: 2em;
+    font-weight: bold;
+    text-align: center;
+    color: #dc3545;
+    margin: 20px 0;
+}
+
+.answers-grid {
+    display: grid;
+    gap: 8px;
+    margin: 15px 0;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    max-width: 100%;
+}
+
+.answer-card {
+    background: white;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    padding: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.5s ease;
+    position: relative;
+    font-size: 0.9em;
+}
+
+.answer-card.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.answer-card.unique {
+    border-color: #28a745;
+    background: #d4edda;
+}
+
+.answer-card.valid {
+    border-color: #007bff;
+    background: #e7f3ff;
+}
+
+.answer-card.invalid {
+    border-color: #dc3545;
+    background: #f8d7da;
+}
+
+.player-name {
+    font-weight: bold;
+    font-size: 0.9em;
+    margin-bottom: 5px;
+    color: #495057;
+}
+
+.player-answer {
+    font-size: 1.1em;
+    margin: 8px 0;
+    font-weight: bold;
+    color: #212529;
+}
+
+.points {
+    font-weight: bold;
+    font-size: 1em;
+    margin: 8px 0;
+}
+
+.points.unique { color: #28a745; }
+.points.valid { color: #007bff; }
+.points.invalid { color: #dc3545; }
+
+.validation-controls {
+    display: flex;
+    gap: 5px;
+    margin-top: 8px;
+    justify-content: center;
+}
+
+.validation-btn {
+    padding: 4px 8px;
+    border: none;
+    border-radius: 4px;
+    font-size: 0.8em;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.2s;
+}
+
+.validation-btn.valid {
+    background: #28a745;
+    color: white;
+}
+
+.validation-btn.invalid {
+    background: #dc3545;
+    color: white;
+}
+
+.validation-btn:hover {
+    transform: scale(1.05);
+}
+
+.validation-btn.active {
+    box-shadow: 0 0 0 2px rgba(0,0,0,0.3);
+}
+
+.answers-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.answers-header h3 {
+    margin: 0 0 10px 0;
+    color: #495057;
+}
+
+.round-info-small {
+    font-size: 0.9em;
+    color: #6c757d;
+    background: #f8f9fa;
+    padding: 8px 15px;
+    border-radius: 20px;
+    display: inline-block;
+}
+</style>
+
+<script>
+let countdownInterval;
+let currentAnswers = [];
+let answerIndex = 0;
+let gameSocket;
+
+// Initialize WebSocket connection
+function initWebSocket() {
+    const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+    const wsUrl = `${protocol}//${window.location.host}/ws/game/{{ game_session.game_code }}/`;
+
+    gameSocket = new WebSocket(wsUrl);
+
+    gameSocket.onopen = () => {
+        // Send identify message with player_id (if present)
+        if (window.playerId) {
+            gameSocket.send(JSON.stringify({type: 'identify', player_id: window.playerId}));
+        }
+        console.log('WebSocket connected');
+    };
+
+    gameSocket.onmessage = function(e) {
+        const data = JSON.parse(e.data);
+        handleWebSocketMessage(data);
+    };
+
+    gameSocket.onclose = function(e) {
+        console.log('WebSocket disconnected');
+        // Attempt to reconnect after 3 seconds
+        setTimeout(initWebSocket, 3000);
+    };
+
+    gameSocket.onerror = function(e) {
+        console.log('WebSocket error:', e);
+    };
+}
+
+// Handle WebSocket messages
+function handleWebSocketMessage(data) {
+    switch(data.type) {
+        case 'timer_update':
+            updateTimer(data.data.time_remaining);
+            break;
+        case 'round_started':
+            updateRoundDisplay(data.data);
+            break;
+        case 'round_ended':
+            handleRoundEnded(data.data);
+            break;
+        case 'score_update':
+            handleScoreUpdate(data.data);
+            break;
+        case 'game_state':
+        case 'game_state_sync':
+        case 'game_update':
+            updateGameState(data.data);
+            break;
+    }
+}
+
+// Update game state (player count, etc.)
+function updateGameState(data) {
+    // Update player count
+    const playerCountElement = document.querySelector('.player-count');
+    if (playerCountElement && data.player_count !== undefined) {
+        playerCountElement.textContent = `${data.player_count} players`;
+    }
+    
+    console.log('Game state updated:', data);
+}
+
+// Handle score update via WebSocket
+function handleScoreUpdate(data) {
+    // Show a brief notification
+    const notification = document.createElement('div');
+    notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: #28a745;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 5px;
+        z-index: 1000;
+        font-weight: bold;
+    `;
+    notification.textContent = data.message;
+    document.body.appendChild(notification);
+
+    // Remove notification after 3 seconds
+    setTimeout(() => {
+        document.body.removeChild(notification);
+    }, 3000);
+}
+
+// Update timer display
+function updateTimer(timeRemaining) {
+    const timerElement = document.getElementById('countdown-timer');
+    if (timerElement) {
+        timerElement.textContent = timeRemaining;
+
+        // Auto-end round if time is up
+        if (timeRemaining <= 0) {
+            clearInterval(countdownInterval);
+            endRound();
+        }
+    }
+}
+
+// Update round display when new round starts via WebSocket
+function updateRoundDisplay(data) {
+    // Check if data is in current_round or at root level
+    const roundData = data.current_round || data;
+    
+    if (roundData && roundData.round_number) {
+        // Update the round header (Round X of Y)
+        const roundTitle = document.querySelector('.round-title h2');
+        if (roundTitle) {
+            roundTitle.textContent = `Round ${roundData.round_number} of {{ config.num_rounds }}`;
+        }
+        
+        // Update the round details (category and letter)
+        const categorySpan = document.querySelector('.round-details .category');
+        const letterSpan = document.querySelector('.round-details .letter');
+        if (categorySpan && letterSpan) {
+            categorySpan.textContent = roundData.category;
+            letterSpan.textContent = `Letter: ${roundData.letter}`;
+        }
+        
+        // Update the game prompt
+        const gamePrompt = document.querySelector('.game-prompt');
+        if (gamePrompt) {
+            gamePrompt.textContent = `${roundData.category} that start with ${roundData.letter}`;
+        }
+    }
+
+    // Show round controls - create them if they don't exist
+    let countdownDisplay = document.getElementById('countdown-display');
+    let endRoundBtn = document.getElementById('end-round-btn');
+    
+    if (!countdownDisplay) {
+        // Create countdown display
+        countdownDisplay = document.createElement('div');
+        countdownDisplay.id = 'countdown-display';
+        countdownDisplay.className = 'countdown';
+        countdownDisplay.innerHTML = '<span id="countdown-timer">30</span> seconds remaining';
+        
+        // Insert after game prompt
+        const gamePrompt = document.querySelector('.game-prompt');
+        if (gamePrompt) {
+            gamePrompt.parentNode.insertBefore(countdownDisplay, gamePrompt.nextSibling);
+        }
+    }
+    
+    if (!endRoundBtn) {
+        // Create end round button
+        endRoundBtn = document.createElement('button');
+        endRoundBtn.id = 'end-round-btn';
+        endRoundBtn.className = 'btn';
+        endRoundBtn.innerHTML = '⏹️ End Round Early';
+        endRoundBtn.addEventListener('click', endRound);
+        
+        // Insert after countdown display
+        if (countdownDisplay) {
+            countdownDisplay.parentNode.insertBefore(endRoundBtn, countdownDisplay.nextSibling);
+        }
+    }
+    
+    countdownDisplay.style.display = 'block';
+    endRoundBtn.style.display = 'inline-block';
+
+    // Hide answers display if it exists
+    const answersDisplay = document.getElementById('answers-display');
+    if (answersDisplay) answersDisplay.style.display = 'none';
+
+    // Start countdown timer
+    if (data.current_round && data.current_round.time_remaining) {
+        startCountdown(data.current_round.time_remaining);
+    }
+}
+
+// Handle round ended via WebSocket
+function handleRoundEnded(data) {
+    // Always handle round end, even if no answers
+    currentAnswers = data.answers || [];
+
+    // Hide round controls
+    const countdownDisplay = document.getElementById('countdown-display');
+    const endRoundBtn = document.getElementById('end-round-btn');
+    if (countdownDisplay) countdownDisplay.style.display = 'none';
+    if (endRoundBtn) endRoundBtn.style.display = 'none';
+
+    // Show round completed message
+    const gamePrompt = document.querySelector('.game-prompt');
+    if (gamePrompt) {
+        if (currentAnswers.length > 0) {
+            gamePrompt.innerHTML = `Round ${data.round_number} Complete!<br><small>Collecting answers...</small>`;
+        } else {
+            gamePrompt.innerHTML = `Round ${data.round_number} Complete!<br><small>No answers submitted</small>`;
+        }
+    }
+
+    // Automatically show answers after a brief delay
+    setTimeout(() => {
+        if (gamePrompt) {
+            if (currentAnswers.length > 0) {
+                gamePrompt.innerHTML = `Round ${data.round_number} Complete!<br><small>Reviewing answers...</small>`;
+            } else {
+                gamePrompt.innerHTML = `Round ${data.round_number} Complete!<br><small>No answers to review</small>`;
+            }
+        }
+        showAnswers();
+    }, 1500);
+}
+
+// Start countdown timer (now synchronized with server)
+function startCountdown(seconds) {
+    // Timer will be updated by updateGameState function
+    // which gets accurate time remaining from server
+    console.log('Timer will be synchronized with server');
+}
+
+// Start first round
+document.getElementById('start-first-round-btn')?.addEventListener('click', function() {
+    startRound();
+});
+
+// Start next round
+document.getElementById('next-round-btn')?.addEventListener('click', function() {
+    startRound();
+});
+
+// Start round function
+function startRound() {
+    fetch('{% url "game_sessions:start_round" game_session.game_code %}', {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': '{{ csrf_token }}',
+            'Content-Type': 'application/json',
+        },
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
+            // WebSocket will handle the round update, no need to reload
+            console.log('Round started successfully');
+        } else if (data.status === 'game_complete') {
+            // Game is finished, show final scores
+            showFinalScores(data.final_scores);
+        } else {
+            console.log('Error: ' + data.error);
+        }
+    })
+    .catch(error => {
+        console.log('Error starting round: ' + error);
+    });
+}
+
+// Show final scores when game is complete
+function showFinalScores(scores) {
+    const gameState = document.getElementById('game-state');
+    gameState.innerHTML = `
+        <div class="text-center">
+            <h2>🎉 Game Complete! 🎉</h2>
+            <h3>Final Scores</h3>
+            <div class="final-scores">
+                ${scores.map((score, index) => `
+                    <div class="score-row ${index === 0 ? 'winner' : ''}">
+                        <span class="rank">${index + 1}.</span>
+                        <span class="player-name">${score.player_name}</span>
+                        <span class="score">${score.total_score} points</span>
+                        ${index === 0 ? '<span class="crown">👑</span>' : ''}
+                    </div>
+                `).join('')}
+            </div>
+            <div style="margin-top: 30px;">
+                <button id="restart-game-btn" class="btn btn-primary">
+                    🔄 Start New Game
+                </button>
+            </div>
+        </div>
+    `;
+
+    // Add styles for final scores
+    const style = document.createElement('style');
+    style.textContent = `
+        .final-scores {
+            max-width: 600px;
+            margin: 20px auto;
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .score-row {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            background: #f8f9fa;
+            font-size: 1.2em;
+        }
+        .score-row.winner {
+            background: linear-gradient(135deg, #ffd700, #ffed4e);
+            font-weight: bold;
+            font-size: 1.4em;
+        }
+        .rank {
+            width: 40px;
+            font-weight: bold;
+        }
+        .player-name {
+            flex: 1;
+            text-align: left;
+            margin-left: 10px;
+        }
+        .score {
+            font-weight: bold;
+            color: #28a745;
+        }
+        .crown {
+            margin-left: 10px;
+            font-size: 1.5em;
+        }
+    `;
+    document.head.appendChild(style);
+
+    // Re-attach restart game event listener
+    document.getElementById('restart-game-btn').addEventListener('click', function() {
+        fetch('{% url "game_sessions:restart_game" game_session.game_code %}', {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}',
+                'Content-Type': 'application/json',
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                window.location.href = '{% url "game_sessions:game_master" game_session.game_code %}';
+            } else {
+                console.log('Error: ' + data.error);
+            }
+        })
+        .catch(error => {
+            console.log('Error restarting game: ' + error);
+        });
+    });
+}
+
+// End round
+document.getElementById('end-round-btn')?.addEventListener('click', function() {
+    endRound();
+});
+
+function endRound() {
+    clearInterval(countdownInterval);
+
+    fetch('{% url "game_sessions:end_round" game_session.game_code %}', {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': '{{ csrf_token }}',
+            'Content-Type': 'application/json',
+        },
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
+            currentAnswers = data.answers;
+
+            // Hide round controls
+            const countdownDisplay = document.getElementById('countdown-display');
+            const endRoundBtn = document.getElementById('end-round-btn');
+            if (countdownDisplay) countdownDisplay.style.display = 'none';
+            if (endRoundBtn) endRoundBtn.style.display = 'none';
+
+            // Show round completed message
+            const gamePrompt = document.querySelector('.game-prompt');
+            if (gamePrompt) {
+                gamePrompt.innerHTML = `Round ${data.round_number} Complete!<br><small>Collecting answers...</small>`;
+            }
+
+            // Automatically show answers after a brief delay
+            setTimeout(() => {
+                if (gamePrompt) {
+                    gamePrompt.innerHTML = `Round ${data.round_number} Complete!<br><small>Reviewing answers...</small>`;
+                }
+                showAnswers();
+            }, 1500);
+        } else {
+            console.log('Error: ' + data.error);
+        }
+    })
+    .catch(error => {
+        console.log('Error ending round: ' + error);
+    });
+}
+
+// Show answers
+document.getElementById('show-answers-btn')?.addEventListener('click', function() {
+    showAnswers();
+});
+
+function showAnswers() {
+    // Hide show answers button if it exists
+    const showAnswersBtn = document.getElementById('show-answers-btn');
+    if (showAnswersBtn) showAnswersBtn.style.display = 'none';
+
+    // Create or show answers display area
+    let answersDisplay = document.getElementById('answers-display');
+    if (!answersDisplay) {
+        // Create the answers display area dynamically
+        const gameState = document.getElementById('game-state');
+        answersDisplay = document.createElement('div');
+        answersDisplay.id = 'answers-display';
+        // Get current round info for display
+        const gamePrompt = document.querySelector('.game-prompt');
+        const roundInfo = gamePrompt ? gamePrompt.textContent : '';
+
+        answersDisplay.innerHTML = `
+            <div class="answers-header">
+                <h3>Player Answers</h3>
+                <div class="round-info-small">${roundInfo}</div>
+            </div>
+            <div id="answers-grid" class="answers-grid"></div>
+            <div class="text-center" style="margin-top: 20px;">
+                <button id="next-round-btn" class="btn btn-success" style="display: none;">
+                    ▶️ Start Next Round
+                </button>
+            </div>
+        `;
+        gameState.appendChild(answersDisplay);
+    }
+    answersDisplay.style.display = 'block';
+
+    const grid = document.getElementById('answers-grid');
+    
+    // Clear existing answers
+    grid.innerHTML = '';
+
+    // Check if there are any answers
+    const playerCount = currentAnswers.length;
+    
+    if (playerCount === 0) {
+        // Show "no answers" message
+        grid.innerHTML = `
+            <div class="no-answers-message" style="
+                grid-column: 1 / -1;
+                text-align: center;
+                padding: 40px;
+                color: #666;
+                font-size: 1.2em;
+                background: #f8f9fa;
+                border: 2px dashed #dee2e6;
+                border-radius: 10px;
+                margin: 20px 0;
+            ">
+                <div style="font-size: 3em; margin-bottom: 10px;">😔</div>
+                <div>No players submitted answers for this round</div>
+                <div style="font-size: 0.9em; margin-top: 10px; color: #999;">
+                    Continue to the next round when ready
+                </div>
+            </div>
+        `;
+        
+        // Show the start next round button immediately and ensure it exists
+        let nextRoundBtn = document.getElementById('next-round-btn');
+        if (!nextRoundBtn) {
+            // Create button if it doesn't exist
+            const buttonContainer = document.createElement('div');
+            buttonContainer.className = 'text-center';
+            buttonContainer.style.marginTop = '20px';
+            buttonContainer.innerHTML = '<button id="next-round-btn" class="btn btn-success">▶️ Start Next Round</button>';
+            answersDisplay.appendChild(buttonContainer);
+            nextRoundBtn = document.getElementById('next-round-btn');
+        }
+        
+        if (nextRoundBtn) {
+            nextRoundBtn.style.display = 'inline-block';
+            // Remove any existing event listeners and add new one
+            const newBtn = nextRoundBtn.cloneNode(true);
+            nextRoundBtn.parentNode.replaceChild(newBtn, nextRoundBtn);
+            newBtn.addEventListener('click', function() {
+                console.log('Next round button clicked (no answers)');
+                startRound();
+            });
+        }
+    } else {
+        // Responsive grid layout optimized for different player counts
+        if (playerCount <= 2) {
+            grid.style.gridTemplateColumns = `repeat(${playerCount}, 1fr)`;
+        } else if (playerCount <= 4) {
+            grid.style.gridTemplateColumns = 'repeat(2, 1fr)';
+        } else if (playerCount <= 6) {
+            grid.style.gridTemplateColumns = 'repeat(3, 1fr)';
+        } else if (playerCount <= 12) {
+            grid.style.gridTemplateColumns = 'repeat(4, 1fr)';
+        } else if (playerCount <= 20) {
+            grid.style.gridTemplateColumns = 'repeat(5, 1fr)';
+        } else {
+            grid.style.gridTemplateColumns = 'repeat(6, 1fr)';
+        }
+
+        // Show answers one by one
+        answerIndex = 0;
+        showNextAnswer();
+    }
+}
+
+function showNextAnswer() {
+    if (answerIndex >= currentAnswers.length) {
+        // All answers shown, show next round button
+        const nextRoundBtn = document.getElementById('next-round-btn');
+        if (nextRoundBtn) {
+            setTimeout(() => {
+                nextRoundBtn.style.display = 'inline-block';
+                // Remove any existing event listeners and add new one
+                const newBtn = nextRoundBtn.cloneNode(true);
+                nextRoundBtn.parentNode.replaceChild(newBtn, nextRoundBtn);
+                newBtn.addEventListener('click', function() {
+                    console.log('Next round button clicked');
+                    startRound();
+                });
+            }, 500);
+        }
+        return;
+    }
+
+    const answer = currentAnswers[answerIndex];
+    const grid = document.getElementById('answers-grid');
+
+    const answerCard = document.createElement('div');
+    answerCard.className = `answer-card ${answer.is_unique ? 'unique' : (answer.is_valid ? 'valid' : 'invalid')}`;
+    answerCard.dataset.answerId = answerIndex;
+
+    answerCard.innerHTML = `
+        <div class="player-name">${answer.player_name}</div>
+        <div class="player-answer">${answer.answer || answer.answer_text || 'No answer'}</div>
+        <div class="points ${answer.is_unique ? 'unique' : (answer.is_valid ? 'valid' : 'invalid')}">
+            +${answer.points_awarded} points
+        </div>
+        <div class="validation-controls">
+            <button class="validation-btn valid ${answer.is_valid && !answer.is_unique ? 'active' : ''}"
+                    onclick="validateAnswer(${answerIndex}, true)">
+                ✓ Valid
+            </button>
+            <button class="validation-btn invalid ${!answer.is_valid ? 'active' : ''}"
+                    onclick="validateAnswer(${answerIndex}, false)">
+                ✗ Invalid
+            </button>
+        </div>
+    `;
+
+    grid.appendChild(answerCard);
+
+    // Animate in
+    setTimeout(() => {
+        answerCard.classList.add('show');
+    }, 100);
+
+    answerIndex++;
+
+    // Show next answer after delay
+    setTimeout(() => {
+        showNextAnswer();
+    }, 1000);
+}
+
+// Validate answer function
+function validateAnswer(answerIndex, isValid) {
+    if (answerIndex >= currentAnswers.length) return;
+
+    const answer = currentAnswers[answerIndex];
+    const answerCard = document.querySelector(`[data-answer-id="${answerIndex}"]`);
+
+    // Update the answer data
+    answer.is_valid = isValid;
+    answer.is_unique = false; // Reset unique status when manually validating
+
+    // Recalculate points based on uniqueness
+    if (isValid) {
+        // Check if this answer is unique (no other player has the same answer)
+        const answerText = answer.answer_text || answer.answer;
+        const sameAnswers = currentAnswers.filter(a => {
+            const otherAnswerText = a.answer_text || a.answer;
+            return otherAnswerText.toLowerCase().trim() === answerText.toLowerCase().trim();
+        });
+
+        if (sameAnswers.length === 1) {
+            answer.points_awarded = 10; // Unique answer points
+            answer.is_unique = true;
+        } else {
+            answer.points_awarded = 5; // Valid but not unique answer points
+            answer.is_unique = false;
+
+            // Update all other answers with the same text to also be non-unique
+            sameAnswers.forEach(sameAnswer => {
+                if (sameAnswer !== answer) {
+                    sameAnswer.points_awarded = 5;
+                    sameAnswer.is_unique = false;
+                }
+            });
+        }
+    } else {
+        answer.points_awarded = 0; // Invalid answer points
+        answer.is_unique = false;
+    }
+
+    // Update the card appearance
+    answerCard.className = `answer-card ${isValid ? 'valid' : 'invalid'} show`;
+
+    // Update points display
+    const pointsElement = answerCard.querySelector('.points');
+    pointsElement.textContent = `+${answer.points_awarded} points`;
+    pointsElement.className = `points ${answer.is_unique ? 'unique' : (isValid ? 'valid' : 'invalid')}`;
+
+    // Update button states
+    const validBtn = answerCard.querySelector('.validation-btn.valid');
+    const invalidBtn = answerCard.querySelector('.validation-btn.invalid');
+
+    validBtn.classList.toggle('active', isValid);
+    invalidBtn.classList.toggle('active', !isValid);
+
+    // Auto-validate identical answers and recalculate all points
+    const currentAnswerText = (answer.answer_text || answer.answer).toLowerCase().trim();
+
+    // First, update all identical answers
+    currentAnswers.forEach((otherAnswer, otherIndex) => {
+        const otherAnswerText = (otherAnswer.answer_text || otherAnswer.answer).toLowerCase().trim();
+        if (otherIndex !== answerIndex && otherAnswerText === currentAnswerText) {
+
+            // Update the other answer with same validation
+            otherAnswer.is_valid = isValid;
+            otherAnswer.is_unique = answer.is_unique;
+            otherAnswer.points_awarded = answer.points_awarded;
+
+            // Update the other answer's display
+            const otherCard = document.querySelector(`[data-answer-id="${otherIndex}"]`);
+            if (otherCard) {
+                otherCard.className = `answer-card ${isValid ? 'valid' : 'invalid'} show`;
+
+                const otherPointsElement = otherCard.querySelector('.points');
+                otherPointsElement.textContent = `+${otherAnswer.points_awarded} points`;
+                otherPointsElement.className = `points ${otherAnswer.is_unique ? 'unique' : (isValid ? 'valid' : 'invalid')}`;
+
+                const otherValidBtn = otherCard.querySelector('.validation-btn.valid');
+                const otherInvalidBtn = otherCard.querySelector('.validation-btn.invalid');
+
+                otherValidBtn.classList.toggle('active', isValid);
+                otherInvalidBtn.classList.toggle('active', !isValid);
+
+                // Send validation to server for the duplicate answer
+                fetch('{% url "game_sessions:validate_answer" game_session.game_code %}', {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': '{{ csrf_token }}',
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        player_name: otherAnswer.player_name,
+                        answer: otherAnswer.answer_text || otherAnswer.answer,
+                        is_valid: isValid,
+                        points_awarded: otherAnswer.points_awarded
+                    })
+                });
+            }
+        }
+    });
+
+    // Send validation to server to update database
+    fetch('{% url "game_sessions:validate_answer" game_session.game_code %}', {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': '{{ csrf_token }}',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            player_name: answer.player_name,
+            answer: answer.answer_text || answer.answer,
+            is_valid: isValid,
+            points_awarded: answer.points_awarded
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
+            console.log(`Answer "${answer.answer}" by ${answer.player_name} marked as ${isValid ? 'valid' : 'invalid'}`);
+        } else {
+            console.log('Error validating answer:', data.error);
+        }
+    })
+    .catch(error => {
+        console.log('Error sending validation:', error);
+    });
+}
+
+// Restart game
+document.getElementById('restart-game-btn')?.addEventListener('click', function() {
+    fetch('{% url "game_sessions:restart_game" game_session.game_code %}', {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}',
+                'Content-Type': 'application/json',
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                window.location.href = '{% url "game_sessions:game_master" game_session.game_code %}';
+            } else {
+                console.log('Error: ' + data.error);
+            }
+        })
+        .catch(error => {
+            console.log('Error restarting game: ' + error);
+        });
+});
+
+// Initialize WebSocket connection
+initWebSocket();
+
+// Start countdown if round is active
+{% if current_round.is_active %}
+    startCountdown({{ config.round_time_seconds }});
+{% endif %}
+</script>
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block title %}Join Game - Quiz Game{% endblock %}
+
+{% block content %}
+<h1>🚪 Join Game</h1>
+
+<form method="post">
+    {% csrf_token %}
+    
+    <div class="form-group">
+        <label for="game_code">Game Code:</label>
+        <input type="text" 
+               id="game_code" 
+               name="game_code" 
+               placeholder="Enter 6-character game code" 
+               maxlength="6" 
+               style="text-transform: uppercase;"
+               required>
+    </div>
+    
+    <div class="form-group">
+        <label for="player_name">Your Name:</label>
+        <input type="text" 
+               id="player_name" 
+               name="player_name" 
+               placeholder="Enter your name" 
+               maxlength="50"
+               required>
+    </div>
+    
+    <div class="text-center">
+        <button type="submit" class="btn btn-success">
+            Join Game
+        </button>
+        
+        <a href="{% url 'game_sessions:home' %}" class="btn">← Back to Home</a>
+    </div>
+</form>
+
+<script>
+// Auto-uppercase game code input
+document.getElementById('game_code').addEventListener('input', function(e) {
+    e.target.value = e.target.value.toUpperCase();
+});
+</script>
+{% endblock %}

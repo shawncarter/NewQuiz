@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+
+{% block title %}Configure Game - {{ game_session.game_code }}{% endblock %}
+
+{% block content %}
+<h1>🎯 Configure Game {{ game_session.game_code }}</h1>
+
+<form method="post">
+    {% csrf_token %}
+    
+    <div class="form-group">
+        <label for="game_type">Game Type:</label>
+        <select id="game_type" name="game_type" required onchange="updateCategories()">
+            <option value="">Select a game type...</option>
+            {% for game_type in game_types %}
+                <option value="{{ game_type.id }}" 
+                    {% if current_config and current_config.game_type.id == game_type.id %}selected{% endif %}>
+                    {{ game_type.name }}
+                </option>
+            {% endfor %}
+        </select>
+    </div>
+    
+    <div class="form-group" id="categories-section" 
+         {% if not current_config %}style="display: none;"{% endif %}>
+        <label>Categories (select 1-3):</label>
+        <div style="max-height: 200px; overflow-y: auto; border: 1px solid #ddd; padding: 10px; border-radius: 5px;">
+            {% for category in categories %}
+                <div class="category-option" data-game-type="{{ category.game_type.id }}" 
+                     {% if not current_config or current_config.game_type.id != category.game_type.id %}style="display: none;"{% endif %}>
+                    <label style="font-weight: normal; margin: 5px 0;">
+                        <input type="checkbox" name="categories" value="{{ category.id }}" 
+                               {% if category.id in current_categories %}checked{% endif %}
+                               onchange="limitCategories()">
+                        {{ category.name }}
+                    </label>
+                </div>
+            {% endfor %}
+        </div>
+        <small style="color: #666;">Choose the categories players will answer for</small>
+    </div>
+    
+    <div class="form-group">
+        <label for="num_rounds">Number of Rounds:</label>
+        <select id="num_rounds" name="num_rounds">
+            <option value="5" {% if current_config.num_rounds == 5 %}selected{% endif %}>5 rounds</option>
+            <option value="10" {% if not current_config or current_config.num_rounds == 10 %}selected{% endif %}>10 rounds</option>
+            <option value="15" {% if current_config.num_rounds == 15 %}selected{% endif %}>15 rounds</option>
+            <option value="20" {% if current_config.num_rounds == 20 %}selected{% endif %}>20 rounds</option>
+        </select>
+    </div>
+    
+    <div class="form-group">
+        <label for="round_time">Time per Round:</label>
+        <select id="round_time" name="round_time">
+            <option value="15" {% if current_config.round_time_seconds == 15 %}selected{% endif %}>15 seconds</option>
+            <option value="30" {% if not current_config or current_config.round_time_seconds == 30 %}selected{% endif %}>30 seconds</option>
+            <option value="45" {% if current_config.round_time_seconds == 45 %}selected{% endif %}>45 seconds</option>
+            <option value="60" {% if current_config.round_time_seconds == 60 %}selected{% endif %}>60 seconds</option>
+        </select>
+    </div>
+    
+    <div class="text-center">
+        <button type="submit" class="btn btn-success">
+            💾 Save Configuration
+        </button>
+        
+        <a href="{% url 'game_sessions:game_master' game_session.game_code %}" class="btn">← Back to Game</a>
+    </div>
+</form>
+
+<script>
+function updateCategories() {
+    const gameTypeSelect = document.getElementById('game_type');
+    const categoriesSection = document.getElementById('categories-section');
+    const categoryOptions = document.querySelectorAll('.category-option');
+    
+    // Hide all categories first
+    categoryOptions.forEach(option => {
+        option.style.display = 'none';
+        const checkbox = option.querySelector('input[type="checkbox"]');
+        checkbox.checked = false;
+    });
+    
+    if (gameTypeSelect.value) {
+        categoriesSection.style.display = 'block';
+        
+        // Show categories for selected game type
+        categoryOptions.forEach(option => {
+            if (option.dataset.gameType === gameTypeSelect.value) {
+                option.style.display = 'block';
+            }
+        });
+    } else {
+        categoriesSection.style.display = 'none';
+    }
+}
+
+function limitCategories() {
+    const checkboxes = document.querySelectorAll('input[name="categories"]:checked');
+    const allCheckboxes = document.querySelectorAll('input[name="categories"]');
+    
+    if (checkboxes.length >= 3) {
+        allCheckboxes.forEach(checkbox => {
+            if (!checkbox.checked) {
+                checkbox.disabled = true;
+            }
+        });
+    } else {
+        allCheckboxes.forEach(checkbox => {
+            checkbox.disabled = false;
+        });
+    }
+}
+
+// Initialize the form state
+document.addEventListener('DOMContentLoaded', function() {
+    updateCategories();
+    limitCategories();
+});
+</script>
+{% endblock %}

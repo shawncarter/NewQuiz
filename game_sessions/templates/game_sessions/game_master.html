@@ -1,0 +1,458 @@
+{% extends 'base.html' %}
+
+{% block title %}Game Master - {{ game_session.game_code }}{% endblock %}
+
+{% block content %}
+<h1>🎯 Game Master Dashboard</h1>
+
+<div class="game-code">
+    Game Code: {{ game_session.game_code }}
+</div>
+
+<div class="text-center">
+    <span class="status status-{{ game_session.status }}">
+        Status: {{ game_session.get_status_display }}
+    </span>
+</div>
+
+{% if config %}
+<div class="player-list">
+    <h3>🎯 Game Configuration</h3>
+    <div class="player-item">
+        <strong>Game Type:</strong> {{ config.game_type.name }}
+    </div>
+    <div class="player-item">
+        <strong>Categories:</strong>
+        {% for category in config.categories.all %}
+            {{ category.name }}{% if not forloop.last %}, {% endif %}
+        {% endfor %}
+    </div>
+    <div class="player-item">
+        <strong>Rounds:</strong> {{ config.num_rounds }}
+    </div>
+    <div class="player-item">
+        <strong>Time per Round:</strong> {{ config.round_time_seconds }} seconds
+    </div>
+</div>
+{% endif %}
+
+<div class="player-list">
+    <h3>Connected Players (<span class="player-count">{{ player_count }}</span>/{{ game_session.max_players }})</h3>
+    
+    <div id="player-list-content">
+        {% if players %}
+            {% for player in players %}
+                <div class="player-item">
+                    <strong>{{ player.name }}</strong>
+                    <small style="color: #666;">
+                        - Joined {{ player.joined_at|date:"H:i:s" }}
+                    </small>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p style="text-align: center; color: #666; font-style: italic;">
+                No players have joined yet. Share the game code above!
+            </p>
+        {% endif %}
+    </div>
+</div>
+
+<div class="text-center">
+    {% if game_session.status == 'waiting' %}
+        {% if config %}
+            <div id="start-game-container" style="display: inline-block;">
+                <button id="start-game-btn" class="btn btn-success" {% if player_count == 0 %}style="display: none;"{% endif %}>
+                    🚀 Start Game
+                </button>
+                <button id="waiting-for-players-btn" class="btn" disabled {% if player_count > 0 %}style="display: none;"{% endif %}>
+                    Waiting for players to join...
+                </button>
+            </div>
+
+            <a href="{% url 'game_sessions:configure_game' game_session.game_code %}" class="btn">
+                ⚙️ Reconfigure Game
+            </a>
+        {% else %}
+            <a href="{% url 'game_sessions:configure_game' game_session.game_code %}" class="btn btn-success">
+                ⚙️ Configure Game First
+            </a>
+        {% endif %}
+    {% elif game_session.status == 'active' %}
+        <div class="alert alert-success">
+            Game is active! 🎮
+        </div>
+
+        {% if current_round %}
+            <div class="round-info">
+                <h3>Round {{ current_round.round_number }}</h3>
+                <div class="round-details">
+                    <strong>Category:</strong> {{ current_round.category.name }}<br>
+                    <strong>Letter:</strong> {{ current_round.prompt_letter }}<br>
+                    <strong>Status:</strong> {% if current_round.is_active %}Active{% else %}Ended{% endif %}
+                </div>
+
+                {% if current_round.is_active %}
+                    <button id="end-round-btn" class="btn btn-warning">
+                        ⏹️ End Round
+                    </button>
+                {% else %}
+                    <button id="start-round-btn" class="btn btn-success">
+                        ▶️ {% if current_round.round_number == 1 %}Start First Round{% else %}Start Round {{ current_round.round_number }}{% endif %}
+                    </button>
+                {% endif %}
+            </div>
+        {% else %}
+            <div class="round-info">
+                <h3>Ready to Start First Round</h3>
+                <p>Click the button below to start the first round of the game.</p>
+                <button id="start-round-btn" class="btn btn-success">
+                    🚀 Start First Round
+                </button>
+            </div>
+        {% endif %}
+
+        <button id="restart-game-btn" class="btn">
+            🔄 Restart Game (Dev)
+        </button>
+    {% elif game_session.status == 'finished' %}
+        <div class="alert">
+            🏁 Game finished!
+        </div>
+
+        <button id="restart-game-btn" class="btn">
+            🔄 Restart Game (Dev)
+        </button>
+    {% endif %}
+
+    <div style="margin-top: 20px;">
+        <a href="{% url 'game_sessions:home' %}" class="btn">← Back to Home</a>
+    </div>
+</div>
+
+<style>
+.round-info {
+    background: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 20px 0;
+    text-align: center;
+}
+
+.round-info h3 {
+    margin-top: 0;
+    color: #495057;
+}
+
+.round-details {
+    margin: 15px 0;
+    font-size: 1.1em;
+    line-height: 1.6;
+}
+
+.btn-warning {
+    background-color: #ffc107;
+    border-color: #ffc107;
+    color: #212529;
+}
+
+.btn-warning:hover {
+    background-color: #e0a800;
+    border-color: #d39e00;
+}
+</style>
+
+<script>
+// WebSocket connection for real-time updates
+let gameSocket;
+
+document.addEventListener('DOMContentLoaded', () => {
+    let gameSocket;
+
+    function escapeHTML(str) {
+        if (str === null || str === undefined) return '';
+        return String(str).replace(/[&<>'"/]/g, function (s) {
+            const entityMap = {
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#39;',
+                '/': '&#x2F;'
+            };
+            return entityMap[s];
+        });
+    }
+
+    function initWebSocket() {
+        const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+        const wsUrl = `${protocol}//${window.location.host}/ws/game/{{ game_session.game_code }}/`;
+        gameSocket = new WebSocket(wsUrl);
+
+        gameSocket.onopen = () => {
+            // Send identify message with player_id=null for GM
+            gameSocket.send(JSON.stringify({type: 'identify', player_id: null}));
+            console.log('GM WebSocket connected');
+        };
+        gameSocket.onclose = () => {
+            console.error('GM WebSocket closed unexpectedly. Reconnecting in 3s...');
+            setTimeout(initWebSocket, 3000);
+        };
+        gameSocket.onerror = (error) => {
+            console.error('GM WebSocket Error:', error);
+            gameSocket.close();
+        };
+        gameSocket.onmessage = (e) => {
+            try {
+                const data = JSON.parse(e.data);
+                console.log('GM received message:', data);
+                switch(data.type) {
+                    case 'game_update':
+                        updateGameState(data.data);
+                        break;
+                    case 'game_state_sync':
+                        console.log('Received game_state_sync (GM):', data.data);
+                        updateGameState(data.data);
+                        break;
+                    case 'round_started':
+                        handleRoundStarted(data.data);
+                        break;
+                    case 'round_ended':
+                        handleRoundEnded(data.data);
+                        break;
+                    case 'game_complete':
+                        handleGameComplete(data.data);
+                        break;
+                    case 'game_started':
+                        handleGameStarted(data.data);
+                        break;
+                    case 'game_restarted':
+                        window.location.reload();
+                        break;
+                    default:
+                        console.log('Unknown message type for GM:', data.type);
+                }
+            } catch (error) {
+                console.error('Error handling GM WebSocket message:', error, e.data);
+            }
+        };
+    }
+
+    function updatePlayerListDisplay(playerCount, players) {
+        const playerListContent = document.getElementById('player-list-content');
+        const playerCountElement = document.querySelector('.player-count');
+        if (!playerListContent || !playerCountElement) return;
+
+        playerCountElement.textContent = playerCount;
+        if (playerCount > 0 && players) {
+            playerListContent.innerHTML = players.map(p => `
+                <div class="player-item">
+                    <strong>${escapeHTML(p.name)}</strong>
+                    <small> - Score: ${p.total_score || 0}</small>
+                </div>
+            `).join('');
+        } else {
+            playerListContent.innerHTML = `<p style="text-align: center; color: #666; font-style: italic;">No players have joined yet.</p>`;
+        }
+    }
+
+    function updateGameState(data) {
+        if (data.player_count !== undefined && data.players) {
+            updatePlayerListDisplay(data.player_count, data.players);
+        }
+        const startBtn = document.getElementById('start-game-btn');
+        const waitingBtn = document.getElementById('waiting-for-players-btn');
+        if (startBtn && waitingBtn) {
+            const hasPlayers = data.player_count > 0;
+            startBtn.style.display = hasPlayers ? 'inline-block' : 'none';
+            waitingBtn.style.display = hasPlayers ? 'none' : 'inline-block';
+        }
+        
+        // Update GM interface based on game state
+        if (data.game_status === 'active') {
+            if (data.current_round && data.current_round.is_active) {
+                // Round is active, show round interface
+                handleRoundStarted(data.current_round);
+            } else if (data.current_round && !data.current_round.is_active) {
+                // Round ended, show round ended interface
+                handleRoundEnded(data.current_round);
+            } else if (!document.querySelector('.round-info')) {
+                // Game is active but no round info, show ready to start
+                const currentRoundNumber = data.current_round ? data.current_round.round_number : 0;
+                updateGameMasterForActiveGame(currentRoundNumber);
+            }
+        }
+    }
+
+    function handleRoundStarted(data) {
+    console.log('[GM] handleRoundStarted data:', data);
+        const container = document.querySelector('.text-center');
+        if (!container) return;
+        container.innerHTML = `
+            <div class="alert alert-success">Game is active! 🎮</div>
+            <div class="round-info">
+                <h3>Round ${escapeHTML(data.round_number)}</h3>
+                <div class="round-details">
+                    <strong>Category:</strong> ${escapeHTML(data.category)}<br>
+                    <strong>Letter:</strong> ${escapeHTML(data.letter)}<br>
+                    <strong>Status:</strong> Active
+                </div>
+                <button id="end-round-btn" class="btn btn-warning">⏹️ End Round</button>
+            </div>
+            <button id="restart-game-btn" class="btn">🔄 Restart Game (Dev)</button>
+            <div style="margin-top: 20px;"><a href="{% url 'game_sessions:home' %}" class="btn">← Back to Home</a></div>
+        `;
+    }
+
+    // When the round ends, show the answer review interface for the GM
+    function handleRoundEnded(data) {
+    console.log('[GM] handleRoundEnded data:', data);
+    if (data.answers) console.log('[GM] Answers received:', data.answers);
+        const container = document.querySelector('.text-center');
+        if (!container) return;
+        let answersHTML = '<p>No answers were submitted for this round.</p>';
+        if (data.answers && data.answers.length > 0) {
+            answersHTML = data.answers.map(answer => `
+                <div class="player-answer" style="border-bottom: 1px solid #eee; padding: 5px 0;">
+                    <strong>${escapeHTML(answer.player_name)}:</strong> 
+                    <span>${escapeHTML(answer.answer_text)}</span>
+                </div>`).join('');
+        }
+        // Determine next round number for button text
+        const currentRound = data.round_number || 1;
+        const nextRoundText = `▶️ Start Round ${currentRound + 1}`;
+        
+        container.innerHTML = `
+            <div class="alert">🏁 Round ${escapeHTML(data.round_number)} Finished!</div>
+            <div class="round-info">
+                <h3>Round Results & Answers</h3>
+                <div id="player-answers-container" style="text-align: left; margin-bottom: 20px;">${answersHTML}</div>
+                <button id="start-round-btn" class="btn btn-success">${nextRoundText}</button>
+            </div>
+            <button id="restart-game-btn" class="btn">🔄 Restart Game (Dev)</button>
+            <div style="margin-top: 20px;"><a href="{% url 'game_sessions:home' %}" class="btn">← Back to Home</a></div>
+        `;
+        // Optionally scroll to review section or add focus
+        window.scrollTo({top: 0, behavior: 'smooth'});
+    }
+
+    function handleGameStarted(data) {
+        console.log('[GM] handleGameStarted data:', data);
+        // Update interface to show "Ready to start first round"
+        updateGameMasterForActiveGame();
+    }
+
+    function handleGameComplete(data) {
+        const container = document.querySelector('.text-center');
+        if (!container) return;
+        container.innerHTML = `
+            <div class="alert">🏁 Game finished!</div>
+            <p>${escapeHTML(data.message || 'Thank you for playing!')}</p>
+            <button id="restart-game-btn" class="btn">🔄 Restart Game (Dev)</button>
+            <div style="margin-top: 20px;"><a href="{% url 'game_sessions:home' %}" class="btn">← Back to Home</a></div>
+        `;
+    }
+    
+    function updateGameMasterForActiveGame(roundNumber = null) {
+        const container = document.querySelector('.text-center');
+        if (!container) return;
+        
+        // Determine if this is first round or next round
+        const isFirstRound = roundNumber === null || roundNumber === 0;
+        const roundText = isFirstRound ? "First Round" : `Round ${roundNumber + 1}`;
+        const buttonText = isFirstRound ? "🚀 Start First Round" : `▶️ Start Round ${roundNumber + 1}`;
+        
+        container.innerHTML = `
+            <div class="alert alert-success">Game is active! 🎮</div>
+            <div class="round-info">
+                <h3>Ready to Start ${roundText}</h3>
+                <button id="start-round-btn" class="btn btn-success">${buttonText}</button>
+            </div>
+            <button id="restart-game-btn" class="btn">🔄 Restart Game (Dev)</button>
+            <div style="margin-top: 20px;"><a href="{% url 'game_sessions:home' %}" class="btn">← Back to Home</a></div>
+        `;
+    }
+
+    function setupEventListeners() {
+        document.body.addEventListener('click', (event) => {
+            const target = event.target.closest('button');
+            if (!target) return;
+
+            const gameCode = '{{ game_session.game_code }}';
+            let url = '';
+            let needsConfirm = false;
+            let confirmMessage = '';
+
+            switch(target.id) {
+                case 'start-game-btn':
+                    url = `{% url 'game_sessions:start_game' '000000' %}`.replace('000000', gameCode);
+                    break;
+                case 'start-round-btn':
+                    url = `{% url 'game_sessions:start_round' '000000' %}`.replace('000000', gameCode);
+                    break;
+                case 'end-round-btn':
+                    url = `{% url 'game_sessions:end_round' '000000' %}`.replace('000000', gameCode);
+                    break;
+                case 'restart-game-btn':
+                    url = `{% url 'game_sessions:restart_game' '000000' %}`.replace('000000', gameCode);
+                    needsConfirm = true;
+                    confirmMessage = 'Are you sure you want to restart the game? This will reset all scores and rounds.';
+                    break;
+                default:
+                    return;
+            }
+            
+            if (needsConfirm && !confirm(confirmMessage)) {
+                return;
+            }
+
+            if (url) {
+                fetch(url, { 
+                    method: 'POST', 
+                    headers: {
+                        'X-CSRFToken': '{{ csrf_token }}',
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(res => {
+                    if (!res.ok) {
+                        return res.json().then(err => { throw new Error(err.error || 'Server error') });
+                    }
+                    return res.json();
+                })
+                .then(data => {
+                    console.log('Fetch response:', data);
+                    if (data.error) {
+                        alert('An error occurred: ' + data.error);
+                    } else if (data.status === 'success') {
+                        // Handle successful actions
+                        if (target.id === 'start-game-btn') {
+                            // Game started successfully, update interface
+                            updateGameMasterForActiveGame();
+                        } else if (target.id === 'start-round-btn') {
+                            // Round started successfully, redirect to proper template
+                            console.log('Round started, redirecting to active game interface');
+                            window.location.href = '{% url "game_sessions:game_master" game_session.game_code %}';
+                        } else if (target.id === 'restart-game-btn') {
+                            // Game restarted, reload page
+                            window.location.reload();
+                        }
+                    } else if (data.status === 'game_complete') {
+                        // Game finished, handle completion
+                        handleGameComplete(data);
+                    }
+                })
+                .catch(err => {
+                    console.error('Fetch Error:', err);
+                    alert('A network error occurred: ' + err.message);
+                });
+            }
+        });
+    }
+
+    initWebSocket();
+    setupEventListeners();
+});
+</script>
+
+{% endblock %}
