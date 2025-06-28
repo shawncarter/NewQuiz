@@ -148,23 +148,7 @@ class GameConsumer(AsyncWebsocketConsumer):
 
         logger.info(f"Player {player_id} submitted answer for round {round_number} in game {self.game_code}")
 
-    @database_sync_to_async
-    def get_player_answers_with_details(self, answers_dict):
-        from players.models import Player
-        
-        player_ids = answers_dict.keys()
-        players = Player.objects.filter(id__in=player_ids).in_bulk(id_field_name='id')
-        
-        detailed_answers = []
-        for player_id, answer_text in answers_dict.items():
-            player_instance = players.get(int(player_id))
-            if player_instance:
-                detailed_answers.append({
-                    'player_id': player_instance.id,
-                    'player_name': player_instance.name,
-                    'answer_text': answer_text,
-                })
-        return detailed_answers
+    
 
     @database_sync_to_async
     def get_game_state(self):

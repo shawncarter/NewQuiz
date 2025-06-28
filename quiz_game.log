@@ -20132,3 +20132,363 @@ INFO 2025-06-25 22:38:27,435 consumers 215446 139345891590272 Broadcasting game_
 INFO 2025-06-25 22:38:27,435 consumers 215446 139345891590272 Broadcasting game_update to BGQ9JF: {'game_status': 'waiting', 'player_count': 2, 'players': [{'id': 124, 'name': 'Susan', 'joined_at': '21:50:46', 'total_score': 0}, {'id': 125, 'name': 'Big Tits', 'joined_at': '21:50:49', 'total_score': 0}], 'message': 'Big Tits reconnected'}
 INFO 2025-06-25 22:39:13,850 consumers 215446 139345891590272 WebSocket disconnecting from game BGQ9JF
 WARNING 2025-06-25 22:39:13,852 consumers 215446 139345834723008 WebSocket disconnect without player identification for game BGQ9JF
+INFO 2025-06-26 22:18:24,737 consumers 503626 128740772446336 WebSocket connecting to game CWGNZ5
+INFO 2025-06-26 22:18:24,738 consumers 503626 128740772446336 WebSocket connected to game CWGNZ5 (channel: specific..inmemory!ZSqYlFRqzLuO)
+INFO 2025-06-26 22:18:24,741 consumers 503626 128740772446336 Sending initial game state to new connection for CWGNZ5
+INFO 2025-06-26 22:18:24,743 consumers 503626 128740772446336 Player identified as 133 for game CWGNZ5
+INFO 2025-06-26 22:18:24,754 consumers 503626 128740772446336 WebSocket connecting to game CWGNZ5
+INFO 2025-06-26 22:18:24,754 consumers 503626 128740772446336 WebSocket connected to game CWGNZ5 (channel: specific..inmemory!WTNsoQnCfLBO)
+INFO 2025-06-26 22:18:24,757 consumers 503626 128740772446336 Sending initial game state to new connection for CWGNZ5
+INFO 2025-06-26 22:18:24,758 consumers 503626 128740772446336 Player identified as 132 for game CWGNZ5
+INFO 2025-06-26 22:18:24,770 consumers 503626 128740772446336 WebSocket connecting to game CWGNZ5
+INFO 2025-06-26 22:18:24,770 consumers 503626 128740772446336 WebSocket connected to game CWGNZ5 (channel: specific..inmemory!iQTOqpjohMsH)
+INFO 2025-06-26 22:18:24,773 consumers 503626 128740772446336 Sending initial game state to new connection for CWGNZ5
+INFO 2025-06-26 22:18:24,774 consumers 503626 128740772446336 Player identified as None for game CWGNZ5
+INFO 2025-06-26 22:18:39,167 consumers 503626 128740772446336 WebSocket disconnecting from game CWGNZ5
+INFO 2025-06-26 22:19:03,518 consumers 503626 128740772446336 WebSocket connecting to game KOQ5JR
+INFO 2025-06-26 22:19:03,519 consumers 503626 128740772446336 WebSocket connected to game KOQ5JR (channel: specific..inmemory!TapZybqRVsGX)
+INFO 2025-06-26 22:19:03,522 consumers 503626 128740772446336 Sending initial game state to new connection for KOQ5JR
+INFO 2025-06-26 22:19:03,586 consumers 503626 128740772446336 Player identified as None for game KOQ5JR
+INFO 2025-06-26 22:19:17,783 consumers 503626 128740772446336 WebSocket disconnecting from game CWGNZ5
+INFO 2025-06-26 22:19:18,862 consumers 503626 128740772446336 WebSocket disconnecting from game CWGNZ5
+INFO 2025-06-26 22:19:35,949 views 503626 128740638062272 Player Fuck joined game KOQ5JR. Total players: 1
+INFO 2025-06-26 22:19:35,949 views 503626 128740638062272 Broadcasting player join: {'game_status': 'waiting', 'player_count': 1, 'players': [{'id': 126, 'name': 'Fuck', 'joined_at': '22:19:35', 'total_score': 0}], 'message': 'Fuck joined the game!'}
+INFO 2025-06-26 22:19:35,949 websocket_utils 503626 128740638062272 Broadcasting game_update to group game_KOQ5JR: {'game_status': 'waiting', 'player_count': 1, 'players': [{'id': 126, 'name': 'Fuck', 'joined_at': '22:19:35', 'total_score': 0}], 'message': 'Fuck joined the game!'}
+INFO 2025-06-26 22:19:35,950 websocket_utils 503626 128740638062272 Successfully broadcast game_update to game_KOQ5JR
+INFO 2025-06-26 22:19:35,952 consumers 503626 128740772446336 Broadcasting game_update to KOQ5JR: {'game_status': 'waiting', 'player_count': 1, 'players': [{'id': 126, 'name': 'Fuck', 'joined_at': '22:19:35', 'total_score': 0}], 'message': 'Fuck joined the game!'}
+INFO 2025-06-26 22:19:36,021 consumers 503626 128740772446336 WebSocket connecting to game KOQ5JR
+INFO 2025-06-26 22:19:36,021 consumers 503626 128740772446336 WebSocket connected to game KOQ5JR (channel: specific..inmemory!UcDFpFRYQRDh)
+INFO 2025-06-26 22:19:36,026 consumers 503626 128740772446336 Sending initial game state to new connection for KOQ5JR
+INFO 2025-06-26 22:19:36,037 consumers 503626 128740772446336 Player identified as 126 for game KOQ5JR
+INFO 2025-06-26 22:19:37,697 views 503626 128740638062272 Player Cunt joined game KOQ5JR. Total players: 2
+INFO 2025-06-26 22:19:37,697 views 503626 128740638062272 Broadcasting player join: {'game_status': 'waiting', 'player_count': 2, 'players': [{'id': 126, 'name': 'Fuck', 'joined_at': '22:19:35', 'total_score': 0}, {'id': 127, 'name': 'Cunt', 'joined_at': '22:19:37', 'total_score': 0}], 'message': 'Cunt joined the game!'}
+INFO 2025-06-26 22:19:37,697 websocket_utils 503626 128740638062272 Broadcasting game_update to group game_KOQ5JR: {'game_status': 'waiting', 'player_count': 2, 'players': [{'id': 126, 'name': 'Fuck', 'joined_at': '22:19:35', 'total_score': 0}, {'id': 127, 'name': 'Cunt', 'joined_at': '22:19:37', 'total_score': 0}], 'message': 'Cunt joined the game!'}
+INFO 2025-06-26 22:19:37,698 websocket_utils 503626 128740638062272 Successfully broadcast game_update to game_KOQ5JR
+INFO 2025-06-26 22:19:37,699 consumers 503626 128740772446336 Broadcasting game_update to KOQ5JR: {'game_status': 'waiting', 'player_count': 2, 'players': [{'id': 126, 'name': 'Fuck', 'joined_at': '22:19:35', 'total_score': 0}, {'id': 127, 'name': 'Cunt', 'joined_at': '22:19:37', 'total_score': 0}], 'message': 'Cunt joined the game!'}
+INFO 2025-06-26 22:19:37,699 consumers 503626 128740772446336 Broadcasting game_update to KOQ5JR: {'game_status': 'waiting', 'player_count': 2, 'players': [{'id': 126, 'name': 'Fuck', 'joined_at': '22:19:35', 'total_score': 0}, {'id': 127, 'name': 'Cunt', 'joined_at': '22:19:37', 'total_score': 0}], 'message': 'Cunt joined the game!'}
+INFO 2025-06-26 22:19:37,765 consumers 503626 128740772446336 WebSocket connecting to game KOQ5JR
+INFO 2025-06-26 22:19:37,765 consumers 503626 128740772446336 WebSocket connected to game KOQ5JR (channel: specific..inmemory!LJziycBcUZaE)
+INFO 2025-06-26 22:19:37,770 consumers 503626 128740772446336 Sending initial game state to new connection for KOQ5JR
+INFO 2025-06-26 22:19:37,781 consumers 503626 128740772446336 Player identified as 127 for game KOQ5JR
+INFO 2025-06-26 22:19:40,060 websocket_utils 503626 128740638062272 Broadcasting game_started to group game_KOQ5JR: {'game_status': 'active', 'message': 'Game has started! Get ready for the first round.', 'player_count': 2}
+INFO 2025-06-26 22:19:40,063 websocket_utils 503626 128740638062272 Successfully broadcast game_started to game_KOQ5JR
+INFO 2025-06-26 22:19:40,175 consumers 503626 128740772446336 WebSocket disconnecting from game KOQ5JR
+INFO 2025-06-26 22:19:40,178 consumers 503626 128740715685568 Detected likely redirect disconnect for game KOQ5JR (within 5s of game_started)
+INFO 2025-06-26 22:19:40,179 consumers 503626 128740715685568 Skipping disconnect for player Fuck (id=126) - likely game start redirect
+INFO 2025-06-26 22:19:40,194 consumers 503626 128740772446336 WebSocket disconnecting from game KOQ5JR
+INFO 2025-06-26 22:19:40,197 consumers 503626 128740715685568 Detected likely redirect disconnect for game KOQ5JR (within 5s of game_started)
+INFO 2025-06-26 22:19:40,198 consumers 503626 128740715685568 Skipping disconnect for player Cunt (id=127) - likely game start redirect
+INFO 2025-06-26 22:19:40,220 consumers 503626 128740772446336 WebSocket connecting to game KOQ5JR
+INFO 2025-06-26 22:19:40,220 consumers 503626 128740772446336 WebSocket connected to game KOQ5JR (channel: specific..inmemory!GsTiMtKFRilO)
+INFO 2025-06-26 22:19:40,224 consumers 503626 128740772446336 Sending initial game state to new connection for KOQ5JR
+INFO 2025-06-26 22:19:40,229 consumers 503626 128740772446336 Player identified as 126 for game KOQ5JR
+INFO 2025-06-26 22:19:40,239 consumers 503626 128740772446336 WebSocket connecting to game KOQ5JR
+INFO 2025-06-26 22:19:40,239 consumers 503626 128740772446336 WebSocket connected to game KOQ5JR (channel: specific..inmemory!eUSQDNQbQjkE)
+INFO 2025-06-26 22:19:40,244 consumers 503626 128740772446336 Sending initial game state to new connection for KOQ5JR
+INFO 2025-06-26 22:19:40,245 consumers 503626 128740772446336 Player identified as 127 for game KOQ5JR
+INFO 2025-06-26 22:19:44,015 websocket_utils 503626 128740621276864 Broadcasting round_started to group game_KOQ5JR: {'round_number': 1, 'prompt': "A movies that starts with 'H'", 'letter': 'H', 'category': 'Movies', 'total_time': 30, 'started_at': '2025-06-26T22:19:44.004474+00:00', 'current_round': {'round_number': 1, 'prompt': "A movies that starts with 'H'", 'letter': 'H', 'category': 'Movies', 'is_active': True, 'time_remaining': 30}}
+INFO 2025-06-26 22:19:44,017 websocket_utils 503626 128740621276864 Successfully broadcast round_started to game_KOQ5JR
+INFO 2025-06-26 22:19:44,018 websocket_utils 503626 128740638062272 Broadcasting timer_update to group game_KOQ5JR: {'time_remaining': 29}
+INFO 2025-06-26 22:19:44,023 websocket_utils 503626 128740638062272 Successfully broadcast timer_update to game_KOQ5JR
+INFO 2025-06-26 22:19:44,071 consumers 503626 128740772446336 WebSocket disconnecting from game KOQ5JR
+INFO 2025-06-26 22:19:44,073 consumers 503626 128740715685568 Detected likely redirect disconnect for game KOQ5JR (within 5s of game_started)
+INFO 2025-06-26 22:19:44,104 consumers 503626 128740772446336 WebSocket connecting to game KOQ5JR
+INFO 2025-06-26 22:19:44,105 consumers 503626 128740772446336 WebSocket connected to game KOQ5JR (channel: specific..inmemory!OEXWnXeNDiwG)
+INFO 2025-06-26 22:19:44,111 consumers 503626 128740772446336 Sending initial game state to new connection for KOQ5JR
+INFO 2025-06-26 22:19:45,030 websocket_utils 503626 128740638062272 Broadcasting timer_update to group game_KOQ5JR: {'time_remaining': 28}
+INFO 2025-06-26 22:19:45,034 websocket_utils 503626 128740638062272 Successfully broadcast timer_update to game_KOQ5JR
+INFO 2025-06-26 22:19:46,038 websocket_utils 503626 128740638062272 Broadcasting timer_update to group game_KOQ5JR: {'time_remaining': 27}
+INFO 2025-06-26 22:19:46,041 websocket_utils 503626 128740638062272 Successfully broadcast timer_update to game_KOQ5JR
+INFO 2025-06-26 22:19:47,045 websocket_utils 503626 128740638062272 Broadcasting timer_update to group game_KOQ5JR: {'time_remaining': 26}
+INFO 2025-06-26 22:19:47,046 websocket_utils 503626 128740638062272 Successfully broadcast timer_update to game_KOQ5JR
+INFO 2025-06-26 22:19:48,047 websocket_utils 503626 128740638062272 Broadcasting timer_update to group game_KOQ5JR: {'time_remaining': 25}
+INFO 2025-06-26 22:19:48,050 websocket_utils 503626 128740638062272 Successfully broadcast timer_update to game_KOQ5JR
+INFO 2025-06-26 22:19:49,053 websocket_utils 503626 128740638062272 Broadcasting timer_update to group game_KOQ5JR: {'time_remaining': 24}
+INFO 2025-06-26 22:19:49,057 websocket_utils 503626 128740638062272 Successfully broadcast timer_update to game_KOQ5JR
+INFO 2025-06-26 22:19:50,060 websocket_utils 503626 128740638062272 Broadcasting timer_update to group game_KOQ5JR: {'time_remaining': 23}
+INFO 2025-06-26 22:19:50,064 websocket_utils 503626 128740638062272 Successfully broadcast timer_update to game_KOQ5JR
+INFO 2025-06-26 22:19:50,341 consumers 503626 128740772446336 Player 126 submitted answer for round 1 in game KOQ5JR
+INFO 2025-06-26 22:19:50,674 consumers 503626 128740772446336 Player 126 submitted answer for round 1 in game KOQ5JR
+INFO 2025-06-26 22:19:51,067 websocket_utils 503626 128740638062272 Broadcasting timer_update to group game_KOQ5JR: {'time_remaining': 22}
+INFO 2025-06-26 22:19:51,068 websocket_utils 503626 128740638062272 Successfully broadcast timer_update to game_KOQ5JR
+INFO 2025-06-26 22:19:51,274 consumers 503626 128740772446336 Player 126 submitted answer for round 1 in game KOQ5JR
+INFO 2025-06-26 22:19:52,069 websocket_utils 503626 128740638062272 Broadcasting timer_update to group game_KOQ5JR: {'time_remaining': 21}
+INFO 2025-06-26 22:19:52,071 websocket_utils 503626 128740638062272 Successfully broadcast timer_update to game_KOQ5JR
+INFO 2025-06-26 22:19:52,205 consumers 503626 128740772446336 Player 126 submitted answer for round 1 in game KOQ5JR
+INFO 2025-06-26 22:19:52,504 consumers 503626 128740772446336 Player 126 submitted answer for round 1 in game KOQ5JR
+INFO 2025-06-26 22:19:53,072 websocket_utils 503626 128740638062272 Broadcasting timer_update to group game_KOQ5JR: {'time_remaining': 20}
+INFO 2025-06-26 22:19:53,076 websocket_utils 503626 128740638062272 Successfully broadcast timer_update to game_KOQ5JR
+INFO 2025-06-26 22:19:53,288 consumers 503626 128740772446336 Player 126 submitted answer for round 1 in game KOQ5JR
+INFO 2025-06-26 22:19:54,079 websocket_utils 503626 128740638062272 Broadcasting timer_update to group game_KOQ5JR: {'time_remaining': 19}
+INFO 2025-06-26 22:19:54,083 websocket_utils 503626 128740638062272 Successfully broadcast timer_update to game_KOQ5JR
+INFO 2025-06-26 22:19:54,715 consumers 503626 128740772446336 Player 126 submitted answer for round 1 in game KOQ5JR
+INFO 2025-06-26 22:19:55,051 consumers 503626 128740772446336 Player 126 submitted answer for round 1 in game KOQ5JR
+INFO 2025-06-26 22:19:55,085 websocket_utils 503626 128740638062272 Broadcasting timer_update to group game_KOQ5JR: {'time_remaining': 18}
+INFO 2025-06-26 22:19:55,089 websocket_utils 503626 128740638062272 Successfully broadcast timer_update to game_KOQ5JR
+INFO 2025-06-26 22:19:55,480 consumers 503626 128740772446336 Player 126 submitted answer for round 1 in game KOQ5JR
+INFO 2025-06-26 22:19:55,801 consumers 503626 128740772446336 Player 126 submitted answer for round 1 in game KOQ5JR
+INFO 2025-06-26 22:19:56,092 websocket_utils 503626 128740638062272 Broadcasting timer_update to group game_KOQ5JR: {'time_remaining': 17}
+INFO 2025-06-26 22:19:56,096 websocket_utils 503626 128740638062272 Successfully broadcast timer_update to game_KOQ5JR
+INFO 2025-06-26 22:19:57,100 websocket_utils 503626 128740638062272 Broadcasting timer_update to group game_KOQ5JR: {'time_remaining': 16}
+INFO 2025-06-26 22:19:57,103 websocket_utils 503626 128740638062272 Successfully broadcast timer_update to game_KOQ5JR
+INFO 2025-06-26 22:19:58,106 websocket_utils 503626 128740638062272 Broadcasting timer_update to group game_KOQ5JR: {'time_remaining': 15}
+INFO 2025-06-26 22:19:58,110 websocket_utils 503626 128740638062272 Successfully broadcast timer_update to game_KOQ5JR
+INFO 2025-06-26 22:19:59,115 websocket_utils 503626 128740638062272 Broadcasting timer_update to group game_KOQ5JR: {'time_remaining': 14}
+INFO 2025-06-26 22:19:59,119 websocket_utils 503626 128740638062272 Successfully broadcast timer_update to game_KOQ5JR
+INFO 2025-06-26 22:19:59,931 consumers 503626 128740772446336 Player 127 submitted answer for round 1 in game KOQ5JR
+INFO 2025-06-26 22:20:00,123 websocket_utils 503626 128740638062272 Broadcasting timer_update to group game_KOQ5JR: {'time_remaining': 13}
+INFO 2025-06-26 22:20:00,126 websocket_utils 503626 128740638062272 Successfully broadcast timer_update to game_KOQ5JR
+INFO 2025-06-26 22:20:00,673 consumers 503626 128740772446336 Player 127 submitted answer for round 1 in game KOQ5JR
+INFO 2025-06-26 22:20:01,130 websocket_utils 503626 128740638062272 Broadcasting timer_update to group game_KOQ5JR: {'time_remaining': 12}
+INFO 2025-06-26 22:20:01,134 websocket_utils 503626 128740638062272 Successfully broadcast timer_update to game_KOQ5JR
+INFO 2025-06-26 22:20:01,298 consumers 503626 128740772446336 Player 127 submitted answer for round 1 in game KOQ5JR
+INFO 2025-06-26 22:20:02,072 consumers 503626 128740772446336 Player 127 submitted answer for round 1 in game KOQ5JR
+INFO 2025-06-26 22:20:02,139 websocket_utils 503626 128740638062272 Broadcasting timer_update to group game_KOQ5JR: {'time_remaining': 11}
+INFO 2025-06-26 22:20:02,142 websocket_utils 503626 128740638062272 Successfully broadcast timer_update to game_KOQ5JR
+INFO 2025-06-26 22:20:02,649 consumers 503626 128740772446336 Player 127 submitted answer for round 1 in game KOQ5JR
+INFO 2025-06-26 22:20:03,145 websocket_utils 503626 128740638062272 Broadcasting timer_update to group game_KOQ5JR: {'time_remaining': 10}
+INFO 2025-06-26 22:20:03,149 websocket_utils 503626 128740638062272 Successfully broadcast timer_update to game_KOQ5JR
+INFO 2025-06-26 22:20:04,152 websocket_utils 503626 128740638062272 Broadcasting timer_update to group game_KOQ5JR: {'time_remaining': 9}
+INFO 2025-06-26 22:20:04,156 websocket_utils 503626 128740638062272 Successfully broadcast timer_update to game_KOQ5JR
+INFO 2025-06-26 22:20:05,159 websocket_utils 503626 128740638062272 Broadcasting timer_update to group game_KOQ5JR: {'time_remaining': 8}
+INFO 2025-06-26 22:20:05,163 websocket_utils 503626 128740638062272 Successfully broadcast timer_update to game_KOQ5JR
+INFO 2025-06-26 22:20:06,166 websocket_utils 503626 128740638062272 Broadcasting timer_update to group game_KOQ5JR: {'time_remaining': 7}
+INFO 2025-06-26 22:20:06,170 websocket_utils 503626 128740638062272 Successfully broadcast timer_update to game_KOQ5JR
+INFO 2025-06-26 22:20:07,173 websocket_utils 503626 128740638062272 Broadcasting timer_update to group game_KOQ5JR: {'time_remaining': 6}
+INFO 2025-06-26 22:20:07,177 websocket_utils 503626 128740638062272 Successfully broadcast timer_update to game_KOQ5JR
+INFO 2025-06-26 22:20:07,415 views 503626 128740621276864 Created PlayerAnswer for connected player Fuck: Horror Storie
+INFO 2025-06-26 22:20:07,425 views 503626 128740621276864 Created PlayerAnswer for connected player Cunt: Havana
+INFO 2025-06-26 22:20:07,483 websocket_utils 503626 128740621276864 Broadcasting round_ended to group game_KOQ5JR: {'round_number': 1, 'is_final_round': False, 'answers': [{'player_name': 'Cunt', 'answer_text': 'Havana', 'points_awarded': 10, 'is_valid': True, 'is_unique': True}, {'player_name': 'Fuck', 'answer_text': 'Horror Storie', 'points_awarded': 10, 'is_valid': True, 'is_unique': True}]}
+INFO 2025-06-26 22:20:07,485 websocket_utils 503626 128740621276864 Successfully broadcast round_ended to game_KOQ5JR
+INFO 2025-06-26 22:20:08,181 websocket_utils 503626 128740638062272 Broadcasting timer_update to group game_KOQ5JR: {'time_remaining': 5}
+INFO 2025-06-26 22:20:08,184 websocket_utils 503626 128740638062272 Successfully broadcast timer_update to game_KOQ5JR
+INFO 2025-06-26 22:20:12,192 websocket_utils 503626 128740638062272 Broadcasting score_update to group game_KOQ5JR: {'player_name': 'Cunt', 'player_id': 127, 'points_awarded': 0, 'points': 0, 'reason': 'Answer correction', 'message': 'Cunt received 0 points!'}
+INFO 2025-06-26 22:20:12,194 websocket_utils 503626 128740638062272 Successfully broadcast score_update to game_KOQ5JR
+INFO 2025-06-26 22:20:16,273 websocket_utils 503626 128740638062272 Broadcasting score_update to group game_KOQ5JR: {'player_name': 'Fuck', 'player_id': 126, 'points_awarded': 10, 'points': 10, 'reason': 'Answer validation', 'message': 'Fuck received 10 points!'}
+INFO 2025-06-26 22:20:16,275 websocket_utils 503626 128740638062272 Successfully broadcast score_update to game_KOQ5JR
+INFO 2025-06-26 22:20:20,840 websocket_utils 503626 128740638062272 Broadcasting round_started to group game_KOQ5JR: {'round_number': 2, 'prompt': "A movies that starts with 'I'", 'letter': 'I', 'category': 'Movies', 'total_time': 30, 'started_at': '2025-06-26T22:20:20.828539+00:00', 'current_round': {'round_number': 2, 'prompt': "A movies that starts with 'I'", 'letter': 'I', 'category': 'Movies', 'is_active': True, 'time_remaining': 30}}
+INFO 2025-06-26 22:20:20,842 websocket_utils 503626 128740638062272 Successfully broadcast round_started to game_KOQ5JR
+INFO 2025-06-26 22:20:20,844 websocket_utils 503626 128740621276864 Broadcasting timer_update to group game_KOQ5JR: {'time_remaining': 29}
+INFO 2025-06-26 22:20:20,850 websocket_utils 503626 128740621276864 Successfully broadcast timer_update to game_KOQ5JR
+INFO 2025-06-26 22:20:21,860 websocket_utils 503626 128740621276864 Broadcasting timer_update to group game_KOQ5JR: {'time_remaining': 28}
+INFO 2025-06-26 22:20:21,864 websocket_utils 503626 128740621276864 Successfully broadcast timer_update to game_KOQ5JR
+INFO 2025-06-26 22:20:22,867 websocket_utils 503626 128740621276864 Broadcasting timer_update to group game_KOQ5JR: {'time_remaining': 27}
+INFO 2025-06-26 22:20:22,870 websocket_utils 503626 128740621276864 Successfully broadcast timer_update to game_KOQ5JR
+INFO 2025-06-26 22:20:23,873 websocket_utils 503626 128740621276864 Broadcasting timer_update to group game_KOQ5JR: {'time_remaining': 26}
+INFO 2025-06-26 22:20:23,878 websocket_utils 503626 128740621276864 Successfully broadcast timer_update to game_KOQ5JR
+INFO 2025-06-26 22:20:24,881 websocket_utils 503626 128740621276864 Broadcasting timer_update to group game_KOQ5JR: {'time_remaining': 25}
+INFO 2025-06-26 22:20:24,885 websocket_utils 503626 128740621276864 Successfully broadcast timer_update to game_KOQ5JR
+INFO 2025-06-26 22:20:25,889 websocket_utils 503626 128740621276864 Broadcasting timer_update to group game_KOQ5JR: {'time_remaining': 24}
+INFO 2025-06-26 22:20:25,893 websocket_utils 503626 128740621276864 Successfully broadcast timer_update to game_KOQ5JR
+INFO 2025-06-26 22:20:26,354 consumers 503626 128740772446336 Player 126 submitted answer for round 2 in game KOQ5JR
+INFO 2025-06-26 22:20:26,897 websocket_utils 503626 128740621276864 Broadcasting timer_update to group game_KOQ5JR: {'time_remaining': 23}
+INFO 2025-06-26 22:20:26,901 websocket_utils 503626 128740621276864 Successfully broadcast timer_update to game_KOQ5JR
+INFO 2025-06-26 22:20:27,081 consumers 503626 128740772446336 Player 126 submitted answer for round 2 in game KOQ5JR
+INFO 2025-06-26 22:20:27,905 websocket_utils 503626 128740621276864 Broadcasting timer_update to group game_KOQ5JR: {'time_remaining': 22}
+INFO 2025-06-26 22:20:27,908 websocket_utils 503626 128740621276864 Successfully broadcast timer_update to game_KOQ5JR
+INFO 2025-06-26 22:20:28,912 websocket_utils 503626 128740621276864 Broadcasting timer_update to group game_KOQ5JR: {'time_remaining': 21}
+INFO 2025-06-26 22:20:28,915 websocket_utils 503626 128740621276864 Successfully broadcast timer_update to game_KOQ5JR
+INFO 2025-06-26 22:20:29,919 websocket_utils 503626 128740621276864 Broadcasting timer_update to group game_KOQ5JR: {'time_remaining': 20}
+INFO 2025-06-26 22:20:29,923 websocket_utils 503626 128740621276864 Successfully broadcast timer_update to game_KOQ5JR
+INFO 2025-06-26 22:20:30,230 consumers 503626 128740772446336 Player 127 submitted answer for round 2 in game KOQ5JR
+INFO 2025-06-26 22:20:30,886 consumers 503626 128740772446336 Player 127 submitted answer for round 2 in game KOQ5JR
+INFO 2025-06-26 22:20:30,926 websocket_utils 503626 128740621276864 Broadcasting timer_update to group game_KOQ5JR: {'time_remaining': 19}
+INFO 2025-06-26 22:20:30,930 websocket_utils 503626 128740621276864 Successfully broadcast timer_update to game_KOQ5JR
+INFO 2025-06-26 22:20:31,230 consumers 503626 128740772446336 Player 127 submitted answer for round 2 in game KOQ5JR
+INFO 2025-06-26 22:20:31,528 consumers 503626 128740772446336 Player 127 submitted answer for round 2 in game KOQ5JR
+INFO 2025-06-26 22:20:31,933 websocket_utils 503626 128740621276864 Broadcasting timer_update to group game_KOQ5JR: {'time_remaining': 18}
+INFO 2025-06-26 22:20:31,937 websocket_utils 503626 128740621276864 Successfully broadcast timer_update to game_KOQ5JR
+INFO 2025-06-26 22:20:32,354 consumers 503626 128740772446336 Player 127 submitted answer for round 2 in game KOQ5JR
+INFO 2025-06-26 22:20:32,940 websocket_utils 503626 128740621276864 Broadcasting timer_update to group game_KOQ5JR: {'time_remaining': 17}
+INFO 2025-06-26 22:20:32,945 websocket_utils 503626 128740621276864 Successfully broadcast timer_update to game_KOQ5JR
+INFO 2025-06-26 22:20:33,948 websocket_utils 503626 128740621276864 Broadcasting timer_update to group game_KOQ5JR: {'time_remaining': 16}
+INFO 2025-06-26 22:20:33,951 websocket_utils 503626 128740621276864 Successfully broadcast timer_update to game_KOQ5JR
+INFO 2025-06-26 22:20:34,955 websocket_utils 503626 128740621276864 Broadcasting timer_update to group game_KOQ5JR: {'time_remaining': 15}
+INFO 2025-06-26 22:20:34,959 websocket_utils 503626 128740621276864 Successfully broadcast timer_update to game_KOQ5JR
+INFO 2025-06-26 22:20:35,963 websocket_utils 503626 128740621276864 Broadcasting timer_update to group game_KOQ5JR: {'time_remaining': 14}
+INFO 2025-06-26 22:20:35,966 websocket_utils 503626 128740621276864 Successfully broadcast timer_update to game_KOQ5JR
+INFO 2025-06-26 22:20:36,045 views 503626 128740638062272 Created PlayerAnswer for connected player Fuck: Ironman
+INFO 2025-06-26 22:20:36,055 views 503626 128740638062272 Created PlayerAnswer for connected player Cunt: Ivanhoe
+INFO 2025-06-26 22:20:36,115 websocket_utils 503626 128740638062272 Broadcasting round_ended to group game_KOQ5JR: {'round_number': 2, 'is_final_round': False, 'answers': [{'player_name': 'Cunt', 'answer_text': 'Ivanhoe', 'points_awarded': 10, 'is_valid': True, 'is_unique': True}, {'player_name': 'Fuck', 'answer_text': 'Ironman', 'points_awarded': 10, 'is_valid': True, 'is_unique': True}]}
+INFO 2025-06-26 22:20:36,118 websocket_utils 503626 128740638062272 Successfully broadcast round_ended to game_KOQ5JR
+INFO 2025-06-26 22:20:36,969 websocket_utils 503626 128740621276864 Broadcasting timer_update to group game_KOQ5JR: {'time_remaining': 13}
+INFO 2025-06-26 22:20:36,970 websocket_utils 503626 128740621276864 Successfully broadcast timer_update to game_KOQ5JR
+INFO 2025-06-28 19:05:12,268 consumers 18199 128171430072448 WebSocket connecting to game 4MAVDC
+INFO 2025-06-28 19:05:12,269 consumers 18199 128171430072448 WebSocket connected to game 4MAVDC (channel: specific..inmemory!kJNcvAyWRqlG)
+INFO 2025-06-28 19:05:12,275 consumers 18199 128171430072448 Sending initial game state to new connection for 4MAVDC
+INFO 2025-06-28 19:05:12,314 consumers 18199 128171430072448 Player identified as None for game 4MAVDC
+INFO 2025-06-28 19:05:27,502 views 18199 128171286460096 Player Kerry joined game 4MAVDC. Total players: 1
+INFO 2025-06-28 19:05:27,506 views 18199 128171286460096 Broadcasting player join: {'game_status': 'waiting', 'player_count': 1, 'players': [{'id': 128, 'name': 'Kerry', 'joined_at': '19:05:27', 'total_score': 0}], 'message': 'Kerry joined the game!'}
+INFO 2025-06-28 19:05:27,506 websocket_utils 18199 128171286460096 Broadcasting game_update to group game_4MAVDC: {'game_status': 'waiting', 'player_count': 1, 'players': [{'id': 128, 'name': 'Kerry', 'joined_at': '19:05:27', 'total_score': 0}], 'message': 'Kerry joined the game!'}
+INFO 2025-06-28 19:05:27,509 websocket_utils 18199 128171286460096 Successfully broadcast game_update to game_4MAVDC
+INFO 2025-06-28 19:05:27,515 consumers 18199 128171430072448 Broadcasting game_update to 4MAVDC: {'game_status': 'waiting', 'player_count': 1, 'players': [{'id': 128, 'name': 'Kerry', 'joined_at': '19:05:27', 'total_score': 0}], 'message': 'Kerry joined the game!'}
+INFO 2025-06-28 19:05:27,838 consumers 18199 128171430072448 WebSocket connecting to game 4MAVDC
+INFO 2025-06-28 19:05:27,841 consumers 18199 128171430072448 WebSocket connected to game 4MAVDC (channel: specific..inmemory!pdqBQWgaZyNB)
+INFO 2025-06-28 19:05:27,852 consumers 18199 128171430072448 Sending initial game state to new connection for 4MAVDC
+INFO 2025-06-28 19:05:27,874 consumers 18199 128171430072448 Player identified as 128 for game 4MAVDC
+INFO 2025-06-28 19:05:31,517 views 18199 128171286460096 Player Shwan joined game 4MAVDC. Total players: 2
+INFO 2025-06-28 19:05:31,520 views 18199 128171286460096 Broadcasting player join: {'game_status': 'waiting', 'player_count': 2, 'players': [{'id': 128, 'name': 'Kerry', 'joined_at': '19:05:27', 'total_score': 0}, {'id': 129, 'name': 'Shwan', 'joined_at': '19:05:31', 'total_score': 0}], 'message': 'Shwan joined the game!'}
+INFO 2025-06-28 19:05:31,520 websocket_utils 18199 128171286460096 Broadcasting game_update to group game_4MAVDC: {'game_status': 'waiting', 'player_count': 2, 'players': [{'id': 128, 'name': 'Kerry', 'joined_at': '19:05:27', 'total_score': 0}, {'id': 129, 'name': 'Shwan', 'joined_at': '19:05:31', 'total_score': 0}], 'message': 'Shwan joined the game!'}
+INFO 2025-06-28 19:05:31,523 websocket_utils 18199 128171286460096 Successfully broadcast game_update to game_4MAVDC
+INFO 2025-06-28 19:05:31,525 consumers 18199 128171430072448 Broadcasting game_update to 4MAVDC: {'game_status': 'waiting', 'player_count': 2, 'players': [{'id': 128, 'name': 'Kerry', 'joined_at': '19:05:27', 'total_score': 0}, {'id': 129, 'name': 'Shwan', 'joined_at': '19:05:31', 'total_score': 0}], 'message': 'Shwan joined the game!'}
+INFO 2025-06-28 19:05:31,528 consumers 18199 128171430072448 Broadcasting game_update to 4MAVDC: {'game_status': 'waiting', 'player_count': 2, 'players': [{'id': 128, 'name': 'Kerry', 'joined_at': '19:05:27', 'total_score': 0}, {'id': 129, 'name': 'Shwan', 'joined_at': '19:05:31', 'total_score': 0}], 'message': 'Shwan joined the game!'}
+INFO 2025-06-28 19:05:31,811 consumers 18199 128171430072448 WebSocket connecting to game 4MAVDC
+INFO 2025-06-28 19:05:31,813 consumers 18199 128171430072448 WebSocket connected to game 4MAVDC (channel: specific..inmemory!WlJUMYqjAhkn)
+INFO 2025-06-28 19:05:31,825 consumers 18199 128171430072448 Sending initial game state to new connection for 4MAVDC
+INFO 2025-06-28 19:05:31,836 consumers 18199 128171430072448 Player identified as 129 for game 4MAVDC
+INFO 2025-06-28 19:05:38,167 websocket_utils 18199 128171286460096 Broadcasting game_started to group game_4MAVDC: {'game_status': 'active', 'message': 'Game has started! Get ready for the first round.', 'player_count': 2}
+INFO 2025-06-28 19:05:38,171 websocket_utils 18199 128171286460096 Successfully broadcast game_started to game_4MAVDC
+INFO 2025-06-28 19:05:38,562 consumers 18199 128171430072448 WebSocket disconnecting from game 4MAVDC
+INFO 2025-06-28 19:05:38,566 consumers 18199 128171373151936 Detected likely redirect disconnect for game 4MAVDC (within 5s of game_started)
+INFO 2025-06-28 19:05:38,569 consumers 18199 128171373151936 Skipping disconnect for player Kerry (id=128) - likely game start redirect
+INFO 2025-06-28 19:05:38,603 consumers 18199 128171430072448 WebSocket disconnecting from game 4MAVDC
+INFO 2025-06-28 19:05:38,610 consumers 18199 128171373151936 Detected likely redirect disconnect for game 4MAVDC (within 5s of game_started)
+INFO 2025-06-28 19:05:38,614 consumers 18199 128171373151936 Skipping disconnect for player Shwan (id=129) - likely game start redirect
+INFO 2025-06-28 19:05:38,640 consumers 18199 128171430072448 WebSocket connecting to game 4MAVDC
+INFO 2025-06-28 19:05:38,640 consumers 18199 128171430072448 WebSocket connected to game 4MAVDC (channel: specific..inmemory!FOlasEqHfsFl)
+INFO 2025-06-28 19:05:38,647 consumers 18199 128171430072448 Sending initial game state to new connection for 4MAVDC
+INFO 2025-06-28 19:05:38,675 consumers 18199 128171430072448 Player identified as 128 for game 4MAVDC
+INFO 2025-06-28 19:05:38,683 consumers 18199 128171430072448 WebSocket connecting to game 4MAVDC
+INFO 2025-06-28 19:05:38,684 consumers 18199 128171430072448 WebSocket connected to game 4MAVDC (channel: specific..inmemory!rKrvNyUKoPNF)
+INFO 2025-06-28 19:05:38,692 consumers 18199 128171430072448 Sending initial game state to new connection for 4MAVDC
+INFO 2025-06-28 19:05:38,702 consumers 18199 128171430072448 Player identified as 129 for game 4MAVDC
+INFO 2025-06-28 19:05:45,029 websocket_utils 18199 128171278067392 Broadcasting round_started to group game_4MAVDC: {'round_number': 1, 'prompt': "A vegetables that starts with 'N'", 'letter': 'N', 'category': 'Vegetables', 'total_time': 30, 'started_at': '2025-06-28T19:05:45.011104+00:00', 'current_round': {'round_number': 1, 'prompt': "A vegetables that starts with 'N'", 'letter': 'N', 'category': 'Vegetables', 'is_active': True, 'time_remaining': 30}}
+INFO 2025-06-28 19:05:45,032 websocket_utils 18199 128171278067392 Successfully broadcast round_started to game_4MAVDC
+INFO 2025-06-28 19:05:45,034 websocket_utils 18199 128171286460096 Broadcasting timer_update to group game_4MAVDC: {'time_remaining': 29}
+INFO 2025-06-28 19:05:45,051 websocket_utils 18199 128171286460096 Successfully broadcast timer_update to game_4MAVDC
+INFO 2025-06-28 19:05:45,307 consumers 18199 128171430072448 WebSocket disconnecting from game 4MAVDC
+WARNING 2025-06-28 19:05:45,317 consumers 18199 128171373151936 WebSocket disconnect without player identification for game 4MAVDC
+INFO 2025-06-28 19:05:45,392 consumers 18199 128171430072448 WebSocket connecting to game 4MAVDC
+INFO 2025-06-28 19:05:45,395 consumers 18199 128171430072448 WebSocket connected to game 4MAVDC (channel: specific..inmemory!kSoGExzLIgTy)
+INFO 2025-06-28 19:05:45,408 consumers 18199 128171430072448 Sending initial game state to new connection for 4MAVDC
+INFO 2025-06-28 19:05:46,061 websocket_utils 18199 128171286460096 Broadcasting timer_update to group game_4MAVDC: {'time_remaining': 28}
+INFO 2025-06-28 19:05:46,064 websocket_utils 18199 128171286460096 Successfully broadcast timer_update to game_4MAVDC
+INFO 2025-06-28 19:05:47,068 websocket_utils 18199 128171286460096 Broadcasting timer_update to group game_4MAVDC: {'time_remaining': 27}
+INFO 2025-06-28 19:05:47,071 websocket_utils 18199 128171286460096 Successfully broadcast timer_update to game_4MAVDC
+INFO 2025-06-28 19:05:48,075 websocket_utils 18199 128171286460096 Broadcasting timer_update to group game_4MAVDC: {'time_remaining': 26}
+INFO 2025-06-28 19:05:48,079 websocket_utils 18199 128171286460096 Successfully broadcast timer_update to game_4MAVDC
+INFO 2025-06-28 19:05:49,082 websocket_utils 18199 128171286460096 Broadcasting timer_update to group game_4MAVDC: {'time_remaining': 25}
+INFO 2025-06-28 19:05:49,086 websocket_utils 18199 128171286460096 Successfully broadcast timer_update to game_4MAVDC
+INFO 2025-06-28 19:05:50,090 websocket_utils 18199 128171286460096 Broadcasting timer_update to group game_4MAVDC: {'time_remaining': 24}
+INFO 2025-06-28 19:05:50,094 websocket_utils 18199 128171286460096 Successfully broadcast timer_update to game_4MAVDC
+INFO 2025-06-28 19:05:51,097 websocket_utils 18199 128171286460096 Broadcasting timer_update to group game_4MAVDC: {'time_remaining': 23}
+INFO 2025-06-28 19:05:51,101 websocket_utils 18199 128171286460096 Successfully broadcast timer_update to game_4MAVDC
+INFO 2025-06-28 19:05:51,273 consumers 18199 128171430072448 Player 128 submitted answer for round 1 in game 4MAVDC
+INFO 2025-06-28 19:05:52,104 websocket_utils 18199 128171286460096 Broadcasting timer_update to group game_4MAVDC: {'time_remaining': 22}
+INFO 2025-06-28 19:05:52,108 websocket_utils 18199 128171286460096 Successfully broadcast timer_update to game_4MAVDC
+INFO 2025-06-28 19:05:53,111 websocket_utils 18199 128171286460096 Broadcasting timer_update to group game_4MAVDC: {'time_remaining': 21}
+INFO 2025-06-28 19:05:53,115 websocket_utils 18199 128171286460096 Successfully broadcast timer_update to game_4MAVDC
+INFO 2025-06-28 19:05:54,119 websocket_utils 18199 128171286460096 Broadcasting timer_update to group game_4MAVDC: {'time_remaining': 20}
+INFO 2025-06-28 19:05:54,123 websocket_utils 18199 128171286460096 Successfully broadcast timer_update to game_4MAVDC
+INFO 2025-06-28 19:05:55,126 websocket_utils 18199 128171286460096 Broadcasting timer_update to group game_4MAVDC: {'time_remaining': 19}
+INFO 2025-06-28 19:05:55,129 websocket_utils 18199 128171286460096 Successfully broadcast timer_update to game_4MAVDC
+INFO 2025-06-28 19:05:56,132 websocket_utils 18199 128171286460096 Broadcasting timer_update to group game_4MAVDC: {'time_remaining': 18}
+INFO 2025-06-28 19:05:56,136 websocket_utils 18199 128171286460096 Successfully broadcast timer_update to game_4MAVDC
+INFO 2025-06-28 19:05:57,139 websocket_utils 18199 128171286460096 Broadcasting timer_update to group game_4MAVDC: {'time_remaining': 17}
+INFO 2025-06-28 19:05:57,142 websocket_utils 18199 128171286460096 Successfully broadcast timer_update to game_4MAVDC
+INFO 2025-06-28 19:05:58,146 websocket_utils 18199 128171286460096 Broadcasting timer_update to group game_4MAVDC: {'time_remaining': 16}
+INFO 2025-06-28 19:05:58,149 websocket_utils 18199 128171286460096 Successfully broadcast timer_update to game_4MAVDC
+INFO 2025-06-28 19:05:58,333 consumers 18199 128171430072448 Player 128 submitted answer for round 1 in game 4MAVDC
+INFO 2025-06-28 19:05:59,153 websocket_utils 18199 128171286460096 Broadcasting timer_update to group game_4MAVDC: {'time_remaining': 15}
+INFO 2025-06-28 19:05:59,155 websocket_utils 18199 128171286460096 Successfully broadcast timer_update to game_4MAVDC
+INFO 2025-06-28 19:05:59,646 consumers 18199 128171430072448 Player 128 submitted answer for round 1 in game 4MAVDC
+INFO 2025-06-28 19:05:59,991 consumers 18199 128171430072448 Player 128 submitted answer for round 1 in game 4MAVDC
+INFO 2025-06-28 19:06:00,157 websocket_utils 18199 128171286460096 Broadcasting timer_update to group game_4MAVDC: {'time_remaining': 14}
+INFO 2025-06-28 19:06:00,162 websocket_utils 18199 128171286460096 Successfully broadcast timer_update to game_4MAVDC
+INFO 2025-06-28 19:06:00,516 consumers 18199 128171430072448 Player 128 submitted answer for round 1 in game 4MAVDC
+INFO 2025-06-28 19:06:01,166 websocket_utils 18199 128171286460096 Broadcasting timer_update to group game_4MAVDC: {'time_remaining': 13}
+INFO 2025-06-28 19:06:01,170 websocket_utils 18199 128171286460096 Successfully broadcast timer_update to game_4MAVDC
+INFO 2025-06-28 19:06:02,174 websocket_utils 18199 128171286460096 Broadcasting timer_update to group game_4MAVDC: {'time_remaining': 12}
+INFO 2025-06-28 19:06:02,179 websocket_utils 18199 128171286460096 Successfully broadcast timer_update to game_4MAVDC
+INFO 2025-06-28 19:06:03,184 websocket_utils 18199 128171286460096 Broadcasting timer_update to group game_4MAVDC: {'time_remaining': 11}
+INFO 2025-06-28 19:06:03,188 websocket_utils 18199 128171286460096 Successfully broadcast timer_update to game_4MAVDC
+INFO 2025-06-28 19:06:04,191 websocket_utils 18199 128171286460096 Broadcasting timer_update to group game_4MAVDC: {'time_remaining': 10}
+INFO 2025-06-28 19:06:04,194 websocket_utils 18199 128171286460096 Successfully broadcast timer_update to game_4MAVDC
+INFO 2025-06-28 19:06:05,197 websocket_utils 18199 128171286460096 Broadcasting timer_update to group game_4MAVDC: {'time_remaining': 9}
+INFO 2025-06-28 19:06:05,201 websocket_utils 18199 128171286460096 Successfully broadcast timer_update to game_4MAVDC
+INFO 2025-06-28 19:06:05,826 consumers 18199 128171430072448 Player 129 submitted answer for round 1 in game 4MAVDC
+INFO 2025-06-28 19:06:06,206 websocket_utils 18199 128171286460096 Broadcasting timer_update to group game_4MAVDC: {'time_remaining': 8}
+INFO 2025-06-28 19:06:06,209 websocket_utils 18199 128171286460096 Successfully broadcast timer_update to game_4MAVDC
+INFO 2025-06-28 19:06:06,357 consumers 18199 128171430072448 Player 129 submitted answer for round 1 in game 4MAVDC
+INFO 2025-06-28 19:06:07,212 websocket_utils 18199 128171286460096 Broadcasting timer_update to group game_4MAVDC: {'time_remaining': 7}
+INFO 2025-06-28 19:06:07,217 websocket_utils 18199 128171286460096 Successfully broadcast timer_update to game_4MAVDC
+INFO 2025-06-28 19:06:08,220 websocket_utils 18199 128171286460096 Broadcasting timer_update to group game_4MAVDC: {'time_remaining': 6}
+INFO 2025-06-28 19:06:08,224 websocket_utils 18199 128171286460096 Successfully broadcast timer_update to game_4MAVDC
+INFO 2025-06-28 19:06:09,227 websocket_utils 18199 128171286460096 Broadcasting timer_update to group game_4MAVDC: {'time_remaining': 5}
+INFO 2025-06-28 19:06:09,231 websocket_utils 18199 128171286460096 Successfully broadcast timer_update to game_4MAVDC
+INFO 2025-06-28 19:06:10,235 websocket_utils 18199 128171286460096 Broadcasting timer_update to group game_4MAVDC: {'time_remaining': 4}
+INFO 2025-06-28 19:06:10,239 websocket_utils 18199 128171286460096 Successfully broadcast timer_update to game_4MAVDC
+INFO 2025-06-28 19:06:11,242 websocket_utils 18199 128171286460096 Broadcasting timer_update to group game_4MAVDC: {'time_remaining': 3}
+INFO 2025-06-28 19:06:11,246 websocket_utils 18199 128171286460096 Successfully broadcast timer_update to game_4MAVDC
+INFO 2025-06-28 19:06:12,249 websocket_utils 18199 128171286460096 Broadcasting timer_update to group game_4MAVDC: {'time_remaining': 2}
+INFO 2025-06-28 19:06:12,253 websocket_utils 18199 128171286460096 Successfully broadcast timer_update to game_4MAVDC
+INFO 2025-06-28 19:06:13,256 websocket_utils 18199 128171286460096 Broadcasting timer_update to group game_4MAVDC: {'time_remaining': 1}
+INFO 2025-06-28 19:06:13,260 websocket_utils 18199 128171286460096 Successfully broadcast timer_update to game_4MAVDC
+INFO 2025-06-28 19:06:14,263 websocket_utils 18199 128171286460096 Broadcasting timer_update to group game_4MAVDC: {'time_remaining': 0}
+INFO 2025-06-28 19:06:14,267 websocket_utils 18199 128171286460096 Successfully broadcast timer_update to game_4MAVDC
+INFO 2025-06-28 19:06:14,563 views 18199 128171278067392 Created PlayerAnswer for connected player Kerry: Number
+INFO 2025-06-28 19:06:14,586 views 18199 128171278067392 Created PlayerAnswer for connected player Shwan: Chia
+INFO 2025-06-28 19:06:14,744 websocket_utils 18199 128171278067392 Broadcasting round_ended to group game_4MAVDC: {'round_number': 1, 'is_final_round': False, 'answers': [{'player_name': 'Shwan', 'answer_text': 'Chia', 'points_awarded': 10, 'is_valid': True, 'is_unique': True}, {'player_name': 'Kerry', 'answer_text': 'Number', 'points_awarded': 10, 'is_valid': True, 'is_unique': True}]}
+INFO 2025-06-28 19:06:14,749 websocket_utils 18199 128171278067392 Successfully broadcast round_ended to game_4MAVDC
+INFO 2025-06-28 19:06:15,271 websocket_utils 18199 128171286460096 Broadcasting timer_update to group game_4MAVDC: {'time_remaining': 0}
+INFO 2025-06-28 19:06:15,274 websocket_utils 18199 128171286460096 Successfully broadcast timer_update to game_4MAVDC
+INFO 2025-06-28 19:06:15,275 websocket_utils 18199 128171286460096 Timer expired for game 4MAVDC, automatically ending round
+INFO 2025-06-28 19:06:21,464 websocket_utils 18199 128171286460096 Broadcasting score_update to group game_4MAVDC: {'player_name': 'Shwan', 'player_id': 129, 'points_awarded': 0, 'points': 0, 'reason': 'Answer correction', 'message': 'Shwan received 0 points!'}
+INFO 2025-06-28 19:06:21,466 websocket_utils 18199 128171286460096 Successfully broadcast score_update to game_4MAVDC
+INFO 2025-06-28 19:06:24,507 websocket_utils 18199 128171286460096 Broadcasting score_update to group game_4MAVDC: {'player_name': 'Kerry', 'player_id': 128, 'points_awarded': 10, 'points': 10, 'reason': 'Answer validation', 'message': 'Kerry received 10 points!'}
+INFO 2025-06-28 19:06:24,511 websocket_utils 18199 128171286460096 Successfully broadcast score_update to game_4MAVDC
+INFO 2025-06-28 19:06:29,747 websocket_utils 18199 128171286460096 Broadcasting round_started to group game_4MAVDC: {'round_number': 2, 'prompt': "A countries that starts with 'U'", 'letter': 'U', 'category': 'Countries', 'total_time': 30, 'started_at': '2025-06-28T19:06:29.728050+00:00', 'current_round': {'round_number': 2, 'prompt': "A countries that starts with 'U'", 'letter': 'U', 'category': 'Countries', 'is_active': True, 'time_remaining': 30}}
+INFO 2025-06-28 19:06:29,750 websocket_utils 18199 128171286460096 Successfully broadcast round_started to game_4MAVDC
+INFO 2025-06-28 19:06:29,751 websocket_utils 18199 128171278067392 Broadcasting timer_update to group game_4MAVDC: {'time_remaining': 29}
+INFO 2025-06-28 19:06:29,763 websocket_utils 18199 128171278067392 Successfully broadcast timer_update to game_4MAVDC
+INFO 2025-06-28 19:06:30,789 websocket_utils 18199 128171278067392 Broadcasting timer_update to group game_4MAVDC: {'time_remaining': 28}
+INFO 2025-06-28 19:06:30,793 websocket_utils 18199 128171278067392 Successfully broadcast timer_update to game_4MAVDC
+INFO 2025-06-28 19:06:31,796 websocket_utils 18199 128171278067392 Broadcasting timer_update to group game_4MAVDC: {'time_remaining': 27}
+INFO 2025-06-28 19:06:31,800 websocket_utils 18199 128171278067392 Successfully broadcast timer_update to game_4MAVDC
+INFO 2025-06-28 19:06:32,809 websocket_utils 18199 128171278067392 Broadcasting timer_update to group game_4MAVDC: {'time_remaining': 26}
+INFO 2025-06-28 19:06:32,810 websocket_utils 18199 128171278067392 Successfully broadcast timer_update to game_4MAVDC
+INFO 2025-06-28 19:06:33,520 consumers 18199 128171430072448 Player 128 submitted answer for round 2 in game 4MAVDC
+INFO 2025-06-28 19:06:33,812 websocket_utils 18199 128171278067392 Broadcasting timer_update to group game_4MAVDC: {'time_remaining': 25}
+INFO 2025-06-28 19:06:33,816 websocket_utils 18199 128171278067392 Successfully broadcast timer_update to game_4MAVDC
+INFO 2025-06-28 19:06:33,915 consumers 18199 128171430072448 Player 128 submitted answer for round 2 in game 4MAVDC
+INFO 2025-06-28 19:06:34,625 consumers 18199 128171430072448 Player 128 submitted answer for round 2 in game 4MAVDC
+INFO 2025-06-28 19:06:34,819 websocket_utils 18199 128171278067392 Broadcasting timer_update to group game_4MAVDC: {'time_remaining': 24}
+INFO 2025-06-28 19:06:34,826 websocket_utils 18199 128171278067392 Successfully broadcast timer_update to game_4MAVDC
+INFO 2025-06-28 19:06:35,395 consumers 18199 128171430072448 Player 128 submitted answer for round 2 in game 4MAVDC
+INFO 2025-06-28 19:06:35,831 websocket_utils 18199 128171278067392 Broadcasting timer_update to group game_4MAVDC: {'time_remaining': 23}
+INFO 2025-06-28 19:06:35,835 websocket_utils 18199 128171278067392 Successfully broadcast timer_update to game_4MAVDC
+INFO 2025-06-28 19:06:36,050 consumers 18199 128171430072448 Player 128 submitted answer for round 2 in game 4MAVDC
+INFO 2025-06-28 19:06:36,838 websocket_utils 18199 128171278067392 Broadcasting timer_update to group game_4MAVDC: {'time_remaining': 22}
+INFO 2025-06-28 19:06:36,842 websocket_utils 18199 128171278067392 Successfully broadcast timer_update to game_4MAVDC
+INFO 2025-06-28 19:06:37,846 websocket_utils 18199 128171278067392 Broadcasting timer_update to group game_4MAVDC: {'time_remaining': 21}
+INFO 2025-06-28 19:06:37,850 websocket_utils 18199 128171278067392 Successfully broadcast timer_update to game_4MAVDC
+INFO 2025-06-28 19:06:38,853 websocket_utils 18199 128171278067392 Broadcasting timer_update to group game_4MAVDC: {'time_remaining': 20}
+INFO 2025-06-28 19:06:38,857 websocket_utils 18199 128171278067392 Successfully broadcast timer_update to game_4MAVDC
+INFO 2025-06-28 19:06:39,747 consumers 18199 128171430072448 Player 129 submitted answer for round 2 in game 4MAVDC
+INFO 2025-06-28 19:06:39,860 websocket_utils 18199 128171278067392 Broadcasting timer_update to group game_4MAVDC: {'time_remaining': 19}
+INFO 2025-06-28 19:06:39,868 websocket_utils 18199 128171278067392 Successfully broadcast timer_update to game_4MAVDC
+INFO 2025-06-28 19:06:40,470 consumers 18199 128171430072448 Player 129 submitted answer for round 2 in game 4MAVDC
+INFO 2025-06-28 19:06:40,874 websocket_utils 18199 128171278067392 Broadcasting timer_update to group game_4MAVDC: {'time_remaining': 18}
+INFO 2025-06-28 19:06:40,878 websocket_utils 18199 128171278067392 Successfully broadcast timer_update to game_4MAVDC
+INFO 2025-06-28 19:06:40,989 consumers 18199 128171430072448 Player 129 submitted answer for round 2 in game 4MAVDC
+INFO 2025-06-28 19:06:41,470 consumers 18199 128171430072448 Player 129 submitted answer for round 2 in game 4MAVDC
+INFO 2025-06-28 19:06:41,881 websocket_utils 18199 128171278067392 Broadcasting timer_update to group game_4MAVDC: {'time_remaining': 17}
+INFO 2025-06-28 19:06:41,885 websocket_utils 18199 128171278067392 Successfully broadcast timer_update to game_4MAVDC
+INFO 2025-06-28 19:06:42,087 consumers 18199 128171430072448 Player 129 submitted answer for round 2 in game 4MAVDC
+INFO 2025-06-28 19:06:42,672 consumers 18199 128171430072448 Player 129 submitted answer for round 2 in game 4MAVDC
+INFO 2025-06-28 19:06:42,888 websocket_utils 18199 128171278067392 Broadcasting timer_update to group game_4MAVDC: {'time_remaining': 16}
+INFO 2025-06-28 19:06:42,892 websocket_utils 18199 128171278067392 Successfully broadcast timer_update to game_4MAVDC
+INFO 2025-06-28 19:06:43,896 websocket_utils 18199 128171278067392 Broadcasting timer_update to group game_4MAVDC: {'time_remaining': 15}
+INFO 2025-06-28 19:06:43,900 websocket_utils 18199 128171278067392 Successfully broadcast timer_update to game_4MAVDC
+INFO 2025-06-28 19:06:44,904 websocket_utils 18199 128171278067392 Broadcasting timer_update to group game_4MAVDC: {'time_remaining': 14}
+INFO 2025-06-28 19:06:44,907 websocket_utils 18199 128171278067392 Successfully broadcast timer_update to game_4MAVDC
+INFO 2025-06-28 19:06:45,558 views 18199 128171286460096 Created PlayerAnswer for connected player Kerry: Uruguay
+INFO 2025-06-28 19:06:45,580 views 18199 128171286460096 Created PlayerAnswer for connected player Shwan: Uruguay
+INFO 2025-06-28 19:06:45,747 websocket_utils 18199 128171286460096 Broadcasting round_ended to group game_4MAVDC: {'round_number': 2, 'is_final_round': False, 'answers': [{'player_name': 'Kerry', 'answer_text': 'Uruguay', 'points_awarded': 5, 'is_valid': True, 'is_unique': False}, {'player_name': 'Shwan', 'answer_text': 'Uruguay', 'points_awarded': 5, 'is_valid': True, 'is_unique': False}]}
+INFO 2025-06-28 19:06:45,755 websocket_utils 18199 128171286460096 Successfully broadcast round_ended to game_4MAVDC
+INFO 2025-06-28 19:06:45,911 websocket_utils 18199 128171278067392 Broadcasting timer_update to group game_4MAVDC: {'time_remaining': 13}
+INFO 2025-06-28 19:06:45,913 websocket_utils 18199 128171278067392 Successfully broadcast timer_update to game_4MAVDC
+INFO 2025-06-28 19:06:50,186 websocket_utils 18199 128171286460096 Broadcasting score_update to group game_4MAVDC: {'player_name': 'Shwan', 'player_id': 129, 'points_awarded': 5, 'points': 5, 'reason': 'Answer validation', 'message': 'Shwan received 5 points!'}
+INFO 2025-06-28 19:06:50,188 websocket_utils 18199 128171286460096 Successfully broadcast score_update to game_4MAVDC
+INFO 2025-06-28 19:06:50,206 websocket_utils 18199 128171278067392 Broadcasting score_update to group game_4MAVDC: {'player_name': 'Kerry', 'player_id': 128, 'points_awarded': 5, 'points': 15, 'reason': 'Answer validation', 'message': 'Kerry received 5 points!'}
+INFO 2025-06-28 19:06:50,208 websocket_utils 18199 128171278067392 Successfully broadcast score_update to game_4MAVDC
