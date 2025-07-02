@@ -7,17 +7,44 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         # Create the Flower, Fruit and Veg game type
-        game_type, created = GameType.objects.get_or_create(
-            name="Letter Categories",
+        ffv_game_type, created = GameType.objects.get_or_create(
+            name="Flower, Fruit & Veg",
             defaults={
                 'description': "Players think of items in specific categories that start with a given letter"
             }
         )
         
         if created:
-            self.stdout.write(f"Created game type: {game_type.name}")
+            self.stdout.write(f"Created game type: {ffv_game_type.name}")
         else:
-            self.stdout.write(f"Game type already exists: {game_type.name}")
+            self.stdout.write(f"Game type already exists: {ffv_game_type.name}")
+        
+        # Create the Multiple Choice game type
+        mc_game_type, created = GameType.objects.get_or_create(
+            name="Multiple Choice",
+            defaults={
+                'description': "Players answer multiple choice questions from various categories"
+            }
+        )
+        
+        if created:
+            self.stdout.write(f"Created game type: {mc_game_type.name}")
+        else:
+            self.stdout.write(f"Game type already exists: {mc_game_type.name}")
+        
+        # Update any existing "Letter Categories" to "Flower, Fruit & Veg"
+        try:
+            old_game_type = GameType.objects.get(name="Letter Categories")
+            # Move all categories from old type to new type
+            old_categories = old_game_type.categories.all()
+            for category in old_categories:
+                category.game_type = ffv_game_type
+                category.save()
+            # Delete the old game type
+            old_game_type.delete()
+            self.stdout.write(f"Migrated 'Letter Categories' to 'Flower, Fruit & Veg' and deleted old record")
+        except GameType.DoesNotExist:
+            pass
         
         # Create categories
         categories = [
@@ -42,7 +69,7 @@ class Command(BaseCommand):
         for category_name in categories:
             category, created = GameCategory.objects.get_or_create(
                 name=category_name,
-                game_type=game_type
+                game_type=ffv_game_type
             )
             if created:
                 created_count += 1

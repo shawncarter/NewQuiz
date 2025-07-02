@@ -13,6 +13,16 @@ from collections import Counter
 logger = logging.getLogger(__name__)
 
 
+class DynamicCategory:
+    """Simple category object for compatibility with template system"""
+    def __init__(self, name):
+        self.name = name
+        self.id = hash(name) % 1000  # Simple ID for consistency
+    
+    def __str__(self):
+        return self.name
+
+
 class BaseRoundHandler(ABC):
     """Base class for all round handlers"""
     
@@ -84,7 +94,16 @@ class FlowerFruitVegRoundHandler(BaseRoundHandler):
     DISPLAY_NAME = 'Flower, Fruit & Veg'
     
     def generate_round_data(self) -> Dict[str, Any]:
-        """Generate category and letter for this round"""
+        """Generate category and letter for this round with caching for browser refresh consistency"""
+        # Check cache first for consistency - critical for browser refresh handling
+        from django.core.cache import cache
+        
+        cache_key = f'game_{self.game_session.game_code}_round_{self.round_number}_ffv_data'
+        cached_data = cache.get(cache_key)
+        if cached_data:
+            logger.info(f"Using CACHED FFV data for game {self.game_session.game_code}, round {self.round_number}: {cached_data['category'].name} - {cached_data['prompt_letter']}")
+            return cached_data
+        
         # Use selected categories from game configuration, with fallback to dynamic list
         try:
             config = self.game_session.configuration
@@ -115,14 +134,13 @@ class FlowerFruitVegRoundHandler(BaseRoundHandler):
         letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
                   'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
 
-        # Use varied seeding to prevent predictable patterns across games
+        # Use consistent seeding that doesn't vary with time - critical for browser refresh handling
         import random
         import hashlib
-        import time
         
-        # Create truly random seed that varies between games but stays consistent within rounds
+        # Create consistent seed that varies between games but stays consistent within rounds
         creation_hash = hashlib.md5(str(self.game_session.created_at.timestamp()).encode()).hexdigest()[:8]
-        seed_string = f"{self.game_session.game_code}_{self.round_number}_{creation_hash}_{int(time.time()) % 10000}"
+        seed_string = f"{self.game_session.game_code}_{self.round_number}_{creation_hash}"
         seed_hash = hashlib.md5(seed_string.encode()).hexdigest()
         
         # Use full hash as integer seed for better distribution
@@ -132,14 +150,6 @@ class FlowerFruitVegRoundHandler(BaseRoundHandler):
         category_name = random.choice(available_categories)
         
         # Create a simple category object for compatibility
-        class DynamicCategory:
-            def __init__(self, name):
-                self.name = name
-                self.id = hash(name) % 1000  # Simple ID for consistency
-            
-            def __str__(self):
-                return self.name
-        
         category = DynamicCategory(category_name)
 
         # Random letter but avoid repeats by tracking used letters
@@ -152,11 +162,17 @@ class FlowerFruitVegRoundHandler(BaseRoundHandler):
 
         letter = random.choice(available_letters)
 
-        return {
+        result = {
             'category': category,
             'prompt_letter': letter,
             'prompt': f"{category.name} that start with {letter}",
         }
+        
+        # Cache the result for browser refresh consistency
+        cache.set(cache_key, result, timeout=3600)
+        logger.info(f"Cached FFV data for game {self.game_session.game_code}, round {self.round_number}: {category.name} - {letter}")
+        
+        return result
     
     def create_player_answer(self, player, answer_text: str):
         """Create PlayerAnswer for Flower, Fruit & Veg rounds - starts invalid"""
@@ -255,9 +271,9 @@ class FlowerFruitVegRoundHandler(BaseRoundHandler):
         import time
         
         for round_num in range(1, self.round_number):
-            # Use the same improved seeding approach as the main round generation
+            # Use the same consistent seeding approach as the main round generation
             creation_hash = hashlib.md5(str(self.game_session.created_at.timestamp()).encode()).hexdigest()[:8]
-            seed_string = f"{self.game_session.game_code}_{round_num}_{creation_hash}_{int(time.time()) % 10000}"
+            seed_string = f"{self.game_session.game_code}_{round_num}_{creation_hash}"
             seed_hash = hashlib.md5(seed_string.encode()).hexdigest()
             random.seed(int(seed_hash[:16], 16))
             
@@ -277,15 +293,21 @@ class MultipleChoiceRoundHandler(BaseRoundHandler):
     DISPLAY_NAME = 'Multiple Choice'
     
     def generate_round_data(self) -> Dict[str, Any]:
-        """Generate or retrieve multiple choice question with consistent caching"""
-        # Check cache first for consistency
+        """Generate or retrieve multiple choice question with consistent caching and browser refresh support"""
+        # Check cache first for consistency - this is critical for browser refresh handling
         from django.core.cache import cache
         import time
         
-        cache_key = f'game_{self.game_session.game_code}_round_{self.round_number}_question_id'
+        cache_key = f'game_{self.game_session.game_code}_round_{self.round_number}_question_data'
         lock_key = f'game_{self.game_session.game_code}_round_{self.round_number}_lock'
         
-        # Simple locking mechanism to prevent race conditions
+        # First check if we have cached question data (includes full question info)
+        cached_data = cache.get(cache_key)
+        if cached_data:
+            logger.info(f"Using CACHED question data for game {self.game_session.game_code}, round {self.round_number}: {cached_data['question_text']}")
+            return cached_data
+        
+        # Simple locking mechanism to prevent race conditions during question generation
         for attempt in range(10):  # Max 10 attempts
             if cache.add(lock_key, 'locked', timeout=30):  # Acquire lock for 30 seconds
                 break
@@ -294,14 +316,22 @@ class MultipleChoiceRoundHandler(BaseRoundHandler):
             logger.warning(f"Could not acquire lock for round {self.round_number} in game {self.game_session.game_code}")
         
         try:
-            cached_question_id = cache.get(cache_key)
+            # Double-check cache after acquiring lock (another thread might have populated it)
+            cached_data = cache.get(cache_key)
+            if cached_data:
+                logger.info(f"Using CACHED question data (post-lock) for game {self.game_session.game_code}, round {self.round_number}: {cached_data['question_text']}")
+                return cached_data
+            
+            # Check if we have a cached question ID for backward compatibility
+            question_id_cache_key = f'game_{self.game_session.game_code}_round_{self.round_number}_question_id'
+            cached_question_id = cache.get(question_id_cache_key)
             
             question = None
             if cached_question_id:
                 try:
                     from game_sessions.models import MultipleChoiceQuestion
                     question = MultipleChoiceQuestion.objects.get(id=cached_question_id)
-                    logger.info(f"Using CACHED question for game {self.game_session.game_code}, round {self.round_number}: {question.question_text}")
+                    logger.info(f"Using CACHED question ID for game {self.game_session.game_code}, round {self.round_number}: {question.question_text}")
                 except MultipleChoiceQuestion.DoesNotExist:
                     logger.warning(f"Cached question ID {cached_question_id} not found")
             
@@ -312,38 +342,15 @@ class MultipleChoiceRoundHandler(BaseRoundHandler):
                 if question:
                     # Add to used questions and cache
                     self.game_session.used_questions.add(question)
-                    cache.set(cache_key, question.id, timeout=3600)
+                    cache.set(question_id_cache_key, question.id, timeout=3600)
                     logger.info(f"Generated and cached NEW question for game {self.game_session.game_code}, round {self.round_number}: {question.question_text}")
                 else:
                     # If generation fails, use deterministic fallback
                     fallback_data = self._get_fallback_question_data()
-                    # Try to find existing fallback question
-                    try:
-                        from game_sessions.models import MultipleChoiceQuestion
-                        question = MultipleChoiceQuestion.objects.filter(
-                            question_text=fallback_data['question_text']
-                        ).first()
-                        
-                        if not question:
-                            # Create the fallback question
-                            question = MultipleChoiceQuestion.objects.create(
-                                question_text=fallback_data['question_text'],
-                                choices=fallback_data['choices'],
-                                correct_answer=fallback_data['correct_answer'],
-                                category=fallback_data['category']
-                            )
-                            logger.info(f"Created FALLBACK question for game {self.game_session.game_code}, round {self.round_number}: {question.question_text}")
-                        else:
-                            logger.info(f"Reusing existing FALLBACK question for game {self.game_session.game_code}, round {self.round_number}: {question.question_text}")
-                        
-                        # Add to used questions and cache
-                        self.game_session.used_questions.add(question)
-                        cache.set(cache_key, question.id, timeout=3600)
-                        
-                    except Exception as e:
-                        logger.error(f"Failed to create/retrieve fallback question: {e}")
-                        # Return the fallback data directly as last resort
-                        return fallback_data
+                    # Cache the fallback data directly
+                    cache.set(cache_key, fallback_data, timeout=3600)
+                    logger.info(f"Using FALLBACK question data for game {self.game_session.game_code}, round {self.round_number}: {fallback_data['question_text']}")
+                    return fallback_data
             
             if question:
                 result = {
@@ -352,6 +359,9 @@ class MultipleChoiceRoundHandler(BaseRoundHandler):
                     'correct_answer': question.correct_answer,
                     'category': question.category,
                 }
+                # Cache the complete question data for browser refresh consistency
+                cache.set(cache_key, result, timeout=3600)
+                logger.info(f"Cached complete question data for game {self.game_session.game_code}, round {self.round_number}")
             else:
                 # This should never happen, but provide ultimate fallback
                 result = {
@@ -360,6 +370,7 @@ class MultipleChoiceRoundHandler(BaseRoundHandler):
                     'correct_answer': '4',
                     'category': 'Math',
                 }
+                cache.set(cache_key, result, timeout=3600)
             
             return result
             

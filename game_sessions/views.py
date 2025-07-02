@@ -12,18 +12,22 @@ from collections import Counter
 logger = logging.getLogger('game_sessions')
 
 
-def start_first_round_internal(game_session):
-    """Internal function to start the first round - used by both start_game and start_round"""
+def start_round_internal(game_session):
+    """Internal function to start any round using round handler system"""
     from django.utils import timezone
+    from .round_handlers import get_round_handler
     
-    # Start the first round
-    game_session.current_round_number = 1
+    # Increment round number (for first round: 0 -> 1, for subsequent: N -> N+1)
+    game_session.current_round_number += 1
     game_session.is_round_active = True
     game_session.current_round_started_at = timezone.now()
     game_session.save()
 
-    # Get the new round info
-    round_info = game_session.get_current_round_info()
+    # Get the round handler for this round
+    round_handler = get_round_handler(game_session, game_session.current_round_number)
+    
+    # Get the round info from the handler
+    round_info = round_handler.get_round_info()
     if not round_info:
         return JsonResponse({'error': 'Could not generate round information'}, status=400)
 
@@ -34,71 +38,46 @@ def start_first_round_internal(game_session):
     start_timer_broadcast(game_session, round_info)
 
     import time
-    return JsonResponse({
+    
+    # Build response with round-specific data
+    response_data = {
         'status': 'success',
         'round_number': round_info['round_number'],
-        'prompt': f"{round_info['category'].name} that start with {round_info['prompt_letter']}",
-        'letter': round_info['prompt_letter'],
-        'category': round_info['category'].name,
         'time_seconds': game_session.configuration.round_time_seconds,
-        'started_at': time.time()  # Current timestamp for synchronization
-    })
+        'started_at': time.time(),  # Current timestamp for synchronization
+        'round_type': round_info['round_type'],
+    }
+    
+    # Add round type specific data
+    if round_info['round_type'] == 'flower_fruit_veg':
+        response_data.update({
+            'prompt': round_info.get('prompt'),
+            'letter': round_info.get('prompt_letter'),
+            'category': round_info.get('category', {}).name if hasattr(round_info.get('category'), 'name') else str(round_info.get('category', '')),
+        })
+    elif round_info['round_type'] == 'multiple_choice':
+        response_data.update({
+            'question_text': round_info.get('question_text'),
+            'choices': round_info.get('choices'),
+            'category': round_info.get('category'),
+            'correct_answer': round_info.get('correct_answer'),  # Include for GM screen
+        })
+    
+    return JsonResponse(response_data)
 
 
 def perform_automatic_scoring(game_session, answers):
-    """Perform automatic scoring for answers using the new scoring system"""
+    """Perform automatic scoring using round handler system"""
     if not answers:
         return
 
-    # Get scoring configuration
-    config = game_session.configuration
-
-    # Count answer frequencies for duplicate detection
-    answer_counts = Counter()
-    for answer in answers:
-        # Normalize answer for comparison (lowercase, strip whitespace)
-        normalized_answer = answer.answer_text.lower().strip()
-        answer_counts[normalized_answer] += 1
-
-    # Score each answer
-    for answer in answers:
-        normalized_answer = answer.answer_text.lower().strip()
-        is_unique = answer_counts[normalized_answer] == 1
-
-        # Determine points based on uniqueness and validity
-        if answer.is_valid:
-            if is_unique:
-                points = config.unique_answer_points
-                reason = "unique_correct_answer"
-            else:
-                points = config.valid_answer_points
-                reason = "duplicate_correct_answer"
-        else:
-            points = config.invalid_answer_points
-            reason = "invalid_answer"
-
-        # Update answer record
-        answer.is_unique = is_unique
-        old_points = answer.points_awarded
-        answer.points_awarded = points
-        answer.save()
-
-        # Award points using new scoring system
-        points_difference = points - old_points
-        if points_difference != 0:
-            if points_difference > 0:
-                answer.player.award_points(
-                    points_difference,
-                    reason=reason,
-                    round_number=game_session.current_round_number,
-                    related_answer=answer
-                )
-            else:
-                answer.player.deduct_points(
-                    abs(points_difference),
-                    reason=f"correction_{reason}",
-                    round_number=game_session.current_round_number
-                )
+    from .round_handlers import get_round_handler
+    
+    # Get the round handler for this round
+    round_handler = get_round_handler(game_session, game_session.current_round_number)
+    
+    # Delegate scoring to the appropriate handler
+    round_handler.perform_automatic_scoring(answers)
 
 
 def home(request):
@@ -118,7 +97,7 @@ def create_game(request):
     """Create a new game session"""
     if request.method == 'POST':
         # Get form data
-        game_type_id = request.POST.get('game_type')
+        game_type = request.POST.get('game_type')  # Now this is the actual round type
         selected_categories = request.POST.getlist('categories')
         num_rounds = int(request.POST.get('num_rounds', 10))
         round_time = int(request.POST.get('round_time', 30))
@@ -129,17 +108,43 @@ def create_game(request):
             is_round_active=False
         )
 
-        # Create configuration
-        game_type = GameType.objects.get(id=game_type_id)
+        # Generate round type sequence based on selected game type
+        if game_type == 'flower_fruit_veg':
+            sequence = ['flower_fruit_veg'] * num_rounds
+        elif game_type == 'multiple_choice':
+            sequence = ['multiple_choice'] * num_rounds
+        else:
+            # Default fallback
+            sequence = ['flower_fruit_veg'] * num_rounds
+
+        # Map the selected game type to the correct GameType record
+        if game_type == 'flower_fruit_veg':
+            game_type_obj, created = GameType.objects.get_or_create(
+                name="Flower, Fruit & Veg",
+                defaults={'description': "Players think of items in specific categories that start with a given letter"}
+            )
+        elif game_type == 'multiple_choice':
+            game_type_obj, created = GameType.objects.get_or_create(
+                name="Multiple Choice",
+                defaults={'description': "Players answer multiple choice questions from various categories"}
+            )
+        else:
+            # Default fallback to FFV
+            game_type_obj, created = GameType.objects.get_or_create(
+                name="Flower, Fruit & Veg",
+                defaults={'description': "Players think of items in specific categories that start with a given letter"}
+            )
+            
         config = GameConfiguration.objects.create(
             game_session=game_session,
-            game_type=game_type,
+            game_type=game_type_obj,
             num_rounds=num_rounds,
-            round_time_seconds=round_time
+            round_time_seconds=round_time,
+            round_type_sequence=sequence
         )
 
-        # Add selected categories (optional - dynamic categories will be used if none selected)
-        if selected_categories:
+        # Add selected categories (only for flower_fruit_veg games)
+        if game_type == 'flower_fruit_veg' and selected_categories:
             categories = GameCategory.objects.filter(id__in=selected_categories)
             config.categories.set(categories)
         # If no categories selected, the dynamic category system will handle it automatically
@@ -148,11 +153,10 @@ def create_game(request):
         return redirect('game_sessions:game_master', game_code=game_session.game_code)
 
     # GET request - show configuration form
-    game_types = GameType.objects.filter(is_active=True)
-    categories = GameCategory.objects.filter(is_active=True).select_related('game_type')
+    # Get all categories for Flower, Fruit & Veg games
+    categories = GameCategory.objects.filter(is_active=True)
 
     context = {
-        'game_types': game_types,
         'categories': categories,
     }
     return render(request, 'game_sessions/create_game.html', context)
@@ -224,9 +228,27 @@ def restart_game(request, game_code):
 
     game_session.restart_game()
 
-    # Keep players but reset their scores and ensure they're connected
-    for player in game_session.players.all():
+    # Clean up any duplicate players (keep the first occurrence of each name)
+    seen_names = set()
+    players_to_keep = []
+    players_to_remove = []
+    
+    for player in game_session.players.all().order_by('joined_at'):
+        if player.name in seen_names:
+            players_to_remove.append(player)
+        else:
+            seen_names.add(player.name)
+            players_to_keep.append(player)
+    
+    # Remove duplicates
+    for duplicate_player in players_to_remove:
+        logger.info(f"Removing duplicate player {duplicate_player.name} (id={duplicate_player.id}) during restart")
+        duplicate_player.delete()
+    
+    # Reset scores for remaining players and ensure they're connected
+    for player in players_to_keep:
         player.current_score = 0
+        player.correct_answer_streak = 0  # Reset answer streak for new game
         player.is_connected = True  # Mark all players as connected for restart
         player.save()
 
@@ -276,6 +298,51 @@ def configure_game(request, game_code):
         selected_categories = request.POST.getlist('categories')
         num_rounds = int(request.POST.get('num_rounds', 10))
         round_time = int(request.POST.get('round_time', 30))
+        round_type_mode = request.POST.get('round_type_mode', 'category_letter')
+        round_sequence = request.POST.get('round_sequence', '')
+
+        # Get the selected GameType to determine sequence
+        try:
+            selected_game_type = GameType.objects.get(id=game_type_id)
+            # Generate round type sequence based on selected GameType
+            if selected_game_type.name == 'Flower, Fruit & Veg':
+                sequence = ['flower_fruit_veg'] * num_rounds
+            elif selected_game_type.name == 'Multiple Choice':
+                sequence = ['multiple_choice'] * num_rounds
+            else:
+                # Default to flower_fruit_veg
+                sequence = ['flower_fruit_veg'] * num_rounds
+        except (GameType.DoesNotExist, ValueError):
+            # Fallback to old logic if needed
+            if round_type_mode == 'category_letter':
+                sequence = ['flower_fruit_veg'] * num_rounds
+            elif round_type_mode == 'multiple_choice':
+                sequence = ['multiple_choice'] * num_rounds
+            elif round_type_mode == 'mixed':
+                # Alternate between the two types
+                sequence = []
+                for i in range(num_rounds):
+                    if i % 2 == 0:
+                        sequence.append('flower_fruit_veg')
+                    else:
+                        sequence.append('multiple_choice')
+            elif round_type_mode == 'custom' and round_sequence:
+                try:
+                    sequence = json.loads(round_sequence)
+                    # Ensure sequence matches number of rounds
+                    if len(sequence) > num_rounds:
+                        sequence = sequence[:num_rounds]
+                    elif len(sequence) < num_rounds:
+                        # Repeat the pattern to fill remaining rounds
+                        while len(sequence) < num_rounds:
+                            sequence.extend(json.loads(round_sequence))
+                        sequence = sequence[:num_rounds]
+                except (json.JSONDecodeError, ValueError):
+                    # Fallback to category_letter if custom sequence is invalid
+                    sequence = ['flower_fruit_veg'] * num_rounds
+            else:
+                # Default fallback
+                sequence = ['flower_fruit_veg'] * num_rounds
 
         # Update or create configuration
         try:
@@ -283,6 +350,7 @@ def configure_game(request, game_code):
             config.game_type_id = game_type_id
             config.num_rounds = num_rounds
             config.round_time_seconds = round_time
+            config.round_type_sequence = sequence
             config.save()
         except GameConfiguration.DoesNotExist:
             game_type = GameType.objects.get(id=game_type_id)
@@ -290,7 +358,8 @@ def configure_game(request, game_code):
                 game_session=game_session,
                 game_type=game_type,
                 num_rounds=num_rounds,
-                round_time_seconds=round_time
+                round_time_seconds=round_time,
+                round_type_sequence=sequence
             )
 
         # Update selected categories
@@ -361,39 +430,8 @@ def start_round(request, game_code):
             'message': 'Game completed! Here are the final scores.'
         })
 
-    # Check if this is the first round
-    if game_session.current_round_number == 0:
-        return start_first_round_internal(game_session)
-
-    # Start next round - increment counter
-    game_session.current_round_number += 1
-    game_session.is_round_active = True
-    from django.utils import timezone
-    game_session.current_round_started_at = timezone.now()
-    game_session.save()
-
-    # Get the new round info
-    round_info = game_session.get_current_round_info()
-    if not round_info:
-        return JsonResponse({'error': 'Could not generate round information'}, status=400)
-
-    # Broadcast round started to all connected clients
-    broadcast_round_started(game_session, round_info)
-
-    # Start timer broadcasting
-    start_timer_broadcast(game_session, round_info)
-
-    import time
-
-    return JsonResponse({
-        'status': 'success',
-        'round_number': round_info['round_number'],
-        'prompt': f"{round_info['category'].name} that start with {round_info['prompt_letter']}",
-        'letter': round_info['prompt_letter'],
-        'category': round_info['category'].name,
-        'time_seconds': game_session.configuration.round_time_seconds,
-        'started_at': time.time()  # Current timestamp for synchronization
-    })
+    # Use unified round start logic for all rounds (first and subsequent)
+    return start_round_internal(game_session)
 
 
 @require_http_methods(["POST"])
@@ -434,14 +472,10 @@ def end_round(request, game_code):
             ).first()
             
             if not existing_answer and answer_text.strip():
-                # Create new answer object
-                PlayerAnswer.objects.create(
-                    player=player,
-                    round_number=game_session.current_round_number,
-                    answer_text=answer_text.strip(),
-                    is_valid=True,  # Will be validated during scoring
-                    points_awarded=0
-                )
+                # Use round handler to create appropriate PlayerAnswer
+                from .round_handlers import get_round_handler
+                round_handler = get_round_handler(game_session, game_session.current_round_number)
+                round_handler.create_player_answer(player, answer_text.strip())
                 logger.info(f"Created PlayerAnswer for connected player {player.name}: {answer_text}")
         except (ValueError, Player.DoesNotExist) as e:
             logger.warning(f"Could not create PlayerAnswer for player_id {player_id_str} (player may be disconnected): {e}")
@@ -459,6 +493,14 @@ def end_round(request, game_code):
     # Perform automatic scoring using new system
     perform_automatic_scoring(game_session, answers)
 
+    # Send individual results to each player based on round handler behavior
+    from .round_handlers import get_round_handler
+    round_handler = get_round_handler(game_session, game_session.current_round_number)
+    
+    if round_handler.should_send_immediate_feedback():
+        from .websocket_utils import broadcast_player_results
+        broadcast_player_results(game_session, round_info, answers)
+
     answer_data = []
     for answer in answers:
         answer_data.append({
@@ -472,12 +514,19 @@ def end_round(request, game_code):
     # Broadcast round ended to all connected clients
     broadcast_round_ended(game_session, round_info, answer_data)
 
-    return JsonResponse({
+    response_data = {
         'status': 'success',
         'answers': answer_data,
         'round_number': game_session.current_round_number,
+        'round_type': round_info['round_type'],
         'is_final_round': game_session.current_round_number >= game_session.configuration.num_rounds
-    })
+    }
+    
+    # Add correct answer for multiple choice questions
+    if round_info['round_type'] == 'multiple_choice':
+        response_data['correct_answer'] = round_info.get('correct_answer')
+    
+    return JsonResponse(response_data)
 
 
 
@@ -501,13 +550,26 @@ def join_game(request):
             messages.error(request, 'Cannot join this game. It may be full or already started.')
             return render(request, 'game_sessions/join_game.html')
 
-        # Simple approach: always create a new player for development
-        # We can add session-based reconnection later if needed
-        player = Player.objects.create(
+        # Check if player already exists in this game (for reconnection after restart)
+        existing_player = Player.objects.filter(
             name=player_name,
-            game_session=game_session,
-            session_key=None  # Not using sessions for now
-        )
+            game_session=game_session
+        ).first()
+        
+        if existing_player:
+            # Reconnect existing player
+            existing_player.is_connected = True
+            existing_player.save()
+            player = existing_player
+            logger.info(f"Player {player_name} reconnected to game {game_code}")
+        else:
+            # Create new player
+            player = Player.objects.create(
+                name=player_name,
+                game_session=game_session,
+                session_key=None  # Not using sessions for now
+            )
+            logger.info(f"Player {player_name} created for game {game_code}")
 
         # Broadcast player join to all connected clients
         connected_players = game_session.players.filter(is_connected=True).order_by('joined_at')
@@ -551,32 +613,37 @@ def game_status(request, game_code):
         'player_count': game_session.player_count,
     }
 
-    # Add current round info if there's an active round
-    if game_session.is_round_active:
-        round_info = game_session.get_current_round_info()
+    # Add current round info if there's an active round or round has started
+    if game_session.current_round_number > 0:
+        # Use round handler to get consistent round info (with caching)
+        from .round_handlers import get_round_handler
+        round_handler = get_round_handler(game_session, game_session.current_round_number)
+        round_info = round_handler.get_round_info()
         if round_info:
-            # Calculate time remaining
-            from django.utils import timezone
-            if game_session.current_round_started_at:
-                elapsed = (timezone.now() - game_session.current_round_started_at).total_seconds()
-                time_remaining = max(0, game_session.configuration.round_time_seconds - elapsed)
-            else:
-                time_remaining = game_session.configuration.round_time_seconds
-
             response_data['current_round'] = {
                 'round_number': round_info['round_number'],
-                'category': round_info['category'].name,
-                'letter': round_info['prompt_letter'],
-                'prompt': f"A {round_info['category'].name.lower()} that starts with '{round_info['prompt_letter']}'",
-                'time_remaining': int(time_remaining)
+                'round_type': round_info['round_type'],
+                'time_remaining': int(round_info['time_remaining'])
             }
+            if round_info['round_type'] == 'flower_fruit_veg':
+                response_data['current_round'].update({
+                    'category': round_info['category'].name,
+                    'letter': round_info['prompt_letter'],
+                    'prompt': f"A {round_info['category'].name.lower()} that starts with '{round_info['prompt_letter']}'",
+                })
+            elif round_info['round_type'] == 'multiple_choice':
+                response_data['current_round'].update({
+                    'question_text': round_info['question_text'],
+                    'choices': round_info['choices'],
+                    'category': round_info['category'],
+                })
 
     return JsonResponse(response_data)
 
 
 @require_http_methods(["POST"])
 def validate_answer(request, game_code):
-    """Validate a player's answer and update points"""
+    """Validate a player's answer using round handler system"""
     game_session = get_object_or_404(GameSession, game_code=game_code)
 
     try:
@@ -589,6 +656,13 @@ def validate_answer(request, game_code):
         # Check if we have a current round using counter system
         if game_session.current_round_number == 0:
             return JsonResponse({'error': 'No round available for validation'}, status=400)
+        
+        # Get round handler and check if validation is supported
+        from .round_handlers import get_round_handler
+        round_handler = get_round_handler(game_session, game_session.current_round_number)
+        
+        if not round_handler.supports_manual_validation():
+            return JsonResponse({'error': 'Manual validation not supported for this round type'}, status=400)
 
         # Find the player answer using round_number
         try:
@@ -599,38 +673,23 @@ def validate_answer(request, game_code):
                 answer_text=answer_text
             )
 
-            # Update the answer validation
-            answer.is_valid = is_valid
-            answer.is_unique = False  # Reset unique status when manually validating
-
-            # Calculate points difference for score adjustment
-            old_points = answer.points_awarded
-            points_difference = points_awarded - old_points
-
-            # Update the answer record for consistency
-            answer.points_awarded = points_awarded
-            answer.save()
-            
-            # Use new scoring system to award/deduct points
-            if points_difference != 0:
-                if points_difference > 0:
-                    player.award_points(
-                        points_difference,
-                        reason="manual_validation",
-                        round_number=game_session.current_round_number,
-                        related_answer=answer
-                    )
-                else:
-                    player.deduct_points(
-                        abs(points_difference),
-                        reason="manual_correction",
-                        round_number=game_session.current_round_number
-                    )
+            # Use round handler to perform validation (handles all the scoring logic)
+            if hasattr(round_handler, 'validate_answer_manually'):
+                points_awarded = round_handler.validate_answer_manually(answer, is_valid)
+            else:
+                # Fallback for handlers without manual validation method
+                answer.is_valid = is_valid
+                answer.points_awarded = points_awarded
+                answer.save()
 
             # Broadcast score update to all connected clients
             from .websocket_utils import broadcast_score_update
             reason = "Answer validation" if is_valid else "Answer correction"
             broadcast_score_update(game_session, player.name, points_awarded, reason)
+
+            # Send individual player result for this specific validation
+            from .websocket_utils import broadcast_individual_player_result
+            broadcast_individual_player_result(game_session, player, answer, points_awarded, is_valid)
 
             return JsonResponse({
                 'status': 'success',
@@ -645,3 +704,46 @@ def validate_answer(request, game_code):
         return JsonResponse({'error': 'Invalid JSON data'}, status=400)
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=500)
+
+
+def get_round_answers(request, game_code):
+    """Get answers for the current round (for page refresh scenarios)"""
+    game_session = get_object_or_404(GameSession, game_code=game_code)
+    
+    if game_session.current_round_number == 0:
+        return JsonResponse({'status': 'success', 'answers': []})
+    
+    # Get current round info to include round type using consistent round handler
+    from .round_handlers import get_round_handler
+    round_handler = get_round_handler(game_session, game_session.current_round_number)
+    round_info = round_handler.get_round_info() if game_session.current_round_number > 0 else None
+    
+    # Get answers for the current round
+    answers = PlayerAnswer.objects.filter(
+        player__game_session=game_session,
+        round_number=game_session.current_round_number
+    ).select_related('player').order_by('player__name')
+    
+    answers_data = []
+    for answer in answers:
+        answers_data.append({
+            'player_name': answer.player.name,
+            'answer_text': answer.answer_text,
+            'answer': answer.answer_text,  # For compatibility
+            'points_awarded': answer.points_awarded,
+            'is_valid': answer.is_valid,
+            'is_unique': answer.is_unique
+        })
+    
+    response_data = {
+        'status': 'success',
+        'answers': answers_data,
+        'round_number': game_session.current_round_number,
+        'round_type': round_info['round_type'] if round_info else 'flower_fruit_veg'
+    }
+    
+    # Add correct answer for multiple choice questions
+    if round_info and round_info['round_type'] == 'multiple_choice':
+        response_data['correct_answer'] = round_info.get('correct_answer')
+    
+    return JsonResponse(response_data)

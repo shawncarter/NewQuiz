@@ -9,7 +9,9 @@
       "Bash(true)",
       "Bash(ls:*)",
       "Bash(rg:*)",
-      "Bash(find:*)"
+      "Bash(find:*)",
+      "Bash(git commit:*)",
+      "Bash(kill:*)"
     ],
     "deny": []
   }

@@ -288,14 +288,31 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log('[GM] handleRoundStarted data:', data);
         const container = document.querySelector('.text-center');
         if (!container) return;
+
+        let roundDetailsHtml = '';
+        if (data.round_type === 'flower_fruit_veg') {
+            roundDetailsHtml = `
+                <strong>Category:</strong> ${escapeHTML(data.category)}<br>
+                <strong>Letter:</strong> ${escapeHTML(data.letter)}<br>
+                <strong>Status:</strong> Active
+            `;
+        } else if (data.round_type === 'multiple_choice') {
+            const choicesHtml = data.choices.map(choice => `<li>${escapeHTML(choice)}</li>`).join('');
+            roundDetailsHtml = `
+                <strong>Question:</strong> ${escapeHTML(data.question_text)}<br>
+                <strong>Choices:</strong>
+                <ul>${choicesHtml}</ul>
+                <strong>Category:</strong> ${escapeHTML(data.category)}<br>
+                <strong>Status:</strong> Active
+            `;
+        }
+
         container.innerHTML = `
             <div class="alert alert-success">Game is active! 🎮</div>
             <div class="round-info">
                 <h3>Round ${escapeHTML(data.round_number)}</h3>
                 <div class="round-details">
-                    <strong>Category:</strong> ${escapeHTML(data.category)}<br>
-                    <strong>Letter:</strong> ${escapeHTML(data.letter)}<br>
-                    <strong>Status:</strong> Active
+                    ${roundDetailsHtml}
                 </div>
                 <button id="end-round-btn" class="btn btn-warning">⏹️ End Round</button>
             </div>

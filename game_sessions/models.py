@@ -2,6 +2,21 @@ from django.db import models
 import random
 import string
 from django.utils import timezone
+import logging
+
+logger = logging.getLogger(__name__)
+
+
+class MultipleChoiceQuestion(models.Model):
+    """A multiple choice question for a quiz game"""
+    question_text = models.TextField(unique=True)
+    choices = models.JSONField()
+    correct_answer = models.CharField(max_length=255)
+    category = models.CharField(max_length=100)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.question_text
 
 
 class GameSession(models.Model):
@@ -24,6 +39,7 @@ class GameSession(models.Model):
     is_round_active = models.BooleanField(default=False)
     current_round_started_at = models.DateTimeField(null=True, blank=True)
     max_players = models.IntegerField(default=10)
+    used_questions = models.ManyToManyField(MultipleChoiceQuestion, blank=True)
 
     class Meta:
         ordering = ['-created_at']
@@ -81,6 +97,15 @@ class GameSession(models.Model):
         self.current_round_number = 0
         self.is_round_active = False
         self.current_round_started_at = None
+        self.used_questions.clear()
+        
+        # Clear question cache for this game
+        from django.core.cache import cache
+        # Clear cache for all possible rounds
+        for round_num in range(1, 21):  # Clear up to 20 rounds worth of cache
+            cache_key = f'game_{self.game_code}_round_{round_num}_question_id'
+            cache.delete(cache_key)
+        
         self.save()
 
         # Clear player answers
@@ -103,7 +128,7 @@ class GameSession(models.Model):
         pass
 
     def get_current_round(self):
-        """Get the current round info dynamically - NO DATABASE ROUNDS"""
+        """Get the current round info using round handler system"""
         return self.get_current_round_info()
 
     def get_next_round(self):
@@ -114,39 +139,95 @@ class GameSession(models.Model):
         # Return info for the next round
         next_round_num = self.current_round_number + 1
 
-        # Get available categories and letters
-        categories = list(self.configuration.categories.all())
-        letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
-                  'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+        # Determine the round type for the next round
+        round_type = 'flower_fruit_veg' # Default to existing type
+        if self.configuration.round_type_sequence and len(self.configuration.round_type_sequence) >= next_round_num:
+            round_type = self.configuration.round_type_sequence[next_round_num - 1]
 
-        if not categories:
+        if round_type == 'flower_fruit_veg':
+            # Get available categories and letters
+            categories = list(self.configuration.categories.all())
+            letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
+                      'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+
+            if not categories:
+                return None
+
+            # Use random selection with game code as seed for consistency
+            import random
+            random.seed(f"{self.game_code}_{next_round_num}")
+
+            # Random category (can repeat)
+            category = random.choice(categories)
+
+            # Random letter but avoid repeats by tracking used letters
+            used_letters = self._get_used_letters_for_round(next_round_num)
+            available_letters = [l for l in letters if l not in used_letters]
+
+            # If all letters used, reset and use all letters again
+            if not available_letters:
+                available_letters = letters
+
+            letter = random.choice(available_letters)
+
+            return {
+                'round_type': 'flower_fruit_veg',
+                'round_number': next_round_num,
+                'category': category,
+                'prompt_letter': letter,
+                'is_active': False,
+                'time_remaining': 0,
+                'started_at': None,
+            }
+        elif round_type == 'multiple_choice':
+            # Check cache first for consistency
+            from django.core.cache import cache
+            cache_key = f'game_{self.game_code}_round_{next_round_num}_question_id'
+            cached_question_id = cache.get(cache_key)
+            
+            question = None
+            if cached_question_id:
+                try:
+                    question = MultipleChoiceQuestion.objects.get(id=cached_question_id)
+                    logger.info(f"Using CACHED question for NEXT round {next_round_num} in game {self.game_code}: {question.question_text}")
+                except MultipleChoiceQuestion.DoesNotExist:
+                    logger.warning(f"Cached question ID {cached_question_id} for next round not found")
+            
+            if not question:
+                # For multiple choice, we need to generate a question
+                # For now, pick a random category from the game config, or a default
+                category_name = "General Knowledge"
+                if self.configuration.categories.exists():
+                    category_name = random.choice(list(self.configuration.categories.values_list('name', flat=True)))
+
+                from game_sessions.question_generator import generate_unique_multiple_choice_question
+                question = generate_unique_multiple_choice_question(category=category_name)
+                if question:
+                    # Add the question to used_questions for this game session
+                    self.used_questions.add(question)
+                    # Cache this question for consistent use
+                    cache.set(cache_key, question.id, timeout=3600)
+                    logger.info(f"Generated and cached question for NEXT round {next_round_num} in game {self.game_code}: {question.question_text}")
+            
+            if question:
+                return {
+                    'round_type': 'multiple_choice',
+                    'round_number': next_round_num,
+                    'question_text': question.question_text,
+                    'choices': question.choices,
+                    'correct_answer': question.correct_answer, # This will be sent to master, not player
+                    'category': question.category,
+                    'is_active': False,
+                    'time_remaining': 0,
+                    'started_at': None,
+                }
+            else:
+                logger.error(f"Could not generate unique multiple choice question for game {self.game_code}, round {next_round_num}")
+                return None # Or fallback to another round type if desired
+        else:
+            logger.warning(f"Unknown round type '{round_type}' configured for game {self.game_code}, round {next_round_num}")
             return None
 
-        # Use random selection with game code as seed for consistency
-        import random
-        random.seed(f"{self.game_code}_{next_round_num}")
-
-        # Random category (can repeat)
-        category = random.choice(categories)
-
-        # Random letter but avoid repeats by tracking used letters
-        used_letters = self._get_used_letters_for_round(next_round_num)
-        available_letters = [l for l in letters if l not in used_letters]
-
-        # If all letters used, reset and use all letters again
-        if not available_letters:
-            available_letters = letters
-
-        letter = random.choice(available_letters)
-
-        return {
-            'round_number': next_round_num,
-            'category': category,
-            'prompt_letter': letter,
-            'is_active': False,
-            'time_remaining': 0,
-            'started_at': None,
-        }
 
     def is_game_complete(self):
         """Check if all rounds have been completed using counter system"""
@@ -168,90 +249,14 @@ class GameSession(models.Model):
         return scores
 
     def get_current_round_info(self):
-        """Get current round information dynamically"""
+        """Get current round information using round handler system"""
         if self.current_round_number == 0:
             return None
 
-        # Use selected categories from game configuration, with fallback to dynamic list
-        try:
-            config = self.configuration
-            selected_categories = list(config.categories.values_list('name', flat=True))
-            
-            if selected_categories:
-                available_categories = selected_categories
-            else:
-                # Fallback to dynamic categories if none selected
-                available_categories = [
-                    'Animals', 'Countries', 'Cities', 'Foods', 'Movies', 'Books', 'TV Shows',
-                    'Sports', 'Cars', 'Colors', 'Fruits', 'Vegetables', 'Flowers', 'Clothing',
-                    'Musical Instruments', 'Board Games', 'Video Games', 'Celebrities', 
-                    'Fictional Characters', 'Superheroes', 'School Subjects', 'Job Titles',
-                    'Things in a Kitchen', 'Things in a Bedroom', 'Things at the Beach',
-                    'Things that Fly', 'Things that are Round', 'Things that are Red',
-                    'Boys Names', 'Girls Names', 'Last Names', 'Brand Names', 'Restaurants',
-                    'Hobbies', 'Toys', 'Cartoon Characters', 'Disney Movies', 'Pizza Toppings',
-                    'Ice Cream Flavors', 'Things in Space', 'Ocean Creatures', 'Farm Animals',
-                    'Wild Animals', 'Types of Birds', 'Types of Fish', 'Insects', 'Trees',
-                    'Things Made of Metal', 'Things Made of Wood', 'Electronics', 'Tools',
-                    'Things in a Hospital', 'Things in a School', 'Types of Weather'
-                ]
-        except GameConfiguration.DoesNotExist:
-            # Fallback if no configuration exists
-            available_categories = ['Animals', 'Countries', 'Movies', 'Foods', 'Sports']
-
-        letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
-                  'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
-
-        # Use varied seeding to prevent predictable patterns across games
-        import random
-        import hashlib
-        import time
-        
-        # Create truly random seed that varies between games but stays consistent within rounds
-        # Use game_code (which is random), round number, and a hash of the game creation time
-        creation_hash = hashlib.md5(str(self.created_at.timestamp()).encode()).hexdigest()[:8]
-        seed_string = f"{self.game_code}_{self.current_round_number}_{creation_hash}_{int(time.time()) % 10000}"
-        seed_hash = hashlib.md5(seed_string.encode()).hexdigest()
-        
-        # Use full hash as integer seed for better distribution
-        random.seed(int(seed_hash[:16], 16))
-
-        # Random category selection from available categories
-        category_name = random.choice(available_categories)
-        
-        # Create a simple category object for compatibility
-        class DynamicCategory:
-            def __init__(self, name):
-                self.name = name
-                self.id = hash(name) % 1000  # Simple ID for consistency
-        
-        category = DynamicCategory(category_name)
-
-        # Random letter but avoid repeats by tracking used letters
-        used_letters = self._get_used_letters()
-        available_letters = [l for l in letters if l not in used_letters]
-
-        # If all letters used, reset and use all letters again
-        if not available_letters:
-            available_letters = letters
-
-        letter = random.choice(available_letters)
-
-        # Calculate time remaining if round is active
-        time_remaining = 0
-        if self.is_round_active and self.current_round_started_at:
-            from django.utils import timezone
-            elapsed = (timezone.now() - self.current_round_started_at).total_seconds()
-            time_remaining = max(0, self.configuration.round_time_seconds - int(elapsed))
-
-        return {
-            'round_number': self.current_round_number,
-            'category': category,
-            'prompt_letter': letter,
-            'is_active': self.is_round_active,
-            'time_remaining': time_remaining,
-            'started_at': self.current_round_started_at,
-        }
+        # Use round handler system
+        from .round_handlers import get_round_handler
+        round_handler = get_round_handler(self, self.current_round_number)
+        return round_handler.get_round_info()
 
     def _get_used_letters(self):
         """Get letters that have been used in previous rounds"""
@@ -317,6 +322,7 @@ class GameConfiguration(models.Model):
     categories = models.ManyToManyField(GameCategory, blank=True)
     num_rounds = models.IntegerField(default=10)
     round_time_seconds = models.IntegerField(default=30)
+    round_type_sequence = models.JSONField(default=list)
 
     # Scoring configuration
     unique_answer_points = models.IntegerField(default=10)

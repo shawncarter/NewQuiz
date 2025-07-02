@@ -14,6 +14,7 @@ class Player(models.Model):
     joined_at = models.DateTimeField(auto_now_add=True)
     is_connected = models.BooleanField(default=True)
     current_score = models.IntegerField(default=0)
+    correct_answer_streak = models.IntegerField(default=0)
 
     # For local testing - we'll use a simple session identifier
     session_key = models.CharField(max_length=40, null=True, blank=True)

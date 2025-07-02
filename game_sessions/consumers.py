@@ -38,10 +38,20 @@ class GameConsumer(AsyncWebsocketConsumer):
     async def disconnect(self, close_code):
         logger.info(f"WebSocket disconnecting from game {self.game_code}")
         await self.handle_player_disconnect()
+        
+        # Remove from game group
         await self.channel_layer.group_discard(
             self.game_group_name,
             self.channel_name
         )
+        
+        # Remove from individual player group if identified
+        if self.player_id:
+            await self.channel_layer.group_discard(
+                f'player_{self.player_id}',
+                self.channel_name
+            )
+            logger.info(f"Removed player {self.player_id} from individual group")
 
     async def receive(self, text_data):
         data = json.loads(text_data)
@@ -51,6 +61,14 @@ class GameConsumer(AsyncWebsocketConsumer):
             # Set player_id for this connection
             self.player_id = data.get('player_id')
             logger.info(f"Player identified as {self.player_id} for game {self.game_code}")
+            
+            # Add player to their individual group for personalized messages
+            if self.player_id:
+                await self.channel_layer.group_add(
+                    f'player_{self.player_id}',
+                    self.channel_name
+                )
+                logger.info(f"Added player {self.player_id} to individual group")
             
             # Mark player as connected when they identify
             await self.mark_player_connected()
@@ -108,6 +126,13 @@ class GameConsumer(AsyncWebsocketConsumer):
             'data': event['data']
         }))
 
+    async def player_result(self, event):
+        logger.info(f"Forwarding player_result to player {self.player_id}: {event['data']}")
+        await self.send(text_data=json.dumps({
+            'type': 'player_result',
+            'data': event['data']
+        }))
+
     async def game_complete(self, event):
         await self.send(text_data=json.dumps({
             'type': 'game_complete',
@@ -154,8 +179,7 @@ class GameConsumer(AsyncWebsocketConsumer):
     def get_game_state(self):
         try:
             game_session = GameSession.objects.get(game_code=self.game_code)
-            current_round_info = game_session.get_current_round_info()
-
+            
             # Get connected players with their details
             connected_players = game_session.players.filter(is_connected=True).order_by('joined_at')
             players_data = []
@@ -173,18 +197,40 @@ class GameConsumer(AsyncWebsocketConsumer):
                 'players': players_data,
             }
 
-            if current_round_info:
-                data.update({
-                    'current_round': {
+            # Only include round info if we have an active game with rounds started
+            if game_session.current_round_number > 0:
+                # Use round handler to get consistent round info (with caching)
+                from .round_handlers import get_round_handler
+                round_handler = get_round_handler(game_session, game_session.current_round_number)
+                current_round_info = round_handler.get_round_info()
+                
+                if current_round_info:
+                    # Map legacy round types for WebSocket compatibility
+                    mapped_round_type = current_round_info['round_type']
+                    if mapped_round_type == 'starts_with':
+                        mapped_round_type = 'flower_fruit_veg'
+                    
+                    current_round_data = {
                         'round_number': current_round_info['round_number'],
-                        'prompt': f"A {current_round_info['category'].name.lower()} that starts with '{current_round_info['prompt_letter']}'",
-                        'letter': current_round_info['prompt_letter'],
-                        'category': current_round_info['category'].name,
                         'is_active': current_round_info['is_active'],
                         'time_remaining': int(current_round_info['time_remaining']),
                         'total_time': game_session.configuration.round_time_seconds,
+                        'round_type': mapped_round_type,  # Send the mapped round type
+                        'category': current_round_info['category'].name if hasattr(current_round_info['category'], 'name') else current_round_info['category'],
                     }
-                })
+                    if mapped_round_type == 'flower_fruit_veg':
+                        current_round_data.update({
+                            'prompt': f"A {current_round_info['category'].name.lower()} that starts with '{current_round_info['prompt_letter']}'",
+                            'letter': current_round_info['prompt_letter'],
+                        })
+                    elif mapped_round_type == 'multiple_choice':
+                        current_round_data.update({
+                            'question_text': current_round_info['question_text'],
+                            'choices': current_round_info['choices'],
+                        })
+                    data.update({
+                        'current_round': current_round_data
+                    })
 
             return data
         except GameSession.DoesNotExist:

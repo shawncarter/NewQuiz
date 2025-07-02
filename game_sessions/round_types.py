@@ -251,6 +251,180 @@ class MultipleChoiceRoundHandler(BaseRoundHandler):
             'choices': ['Monaco', 'Vatican City', 'San Marino', 'Liechtenstein'],
             'correct_answer': 'Vatican City',
             'category': 'Geography'
+        },
+        {
+            'question': 'What is the capital of Japan?',
+            'choices': ['Seoul', 'Tokyo', 'Beijing', 'Bangkok'],
+            'correct_answer': 'Tokyo',
+            'category': 'Geography'
+        },
+        {
+            'question': 'How many sides does a hexagon have?',
+            'choices': ['5', '6', '7', '8'],
+            'correct_answer': '6',
+            'category': 'Mathematics'
+        },
+        {
+            'question': 'Which element has the symbol "O"?',
+            'choices': ['Gold', 'Oxygen', 'Silver', 'Iron'],
+            'correct_answer': 'Oxygen',
+            'category': 'Science'
+        },
+        {
+            'question': 'Who painted the Mona Lisa?',
+            'choices': ['Vincent van Gogh', 'Pablo Picasso', 'Leonardo da Vinci', 'Claude Monet'],
+            'correct_answer': 'Leonardo da Vinci',
+            'category': 'Art'
+        },
+        {
+            'question': 'What is the largest desert in the world?',
+            'choices': ['Sahara', 'Antarctic', 'Arabian', 'Gobi'],
+            'correct_answer': 'Antarctic',
+            'category': 'Geography'
+        },
+        {
+            'question': 'Which sport is played at Wimbledon?',
+            'choices': ['Golf', 'Tennis', 'Cricket', 'Football'],
+            'correct_answer': 'Tennis',
+            'category': 'Sports'
+        },
+        {
+            'question': 'What is the square root of 64?',
+            'choices': ['6', '7', '8', '9'],
+            'correct_answer': '8',
+            'category': 'Mathematics'
+        },
+        {
+            'question': 'Which movie won the Academy Award for Best Picture in 2020?',
+            'choices': ['1917', 'Joker', 'Parasite', 'Once Upon a Time in Hollywood'],
+            'correct_answer': 'Parasite',
+            'category': 'Movies'
+        },
+        {
+            'question': 'What is the hardest natural substance on Earth?',
+            'choices': ['Gold', 'Iron', 'Diamond', 'Platinum'],
+            'correct_answer': 'Diamond',
+            'category': 'Science'
+        },
+        {
+            'question': 'Which continent is known as the "Dark Continent"?',
+            'choices': ['Asia', 'Africa', 'South America', 'Australia'],
+            'correct_answer': 'Africa',
+            'category': 'Geography'
+        },
+        {
+            'question': 'Who wrote "Pride and Prejudice"?',
+            'choices': ['Charlotte Brontë', 'Emily Dickinson', 'Jane Austen', 'Virginia Woolf'],
+            'correct_answer': 'Jane Austen',
+            'category': 'Literature'
+        },
+        {
+            'question': 'What is the speed of light in a vacuum?',
+            'choices': ['300,000 km/s', '150,000 km/s', '450,000 km/s', '600,000 km/s'],
+            'correct_answer': '300,000 km/s',
+            'category': 'Science'
+        },
+        {
+            'question': 'Which river is the longest in the world?',
+            'choices': ['Amazon', 'Nile', 'Mississippi', 'Yangtze'],
+            'correct_answer': 'Nile',
+            'category': 'Geography'
+        },
+        {
+            'question': 'In Greek mythology, who is the king of the gods?',
+            'choices': ['Apollo', 'Hades', 'Zeus', 'Poseidon'],
+            'correct_answer': 'Zeus',
+            'category': 'Mythology'
+        },
+        {
+            'question': 'What is 15% of 200?',
+            'choices': ['25', '30', '35', '40'],
+            'correct_answer': '30',
+            'category': 'Mathematics'
+        },
+        {
+            'question': 'Which instrument does Yo-Yo Ma famously play?',
+            'choices': ['Violin', 'Piano', 'Cello', 'Flute'],
+            'correct_answer': 'Cello',
+            'category': 'Music'
+        },
+        {
+            'question': 'What is the capital of Australia?',
+            'choices': ['Sydney', 'Melbourne', 'Canberra', 'Perth'],
+            'correct_answer': 'Canberra',
+            'category': 'Geography'
+        },
+        {
+            'question': 'Which gas makes up approximately 78% of Earth\'s atmosphere?',
+            'choices': ['Oxygen', 'Carbon Dioxide', 'Nitrogen', 'Hydrogen'],
+            'correct_answer': 'Nitrogen',
+            'category': 'Science'
+        },
+        {
+            'question': 'Who directed the movie "Jaws"?',
+            'choices': ['George Lucas', 'Steven Spielberg', 'Martin Scorsese', 'Francis Ford Coppola'],
+            'correct_answer': 'Steven Spielberg',
+            'category': 'Movies'
+        },
+        {
+            'question': 'What is the currency of the United Kingdom?',
+            'choices': ['Euro', 'Dollar', 'Pound Sterling', 'Franc'],
+            'correct_answer': 'Pound Sterling',
+            'category': 'Economics'
+        },
+        {
+            'question': 'Which planet is closest to the Sun?',
+            'choices': ['Venus', 'Earth', 'Mercury', 'Mars'],
+            'correct_answer': 'Mercury',
+            'category': 'Science'
+        },
+        {
+            'question': 'What does "WWW" stand for?',
+            'choices': ['World Wide Web', 'World Wide Wire', 'World Wide Work', 'World Wide Way'],
+            'correct_answer': 'World Wide Web',
+            'category': 'Technology'
+        },
+        {
+            'question': 'Which chess piece can only move diagonally?',
+            'choices': ['Rook', 'Knight', 'Bishop', 'Queen'],
+            'correct_answer': 'Bishop',
+            'category': 'Games'
+        },
+        {
+            'question': 'What is the main ingredient in guacamole?',
+            'choices': ['Tomato', 'Avocado', 'Onion', 'Pepper'],
+            'correct_answer': 'Avocado',
+            'category': 'Food'
+        },
+        {
+            'question': 'Which country gifted the Statue of Liberty to the United States?',
+            'choices': ['United Kingdom', 'Spain', 'France', 'Italy'],
+            'correct_answer': 'France',
+            'category': 'History'
+        },
+        {
+            'question': 'What is the largest bone in the human body?',
+            'choices': ['Skull', 'Femur', 'Ribcage', 'Spine'],
+            'correct_answer': 'Femur',
+            'category': 'Biology'
+        },
+        {
+            'question': 'Which social media platform was originally called "The Facebook"?',
+            'choices': ['Twitter', 'Instagram', 'Facebook', 'LinkedIn'],
+            'correct_answer': 'Facebook',
+            'category': 'Technology'
+        },
+        {
+            'question': 'What is the freezing point of water in Celsius?',
+            'choices': ['-1°C', '0°C', '1°C', '32°C'],
+            'correct_answer': '0°C',
+            'category': 'Science'
+        },
+        {
+            'question': 'Which superhero is known as the "Man of Steel"?',
+            'choices': ['Batman', 'Iron Man', 'Superman', 'Captain America'],
+            'correct_answer': 'Superman',
+            'category': 'Comics'
         }
     ]
     

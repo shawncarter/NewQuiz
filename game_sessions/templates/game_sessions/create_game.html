@@ -10,11 +10,10 @@
 
     <div class="form-group">
         <label for="game_type">Game Type:</label>
-        <select id="game_type" name="game_type" required onchange="updateCategories()">
+        <select id="game_type" name="game_type" required onchange="updateGameTypeSettings()">
             <option value="">Select a game type...</option>
-            {% for game_type in game_types %}
-                <option value="{{ game_type.id }}">{{ game_type.name }}</option>
-            {% endfor %}
+            <option value="flower_fruit_veg">Flower, Fruit & Veg</option>
+            <option value="multiple_choice">Multiple Choice</option>
         </select>
     </div>
 
@@ -22,7 +21,7 @@
         <label>Categories (select 1-3):</label>
         <div style="max-height: 200px; overflow-y: auto; border: 1px solid #ddd; padding: 10px; border-radius: 5px;">
             {% for category in categories %}
-                <div class="category-option" data-game-type="{{ category.game_type.id }}" style="display: none;">
+                <div class="category-option">
                     <label style="font-weight: normal; margin: 5px 0;">
                         <input type="checkbox" name="categories" value="{{ category.id }}" onchange="limitCategories()">
                         {{ category.name }}
@@ -30,7 +29,7 @@
                 </div>
             {% endfor %}
         </div>
-        <small style="color: #666;">Choose the categories players will answer for</small>
+        <small style="color: #666;">Choose the categories players will answer for (leave empty to use all available categories)</small>
     </div>
 
     <div class="form-group">
@@ -53,6 +52,7 @@
         </select>
     </div>
 
+
     <div class="text-center">
         <button type="submit" class="btn btn-success">
             🚀 Create Game Session
@@ -63,28 +63,29 @@
 </form>
 
 <script>
-function updateCategories() {
+function updateGameTypeSettings() {
     const gameTypeSelect = document.getElementById('game_type');
     const categoriesSection = document.getElementById('categories-section');
     const categoryOptions = document.querySelectorAll('.category-option');
 
-    // Hide all categories first
+    // Clear all category selections
     categoryOptions.forEach(option => {
-        option.style.display = 'none';
         const checkbox = option.querySelector('input[type="checkbox"]');
         checkbox.checked = false;
+        checkbox.disabled = false;
     });
 
-    if (gameTypeSelect.value) {
+    if (gameTypeSelect.value === 'flower_fruit_veg') {
+        // Show categories section for Flower, Fruit & Veg
         categoriesSection.style.display = 'block';
-
-        // Show categories for selected game type
         categoryOptions.forEach(option => {
-            if (option.dataset.gameType === gameTypeSelect.value) {
-                option.style.display = 'block';
-            }
+            option.style.display = 'block';
         });
+    } else if (gameTypeSelect.value === 'multiple_choice') {
+        // Hide categories section for Multiple Choice
+        categoriesSection.style.display = 'none';
     } else {
+        // No game type selected
         categoriesSection.style.display = 'none';
     }
 }
@@ -105,5 +106,13 @@ function limitCategories() {
         });
     }
 }
+
+// Removed round type options - now determined by game type
+
+// Initialize form
+document.addEventListener('DOMContentLoaded', function() {
+    // Set initial state
+    updateGameTypeSettings();
+});
 </script>
 {% endblock %}

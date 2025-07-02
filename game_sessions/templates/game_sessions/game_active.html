@@ -47,12 +47,23 @@ body {
                         <span class="player-count">{{ player_count }} players</span>
                     </div>
                     <div class="round-details">
-                        <span class="category">{{ round_info.category.name }}</span>
-                        <span class="letter">Letter: {{ round_info.prompt_letter }}</span>
+                        <span class="category">{{ round_info.category.name|default:round_info.category }}</span>
+                        {% if round_info.round_type == 'flower_fruit_veg' %}
+                            <span class="letter">Letter: {{ round_info.prompt_letter }}</span>
+                        {% endif %}
                     </div>
                 </div>
                 <div class="game-prompt">
-                    {{ round_info.category.name }} that start with {{ round_info.prompt_letter }}
+                    {% if round_info.round_type == 'flower_fruit_veg' %}
+                        {{ round_info.category.name|default:round_info.category }} that start with {{ round_info.prompt_letter }}
+                    {% elif round_info.round_type == 'multiple_choice' %}
+                        {{ round_info.question_text }}
+                        <ul class="multiple-choice-options">
+                            {% for choice in round_info.choices %}
+                                <li>{{ choice }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
                 </div>
 
                 {% if round_info.is_active %}
@@ -76,21 +87,15 @@ body {
 
                         <div class="text-center" style="margin-top: 20px;">
                             {% if round_info.round_number < config.num_rounds %}
-                                <button id="next-round-btn" class="btn btn-success">
+                                <button id="next-round-btn" class="btn btn-success" style="display: none;">
                                     ▶️ Start Next Round
                                 </button>
                             {% else %}
-                                <button id="show-final-scores-btn" class="btn btn-success">
+                                <button id="show-final-scores-btn" class="btn btn-success" style="display: none;">
                                     🏆 Show Final Scores
                                 </button>
                             {% endif %}
                         </div>
-                    </div>
-
-                    <div class="text-center">
-                        <button id="show-answers-btn" class="btn btn-success">
-                            👁️ Show Answers
-                        </button>
                     </div>
                 {% endif %}
             </div>
@@ -100,8 +105,8 @@ body {
             <h2>Ready to Start!</h2>
             <p>{{ player_count }} players connected</p>
             
-            <button id="start-first-round-btn" class="btn btn-success">
-                🚀 Start First Round
+            <button id="start-round-btn" class="btn btn-success">
+                🚀 Start Round
             </button>
         </div>
     {% endif %}
@@ -289,6 +294,34 @@ body {
     border-radius: 20px;
     display: inline-block;
 }
+    .multiple-choice-options {
+        list-style-type: none;
+        padding: 0;
+        margin-top: 15px;
+        font-size: 0.8em; /* Smaller font for choices */
+        font-weight: normal; /* Normal weight for choices */
+    }
+
+    .multiple-choice-options li {
+        background: rgba(255, 255, 255, 0.2);
+        margin-bottom: 5px;
+        padding: 8px 15px;
+        border-radius: 8px;
+    }
+    .multiple-choice-options {
+        list-style-type: none;
+        padding: 0;
+        margin-top: 15px;
+        font-size: 0.8em; /* Smaller font for choices */
+        font-weight: normal; /* Normal weight for choices */
+    }
+
+    .multiple-choice-options li {
+        background: rgba(255, 255, 255, 0.2);
+        margin-bottom: 5px;
+        padding: 8px 15px;
+        border-radius: 8px;
+    }
 </style>
 
 <script>
@@ -296,6 +329,28 @@ let countdownInterval;
 let currentAnswers = [];
 let answerIndex = 0;
 let gameSocket;
+let currentRoundType = '{{ round_info.round_type|default:"flower_fruit_veg" }}';
+// Handle legacy round types
+if (currentRoundType === 'starts_with') {
+    currentRoundType = 'flower_fruit_veg';
+}
+let currentCorrectAnswer = ''; // Will be set when rounds start
+let currentRoundNumber = {{ game_session.current_round_number|default:0 }};
+let totalRounds = {{ config.num_rounds|default:10 }};
+let roundEndedViaWebSocket = false; // Track if WebSocket already handled round end
+console.log('🔍 DEBUG: Initialized currentRoundType to:', currentRoundType);
+console.log('🔍 DEBUG: Initialized currentCorrectAnswer to:', currentCorrectAnswer);
+
+// Debug function to check current state
+function debugCurrentState() {
+    console.log('🔍 DEBUG: Current state check:');
+    console.log('  - currentRoundType:', currentRoundType);
+    console.log('  - currentCorrectAnswer:', currentCorrectAnswer);
+    console.log('  - currentAnswers length:', currentAnswers.length);
+}
+
+// Call debug every 5 seconds
+setInterval(debugCurrentState, 5000);
 
 // Initialize WebSocket connection
 function initWebSocket() {
@@ -406,24 +461,89 @@ function updateRoundDisplay(data) {
     const roundData = data.current_round || data;
     
     if (roundData && roundData.round_number) {
+        // Reset WebSocket flag for new round
+        roundEndedViaWebSocket = false;
+        
+        // Clear the correct answer from previous round when new round starts
+        const oldCorrectAnswer = currentCorrectAnswer;
+        currentCorrectAnswer = '';
+        console.log('🔍 ROUND START: Cleared currentCorrectAnswer from', oldCorrectAnswer, 'to empty');
+        
+        // Update global round number and type
+        currentRoundNumber = roundData.round_number;
+        currentRoundType = roundData.round_type || 'flower_fruit_veg';
+        // Handle legacy round types
+        if (currentRoundType === 'starts_with') {
+            currentRoundType = 'flower_fruit_veg';
+        }
+        
+        // Set new correct answer for multiple choice rounds
+        if (currentRoundType === 'multiple_choice' && roundData.correct_answer) {
+            currentCorrectAnswer = roundData.correct_answer;
+            console.log('🔍 ROUND START: Set new currentCorrectAnswer to:', currentCorrectAnswer);
+        } else if (currentRoundType === 'multiple_choice') {
+            console.log('🔍 ROUND START: Multiple choice round but no correct_answer in data:', roundData);
+        }
+        
+        console.log('WebSocket round start - currentRoundType:', currentRoundType, 'currentCorrectAnswer:', currentCorrectAnswer);
+        
+        console.log('Updating round display:', {
+            round_number: roundData.round_number,
+            round_type: currentRoundType,
+            question_text: roundData.question_text,
+            category: roundData.category,
+            choices: roundData.choices
+        });
+        
         // Update the round header (Round X of Y)
         const roundTitle = document.querySelector('.round-title h2');
         if (roundTitle) {
             roundTitle.textContent = `Round ${roundData.round_number} of {{ config.num_rounds }}`;
         }
         
-        // Update the round details (category and letter)
+        // Update the round details based on round type
         const categorySpan = document.querySelector('.round-details .category');
         const letterSpan = document.querySelector('.round-details .letter');
-        if (categorySpan && letterSpan) {
-            categorySpan.textContent = roundData.category;
-            letterSpan.textContent = `Letter: ${roundData.letter}`;
-        }
         
-        // Update the game prompt
-        const gamePrompt = document.querySelector('.game-prompt');
-        if (gamePrompt) {
-            gamePrompt.textContent = `${roundData.category} that start with ${roundData.letter}`;
+        if (currentRoundType === 'flower_fruit_veg') {
+            if (categorySpan && letterSpan) {
+                // Handle both string categories and category objects with .name
+                const categoryName = roundData.category?.name || roundData.category || roundData.category_name || 'Category';
+                categorySpan.textContent = categoryName;
+                letterSpan.textContent = `Letter: ${roundData.letter || roundData.prompt_letter}`;
+                letterSpan.style.display = 'inline-block';
+            }
+            
+            // Update the game prompt for flower_fruit_veg
+            const gamePrompt = document.querySelector('.game-prompt');
+            if (gamePrompt) {
+                const categoryName = roundData.category?.name || roundData.category || roundData.category_name || 'items';
+                gamePrompt.innerHTML = `${categoryName} that start with ${roundData.letter || roundData.prompt_letter}`;
+            }
+        } else if (currentRoundType === 'multiple_choice') {
+            if (categorySpan) {
+                categorySpan.textContent = roundData.category || 'Multiple Choice';
+            }
+            if (letterSpan) {
+                letterSpan.style.display = 'none'; // Hide letter for multiple choice
+            }
+            
+            // Update the game prompt for multiple choice
+            const gamePrompt = document.querySelector('.game-prompt');
+            if (gamePrompt) {
+                const questionText = roundData.question_text || roundData.question || 'Question not available';
+                let choicesHtml = '';
+                if (roundData.choices && Array.isArray(roundData.choices)) {
+                    choicesHtml = '<ul class="multiple-choice-options">' + 
+                        roundData.choices.map(choice => `<li>${choice}</li>`).join('') + 
+                        '</ul>';
+                } else {
+                    console.error('No choices available for multiple choice question:', roundData);
+                }
+                gamePrompt.innerHTML = `${questionText}${choicesHtml}`;
+            }
+        } else {
+            console.error('Unknown round type:', currentRoundType, 'Data:', roundData);
         }
     }
 
@@ -462,9 +582,13 @@ function updateRoundDisplay(data) {
     countdownDisplay.style.display = 'block';
     endRoundBtn.style.display = 'inline-block';
 
-    // Hide answers display if it exists
+    // Hide answers display if it exists but don't clear the element itself
     const answersDisplay = document.getElementById('answers-display');
-    if (answersDisplay) answersDisplay.style.display = 'none';
+    if (answersDisplay) {
+        answersDisplay.style.display = 'none';
+        // Don't clear innerHTML here - let showAnswers() handle it when called
+        console.log('🔍 NEW ROUND: Hidden answers display, preserving element');
+    }
 
     // Start countdown timer
     if (data.current_round && data.current_round.time_remaining) {
@@ -474,8 +598,25 @@ function updateRoundDisplay(data) {
 
 // Handle round ended via WebSocket
 function handleRoundEnded(data) {
+    // Mark that WebSocket handled the round end
+    roundEndedViaWebSocket = true;
+    
     // Always handle round end, even if no answers
     currentAnswers = data.answers || [];
+    console.log('🔍 WEBSOCKET: Round ended, received', currentAnswers.length, 'answers:', currentAnswers.map(a => `${a.player_name}: ${a.answer_text}`));
+    
+    // Update round type from WebSocket data if available
+    if (data.round_type) {
+        currentRoundType = data.round_type;
+    }
+    
+    // Store correct answer for multiple choice questions
+    if (data.correct_answer) {
+        currentCorrectAnswer = data.correct_answer;
+        console.log('🔍 ROUND ENDED: Updated currentCorrectAnswer to:', currentCorrectAnswer);
+    } else {
+        console.log('🔍 ROUND ENDED: No correct_answer in data:', data);
+    }
 
     // Hide round controls
     const countdownDisplay = document.getElementById('countdown-display');
@@ -513,8 +654,8 @@ function startCountdown(seconds) {
     console.log('Timer will be synchronized with server');
 }
 
-// Start first round
-document.getElementById('start-first-round-btn')?.addEventListener('click', function() {
+// Start round (works for first round and subsequent rounds)
+document.getElementById('start-round-btn')?.addEventListener('click', function() {
     startRound();
 });
 
@@ -535,6 +676,10 @@ function startRound() {
     .then(response => response.json())
     .then(data => {
         if (data.status === 'success') {
+            // Don't overwrite currentCorrectAnswer here - WebSocket already set it correctly
+            // The AJAX response might have stale data, so trust the WebSocket
+            console.log('startRound success - keeping WebSocket answer:', currentCorrectAnswer);
+            console.log('startRound AJAX response had answer:', data.correct_answer);
             // WebSocket will handle the round update, no need to reload
             console.log('Round started successfully');
         } else if (data.status === 'game_complete') {
@@ -631,7 +776,10 @@ function showFinalScores(scores) {
         .then(response => response.json())
         .then(data => {
             if (data.status === 'success') {
-                window.location.href = '{% url "game_sessions:game_master" game_session.game_code %}';
+                // Add small delay to ensure restart is fully processed
+                setTimeout(() => {
+                    window.location.href = '{% url "game_sessions:game_master" game_session.game_code %}';
+                }, 500);
             } else {
                 console.log('Error: ' + data.error);
             }
@@ -660,7 +808,23 @@ function endRound() {
     .then(response => response.json())
     .then(data => {
         if (data.status === 'success') {
-            currentAnswers = data.answers;
+            // Only update if WebSocket hasn't already handled it
+            if (!roundEndedViaWebSocket) {
+                currentAnswers = data.answers;
+                console.log('🔍 AJAX: Round ended, received', currentAnswers.length, 'answers:', currentAnswers.map(a => a.player_name));
+                currentRoundType = data.round_type || 'flower_fruit_veg'; // Update round type from response
+                // Handle legacy round types
+                if (currentRoundType === 'starts_with') {
+                    currentRoundType = 'flower_fruit_veg';
+                }
+                
+                // Store correct answer for multiple choice questions
+                if (data.correct_answer) {
+                    currentCorrectAnswer = data.correct_answer;
+                }
+            } else {
+                console.log('🔍 AJAX: Skipping data update - WebSocket already handled round end');
+            }
 
             // Hide round controls
             const countdownDisplay = document.getElementById('countdown-display');
@@ -691,51 +855,185 @@ function endRound() {
 }
 
 // Show answers
-document.getElementById('show-answers-btn')?.addEventListener('click', function() {
-    showAnswers();
-});
+// Show answers button removed - answers now show automatically
+
+let showAnswersInProgress = false;
 
 function showAnswers() {
-    // Hide show answers button if it exists
-    const showAnswersBtn = document.getElementById('show-answers-btn');
-    if (showAnswersBtn) showAnswersBtn.style.display = 'none';
+    // Prevent multiple simultaneous calls
+    if (showAnswersInProgress) {
+        console.log('🔍 DEBUG: showAnswers() already in progress, skipping duplicate call');
+        return;
+    }
+    showAnswersInProgress = true;
+    
+    // Show answers button no longer exists - answers show automatically
+    
+    // Ensure we have the correct round type - get it from the current round info if not set
+    if (!currentRoundType) {
+        {% if game_session.current_round_number > 0 %}
+            {% with round_info=game_session.get_current_round_info %}
+                currentRoundType = '{{ round_info.round_type }}';
+                // Handle legacy round types
+                if (currentRoundType === 'flower_fruit_veg') {
+                    currentRoundType = 'flower_fruit_veg';
+                }
+            {% endwith %}
+        {% endif %}
+    }
+    
+    console.log('🔍 DEBUG: showAnswers() called - currentRoundType:', currentRoundType, 'currentAnswers.length:', currentAnswers.length);
 
     // Create or show answers display area
     let answersDisplay = document.getElementById('answers-display');
     if (!answersDisplay) {
         // Create the answers display area dynamically
         const gameState = document.getElementById('game-state');
+        if (!gameState) {
+            console.error('🔍 ERROR: game-state element not found!');
+            return;
+        }
         answersDisplay = document.createElement('div');
         answersDisplay.id = 'answers-display';
-        // Get current round info for display
-        const gamePrompt = document.querySelector('.game-prompt');
-        const roundInfo = gamePrompt ? gamePrompt.textContent : '';
+        gameState.appendChild(answersDisplay);
+        console.log('🔍 SHOW ANSWERS: Created new answers-display element');
+    } else {
+        console.log('🔍 SHOW ANSWERS: Found existing answers-display element');
+    }
+    
+    // Now populate the content (after element is in DOM)
+    const gamePrompt = document.querySelector('.game-prompt');
+    const roundInfo = gamePrompt ? gamePrompt.textContent : '';
 
+    // Verify element is in the DOM before setting innerHTML
+    if (!answersDisplay.parentNode) {
+        console.error('🔍 ERROR: answers-display element not attached to DOM! Re-creating...');
+        const gameState = document.getElementById('game-state');
+        if (gameState) {
+            gameState.appendChild(answersDisplay);
+        } else {
+            console.error('🔍 ERROR: Cannot find game-state element to attach answers-display!');
+            return;
+        }
+    }
+
+    // Build correct answer display for multiple choice
+    console.log('🔍 SHOW ANSWERS: currentRoundType:', currentRoundType, 'currentCorrectAnswer:', currentCorrectAnswer);
+    const correctAnswerHtml = (currentRoundType === 'multiple_choice' && currentCorrectAnswer) ? 
+        `<div class="correct-answer-display" style="background: #d4edda; border: 2px solid #28a745; padding: 15px; border-radius: 10px; margin: 10px 0; text-align: center;">
+            <strong>✅ Correct Answer: ${currentCorrectAnswer}</strong>
+        </div>` : '';
+    console.log('🔍 SHOW ANSWERS: Generated correctAnswerHtml:', correctAnswerHtml);
+
+    // Determine button text based on whether it's the final round
+    const isLastRound = currentRoundNumber >= totalRounds;
+    const nextButtonText = isLastRound ? '🏆 Finish Game' : '▶️ Start Next Round';
+    console.log('🔍 BUTTON: currentRoundNumber:', currentRoundNumber, 'totalRounds:', totalRounds, 'isLastRound:', isLastRound, 'buttonText:', nextButtonText);
+    
+    // Safe innerHTML assignment with error handling
+    try {
         answersDisplay.innerHTML = `
             <div class="answers-header">
                 <h3>Player Answers</h3>
                 <div class="round-info-small">${roundInfo}</div>
+                ${correctAnswerHtml}
             </div>
             <div id="answers-grid" class="answers-grid"></div>
             <div class="text-center" style="margin-top: 20px;">
                 <button id="next-round-btn" class="btn btn-success" style="display: none;">
-                    ▶️ Start Next Round
+                    ${nextButtonText}
                 </button>
             </div>
         `;
-        gameState.appendChild(answersDisplay);
+        answersDisplay.style.display = 'block';
+        console.log('🔍 SHOW ANSWERS: Successfully set innerHTML and made visible');
+    } catch (error) {
+        console.error('🔍 ERROR: Failed to set innerHTML on answers-display:', error);
+        return;
     }
-    answersDisplay.style.display = 'block';
 
     const grid = document.getElementById('answers-grid');
     
     // Clear existing answers
     grid.innerHTML = '';
 
+    // Check if we need to fetch answers from server (e.g., after page refresh)
+    if (currentAnswers.length === 0) {
+        // Try to fetch answers from server for the current round
+        fetch(`/game/{{ game_session.game_code }}/round-answers/`, {
+            method: 'GET',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}',
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success' && data.answers && data.answers.length > 0) {
+                currentAnswers = data.answers;
+                // Update round type from fetched data
+                if (data.round_type) {
+                    currentRoundType = data.round_type;
+                    console.log('🔍 DEBUG: Updated currentRoundType from server:', currentRoundType);
+                }
+                // Update correct answer from fetched data
+                if (data.correct_answer) {
+                    currentCorrectAnswer = data.correct_answer;
+                    console.log('🔍 AJAX: Updated currentCorrectAnswer from server to:', currentCorrectAnswer);
+                } else {
+                    console.log('🔍 AJAX: No correct_answer in server response:', data);
+                }
+                // Reset flag and re-call showAnswers now that we have the data
+                showAnswersInProgress = false;
+                showAnswers();
+                return;
+            } else {
+                // No answers found on server, show no answers message
+                // Update round type from fetched data even if no answers
+                if (data.round_type) {
+                    currentRoundType = data.round_type;
+                }
+                // Update correct answer from fetched data even if no answers
+                if (data.correct_answer) {
+                    currentCorrectAnswer = data.correct_answer;
+                }
+                showNoAnswersMessage();
+            }
+        })
+        .catch(error => {
+            console.log('Error fetching answers:', error);
+            showNoAnswersMessage();
+        })
+        .finally(() => {
+            // Reset flag regardless of success or failure
+            showAnswersInProgress = false;
+        });
+        return;
+    }
+
     // Check if there are any answers
     const playerCount = currentAnswers.length;
     
     if (playerCount === 0) {
+        showNoAnswersMessage();
+        showAnswersInProgress = false;
+        return;
+    }
+
+    // Continue with normal answer display...
+    // Add a small delay to ensure DOM is fully ready
+    setTimeout(() => {
+        displayAnswersGrid();
+        // Reset the flag after completion
+        showAnswersInProgress = false;
+    }, 100);
+}
+
+function showNoAnswersMessage() {
+    const grid = document.getElementById('answers-grid');
+    if (!grid) {
+        console.error('🔍 ERROR: answers-grid element not found in showNoAnswersMessage()!');
+        return;
+    }
         // Show "no answers" message
         grid.innerHTML = `
             <div class="no-answers-message" style="
@@ -764,12 +1062,19 @@ function showAnswers() {
             const buttonContainer = document.createElement('div');
             buttonContainer.className = 'text-center';
             buttonContainer.style.marginTop = '20px';
-            buttonContainer.innerHTML = '<button id="next-round-btn" class="btn btn-success">▶️ Start Next Round</button>';
+            const isLastRound = currentRoundNumber >= totalRounds;
+            const nextButtonText = isLastRound ? '🏆 Finish Game' : '▶️ Start Next Round';
+            buttonContainer.innerHTML = `<button id="next-round-btn" class="btn btn-success">${nextButtonText}</button>`;
             answersDisplay.appendChild(buttonContainer);
             nextRoundBtn = document.getElementById('next-round-btn');
         }
         
         if (nextRoundBtn) {
+            // Update button text for final round
+            const isLastRound = currentRoundNumber >= totalRounds;
+            const nextButtonText = isLastRound ? '🏆 Finish Game' : '▶️ Start Next Round';
+            nextRoundBtn.textContent = nextButtonText;
+            
             nextRoundBtn.style.display = 'inline-block';
             // Remove any existing event listeners and add new one
             const newBtn = nextRoundBtn.cloneNode(true);
@@ -779,26 +1084,57 @@ function showAnswers() {
                 startRound();
             });
         }
-    } else {
-        // Responsive grid layout optimized for different player counts
-        if (playerCount <= 2) {
-            grid.style.gridTemplateColumns = `repeat(${playerCount}, 1fr)`;
-        } else if (playerCount <= 4) {
-            grid.style.gridTemplateColumns = 'repeat(2, 1fr)';
-        } else if (playerCount <= 6) {
-            grid.style.gridTemplateColumns = 'repeat(3, 1fr)';
-        } else if (playerCount <= 12) {
-            grid.style.gridTemplateColumns = 'repeat(4, 1fr)';
-        } else if (playerCount <= 20) {
-            grid.style.gridTemplateColumns = 'repeat(5, 1fr)';
-        } else {
-            grid.style.gridTemplateColumns = 'repeat(6, 1fr)';
-        }
+}
 
-        // Show answers one by one
-        answerIndex = 0;
-        showNextAnswer();
+function displayAnswersGrid() {
+    const grid = document.getElementById('answers-grid');
+    if (!grid) {
+        console.error('🔍 ERROR: answers-grid element not found! Cannot display answers.');
+        return;
     }
+    
+    // Completely clear the grid to prevent duplicates
+    grid.innerHTML = '';
+    console.log('🔍 GRID: Cleared grid before displaying answers');
+    
+    // Deduplicate answers by player name (keep the first occurrence)
+    console.log('🔍 DEDUP: Before deduplication:', currentAnswers.map(a => `${a.player_name}: ${a.answer_text}`));
+    const seenPlayers = new Set();
+    const deduplicatedAnswers = currentAnswers.filter((answer, index) => {
+        const key = answer.player_name;
+        if (seenPlayers.has(key)) {
+            console.warn('🔍 WARNING: Duplicate answer found for player:', key, 'at index', index, 'answer:', answer.answer_text, '- removing duplicate');
+            return false;
+        }
+        seenPlayers.add(key);
+        return true;
+    });
+    
+    // Use deduplicated answers for display
+    currentAnswers = deduplicatedAnswers;
+    console.log('🔍 DEDUP: After deduplication:', currentAnswers.map(a => `${a.player_name}: ${a.answer_text}`));
+    
+    const playerCount = currentAnswers.length;
+    console.log('🔍 DISPLAY GRID: Found grid element, playerCount:', playerCount, 'after deduplication');
+    
+    // Responsive grid layout optimized for different player counts
+    if (playerCount <= 2) {
+        grid.style.gridTemplateColumns = `repeat(${playerCount}, 1fr)`;
+    } else if (playerCount <= 4) {
+        grid.style.gridTemplateColumns = 'repeat(2, 1fr)';
+    } else if (playerCount <= 6) {
+        grid.style.gridTemplateColumns = 'repeat(3, 1fr)';
+    } else if (playerCount <= 12) {
+        grid.style.gridTemplateColumns = 'repeat(4, 1fr)';
+    } else if (playerCount <= 20) {
+        grid.style.gridTemplateColumns = 'repeat(5, 1fr)';
+    } else {
+        grid.style.gridTemplateColumns = 'repeat(6, 1fr)';
+    }
+
+    // Show answers one by one
+    answerIndex = 0;
+    showNextAnswer();
 }
 
 function showNextAnswer() {
@@ -807,6 +1143,11 @@ function showNextAnswer() {
         const nextRoundBtn = document.getElementById('next-round-btn');
         if (nextRoundBtn) {
             setTimeout(() => {
+                // Update button text for final round
+                const isLastRound = currentRoundNumber >= totalRounds;
+                const nextButtonText = isLastRound ? '🏆 Finish Game' : '▶️ Start Next Round';
+                nextRoundBtn.textContent = nextButtonText;
+                
                 nextRoundBtn.style.display = 'inline-block';
                 // Remove any existing event listeners and add new one
                 const newBtn = nextRoundBtn.cloneNode(true);
@@ -822,17 +1163,19 @@ function showNextAnswer() {
 
     const answer = currentAnswers[answerIndex];
     const grid = document.getElementById('answers-grid');
+    
+    if (!grid) {
+        console.error('🔍 ERROR: answers-grid element not found in showNextAnswer()! Stopping answer display.');
+        return;
+    }
 
     const answerCard = document.createElement('div');
     answerCard.className = `answer-card ${answer.is_unique ? 'unique' : (answer.is_valid ? 'valid' : 'invalid')}`;
     answerCard.dataset.answerId = answerIndex;
 
-    answerCard.innerHTML = `
-        <div class="player-name">${answer.player_name}</div>
-        <div class="player-answer">${answer.answer || answer.answer_text || 'No answer'}</div>
-        <div class="points ${answer.is_unique ? 'unique' : (answer.is_valid ? 'valid' : 'invalid')}">
-            +${answer.points_awarded} points
-        </div>
+    // Only show validation controls for "flower_fruit_veg" rounds (use global variable)
+    console.log('🔍 DEBUG: Showing answer for player:', answer.player_name, 'currentRoundType:', currentRoundType, 'Should show validation?', currentRoundType === 'flower_fruit_veg');
+    const validationControlsHtml = currentRoundType === 'flower_fruit_veg' ? `
         <div class="validation-controls">
             <button class="validation-btn valid ${answer.is_valid && !answer.is_unique ? 'active' : ''}"
                     onclick="validateAnswer(${answerIndex}, true)">
@@ -843,6 +1186,15 @@ function showNextAnswer() {
                 ✗ Invalid
             </button>
         </div>
+    ` : '';
+
+    answerCard.innerHTML = `
+        <div class="player-name">${answer.player_name}</div>
+        <div class="player-answer">${answer.answer || answer.answer_text || 'No answer'}</div>
+        <div class="points ${answer.is_unique ? 'unique' : (answer.is_valid ? 'valid' : 'invalid')}">
+            +${answer.points_awarded} points
+        </div>
+        ${validationControlsHtml}
     `;
 
     grid.appendChild(answerCard);
@@ -862,10 +1214,19 @@ function showNextAnswer() {
 
 // Validate answer function
 function validateAnswer(answerIndex, isValid) {
-    if (answerIndex >= currentAnswers.length) return;
+    console.log('🔍 VALIDATE: Validating answer at index', answerIndex, 'as', isValid ? 'valid' : 'invalid');
+    console.log('🔍 VALIDATE: currentAnswers length:', currentAnswers.length);
+    
+    if (answerIndex >= currentAnswers.length) {
+        console.error('🔍 VALIDATE: Invalid answerIndex', answerIndex, 'for array length', currentAnswers.length);
+        return;
+    }
 
     const answer = currentAnswers[answerIndex];
     const answerCard = document.querySelector(`[data-answer-id="${answerIndex}"]`);
+    
+    console.log('🔍 VALIDATE: Found answer:', answer.player_name, '-', answer.answer_text);
+    console.log('🔍 VALIDATE: Found answerCard:', answerCard ? 'yes' : 'no');
 
     // Update the answer data
     answer.is_valid = isValid;
@@ -908,12 +1269,14 @@ function validateAnswer(answerIndex, isValid) {
     pointsElement.textContent = `+${answer.points_awarded} points`;
     pointsElement.className = `points ${answer.is_unique ? 'unique' : (isValid ? 'valid' : 'invalid')}`;
 
-    // Update button states
+    // Update button states (only if validation buttons exist)
     const validBtn = answerCard.querySelector('.validation-btn.valid');
     const invalidBtn = answerCard.querySelector('.validation-btn.invalid');
 
-    validBtn.classList.toggle('active', isValid);
-    invalidBtn.classList.toggle('active', !isValid);
+    if (validBtn && invalidBtn) {
+        validBtn.classList.toggle('active', isValid);
+        invalidBtn.classList.toggle('active', !isValid);
+    }
 
     // Auto-validate identical answers and recalculate all points
     const currentAnswerText = (answer.answer_text || answer.answer).toLowerCase().trim();
@@ -939,9 +1302,13 @@ function validateAnswer(answerIndex, isValid) {
 
                 const otherValidBtn = otherCard.querySelector('.validation-btn.valid');
                 const otherInvalidBtn = otherCard.querySelector('.validation-btn.invalid');
+                
+                // Only update buttons if they exist (for flower_fruit_veg rounds)
+                if (otherValidBtn && otherInvalidBtn) {
 
-                otherValidBtn.classList.toggle('active', isValid);
-                otherInvalidBtn.classList.toggle('active', !isValid);
+                    otherValidBtn.classList.toggle('active', isValid);
+                    otherInvalidBtn.classList.toggle('active', !isValid);
+                }
 
                 // Send validation to server for the duplicate answer
                 fetch('{% url "game_sessions:validate_answer" game_session.game_code %}', {
@@ -1000,7 +1367,10 @@ document.getElementById('restart-game-btn')?.addEventListener('click', function(
         .then(response => response.json())
         .then(data => {
             if (data.status === 'success') {
-                window.location.href = '{% url "game_sessions:game_master" game_session.game_code %}';
+                // Add small delay to ensure restart is fully processed
+                setTimeout(() => {
+                    window.location.href = '{% url "game_sessions:game_master" game_session.game_code %}';
+                }, 500);
             } else {
                 console.log('Error: ' + data.error);
             }
@@ -1012,6 +1382,46 @@ document.getElementById('restart-game-btn')?.addEventListener('click', function(
 
 // Initialize WebSocket connection
 initWebSocket();
+
+// Ensure display matches current template state (important after page refresh)
+document.addEventListener('DOMContentLoaded', function() {
+    const templateRoundType = '{{ round_info.round_type|default:"flower_fruit_veg" }}';
+    const isRoundActive = {{ round_info.is_active|yesno:"true,false" }};
+    const currentRoundNumber = {{ round_info.round_number|default:0 }};
+    
+    console.log('Page loaded with round type:', templateRoundType, 'Active:', isRoundActive, 'Round:', currentRoundNumber);
+    
+    if (templateRoundType !== currentRoundType) {
+        console.log('Syncing round type from template');
+        currentRoundType = templateRoundType;
+        
+        // Force a display update with current template data
+        const templateData = {
+            round_number: currentRoundNumber,
+            round_type: templateRoundType,
+            {% if round_info.round_type == 'multiple_choice' %}
+            question_text: '{{ round_info.question_text|escapejs }}',
+            choices: {{ round_info.choices|safe }},
+            category: '{{ round_info.category|escapejs }}',
+            {% else %}
+            category: '{{ round_info.category.name|default:"Category"|escapejs }}',
+            letter: '{{ round_info.prompt_letter|default:""|escapejs }}',
+            prompt_letter: '{{ round_info.prompt_letter|default:""|escapejs }}',
+            {% endif %}
+        };
+        
+        console.log('Updating display with template data:', templateData);
+        updateRoundDisplay({current_round: templateData});
+    }
+    
+    // Auto-show answers if round is not active and we have a round number
+    if (!isRoundActive && currentRoundNumber > 0) {
+        console.log('🔍 AUTO-SHOW: Round is not active, automatically showing answers');
+        setTimeout(() => {
+            showAnswers();
+        }, 500); // Small delay to ensure page is fully loaded
+    }
+});
 
 // Start countdown if round is active
 {% if current_round.is_active %}

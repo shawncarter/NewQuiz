@@ -12,7 +12,11 @@
         
         {% if current_round.is_active %}
             <div class="prompt-display">
-                A {{ current_round.category.name|lower }} that starts with '{{ current_round.prompt_letter }}'
+                {% if current_round.round_type == 'flower_fruit_veg' %}
+                    A {{ current_round.category|lower }} that starts with '{{ current_round.prompt_letter }}'
+                {% elif current_round.round_type == 'multiple_choice' %}
+                    {{ current_round.question_text }}
+                {% endif %}
             </div>
             
             <div id="countdown-small" class="countdown-small">
@@ -20,16 +24,24 @@
             </div>
             
             <div class="answer-input-container">
-                <input type="text" 
-                       id="answer-input" 
-                       placeholder="Type your answer here..."
-                       maxlength="100"
-                       autocomplete="off"
-                       autocapitalize="words">
-                
-                <div class="input-help">
-                    Your answer will be automatically submitted when time runs out
-                </div>
+                {% if current_round.round_type == 'flower_fruit_veg' %}
+                    <input type="text" 
+                           id="answer-input" 
+                           placeholder="Type your answer here..."
+                           maxlength="100"
+                           autocomplete="off"
+                           autocapitalize="words">
+                    
+                    <div class="input-help">
+                        Your answer will be automatically submitted when time runs out
+                    </div>
+                {% elif current_round.round_type == 'multiple_choice' %}
+                    <div id="choices-container" class="choices-container">
+                        {% for choice in current_round.choices %}
+                            <button class="choice-btn" data-choice="{{ choice }}">{{ choice }}</button>
+                        {% endfor %}
+                    </div>
+                {% endif %}
             </div>
             
             <div id="answer-status" class="answer-status" style="display: none;">
@@ -244,6 +256,96 @@ body {
         padding: 25px;
     }
 }
+
+.choices-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.choice-btn {
+    background-color: #007bff;
+    color: white;
+    padding: 15px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.2em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.choice-btn:hover {
+    background-color: #0056b3;
+}
+
+.choice-btn:active {
+    background-color: #004085;
+}
+
+.choice-btn.selected {
+    background-color: #28a745;
+    border: 2px solid #1e7e34;
+}
+
+.result-display {
+    text-align: center;
+    padding: 30px 20px;
+    border-radius: 15px;
+    margin: 20px 0;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.result-display.result-correct {
+    background: linear-gradient(135deg, #d4edda, #c3e6cb);
+    border: 2px solid #28a745;
+}
+
+.result-display.result-incorrect {
+    background: linear-gradient(135deg, #f8d7da, #f5c6cb);
+    border: 2px solid #dc3545;
+}
+
+.result-header {
+    margin-bottom: 20px;
+}
+
+.result-icon {
+    font-size: 3em;
+    margin-bottom: 10px;
+}
+
+.result-header h3 {
+    margin: 0;
+    color: #495057;
+    font-size: 1.4em;
+}
+
+.result-message {
+    font-size: 1.1em;
+    margin: 20px 0;
+    line-height: 1.5;
+}
+
+.result-message p {
+    margin: 8px 0;
+}
+
+.result-points {
+    margin: 20px 0;
+}
+
+.points-earned {
+    font-size: 1.3em;
+    font-weight: bold;
+    color: #28a745;
+    background: rgba(255,255,255,0.8);
+    padding: 8px 15px;
+    border-radius: 20px;
+    display: inline-block;
+}
 </style>
 
 <script>
@@ -271,13 +373,14 @@ document.addEventListener('DOMContentLoaded', () => {
     let gameSocket;
     let lastSubmittedAnswer = "";
     let debounceTimer;
+    let currentRoundType = ""; // To store the current round type
 
     function escapeHTML(str) {
         if (typeof str !== 'string') {
             if (str === undefined || str === null) return '';
             str = String(str);
         }
-        return str.replace(/[&<>'"\/]/g, function (tag) {
+        return str.replace(/[&<>"'/]/g, function (tag) {
             const chars = {
                 '&': '&amp;',
                 '<': '&lt;',
@@ -355,6 +458,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     case 'game_restarted':
                         handleGameRestarted(data.data);
                         break;
+                    case 'player_result':
+                        console.log('[Player] Received player_result message:', data.data);
+                        handlePlayerResult(data.data);
+                        break;
                     default:
                         console.log('Unknown message type for player:', data.type);
                         console.log('Full message data:', data);
@@ -398,16 +505,20 @@ document.addEventListener('DOMContentLoaded', () => {
             
             // When timer reaches 0, submit final answer and disable input
             if (timeRemaining <= 0) {
-                const answerInput = document.getElementById('answer-input');
-                if (answerInput && answerInput.value && answerInput.value !== lastSubmittedAnswer) {
-                    console.log('[Player] Submitting final answer on timer expiry:', answerInput.value);
-                    saveAnswer(answerInput.value);
-                    lastSubmittedAnswer = answerInput.value;
-                }
-                
-                // Disable input to prevent further changes
-                if (answerInput) {
-                    answerInput.disabled = true;
+                if (currentRoundType === 'flower_fruit_veg') {
+                    const answerInput = document.getElementById('answer-input');
+                    if (answerInput && answerInput.value && answerInput.value !== lastSubmittedAnswer) {
+                        console.log('[Player] Submitting final answer on timer expiry:', answerInput.value);
+                        saveAnswer(answerInput.value);
+                        lastSubmittedAnswer = answerInput.value;
+                    }
+                    if (answerInput) {
+                        answerInput.disabled = true;
+                    }
+                } else if (currentRoundType === 'multiple_choice') {
+                    // For multiple choice, answers are submitted on click, so just disable buttons
+                    const choiceButtons = document.querySelectorAll('.choice-btn');
+                    choiceButtons.forEach(button => button.disabled = true);
                 }
             }
         }
@@ -419,19 +530,14 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!gameInterface) return;
 
         lastSubmittedAnswer = "";
+        currentRoundType = data.round_type; // Set the current round type
 
-        const newRoundHTML = `
-            <div class="game-header">
-                <h2>Round ${escapeHTML(data.round_number)}</h2>
-                <div class="game-code-small">Game: {{ game_session.game_code }}</div>
-            </div>
-            <div class="prompt-display">
-                A ${escapeHTML(data.category.toLowerCase())} that starts with '${escapeHTML(data.letter)}'
-            </div>
-            <div id="countdown-small" class="countdown-small">
-                <span id="timer">${escapeHTML(data.total_time)}</span>s
-            </div>
-            <div class="answer-input-container">
+        let promptHtml = '';
+        let inputHtml = '';
+
+        if (data.round_type === 'flower_fruit_veg') {
+            promptHtml = `A ${escapeHTML(data.category.toLowerCase())} that starts with '${escapeHTML(data.letter)}'`;
+            inputHtml = `
                 <input type="text"
                        id="answer-input"
                        placeholder="Type your answer here..."
@@ -440,6 +546,29 @@ document.addEventListener('DOMContentLoaded', () => {
                        autocapitalize="words"
                        autofocus>
                 <div class="input-help">Your answer is saved as you type.</div>
+            `;
+        } else if (data.round_type === 'multiple_choice') {
+            promptHtml = escapeHTML(data.question_text);
+            inputHtml = `
+                <div id="choices-container" class="choices-container">
+                    ${data.choices.map(choice => `<button class="choice-btn" data-choice="${escapeHTML(choice)}">${escapeHTML(choice)}</button>`).join('')}
+                </div>
+            `;
+        }
+
+        const newRoundHTML = `
+            <div class="game-header">
+                <h2>Round ${escapeHTML(data.round_number)}</h2>
+                <div class="game-code-small">Game: {{ game_session.game_code }}</div>
+            </div>
+            <div class="prompt-display">
+                ${promptHtml}
+            </div>
+            <div id="countdown-small" class="countdown-small">
+                <span id="timer">${escapeHTML(data.total_time)}</span>s
+            </div>
+            <div class="answer-input-container">
+                ${inputHtml}
             </div>
             <div id="answer-status" class="answer-status" style="display: none;">
                 <div class="status-icon">✓</div>
@@ -447,12 +576,15 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
         `;
         gameInterface.innerHTML = newRoundHTML;
-        attachAnswerInputListener();
         
-        // Re-enable input for new round
-        const answerInput = document.getElementById('answer-input');
-        if (answerInput) {
-            answerInput.disabled = false;
+        if (data.round_type === 'flower_fruit_veg') {
+            attachAnswerInputListener();
+            const answerInput = document.getElementById('answer-input');
+            if (answerInput) {
+                answerInput.disabled = false;
+            }
+        } else if (data.round_type === 'multiple_choice') {
+            attachChoiceButtonListeners();
         }
     }
 
@@ -461,20 +593,30 @@ document.addEventListener('DOMContentLoaded', () => {
     if (data.answers) console.log('[Player] Answers received:', data.answers);
         
         // Submit final answer if there's text in the input that hasn't been submitted yet
-        const answerInput = document.getElementById('answer-input');
-        if (answerInput && answerInput.value && answerInput.value !== lastSubmittedAnswer) {
-            console.log('[Player] Submitting final answer on round end:', answerInput.value);
-            saveAnswer(answerInput.value);
-            lastSubmittedAnswer = answerInput.value;
-        }
-        
-        // Disable input to prevent further changes
-        if (answerInput) {
-            answerInput.disabled = true;
+        if (currentRoundType === 'flower_fruit_veg') {
+            const answerInput = document.getElementById('answer-input');
+            if (answerInput && answerInput.value && answerInput.value !== lastSubmittedAnswer) {
+                console.log('[Player] Submitting final answer on round end:', answerInput.value);
+                saveAnswer(answerInput.value);
+                lastSubmittedAnswer = answerInput.value;
+            }
+            if (answerInput) {
+                answerInput.disabled = true;
+            }
+        } else if (currentRoundType === 'multiple_choice') {
+            const choiceButtons = document.querySelectorAll('.choice-btn');
+            choiceButtons.forEach(button => button.disabled = true);
         }
         
         const gameInterface = document.getElementById('game-interface');
         if (!gameInterface) return;
+
+        // Check if we already have a result display from player_result message
+        const existingResultDisplay = gameInterface.querySelector('.result-display');
+        if (existingResultDisplay) {
+            console.log('[Player] Keeping existing result display, not overriding with waiting screen');
+            return; // Don't override the result display
+        }
 
         let yourAnswerHTML = `
             <div class="no-answer">You didn't submit an answer for this round.</div>
@@ -518,14 +660,26 @@ document.addEventListener('DOMContentLoaded', () => {
             
             // Create descriptive reason based on points awarded
             let displayReason = '';
-            if (pointsAwarded === 10) {
-                displayReason = 'Correct & Unique Answer!';
-            } else if (pointsAwarded === 5) {
-                displayReason = 'Correct Answer (duplicate)';
-            } else if (pointsAwarded === 0) {
-                displayReason = 'Incorrect Answer';
-            } else {
-                displayReason = data.reason || 'Manual scoring';
+            if (currentRoundType === 'flower_fruit_veg') {
+                if (pointsAwarded === 10) {
+                    displayReason = 'Correct & Unique Answer!';
+                } else if (pointsAwarded === 5) {
+                    displayReason = 'Correct Answer (duplicate)';
+                } else if (pointsAwarded === 0) {
+                    displayReason = 'Incorrect Answer';
+                } else {
+                    displayReason = data.reason || 'Manual scoring';
+                }
+            } else if (currentRoundType === 'multiple_choice') {
+                if (pointsAwarded > 0) {
+                    displayReason = 'Correct Answer!';
+                    if (data.reason && data.reason.includes('_streak_')) {
+                        const streakNum = parseInt(data.reason.split('_streak_')[1]);
+                        displayReason += ` (${streakNum}x streak!)`;
+                    }
+                } else {
+                    displayReason = 'Incorrect Answer';
+                }
             }
             
             document.getElementById('score-reason').textContent = displayReason;
@@ -608,7 +762,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     round_number: data.current_round.round_number,
                     category: data.current_round.category,
                     letter: data.current_round.letter,
-                    total_time: data.current_round.total_time
+                    total_time: data.current_round.total_time,
+                    round_type: data.current_round.round_type,
+                    question_text: data.current_round.question_text,
+                    choices: data.current_round.choices
                 });
             } else if (data.current_round && !data.current_round.is_active) {
                 // Round has ended - show waiting for next round
@@ -666,7 +823,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 round_number: data.current_round.round_number,
                 category: data.current_round.category,
                 letter: data.current_round.letter,
-                total_time: data.current_round.total_time || data.current_round.time_remaining
+                total_time: data.current_round.total_time || data.current_round.time_remaining,
+                round_type: data.current_round.round_type,
+                question_text: data.current_round.question_text,
+                choices: data.current_round.choices
             });
         } else if (data.current_round && !data.current_round.is_active) {
             // Round has ended, show waiting state
@@ -743,6 +903,45 @@ document.addEventListener('DOMContentLoaded', () => {
         window.location.href = "{% url 'game_sessions:home' %}";
     }
 
+    function handlePlayerResult(data) {
+        console.log('[Player] Received result:', data);
+        
+        const gameInterface = document.getElementById('game-interface');
+        if (!gameInterface) return;
+        
+        // Determine result styling based on correctness
+        const isCorrect = data.is_correct;
+        const pointsEarned = data.points_earned || 0;
+        const resultClass = isCorrect ? 'result-correct' : 'result-incorrect';
+        const resultIcon = isCorrect ? '🎉' : '❌';
+        
+        // Build result HTML
+        let resultHTML = `
+            <div class="result-display ${resultClass}">
+                <div class="result-header">
+                    <div class="result-icon">${resultIcon}</div>
+                    <h3>Round ${data.round_number} Result</h3>
+                </div>
+                
+                <div class="result-message">
+                    ${data.message.split('\n').map(line => `<p>${escapeHTML(line)}</p>`).join('')}
+                </div>
+                
+                <div class="result-points">
+                    <span class="points-earned">+${pointsEarned} points</span>
+                </div>
+                
+                <div class="waiting-message">
+                    <div class="waiting-icon">⏳</div>
+                    <div>Waiting for next round...</div>
+                    <div class="sub-message">The game master will start the next round shortly</div>
+                </div>
+            </div>
+        `;
+        
+        gameInterface.innerHTML = resultHTML;
+    }
+
     function attachAnswerInputListener() {
         const answerInput = document.getElementById('answer-input');
         if (answerInput) {
@@ -757,11 +956,29 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    function attachChoiceButtonListeners() {
+        const choiceButtons = document.querySelectorAll('.choice-btn');
+        choiceButtons.forEach(button => {
+            button.addEventListener('click', (e) => {
+                // Disable all buttons after a choice is made
+                choiceButtons.forEach(btn => btn.disabled = true);
+                e.target.classList.add('selected');
+                saveAnswer(e.target.dataset.choice);
+            });
+        });
+    }
+
     // Initial setup
     initWebSocket();
-    if (document.getElementById('answer-input')) {
-        attachAnswerInputListener();
-    }
+    // Attach listeners based on initial round type if available
+    {% if current_round.is_active %}
+        currentRoundType = '{{ current_round.round_type }}';
+        if (currentRoundType === 'flower_fruit_veg') {
+            attachAnswerInputListener();
+        } else if (currentRoundType === 'multiple_choice') {
+            attachChoiceButtonListeners();
+        }
+    {% endif %}
 });
 </script>
 {% endblock %}

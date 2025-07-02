@@ -42,22 +42,38 @@ def broadcast_to_game(game_code, message_type, data):
 
 def broadcast_round_started(game_session, round_obj):
     """Broadcast that a round has started"""
+    # Map legacy round types for WebSocket compatibility
+    mapped_round_type = round_obj['round_type']
+    if mapped_round_type == 'starts_with':
+        mapped_round_type = 'flower_fruit_veg'
+    
     data = {
         'round_number': round_obj['round_number'],
-        'prompt': f"A {round_obj['category'].name.lower()} that starts with '{round_obj['prompt_letter']}'",
-        'letter': round_obj['prompt_letter'],
-        'category': round_obj['category'].name,
         'total_time': game_session.configuration.round_time_seconds,
         'started_at': round_obj['started_at'].isoformat() if round_obj['started_at'] else None,
-        'current_round': {
-            'round_number': round_obj['round_number'],
+        'round_type': mapped_round_type,  # Send the mapped round type
+        'is_active': True,
+        'time_remaining': game_session.configuration.round_time_seconds
+    }
+
+    # Handle both new and legacy round types for WebSocket compatibility
+    round_type = round_obj['round_type']
+    if round_type == 'starts_with':
+        round_type = 'flower_fruit_veg'
+    
+    if round_type == 'flower_fruit_veg':
+        data.update({
             'prompt': f"A {round_obj['category'].name.lower()} that starts with '{round_obj['prompt_letter']}'",
             'letter': round_obj['prompt_letter'],
             'category': round_obj['category'].name,
-            'is_active': True,
-            'time_remaining': game_session.configuration.round_time_seconds
-        }
-    }
+        })
+    elif round_obj['round_type'] == 'multiple_choice':
+        data.update({
+            'question_text': round_obj['question_text'],
+            'choices': round_obj['choices'],
+            'category': round_obj['category'],
+            'correct_answer': round_obj.get('correct_answer'),  # Include for GM screen
+        })
 
     broadcast_to_game(game_session.game_code, 'round_started', data)
 
@@ -66,11 +82,16 @@ def broadcast_round_ended(game_session, round_obj, answers_data=None):
     """Broadcast that a round has ended"""
     data = {
         'round_number': round_obj['round_number'],
+        'round_type': round_obj['round_type'],
         'is_final_round': round_obj['round_number'] >= game_session.configuration.num_rounds
     }
 
     if answers_data:
         data['answers'] = answers_data
+    
+    # Add correct answer for multiple choice questions
+    if round_obj['round_type'] == 'multiple_choice':
+        data['correct_answer'] = round_obj.get('correct_answer')
 
     broadcast_to_game(game_session.game_code, 'round_ended', data)
 
@@ -82,6 +103,140 @@ def broadcast_timer_update(game_code, time_remaining):
     }
     
     broadcast_to_game(game_code, 'timer_update', data)
+
+
+def broadcast_player_results(game_session, round_info, answers):
+    """Broadcast individual results to each player"""
+    from players.models import Player, PlayerAnswer
+    
+    logger.info(f"Broadcasting player results for game {game_session.game_code}, round {game_session.current_round_number}")
+    logger.info(f"Round type: {round_info['round_type']}")
+    
+    # Get the correct answer for this round
+    correct_answer = None
+    if round_info['round_type'] == 'multiple_choice':
+        correct_answer = round_info.get('correct_answer')
+        logger.info(f"Correct answer for multiple choice: {correct_answer}")
+    
+    # Send personalized feedback to each player
+    for player in game_session.players.filter(is_connected=True):
+        logger.info(f"Processing result for player {player.name} (ID: {player.id})")
+        
+        # Find this player's answer for the current round
+        player_answer = PlayerAnswer.objects.filter(
+            player=player,
+            round_number=game_session.current_round_number
+        ).first()
+        
+        logger.info(f"Player answer found: {player_answer.answer_text if player_answer else 'None'}")
+        
+        if player_answer:
+            # Player submitted an answer
+            if round_info['round_type'] == 'multiple_choice':
+                if player_answer.is_valid and player_answer.points_awarded > 0:
+                    # Correct answer
+                    message = f"🎉 Correct! You earned {player_answer.points_awarded} points."
+                    if player.correct_answer_streak > 1:
+                        message += f" ({player.correct_answer_streak} answer streak!)"
+                    message += f"\n\nThe correct answer was: {correct_answer}"
+                    message += f"\nYour answer: {player_answer.answer_text}"
+                else:
+                    # Incorrect answer
+                    message = f"❌ Incorrect. The correct answer was: {correct_answer}"
+                    message += f"\n\nYour answer: {player_answer.answer_text}"
+            else:
+                # Starts with round
+                if player_answer.is_unique:
+                    message = f"🌟 Unique answer! You earned {player_answer.points_awarded} points."
+                elif player_answer.is_valid and player_answer.points_awarded > 0:
+                    message = f"✅ Valid answer! You earned {player_answer.points_awarded} points."
+                else:
+                    message = f"❌ Invalid answer. No points awarded."
+                message += f"\n\nYour answer: {player_answer.answer_text}"
+        else:
+            # Player didn't submit an answer
+            message = "⏰ No answer submitted this round."
+        
+        # Broadcast to this specific player
+        from channels.layers import get_channel_layer
+        from asgiref.sync import async_to_sync
+        
+        player_group = f'player_{player.id}'
+        result_data = {
+            'round_number': game_session.current_round_number,
+            'message': message,
+            'points_earned': player_answer.points_awarded if player_answer else 0,
+            'is_correct': player_answer.is_valid if player_answer else False,
+            'correct_answer': correct_answer if round_info['round_type'] == 'multiple_choice' else None,
+            'player_answer': player_answer.answer_text if player_answer else None,
+            'round_type': round_info['round_type']
+        }
+        
+        logger.info(f"Sending player result to group {player_group}: {result_data}")
+        
+        channel_layer = get_channel_layer()
+        try:
+            async_to_sync(channel_layer.group_send)(
+                player_group,
+                {
+                    'type': 'player_result',
+                    'data': result_data
+                }
+            )
+            logger.info(f"Successfully sent player_result to {player_group}")
+        except Exception as e:
+            logger.error(f"Failed to send player_result to {player_group}: {e}")
+
+
+def broadcast_individual_player_result(game_session, player, answer, points_awarded, is_valid):
+    """Send individual result feedback to a specific player when their answer is validated"""
+    from channels.layers import get_channel_layer
+    from asgiref.sync import async_to_sync
+    
+    # Get round info for context
+    round_info = game_session.get_current_round_info()
+    if not round_info:
+        logger.error(f"Could not get round info for individual player result")
+        return
+    
+    # Create personalized message
+    if round_info['round_type'] == 'flower_fruit_veg':
+        if is_valid:
+            if getattr(answer, 'is_unique', False):
+                message = f"🌟 Unique answer! You earned {points_awarded} points."
+            else:
+                message = f"✅ Valid answer! You earned {points_awarded} points."
+        else:
+            message = f"❌ Invalid answer. No points awarded."
+        message += f"\n\nYour answer: {answer.answer_text}"
+    else:
+        # Fallback for other round types
+        message = f"{'✅ Correct!' if is_valid else '❌ Incorrect.'} You earned {points_awarded} points."
+    
+    player_group = f'player_{player.id}'
+    result_data = {
+        'round_number': game_session.current_round_number,
+        'message': message,
+        'points_earned': points_awarded,
+        'is_correct': is_valid,
+        'player_answer': answer.answer_text,
+        'round_type': round_info['round_type']
+    }
+    
+    logger.info(f"Sending individual validation result to player {player.name}: {result_data}")
+    
+    channel_layer = get_channel_layer()
+    try:
+        async_to_sync(channel_layer.group_send)(
+            player_group,
+            {
+                'type': 'player_result',
+                'data': result_data
+            }
+        )
+        logger.info(f"Successfully sent individual player_result to {player_group}")
+    except Exception as e:
+        logger.error(f"Failed to send individual player_result to {player_group}: {e}")
 
 
 def broadcast_score_update(game_session, player_name, points_awarded, reason="manual_validation"):
@@ -167,14 +322,10 @@ def start_timer_broadcast(game_session, round_obj):
                                     ).first()
                                     
                                     if not existing_answer and answer_text.strip():
-                                        # Create new answer object
-                                        PlayerAnswer.objects.create(
-                                            player=player,
-                                            round_number=current_game.current_round_number,
-                                            answer_text=answer_text.strip(),
-                                            is_valid=True,  # Will be validated during scoring
-                                            points_awarded=0
-                                        )
+                                        # Use round handler to create appropriate PlayerAnswer
+                                        from .round_handlers import get_round_handler
+                                        round_handler = get_round_handler(current_game, current_game.current_round_number)
+                                        round_handler.create_player_answer(player, answer_text.strip())
                                         logger.info(f"Auto-end: Created PlayerAnswer for player {player.name}: {answer_text}")
                                 except (ValueError, Player.DoesNotExist) as e:
                                     logger.warning(f"Auto-end: Could not create PlayerAnswer for player_id {player_id_str}: {e}")
