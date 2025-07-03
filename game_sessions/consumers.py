@@ -12,6 +12,11 @@ logger = logging.getLogger('websockets')
 class GameConsumer(AsyncWebsocketConsumer):
     async def connect(self):
         # Handle both test and production URL routing
+        """
+        Handles a new WebSocket connection for a game session.
+        
+        Extracts the game code from the connection scope or URL, joins the appropriate game group, accepts the WebSocket connection, and sends the initial game state to the client. Closes the connection if the game code cannot be determined.
+        """
         if 'url_route' in self.scope and 'kwargs' in self.scope['url_route']:
             self.game_code = self.scope['url_route']['kwargs']['game_code']
         else:
@@ -50,6 +55,11 @@ class GameConsumer(AsyncWebsocketConsumer):
         }))
 
     async def disconnect(self, _close_code):
+        """
+        Handles cleanup when a WebSocket client disconnects from a game session.
+        
+        Removes the client from the game group and, if identified, from the individual player group. Updates the player's connection status in the database.
+        """
         logger.info(f"WebSocket disconnecting from game {self.game_code}")
         await self.handle_player_disconnect()
         

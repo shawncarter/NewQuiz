@@ -240,7 +240,11 @@ def broadcast_individual_player_result(game_session, player, answer, points_awar
 
 
 def broadcast_score_update(game_session, player_name, points_awarded, reason="manual_validation"):
-    """Broadcast score update to all clients"""
+    """
+    Broadcasts a score update event to all clients in the game.
+    
+    If the player is found in the game session, includes their ID and current total score in the broadcast data. Otherwise, sends a minimal score update message.
+    """
     # Find the player to get their ID and current score
     try:
         from players.models import Player
@@ -266,7 +270,11 @@ def broadcast_score_update(game_session, player_name, points_awarded, reason="ma
 
 
 def start_timer_broadcast(game_session, _round_obj):
-    """Start broadcasting timer updates for a round"""
+    """
+    Starts a background thread to broadcast timer updates every second for the duration of a game round.
+    
+    When the timer expires, automatically ends the round if it is still active, transfers any cached player answers to the database, performs automatic scoring, and broadcasts the round ended event with answer data to all clients. The timer stops early if the round is manually ended or the game session is deleted.
+    """
     import threading
     import time
 
