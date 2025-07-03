@@ -7,7 +7,7 @@ allowing each game type to have its own logic for scoring, validation, and playe
 
 import logging
 from abc import ABC, abstractmethod
-from typing import Dict, List, Any, Optional
+from typing import Dict, Any
 from collections import Counter
 
 logger = logging.getLogger(__name__)
@@ -473,22 +473,10 @@ class MultipleChoiceRoundHandler(BaseRoundHandler):
         return message
     
     def _generate_new_question(self):
-        """Generate a new multiple choice question"""
-        category_name = "General Knowledge"
-        if self.config.categories.exists():
-            import random
-            random.seed(f"{self.game_session.game_code}_{self.round_number}")
-            category_name = random.choice(list(self.config.categories.values_list('name', flat=True)))
-
-        try:
-            from game_sessions.question_generator import generate_unique_multiple_choice_question
-            question = generate_unique_multiple_choice_question(category=category_name)
-            if question:
-                logger.info(f"Generated new question for game {self.game_session.game_code}, round {self.round_number}: {question.question_text}")
-                return question
-        except ImportError:
-            logger.warning("Question generator not available, using fallback")
-        
+        """Generate a new multiple choice question - currently returns None to use fallback"""
+        # Note: Question generation functionality removed - using fallback questions
+        # Future enhancement: Implement proper question generation here
+        logger.info(f"Using fallback questions for game {self.game_session.game_code}, round {self.round_number}")
         return None
     
     def _get_fallback_question_data(self):

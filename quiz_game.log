@@ -2398,3 +2398,581 @@ INFO 2025-07-03 21:49:49,588 websocket_utils 217500 136252795905728 Broadcasting
 INFO 2025-07-03 21:49:49,591 websocket_utils 217500 136252795905728 Successfully broadcast timer_update to game_FTG9P8
 INFO 2025-07-03 21:49:51,972 websocket_utils 217500 136252795905728 Broadcasting game_complete to group game_FTG9P8: {'game_status': 'finished', 'final_scores': [{'player_name': 'Test 3', 'total_score': 100}, {'player_name': 'Test 4', 'total_score': 10}], 'message': 'Game completed! Here are the final scores.'}
 INFO 2025-07-03 21:49:51,975 websocket_utils 217500 136252795905728 Successfully broadcast game_complete to game_FTG9P8
+INFO 2025-07-03 23:05:32,918 consumers 282234 129804032856192 WebSocket connecting to game FTG9P8
+INFO 2025-07-03 23:05:32,918 consumers 282234 129804032856192 WebSocket connected to game FTG9P8 (channel: specific..inmemory!FWmgQyCJRGWA)
+DEBUG 2025-07-03 23:05:32,925 cache_service 282234 129803976005312 Cached 2 connected players for game FTG9P8
+DEBUG 2025-07-03 23:05:32,925 cache_service 282234 129803976005312 Cached game state for FTG9P8: finished, 2 players
+INFO 2025-07-03 23:05:32,929 question_generator 282234 129803976005312 Attempt 1: Question 'What is the largest bone in the human body?' already exists. Retrying...
+INFO 2025-07-03 23:05:32,930 question_generator 282234 129803976005312 Attempt 2: Question 'What is the smallest country in the world?' already exists. Retrying...
+INFO 2025-07-03 23:05:32,931 question_generator 282234 129803976005312 Attempt 3: Question 'What is the largest mammal in the world?' already exists. Retrying...
+INFO 2025-07-03 23:05:32,932 question_generator 282234 129803976005312 Attempt 4: Question 'What is the largest mammal in the world?' already exists. Retrying...
+INFO 2025-07-03 23:05:32,932 question_generator 282234 129803976005312 Attempt 5: Question 'What is the smallest country in the world?' already exists. Retrying...
+ERROR 2025-07-03 23:05:32,932 question_generator 282234 129803976005312 Failed to generate a unique multiple-choice question for category 'General Knowledge' after 5 attempts.
+INFO 2025-07-03 23:05:32,933 round_handlers 282234 129803976005312 Using FALLBACK question data for game FTG9P8, round 5: What is the largest mammal in the world?
+INFO 2025-07-03 23:05:32,933 consumers 282234 129804032856192 Sending initial game state to new connection for FTG9P8
+INFO 2025-07-03 23:05:32,934 consumers 282234 129804032856192 Player identified as 150 for game FTG9P8
+INFO 2025-07-03 23:05:32,934 consumers 282234 129804032856192 Added player 150 to individual group
+DEBUG 2025-07-03 23:05:47,408 cache_service 282547 127480523518080 Cached game state for NH4FE0: waiting, 1 players
+DEBUG 2025-07-03 23:05:47,410 cache_service 282547 127480523518080 Cached answer for player 1 in round 1: Rose...
+DEBUG 2025-07-03 23:05:47,411 cache_service 282547 127480523518080 Cached answer for player 1 in round 1: Rose...
+DEBUG 2025-07-03 23:05:47,411 cache_service 282547 127480523518080 Invalidated game state cache for JLUMCY
+INFO 2025-07-03 23:05:47,449 services 282547 127480523518080 Player Test Player created for game BAUMW5
+INFO 2025-07-03 23:05:47,450 services 282547 127480523518080 Player Test Player joined game BAUMW5. Total players: 1
+DEBUG 2025-07-03 23:05:47,450 cache_service 282547 127480523518080 Cached game state for BAUMW5: waiting, 1 players
+DEBUG 2025-07-03 23:05:47,451 cache_service 282547 127480523518080 Cached 1 connected players for game BAUMW5
+INFO 2025-07-03 23:05:47,451 services 282547 127480523518080 Broadcasting player join: {'game_status': 'waiting', 'player_count': 1, 'players': [{'id': 1, 'name': 'Test Player', 'joined_at': '23:05:47', 'total_score': 0}], 'message': 'Test Player joined the game!'}
+INFO 2025-07-03 23:05:47,454 services 282547 127480523518080 Player Test Player created for game cxdvrr
+INFO 2025-07-03 23:05:47,454 services 282547 127480523518080 Player Test Player joined game CXDVRR. Total players: 1
+DEBUG 2025-07-03 23:05:47,455 cache_service 282547 127480523518080 Cached game state for CXDVRR: waiting, 1 players
+DEBUG 2025-07-03 23:05:47,455 cache_service 282547 127480523518080 Cached 1 connected players for game CXDVRR
+INFO 2025-07-03 23:05:47,455 services 282547 127480523518080 Broadcasting player join: {'game_status': 'waiting', 'player_count': 1, 'players': [{'id': 1, 'name': 'Test Player', 'joined_at': '23:05:47', 'total_score': 0}], 'message': 'Test Player joined the game!'}
+INFO 2025-07-03 23:05:47,455 websocket_utils 282547 127480523518080 Broadcasting game_update to group game_CXDVRR: {'game_status': 'waiting', 'player_count': 1, 'players': [{'id': 1, 'name': 'Test Player', 'joined_at': '23:05:47', 'total_score': 0}], 'message': 'Test Player joined the game!'}
+INFO 2025-07-03 23:05:47,456 websocket_utils 282547 127480523518080 Successfully broadcast game_update to game_CXDVRR
+INFO 2025-07-03 23:05:47,459 services 282547 127480523518080 Player   Test Player   created for game KRZ1DH
+INFO 2025-07-03 23:05:47,460 services 282547 127480523518080 Player   Test Player   joined game KRZ1DH. Total players: 1
+DEBUG 2025-07-03 23:05:47,461 cache_service 282547 127480523518080 Cached game state for KRZ1DH: waiting, 1 players
+DEBUG 2025-07-03 23:05:47,462 cache_service 282547 127480523518080 Cached 1 connected players for game KRZ1DH
+INFO 2025-07-03 23:05:47,462 services 282547 127480523518080 Broadcasting player join: {'game_status': 'waiting', 'player_count': 1, 'players': [{'id': 1, 'name': '  Test Player  ', 'joined_at': '23:05:47', 'total_score': 0}], 'message': '  Test Player   joined the game!'}
+INFO 2025-07-03 23:05:47,462 websocket_utils 282547 127480523518080 Broadcasting game_update to group game_KRZ1DH: {'game_status': 'waiting', 'player_count': 1, 'players': [{'id': 1, 'name': '  Test Player  ', 'joined_at': '23:05:47', 'total_score': 0}], 'message': '  Test Player   joined the game!'}
+INFO 2025-07-03 23:05:47,463 websocket_utils 282547 127480523518080 Successfully broadcast game_update to game_KRZ1DH
+INFO 2025-07-03 23:05:47,490 services 282547 127480523518080 Player AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA created for game 02YX1C
+INFO 2025-07-03 23:05:47,491 services 282547 127480523518080 Player AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA joined game 02YX1C. Total players: 1
+DEBUG 2025-07-03 23:05:47,492 cache_service 282547 127480523518080 Cached game state for 02YX1C: waiting, 1 players
+DEBUG 2025-07-03 23:05:47,492 cache_service 282547 127480523518080 Cached 1 connected players for game 02YX1C
+INFO 2025-07-03 23:05:47,492 services 282547 127480523518080 Broadcasting player join: {'game_status': 'waiting', 'player_count': 1, 'players': [{'id': 1, 'name': 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA', 'joined_at': '23:05:47', 'total_score': 0}], 'message': 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA joined the game!'}
+INFO 2025-07-03 23:05:47,492 websocket_utils 282547 127480523518080 Broadcasting game_update to group game_02YX1C: {'game_status': 'waiting', 'player_count': 1, 'players': [{'id': 1, 'name': 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA', 'joined_at': '23:05:47', 'total_score': 0}], 'message': 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA joined the game!'}
+INFO 2025-07-03 23:05:47,493 websocket_utils 282547 127480523518080 Successfully broadcast game_update to game_02YX1C
+INFO 2025-07-03 23:05:47,505 round_handlers 282547 127480523518080 Cached FFV data for game IINFSP, round 1: Flowers - R
+DEBUG 2025-07-03 23:05:47,505 services 282547 127480523518080 No cached answers found for game IINFSP round 1
+INFO 2025-07-03 23:05:47,508 round_handlers 282547 127480523518080 Prepared 1 Flower, Fruit & Veg answers for manual validation
+DEBUG 2025-07-03 23:05:47,508 cache_service 282547 127480523518080 Invalidated game state cache for IINFSP
+DEBUG 2025-07-03 23:05:47,516 cache_service 282547 127480523518080 Cached answer for player 1 in round 1: Rose...
+INFO 2025-07-03 23:05:47,519 services 282547 127480523518080 Processed answer for player Test Player: Rose...
+INFO 2025-07-03 23:05:47,519 services 282547 127480523518080 Bulk created 1 PlayerAnswer objects
+DEBUG 2025-07-03 23:05:47,519 cache_service 282547 127480523518080 Cleared cached answers for round 1
+INFO 2025-07-03 23:05:47,520 services 282547 127480523518080 Processed 1 cached answers into database
+INFO 2025-07-03 23:05:47,559 round_handlers 282547 127480523518080 Cached FFV data for game 65NQDE, round 1: Flowers - W
+DEBUG 2025-07-03 23:05:47,559 cache_service 282547 127480523518080 Cached round state for round 1: flower_fruit_veg
+DEBUG 2025-07-03 23:05:47,559 cache_service 282547 127480523518080 Invalidated game state cache for 65NQDE
+INFO 2025-07-03 23:05:47,566 services 282547 127480523518080 Player Player 2 joined game 6FIKZV. Total players: 2
+DEBUG 2025-07-03 23:05:47,567 cache_service 282547 127480523518080 Cached game state for 6FIKZV: waiting, 2 players
+DEBUG 2025-07-03 23:05:47,567 cache_service 282547 127480523518080 Cached 2 connected players for game 6FIKZV
+INFO 2025-07-03 23:05:47,567 services 282547 127480523518080 Broadcasting player join: {'game_status': 'waiting', 'player_count': 2, 'players': [{'id': 1, 'name': 'Player 1', 'joined_at': '23:05:47', 'total_score': 0}, {'id': 2, 'name': 'Player 2', 'joined_at': '23:05:47', 'total_score': 0}], 'message': 'Player 2 joined the game!'}
+INFO 2025-07-03 23:05:47,583 services 282547 127480523518080 Player Test Player created for game H7LB0V
+INFO 2025-07-03 23:05:47,594 services 282547 127480523518080 Player Test Player reconnected to game GGKHMS
+INFO 2025-07-03 23:05:47,601 services 282547 127480523518080 Player Player 1 created for game IU1HKU
+INFO 2025-07-03 23:05:47,603 services 282547 127480523518080 Player Player 2 created for game IU1HKU
+INFO 2025-07-03 23:05:47,608 round_handlers 282547 127480523518080 Cached FFV data for game IU1HKU, round 1: Flowers - J
+DEBUG 2025-07-03 23:05:47,608 cache_service 282547 127480523518080 Cached round state for round 1: flower_fruit_veg
+DEBUG 2025-07-03 23:05:47,608 cache_service 282547 127480523518080 Invalidated game state cache for IU1HKU
+INFO 2025-07-03 23:05:47,609 websocket_utils 282547 127480400705216 Broadcasting timer_update to group game_IU1HKU: {'time_remaining': 29}
+INFO 2025-07-03 23:05:47,613 websocket_utils 282547 127480400705216 Successfully broadcast timer_update to game_IU1HKU
+DEBUG 2025-07-03 23:05:47,616 cache_service 282547 127480523518080 Marked round 1 as ended in cache
+DEBUG 2025-07-03 23:05:47,618 services 282547 127480523518080 No cached answers found for game IU1HKU round 1
+INFO 2025-07-03 23:05:47,620 round_handlers 282547 127480523518080 Prepared 2 Flower, Fruit & Veg answers for manual validation
+DEBUG 2025-07-03 23:05:47,624 cache_service 282547 127480523518080 Invalidated game state cache for IU1HKU
+INFO 2025-07-03 23:05:47,626 round_handlers 282547 127480523518080 Cached FFV data for game IU1HKU, round 2: Flowers - J
+DEBUG 2025-07-03 23:05:47,626 cache_service 282547 127480523518080 Cached round state for round 2: flower_fruit_veg
+DEBUG 2025-07-03 23:05:47,627 cache_service 282547 127480523518080 Invalidated game state cache for IU1HKU
+INFO 2025-07-03 23:05:47,628 websocket_utils 282547 127480400705216 Broadcasting timer_update to group game_IU1HKU: {'time_remaining': 29}
+INFO 2025-07-03 23:05:47,633 websocket_utils 282547 127480400705216 Successfully broadcast timer_update to game_IU1HKU
+DEBUG 2025-07-03 23:05:47,636 cache_service 282547 127480523518080 Marked round 2 as ended in cache
+DEBUG 2025-07-03 23:05:47,636 services 282547 127480523518080 No cached answers found for game IU1HKU round 2
+INFO 2025-07-03 23:05:47,639 round_handlers 282547 127480523518080 Prepared 1 Flower, Fruit & Veg answers for manual validation
+DEBUG 2025-07-03 23:05:47,641 cache_service 282547 127480523518080 Invalidated game state cache for IU1HKU
+INFO 2025-07-03 23:05:47,657 services 282547 127480523518080 Removing duplicate player Player 1 (id=3) during restart
+INFO 2025-07-03 23:05:47,731 websocket_utils 282547 127480523518080 Broadcasting game_started to group game_XFQ0PT: {'game_status': 'active', 'message': 'Game has started! Get ready for the first round.', 'player_count': 1}
+INFO 2025-07-03 23:05:47,732 websocket_utils 282547 127480523518080 Successfully broadcast game_started to game_XFQ0PT
+INFO 2025-07-03 23:05:47,746 services 282547 127480523518080 Player Test Player reconnected to game 08ZXT3
+INFO 2025-07-03 23:05:47,747 services 282547 127480523518080 Player Test Player joined game 08ZXT3. Total players: 1
+DEBUG 2025-07-03 23:05:47,748 cache_service 282547 127480523518080 Cached game state for 08ZXT3: waiting, 1 players
+DEBUG 2025-07-03 23:05:47,748 cache_service 282547 127480523518080 Cached 1 connected players for game 08ZXT3
+INFO 2025-07-03 23:05:47,749 services 282547 127480523518080 Broadcasting player join: {'game_status': 'waiting', 'player_count': 1, 'players': [{'id': 1, 'name': 'Test Player', 'joined_at': '23:05:47', 'total_score': 0}], 'message': 'Test Player joined the game!'}
+INFO 2025-07-03 23:05:47,749 websocket_utils 282547 127480523518080 Broadcasting game_update to group game_08ZXT3: {'game_status': 'waiting', 'player_count': 1, 'players': [{'id': 1, 'name': 'Test Player', 'joined_at': '23:05:47', 'total_score': 0}], 'message': 'Test Player joined the game!'}
+INFO 2025-07-03 23:05:47,749 websocket_utils 282547 127480523518080 Successfully broadcast game_update to game_08ZXT3
+INFO 2025-07-03 23:05:47,776 services 282547 127480523518080 Player Test Player created for game CABWNK
+INFO 2025-07-03 23:05:47,777 services 282547 127480523518080 Player Test Player joined game CABWNK. Total players: 1
+DEBUG 2025-07-03 23:05:47,778 cache_service 282547 127480523518080 Cached game state for CABWNK: waiting, 1 players
+DEBUG 2025-07-03 23:05:47,778 cache_service 282547 127480523518080 Cached 1 connected players for game CABWNK
+INFO 2025-07-03 23:05:47,779 services 282547 127480523518080 Broadcasting player join: {'game_status': 'waiting', 'player_count': 1, 'players': [{'id': 1, 'name': 'Test Player', 'joined_at': '23:05:47', 'total_score': 0}], 'message': 'Test Player joined the game!'}
+INFO 2025-07-03 23:05:47,779 websocket_utils 282547 127480523518080 Broadcasting game_update to group game_CABWNK: {'game_status': 'waiting', 'player_count': 1, 'players': [{'id': 1, 'name': 'Test Player', 'joined_at': '23:05:47', 'total_score': 0}], 'message': 'Test Player joined the game!'}
+INFO 2025-07-03 23:05:47,780 websocket_utils 282547 127480523518080 Successfully broadcast game_update to game_CABWNK
+INFO 2025-07-03 23:05:47,797 services 282547 127480523518080 Player Player 1 created for game LCDMZF
+INFO 2025-07-03 23:05:47,798 services 282547 127480523518080 Player Player 1 joined game LCDMZF. Total players: 1
+DEBUG 2025-07-03 23:05:47,799 cache_service 282547 127480523518080 Cached game state for LCDMZF: waiting, 1 players
+DEBUG 2025-07-03 23:05:47,800 cache_service 282547 127480523518080 Cached 1 connected players for game LCDMZF
+INFO 2025-07-03 23:05:47,800 services 282547 127480523518080 Broadcasting player join: {'game_status': 'waiting', 'player_count': 1, 'players': [{'id': 1, 'name': 'Player 1', 'joined_at': '23:05:47', 'total_score': 0}], 'message': 'Player 1 joined the game!'}
+INFO 2025-07-03 23:05:47,800 websocket_utils 282547 127480523518080 Broadcasting game_update to group game_LCDMZF: {'game_status': 'waiting', 'player_count': 1, 'players': [{'id': 1, 'name': 'Player 1', 'joined_at': '23:05:47', 'total_score': 0}], 'message': 'Player 1 joined the game!'}
+INFO 2025-07-03 23:05:47,801 websocket_utils 282547 127480523518080 Successfully broadcast game_update to game_LCDMZF
+INFO 2025-07-03 23:05:47,806 services 282547 127480523518080 Player Player 2 created for game LCDMZF
+INFO 2025-07-03 23:05:47,807 services 282547 127480523518080 Player Player 2 joined game LCDMZF. Total players: 2
+DEBUG 2025-07-03 23:05:47,807 cache_service 282547 127480523518080 Cached game state for LCDMZF: waiting, 2 players
+DEBUG 2025-07-03 23:05:47,807 cache_service 282547 127480523518080 Cached 2 connected players for game LCDMZF
+INFO 2025-07-03 23:05:47,808 services 282547 127480523518080 Broadcasting player join: {'game_status': 'waiting', 'player_count': 2, 'players': [{'id': 1, 'name': 'Player 1', 'joined_at': '23:05:47', 'total_score': 0}, {'id': 2, 'name': 'Player 2', 'joined_at': '23:05:47', 'total_score': 0}], 'message': 'Player 2 joined the game!'}
+INFO 2025-07-03 23:05:47,808 websocket_utils 282547 127480523518080 Broadcasting game_update to group game_LCDMZF: {'game_status': 'waiting', 'player_count': 2, 'players': [{'id': 1, 'name': 'Player 1', 'joined_at': '23:05:47', 'total_score': 0}, {'id': 2, 'name': 'Player 2', 'joined_at': '23:05:47', 'total_score': 0}], 'message': 'Player 2 joined the game!'}
+INFO 2025-07-03 23:05:47,808 websocket_utils 282547 127480523518080 Successfully broadcast game_update to game_LCDMZF
+INFO 2025-07-03 23:05:47,813 consumers 282547 127480392312512 WebSocket connecting to game CKCOH5
+INFO 2025-07-03 23:05:47,814 consumers 282547 127480392312512 WebSocket connected to game CKCOH5 (channel: specific..inmemory!kxxxCdewqoJu)
+DEBUG 2025-07-03 23:05:47,815 cache_service 282547 127480523518080 Cached 0 connected players for game CKCOH5
+DEBUG 2025-07-03 23:05:47,816 cache_service 282547 127480523518080 Cached game state for CKCOH5: waiting, 0 players
+INFO 2025-07-03 23:05:47,816 consumers 282547 127480392312512 Sending initial game state to new connection for CKCOH5
+INFO 2025-07-03 23:05:47,816 consumers 282547 127480392312512 WebSocket disconnecting from game CKCOH5
+WARNING 2025-07-03 23:05:47,817 consumers 282547 127480523518080 WebSocket disconnect without player identification for game CKCOH5
+INFO 2025-07-03 23:05:47,823 consumers 282547 127480523518080 WebSocket connecting to game E5OWNZ
+INFO 2025-07-03 23:05:47,823 consumers 282547 127480523518080 WebSocket connected to game E5OWNZ (channel: specific..inmemory!SGhjovoEoYaU)
+ERROR 2025-07-03 23:05:47,825 consumers 282547 127480392312512 Error getting game state for E5OWNZ: database table is locked: game_sessions_gamesession
+INFO 2025-07-03 23:05:47,826 consumers 282547 127480523518080 Sending initial game state to new connection for E5OWNZ
+INFO 2025-07-03 23:05:47,834 consumers 282547 127480383919808 WebSocket connecting to game XQBFAO
+INFO 2025-07-03 23:05:47,834 consumers 282547 127480383919808 WebSocket connected to game XQBFAO (channel: specific..inmemory!PkSEeAqgPBBj)
+DEBUG 2025-07-03 23:05:47,836 cache_service 282547 127480523518080 Cached 0 connected players for game XQBFAO
+DEBUG 2025-07-03 23:05:47,836 cache_service 282547 127480523518080 Cached game state for XQBFAO: waiting, 0 players
+INFO 2025-07-03 23:05:47,836 consumers 282547 127480383919808 Sending initial game state to new connection for XQBFAO
+INFO 2025-07-03 23:05:47,837 websocket_utils 282547 127480383919808 Broadcasting game_update to group game_XQBFAO: {'game_status': 'waiting', 'player_count': 0, 'message': 'Game restarted! Get ready for a new game.'}
+ERROR 2025-07-03 23:05:47,837 websocket_utils 282547 127480383919808 Failed to broadcast game_update to game_XQBFAO: You cannot use AsyncToSync in the same thread as an async event loop - just await the async function directly.
+ERROR 2025-07-03 23:05:47,937 websocket_utils 282547 127480383919808 Failed to broadcast game_update to game_XQBFAO on retry: You cannot use AsyncToSync in the same thread as an async event loop - just await the async function directly.
+INFO 2025-07-03 23:05:48,036 websocket_utils 282547 127480483006144 Broadcasting game_restart_confirmation to group game_PWFKJN: {'game_status': 'waiting', 'player_count': 0, 'message': "Game restarted! Please return to lobby if you haven't already.", 'force_redirect': True, 'restart_timestamp': 1751583948}
+INFO 2025-07-03 23:05:48,037 websocket_utils 282547 127480483006144 Successfully broadcast game_restart_confirmation to game_PWFKJN
+INFO 2025-07-03 23:05:48,162 websocket_utils 282547 127480400705216 Broadcasting game_restart_confirmation to group game_4N3AEB: {'game_status': 'waiting', 'player_count': 0, 'message': "Game restarted! Please return to lobby if you haven't already.", 'force_redirect': True, 'restart_timestamp': 1751583948}
+INFO 2025-07-03 23:05:48,163 websocket_utils 282547 127480400705216 Successfully broadcast game_restart_confirmation to game_4N3AEB
+INFO 2025-07-03 23:05:48,957 consumers 282547 127480523518080 WebSocket connecting to game PL6TQW
+INFO 2025-07-03 23:05:48,957 consumers 282547 127480523518080 WebSocket connected to game PL6TQW (channel: specific..inmemory!UTNoUMVGjXgX)
+ERROR 2025-07-03 23:05:48,960 consumers 282547 127480392312512 Error getting game state for PL6TQW: database table is locked: game_sessions_gamesession
+INFO 2025-07-03 23:05:48,961 consumers 282547 127480523518080 Sending initial game state to new connection for PL6TQW
+INFO 2025-07-03 23:05:48,962 websocket_utils 282547 127480523518080 Broadcasting game_update to group game_PL6TQW: {'game_status': 'waiting', 'player_count': 0, 'message': 'Game restarted! Get ready for a new game.'}
+ERROR 2025-07-03 23:05:48,962 websocket_utils 282547 127480523518080 Failed to broadcast game_update to game_PL6TQW: You cannot use AsyncToSync in the same thread as an async event loop - just await the async function directly.
+ERROR 2025-07-03 23:05:49,063 websocket_utils 282547 127480523518080 Failed to broadcast game_update to game_PL6TQW on retry: You cannot use AsyncToSync in the same thread as an async event loop - just await the async function directly.
+INFO 2025-07-03 23:05:50,069 consumers 282547 127480400705216 WebSocket connecting to game LJONX0
+INFO 2025-07-03 23:05:50,069 consumers 282547 127480400705216 WebSocket connected to game LJONX0 (channel: specific..inmemory!btGOTaJJqvQm)
+DEBUG 2025-07-03 23:05:50,071 cache_service 282547 127480523518080 Cached 0 connected players for game LJONX0
+DEBUG 2025-07-03 23:05:50,071 cache_service 282547 127480523518080 Cached game state for LJONX0: waiting, 0 players
+INFO 2025-07-03 23:05:50,072 consumers 282547 127480400705216 Sending initial game state to new connection for LJONX0
+INFO 2025-07-03 23:05:50,072 websocket_utils 282547 127480400705216 Broadcasting game_update to group game_LJONX0: {'game_status': 'waiting', 'player_count': 1, 'message': 'Test player joined!'}
+ERROR 2025-07-03 23:05:50,072 websocket_utils 282547 127480400705216 Failed to broadcast game_update to game_LJONX0: You cannot use AsyncToSync in the same thread as an async event loop - just await the async function directly.
+ERROR 2025-07-03 23:05:50,172 websocket_utils 282547 127480400705216 Failed to broadcast game_update to game_LJONX0 on retry: You cannot use AsyncToSync in the same thread as an async event loop - just await the async function directly.
+INFO 2025-07-03 23:05:51,191 consumers 282547 127480523518080 WebSocket connecting to game NURDVO
+INFO 2025-07-03 23:05:51,192 consumers 282547 127480523518080 WebSocket connected to game NURDVO (channel: specific..inmemory!buKUDTHHKZkd)
+ERROR 2025-07-03 23:05:51,195 consumers 282547 127480392312512 Error getting game state for NURDVO: database table is locked: game_sessions_gamesession
+INFO 2025-07-03 23:05:51,196 consumers 282547 127480523518080 Sending initial game state to new connection for NURDVO
+INFO 2025-07-03 23:05:51,197 websocket_utils 282547 127480523518080 Broadcasting game_update to group game_NURDVO: {'game_status': 'waiting', 'player_count': 1, 'message': 'Test player joined!'}
+ERROR 2025-07-03 23:05:51,197 websocket_utils 282547 127480523518080 Failed to broadcast game_update to game_NURDVO: You cannot use AsyncToSync in the same thread as an async event loop - just await the async function directly.
+ERROR 2025-07-03 23:05:51,297 websocket_utils 282547 127480523518080 Failed to broadcast game_update to game_NURDVO on retry: You cannot use AsyncToSync in the same thread as an async event loop - just await the async function directly.
+INFO 2025-07-03 23:05:52,307 consumers 282547 127480483006144 WebSocket connecting to game MIURVY
+INFO 2025-07-03 23:05:52,307 consumers 282547 127480483006144 WebSocket connected to game MIURVY (channel: specific..inmemory!kBirEfuaHmZa)
+DEBUG 2025-07-03 23:05:52,311 cache_service 282547 127480523518080 Cached 0 connected players for game MIURVY
+DEBUG 2025-07-03 23:05:52,311 cache_service 282547 127480523518080 Cached game state for MIURVY: waiting, 0 players
+INFO 2025-07-03 23:05:52,312 consumers 282547 127480483006144 Sending initial game state to new connection for MIURVY
+DEBUG 2025-07-03 23:05:52,313 consumers 282547 127480523518080 Using cached game state for MIURVY (age: 0.0s)
+INFO 2025-07-03 23:05:52,315 consumers 282547 127480483006144 WebSocket disconnecting from game MIURVY
+WARNING 2025-07-03 23:05:52,316 consumers 282547 127480523518080 WebSocket disconnect without player identification for game MIURVY
+INFO 2025-07-03 23:05:52,323 consumers 282547 127480523518080 WebSocket connecting to game O064G4
+INFO 2025-07-03 23:05:52,323 consumers 282547 127480523518080 WebSocket connected to game O064G4 (channel: specific..inmemory!etNcvWpKcdlx)
+ERROR 2025-07-03 23:05:52,324 consumers 282547 127480392312512 Error getting game state for O064G4: database table is locked: game_sessions_gamesession
+INFO 2025-07-03 23:05:52,325 consumers 282547 127480523518080 Sending initial game state to new connection for O064G4
+ERROR 2025-07-03 23:05:52,327 consumers 282547 127480392312512 Error getting game state for O064G4: database table is locked: game_sessions_gamesession
+INFO 2025-07-03 23:05:52,328 consumers 282547 127480523518080 WebSocket disconnecting from game O064G4
+INFO 2025-07-03 23:05:52,359 services 282547 127480523518080 Player Player 1 created for game FTG1KW
+INFO 2025-07-03 23:05:52,360 services 282547 127480523518080 Player Player 1 joined game FTG1KW. Total players: 1
+DEBUG 2025-07-03 23:05:52,362 cache_service 282547 127480523518080 Cached game state for FTG1KW: waiting, 1 players
+DEBUG 2025-07-03 23:05:52,362 cache_service 282547 127480523518080 Cached 1 connected players for game FTG1KW
+INFO 2025-07-03 23:05:52,362 services 282547 127480523518080 Broadcasting player join: {'game_status': 'waiting', 'player_count': 1, 'players': [{'id': 1, 'name': 'Player 1', 'joined_at': '23:05:52', 'total_score': 0}], 'message': 'Player 1 joined the game!'}
+INFO 2025-07-03 23:05:52,362 websocket_utils 282547 127480523518080 Broadcasting game_update to group game_FTG1KW: {'game_status': 'waiting', 'player_count': 1, 'players': [{'id': 1, 'name': 'Player 1', 'joined_at': '23:05:52', 'total_score': 0}], 'message': 'Player 1 joined the game!'}
+INFO 2025-07-03 23:05:52,363 websocket_utils 282547 127480523518080 Successfully broadcast game_update to game_FTG1KW
+INFO 2025-07-03 23:05:52,366 services 282547 127480523518080 Player Player 2 created for game FTG1KW
+INFO 2025-07-03 23:05:52,367 services 282547 127480523518080 Player Player 2 joined game FTG1KW. Total players: 2
+DEBUG 2025-07-03 23:05:52,367 cache_service 282547 127480523518080 Cached game state for FTG1KW: waiting, 2 players
+DEBUG 2025-07-03 23:05:52,367 cache_service 282547 127480523518080 Cached 2 connected players for game FTG1KW
+INFO 2025-07-03 23:05:52,368 services 282547 127480523518080 Broadcasting player join: {'game_status': 'waiting', 'player_count': 2, 'players': [{'id': 1, 'name': 'Player 1', 'joined_at': '23:05:52', 'total_score': 0}, {'id': 2, 'name': 'Player 2', 'joined_at': '23:05:52', 'total_score': 0}], 'message': 'Player 2 joined the game!'}
+INFO 2025-07-03 23:05:52,368 websocket_utils 282547 127480523518080 Broadcasting game_update to group game_FTG1KW: {'game_status': 'waiting', 'player_count': 2, 'players': [{'id': 1, 'name': 'Player 1', 'joined_at': '23:05:52', 'total_score': 0}, {'id': 2, 'name': 'Player 2', 'joined_at': '23:05:52', 'total_score': 0}], 'message': 'Player 2 joined the game!'}
+INFO 2025-07-03 23:05:52,369 websocket_utils 282547 127480523518080 Successfully broadcast game_update to game_FTG1KW
+INFO 2025-07-03 23:05:52,374 services 282547 127480523518080 Player Test Player created for game 5WJD5F
+INFO 2025-07-03 23:05:52,376 services 282547 127480523518080 Player Test Player joined game 5WJD5F. Total players: 1
+DEBUG 2025-07-03 23:05:52,376 cache_service 282547 127480523518080 Cached game state for 5WJD5F: waiting, 1 players
+DEBUG 2025-07-03 23:05:52,377 cache_service 282547 127480523518080 Cached 1 connected players for game 5WJD5F
+INFO 2025-07-03 23:05:52,377 services 282547 127480523518080 Broadcasting player join: {'game_status': 'waiting', 'player_count': 1, 'players': [{'id': 1, 'name': 'Test Player', 'joined_at': '23:05:52', 'total_score': 0}], 'message': 'Test Player joined the game!'}
+INFO 2025-07-03 23:05:52,377 websocket_utils 282547 127480523518080 Broadcasting game_update to group game_5WJD5F: {'game_status': 'waiting', 'player_count': 1, 'players': [{'id': 1, 'name': 'Test Player', 'joined_at': '23:05:52', 'total_score': 0}], 'message': 'Test Player joined the game!'}
+INFO 2025-07-03 23:05:52,378 websocket_utils 282547 127480523518080 Successfully broadcast game_update to game_5WJD5F
+INFO 2025-07-03 23:05:52,382 services 282547 127480523518080 Player Test Player reconnected to game 5WJD5F
+INFO 2025-07-03 23:05:52,382 services 282547 127480523518080 Player Test Player joined game 5WJD5F. Total players: 1
+DEBUG 2025-07-03 23:05:52,383 cache_service 282547 127480523518080 Cached game state for 5WJD5F: waiting, 1 players
+DEBUG 2025-07-03 23:05:52,383 cache_service 282547 127480523518080 Cached 1 connected players for game 5WJD5F
+INFO 2025-07-03 23:05:52,384 services 282547 127480523518080 Broadcasting player join: {'game_status': 'waiting', 'player_count': 1, 'players': [{'id': 1, 'name': 'Test Player', 'joined_at': '23:05:52', 'total_score': 0}], 'message': 'Test Player joined the game!'}
+INFO 2025-07-03 23:05:52,384 websocket_utils 282547 127480523518080 Broadcasting game_update to group game_5WJD5F: {'game_status': 'waiting', 'player_count': 1, 'players': [{'id': 1, 'name': 'Test Player', 'joined_at': '23:05:52', 'total_score': 0}], 'message': 'Test Player joined the game!'}
+INFO 2025-07-03 23:05:52,384 websocket_utils 282547 127480523518080 Successfully broadcast game_update to game_5WJD5F
+INFO 2025-07-03 23:05:52,391 round_handlers 282547 127480523518080 Cached FFV data for game TI889T, round 1: Fictional Characters - T
+DEBUG 2025-07-03 23:09:44,770 cache_service 285421 127403492593792 Cached game state for 78J5BC: waiting, 1 players
+DEBUG 2025-07-03 23:09:44,772 cache_service 285421 127403492593792 Cached answer for player 1 in round 1: Rose...
+DEBUG 2025-07-03 23:09:44,774 cache_service 285421 127403492593792 Cached answer for player 1 in round 1: Rose...
+DEBUG 2025-07-03 23:09:44,775 cache_service 285421 127403492593792 Invalidated game state cache for 9VNTAX
+INFO 2025-07-03 23:09:44,857 services 285421 127403492593792 Player Test Player created for game WS9P1U
+INFO 2025-07-03 23:09:44,858 services 285421 127403492593792 Player Test Player joined game WS9P1U. Total players: 1
+DEBUG 2025-07-03 23:09:44,859 cache_service 285421 127403492593792 Cached game state for WS9P1U: waiting, 1 players
+DEBUG 2025-07-03 23:09:44,860 cache_service 285421 127403492593792 Cached 1 connected players for game WS9P1U
+INFO 2025-07-03 23:09:44,860 services 285421 127403492593792 Broadcasting player join: {'game_status': 'waiting', 'player_count': 1, 'players': [{'id': 1, 'name': 'Test Player', 'joined_at': '23:09:44', 'total_score': 0}], 'message': 'Test Player joined the game!'}
+INFO 2025-07-03 23:09:44,868 services 285421 127403492593792 Player Test Player created for game z0ggpa
+INFO 2025-07-03 23:09:44,870 services 285421 127403492593792 Player Test Player joined game Z0GGPA. Total players: 1
+DEBUG 2025-07-03 23:09:44,872 cache_service 285421 127403492593792 Cached game state for Z0GGPA: waiting, 1 players
+DEBUG 2025-07-03 23:09:44,872 cache_service 285421 127403492593792 Cached 1 connected players for game Z0GGPA
+INFO 2025-07-03 23:09:44,872 services 285421 127403492593792 Broadcasting player join: {'game_status': 'waiting', 'player_count': 1, 'players': [{'id': 1, 'name': 'Test Player', 'joined_at': '23:09:44', 'total_score': 0}], 'message': 'Test Player joined the game!'}
+INFO 2025-07-03 23:09:44,872 websocket_utils 285421 127403492593792 Broadcasting game_update to group game_Z0GGPA: {'game_status': 'waiting', 'player_count': 1, 'players': [{'id': 1, 'name': 'Test Player', 'joined_at': '23:09:44', 'total_score': 0}], 'message': 'Test Player joined the game!'}
+INFO 2025-07-03 23:09:44,875 websocket_utils 285421 127403492593792 Successfully broadcast game_update to game_Z0GGPA
+INFO 2025-07-03 23:09:44,881 services 285421 127403492593792 Player   Test Player   created for game GJ1L57
+INFO 2025-07-03 23:09:44,883 services 285421 127403492593792 Player   Test Player   joined game GJ1L57. Total players: 1
+DEBUG 2025-07-03 23:09:44,885 cache_service 285421 127403492593792 Cached game state for GJ1L57: waiting, 1 players
+DEBUG 2025-07-03 23:09:44,885 cache_service 285421 127403492593792 Cached 1 connected players for game GJ1L57
+INFO 2025-07-03 23:09:44,885 services 285421 127403492593792 Broadcasting player join: {'game_status': 'waiting', 'player_count': 1, 'players': [{'id': 1, 'name': '  Test Player  ', 'joined_at': '23:09:44', 'total_score': 0}], 'message': '  Test Player   joined the game!'}
+INFO 2025-07-03 23:09:44,885 websocket_utils 285421 127403492593792 Broadcasting game_update to group game_GJ1L57: {'game_status': 'waiting', 'player_count': 1, 'players': [{'id': 1, 'name': '  Test Player  ', 'joined_at': '23:09:44', 'total_score': 0}], 'message': '  Test Player   joined the game!'}
+INFO 2025-07-03 23:09:44,887 websocket_utils 285421 127403492593792 Successfully broadcast game_update to game_GJ1L57
+INFO 2025-07-03 23:09:45,020 services 285421 127403492593792 Player AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA created for game HWQOLB
+INFO 2025-07-03 23:09:45,022 services 285421 127403492593792 Player AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA joined game HWQOLB. Total players: 1
+DEBUG 2025-07-03 23:09:45,024 cache_service 285421 127403492593792 Cached game state for HWQOLB: waiting, 1 players
+DEBUG 2025-07-03 23:09:45,025 cache_service 285421 127403492593792 Cached 1 connected players for game HWQOLB
+INFO 2025-07-03 23:09:45,025 services 285421 127403492593792 Broadcasting player join: {'game_status': 'waiting', 'player_count': 1, 'players': [{'id': 1, 'name': 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA', 'joined_at': '23:09:45', 'total_score': 0}], 'message': 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA joined the game!'}
+INFO 2025-07-03 23:09:45,025 websocket_utils 285421 127403492593792 Broadcasting game_update to group game_HWQOLB: {'game_status': 'waiting', 'player_count': 1, 'players': [{'id': 1, 'name': 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA', 'joined_at': '23:09:45', 'total_score': 0}], 'message': 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA joined the game!'}
+INFO 2025-07-03 23:09:45,027 websocket_utils 285421 127403492593792 Successfully broadcast game_update to game_HWQOLB
+INFO 2025-07-03 23:09:45,052 round_handlers 285421 127403492593792 Cached FFV data for game NKK4YX, round 1: Flowers - V
+DEBUG 2025-07-03 23:09:45,052 services 285421 127403492593792 No cached answers found for game NKK4YX round 1
+INFO 2025-07-03 23:09:45,058 round_handlers 285421 127403492593792 Prepared 1 Flower, Fruit & Veg answers for manual validation
+DEBUG 2025-07-03 23:09:45,058 cache_service 285421 127403492593792 Invalidated game state cache for NKK4YX
+DEBUG 2025-07-03 23:09:45,077 cache_service 285421 127403492593792 Cached answer for player 1 in round 1: Rose...
+INFO 2025-07-03 23:09:45,081 services 285421 127403492593792 Processed answer for player Test Player: Rose...
+INFO 2025-07-03 23:09:45,082 services 285421 127403492593792 Bulk created 1 PlayerAnswer objects
+DEBUG 2025-07-03 23:09:45,083 cache_service 285421 127403492593792 Cleared cached answers for round 1
+INFO 2025-07-03 23:09:45,083 services 285421 127403492593792 Processed 1 cached answers into database
+INFO 2025-07-03 23:09:45,168 round_handlers 285421 127403492593792 Cached FFV data for game K6IO7T, round 1: Flowers - M
+DEBUG 2025-07-03 23:09:45,169 cache_service 285421 127403492593792 Cached round state for round 1: flower_fruit_veg
+DEBUG 2025-07-03 23:09:45,169 cache_service 285421 127403492593792 Invalidated game state cache for K6IO7T
+INFO 2025-07-03 23:09:45,182 services 285421 127403492593792 Player Player 2 joined game I923KA. Total players: 2
+DEBUG 2025-07-03 23:09:45,184 cache_service 285421 127403492593792 Cached game state for I923KA: waiting, 2 players
+DEBUG 2025-07-03 23:09:45,184 cache_service 285421 127403492593792 Cached 2 connected players for game I923KA
+INFO 2025-07-03 23:09:45,185 services 285421 127403492593792 Broadcasting player join: {'game_status': 'waiting', 'player_count': 2, 'players': [{'id': 1, 'name': 'Player 1', 'joined_at': '23:09:45', 'total_score': 0}, {'id': 2, 'name': 'Player 2', 'joined_at': '23:09:45', 'total_score': 0}], 'message': 'Player 2 joined the game!'}
+INFO 2025-07-03 23:09:45,213 services 285421 127403492593792 Player Test Player created for game ZDOITD
+INFO 2025-07-03 23:09:45,233 services 285421 127403492593792 Player Test Player reconnected to game 431Z3K
+INFO 2025-07-03 23:09:45,248 services 285421 127403492593792 Player Player 1 created for game 06RPRB
+INFO 2025-07-03 23:09:45,255 services 285421 127403492593792 Player Player 2 created for game 06RPRB
+INFO 2025-07-03 23:09:45,266 round_handlers 285421 127403492593792 Cached FFV data for game 06RPRB, round 1: Flowers - K
+DEBUG 2025-07-03 23:09:45,266 cache_service 285421 127403492593792 Cached round state for round 1: flower_fruit_veg
+DEBUG 2025-07-03 23:09:45,266 cache_service 285421 127403492593792 Invalidated game state cache for 06RPRB
+INFO 2025-07-03 23:09:45,269 websocket_utils 285421 127403439396544 Broadcasting timer_update to group game_06RPRB: {'time_remaining': 29}
+INFO 2025-07-03 23:09:45,275 websocket_utils 285421 127403439396544 Successfully broadcast timer_update to game_06RPRB
+DEBUG 2025-07-03 23:09:45,278 cache_service 285421 127403492593792 Marked round 1 as ended in cache
+DEBUG 2025-07-03 23:09:45,282 services 285421 127403492593792 No cached answers found for game 06RPRB round 1
+INFO 2025-07-03 23:09:45,292 round_handlers 285421 127403492593792 Prepared 2 Flower, Fruit & Veg answers for manual validation
+DEBUG 2025-07-03 23:09:45,294 cache_service 285421 127403492593792 Invalidated game state cache for 06RPRB
+INFO 2025-07-03 23:09:45,298 round_handlers 285421 127403492593792 Cached FFV data for game 06RPRB, round 2: Flowers - K
+DEBUG 2025-07-03 23:09:45,298 cache_service 285421 127403492593792 Cached round state for round 2: flower_fruit_veg
+DEBUG 2025-07-03 23:09:45,299 cache_service 285421 127403492593792 Invalidated game state cache for 06RPRB
+INFO 2025-07-03 23:09:45,299 websocket_utils 285421 127403439396544 Broadcasting timer_update to group game_06RPRB: {'time_remaining': 29}
+DEBUG 2025-07-03 23:09:45,304 cache_service 285421 127403492593792 Marked round 2 as ended in cache
+INFO 2025-07-03 23:09:45,304 websocket_utils 285421 127403439396544 Successfully broadcast timer_update to game_06RPRB
+DEBUG 2025-07-03 23:09:45,304 services 285421 127403492593792 No cached answers found for game 06RPRB round 2
+INFO 2025-07-03 23:09:45,310 round_handlers 285421 127403492593792 Prepared 1 Flower, Fruit & Veg answers for manual validation
+DEBUG 2025-07-03 23:09:45,310 cache_service 285421 127403492593792 Invalidated game state cache for 06RPRB
+INFO 2025-07-03 23:09:45,340 services 285421 127403492593792 Removing duplicate player Player 1 (id=3) during restart
+INFO 2025-07-03 23:09:45,493 websocket_utils 285421 127403492593792 Broadcasting game_started to group game_O22YF8: {'game_status': 'active', 'message': 'Game has started! Get ready for the first round.', 'player_count': 1}
+INFO 2025-07-03 23:09:45,494 websocket_utils 285421 127403492593792 Successfully broadcast game_started to game_O22YF8
+INFO 2025-07-03 23:09:45,523 services 285421 127403492593792 Player Test Player reconnected to game ZDVI5B
+INFO 2025-07-03 23:09:45,525 services 285421 127403492593792 Player Test Player joined game ZDVI5B. Total players: 1
+DEBUG 2025-07-03 23:09:45,527 cache_service 285421 127403492593792 Cached game state for ZDVI5B: waiting, 1 players
+DEBUG 2025-07-03 23:09:45,527 cache_service 285421 127403492593792 Cached 1 connected players for game ZDVI5B
+INFO 2025-07-03 23:09:45,527 services 285421 127403492593792 Broadcasting player join: {'game_status': 'waiting', 'player_count': 1, 'players': [{'id': 1, 'name': 'Test Player', 'joined_at': '23:09:45', 'total_score': 0}], 'message': 'Test Player joined the game!'}
+INFO 2025-07-03 23:09:45,527 websocket_utils 285421 127403492593792 Broadcasting game_update to group game_ZDVI5B: {'game_status': 'waiting', 'player_count': 1, 'players': [{'id': 1, 'name': 'Test Player', 'joined_at': '23:09:45', 'total_score': 0}], 'message': 'Test Player joined the game!'}
+INFO 2025-07-03 23:09:45,529 websocket_utils 285421 127403492593792 Successfully broadcast game_update to game_ZDVI5B
+INFO 2025-07-03 23:09:45,587 services 285421 127403492593792 Player Test Player created for game BTXQRX
+INFO 2025-07-03 23:09:45,588 services 285421 127403492593792 Player Test Player joined game BTXQRX. Total players: 1
+DEBUG 2025-07-03 23:09:45,589 cache_service 285421 127403492593792 Cached game state for BTXQRX: waiting, 1 players
+DEBUG 2025-07-03 23:09:45,590 cache_service 285421 127403492593792 Cached 1 connected players for game BTXQRX
+INFO 2025-07-03 23:09:45,590 services 285421 127403492593792 Broadcasting player join: {'game_status': 'waiting', 'player_count': 1, 'players': [{'id': 1, 'name': 'Test Player', 'joined_at': '23:09:45', 'total_score': 0}], 'message': 'Test Player joined the game!'}
+INFO 2025-07-03 23:09:45,590 websocket_utils 285421 127403492593792 Broadcasting game_update to group game_BTXQRX: {'game_status': 'waiting', 'player_count': 1, 'players': [{'id': 1, 'name': 'Test Player', 'joined_at': '23:09:45', 'total_score': 0}], 'message': 'Test Player joined the game!'}
+INFO 2025-07-03 23:09:45,591 websocket_utils 285421 127403492593792 Successfully broadcast game_update to game_BTXQRX
+INFO 2025-07-03 23:09:45,636 services 285421 127403492593792 Player Player 1 created for game 9WQWNX
+INFO 2025-07-03 23:09:45,638 services 285421 127403492593792 Player Player 1 joined game 9WQWNX. Total players: 1
+DEBUG 2025-07-03 23:09:45,639 cache_service 285421 127403492593792 Cached game state for 9WQWNX: waiting, 1 players
+DEBUG 2025-07-03 23:09:45,639 cache_service 285421 127403492593792 Cached 1 connected players for game 9WQWNX
+INFO 2025-07-03 23:09:45,640 services 285421 127403492593792 Broadcasting player join: {'game_status': 'waiting', 'player_count': 1, 'players': [{'id': 1, 'name': 'Player 1', 'joined_at': '23:09:45', 'total_score': 0}], 'message': 'Player 1 joined the game!'}
+INFO 2025-07-03 23:09:45,640 websocket_utils 285421 127403492593792 Broadcasting game_update to group game_9WQWNX: {'game_status': 'waiting', 'player_count': 1, 'players': [{'id': 1, 'name': 'Player 1', 'joined_at': '23:09:45', 'total_score': 0}], 'message': 'Player 1 joined the game!'}
+INFO 2025-07-03 23:09:45,641 websocket_utils 285421 127403492593792 Successfully broadcast game_update to game_9WQWNX
+INFO 2025-07-03 23:09:45,649 services 285421 127403492593792 Player Player 2 created for game 9WQWNX
+INFO 2025-07-03 23:09:45,651 services 285421 127403492593792 Player Player 2 joined game 9WQWNX. Total players: 2
+DEBUG 2025-07-03 23:09:45,653 cache_service 285421 127403492593792 Cached game state for 9WQWNX: waiting, 2 players
+DEBUG 2025-07-03 23:09:45,654 cache_service 285421 127403492593792 Cached 2 connected players for game 9WQWNX
+INFO 2025-07-03 23:09:45,654 services 285421 127403492593792 Broadcasting player join: {'game_status': 'waiting', 'player_count': 2, 'players': [{'id': 1, 'name': 'Player 1', 'joined_at': '23:09:45', 'total_score': 0}, {'id': 2, 'name': 'Player 2', 'joined_at': '23:09:45', 'total_score': 0}], 'message': 'Player 2 joined the game!'}
+INFO 2025-07-03 23:09:45,654 websocket_utils 285421 127403492593792 Broadcasting game_update to group game_9WQWNX: {'game_status': 'waiting', 'player_count': 2, 'players': [{'id': 1, 'name': 'Player 1', 'joined_at': '23:09:45', 'total_score': 0}, {'id': 2, 'name': 'Player 2', 'joined_at': '23:09:45', 'total_score': 0}], 'message': 'Player 2 joined the game!'}
+INFO 2025-07-03 23:09:45,656 websocket_utils 285421 127403492593792 Successfully broadcast game_update to game_9WQWNX
+INFO 2025-07-03 23:09:45,672 consumers 285421 127403448837824 WebSocket connecting to game A6AUWN
+INFO 2025-07-03 23:09:45,672 consumers 285421 127403448837824 WebSocket connected to game A6AUWN (channel: specific..inmemory!GLlbALziAnDL)
+DEBUG 2025-07-03 23:09:45,677 cache_service 285421 127403492593792 Cached 0 connected players for game A6AUWN
+DEBUG 2025-07-03 23:09:45,677 cache_service 285421 127403492593792 Cached game state for A6AUWN: waiting, 0 players
+INFO 2025-07-03 23:09:45,677 consumers 285421 127403448837824 Sending initial game state to new connection for A6AUWN
+INFO 2025-07-03 23:09:45,679 consumers 285421 127403448837824 WebSocket disconnecting from game A6AUWN
+WARNING 2025-07-03 23:09:45,681 consumers 285421 127403492593792 WebSocket disconnect without player identification for game A6AUWN
+INFO 2025-07-03 23:09:45,690 consumers 285421 127403492593792 WebSocket connecting to game PH41DP
+INFO 2025-07-03 23:09:45,690 consumers 285421 127403492593792 WebSocket connected to game PH41DP (channel: specific..inmemory!OJqrtLSqaFzl)
+ERROR 2025-07-03 23:09:45,692 consumers 285421 127403448837824 Error getting game state for PH41DP: database table is locked: game_sessions_gamesession
+INFO 2025-07-03 23:09:45,692 consumers 285421 127403492593792 Sending initial game state to new connection for PH41DP
+INFO 2025-07-03 23:09:45,706 consumers 285421 127403439396544 WebSocket connecting to game ZR9CB0
+INFO 2025-07-03 23:09:45,706 consumers 285421 127403439396544 WebSocket connected to game ZR9CB0 (channel: specific..inmemory!okfzJYjxsgiv)
+DEBUG 2025-07-03 23:09:45,711 cache_service 285421 127403492593792 Cached 0 connected players for game ZR9CB0
+DEBUG 2025-07-03 23:09:45,712 cache_service 285421 127403492593792 Cached game state for ZR9CB0: waiting, 0 players
+INFO 2025-07-03 23:09:45,712 consumers 285421 127403439396544 Sending initial game state to new connection for ZR9CB0
+INFO 2025-07-03 23:09:45,713 websocket_utils 285421 127403439396544 Broadcasting game_update to group game_ZR9CB0: {'game_status': 'waiting', 'player_count': 0, 'message': 'Game restarted! Get ready for a new game.'}
+ERROR 2025-07-03 23:09:45,713 websocket_utils 285421 127403439396544 Failed to broadcast game_update to game_ZR9CB0: You cannot use AsyncToSync in the same thread as an async event loop - just await the async function directly.
+ERROR 2025-07-03 23:09:45,813 websocket_utils 285421 127403439396544 Failed to broadcast game_update to game_ZR9CB0 on retry: You cannot use AsyncToSync in the same thread as an async event loop - just await the async function directly.
+INFO 2025-07-03 23:09:45,852 websocket_utils 285421 127403359729344 Broadcasting game_restart_confirmation to group game_8504EV: {'game_status': 'waiting', 'player_count': 0, 'message': "Game restarted! Please return to lobby if you haven't already.", 'force_redirect': True, 'restart_timestamp': 1751584185}
+INFO 2025-07-03 23:09:45,856 websocket_utils 285421 127403359729344 Successfully broadcast game_restart_confirmation to game_8504EV
+INFO 2025-07-03 23:09:46,823 consumers 285421 127403492593792 WebSocket connecting to game ATBMTR
+INFO 2025-07-03 23:09:46,823 consumers 285421 127403492593792 WebSocket connected to game ATBMTR (channel: specific..inmemory!LwovCcYoMwlN)
+ERROR 2025-07-03 23:09:46,825 consumers 285421 127403448837824 Error getting game state for ATBMTR: database table is locked: game_sessions_gamesession
+INFO 2025-07-03 23:09:46,825 consumers 285421 127403492593792 Sending initial game state to new connection for ATBMTR
+INFO 2025-07-03 23:09:46,825 websocket_utils 285421 127403492593792 Broadcasting game_update to group game_ATBMTR: {'game_status': 'waiting', 'player_count': 0, 'message': 'Game restarted! Get ready for a new game.'}
+ERROR 2025-07-03 23:09:46,826 websocket_utils 285421 127403492593792 Failed to broadcast game_update to game_ATBMTR: You cannot use AsyncToSync in the same thread as an async event loop - just await the async function directly.
+ERROR 2025-07-03 23:09:46,926 websocket_utils 285421 127403492593792 Failed to broadcast game_update to game_ATBMTR on retry: You cannot use AsyncToSync in the same thread as an async event loop - just await the async function directly.
+INFO 2025-07-03 23:09:47,934 consumers 285421 127403359729344 WebSocket connecting to game A4XTYR
+INFO 2025-07-03 23:09:47,934 consumers 285421 127403359729344 WebSocket connected to game A4XTYR (channel: specific..inmemory!pMGisJvItCnW)
+DEBUG 2025-07-03 23:09:47,938 cache_service 285421 127403492593792 Cached 0 connected players for game A4XTYR
+DEBUG 2025-07-03 23:09:47,938 cache_service 285421 127403492593792 Cached game state for A4XTYR: waiting, 0 players
+INFO 2025-07-03 23:09:47,939 consumers 285421 127403359729344 Sending initial game state to new connection for A4XTYR
+INFO 2025-07-03 23:09:47,939 websocket_utils 285421 127403359729344 Broadcasting game_update to group game_A4XTYR: {'game_status': 'waiting', 'player_count': 1, 'message': 'Test player joined!'}
+ERROR 2025-07-03 23:09:47,939 websocket_utils 285421 127403359729344 Failed to broadcast game_update to game_A4XTYR: You cannot use AsyncToSync in the same thread as an async event loop - just await the async function directly.
+ERROR 2025-07-03 23:09:48,043 websocket_utils 285421 127403359729344 Failed to broadcast game_update to game_A4XTYR on retry: You cannot use AsyncToSync in the same thread as an async event loop - just await the async function directly.
+INFO 2025-07-03 23:09:49,051 consumers 285421 127403492593792 WebSocket connecting to game 5NQ5XM
+INFO 2025-07-03 23:09:49,051 consumers 285421 127403492593792 WebSocket connected to game 5NQ5XM (channel: specific..inmemory!rvVafoFCaFrE)
+ERROR 2025-07-03 23:09:49,053 consumers 285421 127403448837824 Error getting game state for 5NQ5XM: database table is locked: game_sessions_gamesession
+INFO 2025-07-03 23:09:49,053 consumers 285421 127403492593792 Sending initial game state to new connection for 5NQ5XM
+INFO 2025-07-03 23:09:49,053 websocket_utils 285421 127403492593792 Broadcasting game_update to group game_5NQ5XM: {'game_status': 'waiting', 'player_count': 1, 'message': 'Test player joined!'}
+ERROR 2025-07-03 23:09:49,054 websocket_utils 285421 127403492593792 Failed to broadcast game_update to game_5NQ5XM: You cannot use AsyncToSync in the same thread as an async event loop - just await the async function directly.
+ERROR 2025-07-03 23:09:49,154 websocket_utils 285421 127403492593792 Failed to broadcast game_update to game_5NQ5XM on retry: You cannot use AsyncToSync in the same thread as an async event loop - just await the async function directly.
+INFO 2025-07-03 23:09:50,161 consumers 285421 127403359729344 WebSocket connecting to game MKD3FV
+INFO 2025-07-03 23:09:50,161 consumers 285421 127403359729344 WebSocket connected to game MKD3FV (channel: specific..inmemory!HpmFHrONTpDz)
+DEBUG 2025-07-03 23:09:50,165 cache_service 285421 127403492593792 Cached 0 connected players for game MKD3FV
+DEBUG 2025-07-03 23:09:50,165 cache_service 285421 127403492593792 Cached game state for MKD3FV: waiting, 0 players
+INFO 2025-07-03 23:09:50,166 consumers 285421 127403359729344 Sending initial game state to new connection for MKD3FV
+DEBUG 2025-07-03 23:09:50,167 consumers 285421 127403492593792 Using cached game state for MKD3FV (age: 0.0s)
+INFO 2025-07-03 23:09:50,170 consumers 285421 127403359729344 WebSocket disconnecting from game MKD3FV
+WARNING 2025-07-03 23:09:50,172 consumers 285421 127403492593792 WebSocket disconnect without player identification for game MKD3FV
+INFO 2025-07-03 23:09:50,181 consumers 285421 127403492593792 WebSocket connecting to game LYUS2I
+INFO 2025-07-03 23:09:50,182 consumers 285421 127403492593792 WebSocket connected to game LYUS2I (channel: specific..inmemory!jasSwjuITnZz)
+ERROR 2025-07-03 23:09:50,184 consumers 285421 127403448837824 Error getting game state for LYUS2I: database table is locked: game_sessions_gamesession
+INFO 2025-07-03 23:09:50,185 consumers 285421 127403492593792 Sending initial game state to new connection for LYUS2I
+ERROR 2025-07-03 23:09:50,190 consumers 285421 127403448837824 Error getting game state for LYUS2I: database table is locked: game_sessions_gamesession
+INFO 2025-07-03 23:09:50,192 consumers 285421 127403492593792 WebSocket disconnecting from game LYUS2I
+INFO 2025-07-03 23:09:50,252 services 285421 127403492593792 Player Player 1 created for game 08Y5A4
+INFO 2025-07-03 23:09:50,254 services 285421 127403492593792 Player Player 1 joined game 08Y5A4. Total players: 1
+DEBUG 2025-07-03 23:09:50,257 cache_service 285421 127403492593792 Cached game state for 08Y5A4: waiting, 1 players
+DEBUG 2025-07-03 23:09:50,257 cache_service 285421 127403492593792 Cached 1 connected players for game 08Y5A4
+INFO 2025-07-03 23:09:50,258 services 285421 127403492593792 Broadcasting player join: {'game_status': 'waiting', 'player_count': 1, 'players': [{'id': 1, 'name': 'Player 1', 'joined_at': '23:09:50', 'total_score': 0}], 'message': 'Player 1 joined the game!'}
+INFO 2025-07-03 23:09:50,258 websocket_utils 285421 127403492593792 Broadcasting game_update to group game_08Y5A4: {'game_status': 'waiting', 'player_count': 1, 'players': [{'id': 1, 'name': 'Player 1', 'joined_at': '23:09:50', 'total_score': 0}], 'message': 'Player 1 joined the game!'}
+INFO 2025-07-03 23:09:50,259 websocket_utils 285421 127403492593792 Successfully broadcast game_update to game_08Y5A4
+INFO 2025-07-03 23:09:50,264 services 285421 127403492593792 Player Player 2 created for game 08Y5A4
+INFO 2025-07-03 23:09:50,266 services 285421 127403492593792 Player Player 2 joined game 08Y5A4. Total players: 2
+DEBUG 2025-07-03 23:09:50,268 cache_service 285421 127403492593792 Cached game state for 08Y5A4: waiting, 2 players
+DEBUG 2025-07-03 23:09:50,268 cache_service 285421 127403492593792 Cached 2 connected players for game 08Y5A4
+INFO 2025-07-03 23:09:50,268 services 285421 127403492593792 Broadcasting player join: {'game_status': 'waiting', 'player_count': 2, 'players': [{'id': 1, 'name': 'Player 1', 'joined_at': '23:09:50', 'total_score': 0}, {'id': 2, 'name': 'Player 2', 'joined_at': '23:09:50', 'total_score': 0}], 'message': 'Player 2 joined the game!'}
+INFO 2025-07-03 23:09:50,269 websocket_utils 285421 127403492593792 Broadcasting game_update to group game_08Y5A4: {'game_status': 'waiting', 'player_count': 2, 'players': [{'id': 1, 'name': 'Player 1', 'joined_at': '23:09:50', 'total_score': 0}, {'id': 2, 'name': 'Player 2', 'joined_at': '23:09:50', 'total_score': 0}], 'message': 'Player 2 joined the game!'}
+INFO 2025-07-03 23:09:50,270 websocket_utils 285421 127403492593792 Successfully broadcast game_update to game_08Y5A4
+INFO 2025-07-03 23:09:50,281 services 285421 127403492593792 Player Test Player created for game F44739
+INFO 2025-07-03 23:09:50,283 services 285421 127403492593792 Player Test Player joined game F44739. Total players: 1
+DEBUG 2025-07-03 23:09:50,285 cache_service 285421 127403492593792 Cached game state for F44739: waiting, 1 players
+DEBUG 2025-07-03 23:09:50,285 cache_service 285421 127403492593792 Cached 1 connected players for game F44739
+INFO 2025-07-03 23:09:50,286 services 285421 127403492593792 Broadcasting player join: {'game_status': 'waiting', 'player_count': 1, 'players': [{'id': 1, 'name': 'Test Player', 'joined_at': '23:09:50', 'total_score': 0}], 'message': 'Test Player joined the game!'}
+INFO 2025-07-03 23:09:50,286 websocket_utils 285421 127403492593792 Broadcasting game_update to group game_F44739: {'game_status': 'waiting', 'player_count': 1, 'players': [{'id': 1, 'name': 'Test Player', 'joined_at': '23:09:50', 'total_score': 0}], 'message': 'Test Player joined the game!'}
+INFO 2025-07-03 23:09:50,288 websocket_utils 285421 127403492593792 Successfully broadcast game_update to game_F44739
+INFO 2025-07-03 23:09:50,304 services 285421 127403492593792 Player Test Player reconnected to game F44739
+INFO 2025-07-03 23:09:50,306 services 285421 127403492593792 Player Test Player joined game F44739. Total players: 1
+DEBUG 2025-07-03 23:09:50,309 cache_service 285421 127403492593792 Cached game state for F44739: waiting, 1 players
+DEBUG 2025-07-03 23:09:50,309 cache_service 285421 127403492593792 Cached 1 connected players for game F44739
+INFO 2025-07-03 23:09:50,309 services 285421 127403492593792 Broadcasting player join: {'game_status': 'waiting', 'player_count': 1, 'players': [{'id': 1, 'name': 'Test Player', 'joined_at': '23:09:50', 'total_score': 0}], 'message': 'Test Player joined the game!'}
+INFO 2025-07-03 23:09:50,310 websocket_utils 285421 127403492593792 Broadcasting game_update to group game_F44739: {'game_status': 'waiting', 'player_count': 1, 'players': [{'id': 1, 'name': 'Test Player', 'joined_at': '23:09:50', 'total_score': 0}], 'message': 'Test Player joined the game!'}
+INFO 2025-07-03 23:09:50,311 websocket_utils 285421 127403492593792 Successfully broadcast game_update to game_F44739
+INFO 2025-07-03 23:09:50,326 round_handlers 285421 127403492593792 Cached FFV data for game 3SDXVB, round 1: Restaurants - I
+INFO 2025-07-03 23:11:12,404 consumers 282234 129804032856192 WebSocket disconnecting from game FTG9P8
+INFO 2025-07-03 23:11:12,419 consumers 282234 129803976005312 Marked player Test 4 (id=150) as disconnected
+INFO 2025-07-03 23:11:12,422 websocket_utils 282234 129803976005312 Broadcasting game_update to group game_FTG9P8: {'game_status': 'finished', 'player_count': 1, 'players': [{'id': 149, 'name': 'Test 3', 'joined_at': '21:48:24', 'total_score': 100}], 'message': 'Test 4 disconnected'}
+INFO 2025-07-03 23:11:12,422 websocket_utils 282234 129803976005312 Successfully broadcast game_update to game_FTG9P8
+INFO 2025-07-03 23:11:12,423 consumers 282234 129804032856192 Removed player 150 from individual group
+DEBUG 2025-07-03 23:21:19,424 cache_service 295039 132154461302912 Cached game state for U44VRC: waiting, 1 players
+DEBUG 2025-07-03 23:21:19,425 cache_service 295039 132154461302912 Cached answer for player 1 in round 1: Rose...
+DEBUG 2025-07-03 23:21:19,426 cache_service 295039 132154461302912 Cached answer for player 1 in round 1: Rose...
+DEBUG 2025-07-03 23:21:19,426 cache_service 295039 132154461302912 Invalidated game state cache for BBUO1C
+INFO 2025-07-03 23:21:19,463 services 295039 132154461302912 Player Test Player created for game 0E47LK
+INFO 2025-07-03 23:21:19,464 services 295039 132154461302912 Player Test Player joined game 0E47LK. Total players: 1
+DEBUG 2025-07-03 23:21:19,465 cache_service 295039 132154461302912 Cached game state for 0E47LK: waiting, 1 players
+DEBUG 2025-07-03 23:21:19,465 cache_service 295039 132154461302912 Cached 1 connected players for game 0E47LK
+INFO 2025-07-03 23:21:19,465 services 295039 132154461302912 Broadcasting player join: {'game_status': 'waiting', 'player_count': 1, 'players': [{'id': 1, 'name': 'Test Player', 'joined_at': '23:21:19', 'total_score': 0}], 'message': 'Test Player joined the game!'}
+INFO 2025-07-03 23:21:19,469 services 295039 132154461302912 Player Test Player created for game 9ymtq9
+INFO 2025-07-03 23:21:19,469 services 295039 132154461302912 Player Test Player joined game 9YMTQ9. Total players: 1
+DEBUG 2025-07-03 23:21:19,470 cache_service 295039 132154461302912 Cached game state for 9YMTQ9: waiting, 1 players
+DEBUG 2025-07-03 23:21:19,470 cache_service 295039 132154461302912 Cached 1 connected players for game 9YMTQ9
+INFO 2025-07-03 23:21:19,470 services 295039 132154461302912 Broadcasting player join: {'game_status': 'waiting', 'player_count': 1, 'players': [{'id': 1, 'name': 'Test Player', 'joined_at': '23:21:19', 'total_score': 0}], 'message': 'Test Player joined the game!'}
+INFO 2025-07-03 23:21:19,470 websocket_utils 295039 132154461302912 Broadcasting game_update to group game_9YMTQ9: {'game_status': 'waiting', 'player_count': 1, 'players': [{'id': 1, 'name': 'Test Player', 'joined_at': '23:21:19', 'total_score': 0}], 'message': 'Test Player joined the game!'}
+INFO 2025-07-03 23:21:19,472 websocket_utils 295039 132154461302912 Successfully broadcast game_update to game_9YMTQ9
+INFO 2025-07-03 23:21:19,476 services 295039 132154461302912 Player   Test Player   created for game 8AK55B
+INFO 2025-07-03 23:21:19,476 services 295039 132154461302912 Player   Test Player   joined game 8AK55B. Total players: 1
+DEBUG 2025-07-03 23:21:19,477 cache_service 295039 132154461302912 Cached game state for 8AK55B: waiting, 1 players
+DEBUG 2025-07-03 23:21:19,477 cache_service 295039 132154461302912 Cached 1 connected players for game 8AK55B
+INFO 2025-07-03 23:21:19,477 services 295039 132154461302912 Broadcasting player join: {'game_status': 'waiting', 'player_count': 1, 'players': [{'id': 1, 'name': '  Test Player  ', 'joined_at': '23:21:19', 'total_score': 0}], 'message': '  Test Player   joined the game!'}
+INFO 2025-07-03 23:21:19,477 websocket_utils 295039 132154461302912 Broadcasting game_update to group game_8AK55B: {'game_status': 'waiting', 'player_count': 1, 'players': [{'id': 1, 'name': '  Test Player  ', 'joined_at': '23:21:19', 'total_score': 0}], 'message': '  Test Player   joined the game!'}
+INFO 2025-07-03 23:21:19,478 websocket_utils 295039 132154461302912 Successfully broadcast game_update to game_8AK55B
+INFO 2025-07-03 23:21:19,505 services 295039 132154461302912 Player AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA created for game 0P8RM7
+INFO 2025-07-03 23:21:19,506 services 295039 132154461302912 Player AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA joined game 0P8RM7. Total players: 1
+DEBUG 2025-07-03 23:21:19,507 cache_service 295039 132154461302912 Cached game state for 0P8RM7: waiting, 1 players
+DEBUG 2025-07-03 23:21:19,508 cache_service 295039 132154461302912 Cached 1 connected players for game 0P8RM7
+INFO 2025-07-03 23:21:19,508 services 295039 132154461302912 Broadcasting player join: {'game_status': 'waiting', 'player_count': 1, 'players': [{'id': 1, 'name': 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA', 'joined_at': '23:21:19', 'total_score': 0}], 'message': 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA joined the game!'}
+INFO 2025-07-03 23:21:19,508 websocket_utils 295039 132154461302912 Broadcasting game_update to group game_0P8RM7: {'game_status': 'waiting', 'player_count': 1, 'players': [{'id': 1, 'name': 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA', 'joined_at': '23:21:19', 'total_score': 0}], 'message': 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA joined the game!'}
+INFO 2025-07-03 23:21:19,509 websocket_utils 295039 132154461302912 Successfully broadcast game_update to game_0P8RM7
+INFO 2025-07-03 23:21:19,521 round_handlers 295039 132154461302912 Cached FFV data for game ZFZCQ0, round 1: Flowers - V
+DEBUG 2025-07-03 23:21:19,521 services 295039 132154461302912 No cached answers found for game ZFZCQ0 round 1
+INFO 2025-07-03 23:21:19,524 round_handlers 295039 132154461302912 Prepared 1 Flower, Fruit & Veg answers for manual validation
+DEBUG 2025-07-03 23:21:19,524 cache_service 295039 132154461302912 Invalidated game state cache for ZFZCQ0
+DEBUG 2025-07-03 23:21:19,533 cache_service 295039 132154461302912 Cached answer for player 1 in round 1: Rose...
+INFO 2025-07-03 23:21:19,537 services 295039 132154461302912 Processed answer for player Test Player: Rose...
+INFO 2025-07-03 23:21:19,538 services 295039 132154461302912 Bulk created 1 PlayerAnswer objects
+DEBUG 2025-07-03 23:21:19,538 cache_service 295039 132154461302912 Cleared cached answers for round 1
+INFO 2025-07-03 23:21:19,539 services 295039 132154461302912 Processed 1 cached answers into database
+INFO 2025-07-03 23:21:19,588 round_handlers 295039 132154461302912 Cached FFV data for game 7QRBOZ, round 1: Flowers - Q
+DEBUG 2025-07-03 23:21:19,588 cache_service 295039 132154461302912 Cached round state for round 1: flower_fruit_veg
+DEBUG 2025-07-03 23:21:19,589 cache_service 295039 132154461302912 Invalidated game state cache for 7QRBOZ
+INFO 2025-07-03 23:21:19,597 services 295039 132154461302912 Player Player 2 joined game 3K2TNZ. Total players: 2
+DEBUG 2025-07-03 23:21:19,598 cache_service 295039 132154461302912 Cached game state for 3K2TNZ: waiting, 2 players
+DEBUG 2025-07-03 23:21:19,598 cache_service 295039 132154461302912 Cached 2 connected players for game 3K2TNZ
+INFO 2025-07-03 23:21:19,598 services 295039 132154461302912 Broadcasting player join: {'game_status': 'waiting', 'player_count': 2, 'players': [{'id': 1, 'name': 'Player 1', 'joined_at': '23:21:19', 'total_score': 0}, {'id': 2, 'name': 'Player 2', 'joined_at': '23:21:19', 'total_score': 0}], 'message': 'Player 2 joined the game!'}
+INFO 2025-07-03 23:21:19,615 services 295039 132154461302912 Player Test Player created for game SVKL5A
+INFO 2025-07-03 23:21:19,625 services 295039 132154461302912 Player Test Player reconnected to game Q662CP
+INFO 2025-07-03 23:21:19,635 services 295039 132154461302912 Player Player 1 created for game NHF9AX
+INFO 2025-07-03 23:21:19,638 services 295039 132154461302912 Player Player 2 created for game NHF9AX
+INFO 2025-07-03 23:21:19,645 round_handlers 295039 132154461302912 Cached FFV data for game NHF9AX, round 1: Flowers - I
+DEBUG 2025-07-03 23:21:19,646 cache_service 295039 132154461302912 Cached round state for round 1: flower_fruit_veg
+DEBUG 2025-07-03 23:21:19,646 cache_service 295039 132154461302912 Invalidated game state cache for NHF9AX
+INFO 2025-07-03 23:21:19,647 websocket_utils 295039 132154412418752 Broadcasting timer_update to group game_NHF9AX: {'time_remaining': 29}
+INFO 2025-07-03 23:21:19,654 websocket_utils 295039 132154412418752 Successfully broadcast timer_update to game_NHF9AX
+DEBUG 2025-07-03 23:21:19,659 cache_service 295039 132154461302912 Marked round 1 as ended in cache
+DEBUG 2025-07-03 23:21:19,659 services 295039 132154461302912 No cached answers found for game NHF9AX round 1
+INFO 2025-07-03 23:21:19,662 round_handlers 295039 132154461302912 Prepared 2 Flower, Fruit & Veg answers for manual validation
+DEBUG 2025-07-03 23:21:19,664 cache_service 295039 132154461302912 Invalidated game state cache for NHF9AX
+INFO 2025-07-03 23:21:19,667 round_handlers 295039 132154461302912 Cached FFV data for game NHF9AX, round 2: Flowers - I
+DEBUG 2025-07-03 23:21:19,667 cache_service 295039 132154461302912 Cached round state for round 2: flower_fruit_veg
+DEBUG 2025-07-03 23:21:19,668 cache_service 295039 132154461302912 Invalidated game state cache for NHF9AX
+INFO 2025-07-03 23:21:19,668 websocket_utils 295039 132154331756224 Broadcasting timer_update to group game_NHF9AX: {'time_remaining': 29}
+DEBUG 2025-07-03 23:21:19,675 cache_service 295039 132154461302912 Marked round 2 as ended in cache
+INFO 2025-07-03 23:21:19,676 websocket_utils 295039 132154331756224 Successfully broadcast timer_update to game_NHF9AX
+DEBUG 2025-07-03 23:21:19,676 services 295039 132154461302912 No cached answers found for game NHF9AX round 2
+INFO 2025-07-03 23:21:19,684 round_handlers 295039 132154461302912 Prepared 1 Flower, Fruit & Veg answers for manual validation
+DEBUG 2025-07-03 23:21:19,688 cache_service 295039 132154461302912 Invalidated game state cache for NHF9AX
+INFO 2025-07-03 23:21:19,706 services 295039 132154461302912 Removing duplicate player Player 1 (id=3) during restart
+INFO 2025-07-03 23:21:19,800 websocket_utils 295039 132154461302912 Broadcasting game_started to group game_TWY8CR: {'game_status': 'active', 'message': 'Game has started! Get ready for the first round.', 'player_count': 1}
+INFO 2025-07-03 23:21:19,802 websocket_utils 295039 132154461302912 Successfully broadcast game_started to game_TWY8CR
+INFO 2025-07-03 23:21:19,812 services 295039 132154461302912 Player Test Player reconnected to game 71W8H7
+INFO 2025-07-03 23:21:19,813 services 295039 132154461302912 Player Test Player joined game 71W8H7. Total players: 1
+DEBUG 2025-07-03 23:21:19,814 cache_service 295039 132154461302912 Cached game state for 71W8H7: waiting, 1 players
+DEBUG 2025-07-03 23:21:19,814 cache_service 295039 132154461302912 Cached 1 connected players for game 71W8H7
+INFO 2025-07-03 23:21:19,814 services 295039 132154461302912 Broadcasting player join: {'game_status': 'waiting', 'player_count': 1, 'players': [{'id': 1, 'name': 'Test Player', 'joined_at': '23:21:19', 'total_score': 0}], 'message': 'Test Player joined the game!'}
+INFO 2025-07-03 23:21:19,814 websocket_utils 295039 132154461302912 Broadcasting game_update to group game_71W8H7: {'game_status': 'waiting', 'player_count': 1, 'players': [{'id': 1, 'name': 'Test Player', 'joined_at': '23:21:19', 'total_score': 0}], 'message': 'Test Player joined the game!'}
+INFO 2025-07-03 23:21:19,815 websocket_utils 295039 132154461302912 Successfully broadcast game_update to game_71W8H7
+INFO 2025-07-03 23:21:19,850 services 295039 132154461302912 Player Test Player created for game QER0DG
+INFO 2025-07-03 23:21:19,852 services 295039 132154461302912 Player Test Player joined game QER0DG. Total players: 1
+DEBUG 2025-07-03 23:21:19,855 cache_service 295039 132154461302912 Cached game state for QER0DG: waiting, 1 players
+DEBUG 2025-07-03 23:21:19,857 cache_service 295039 132154461302912 Cached 1 connected players for game QER0DG
+INFO 2025-07-03 23:21:19,857 services 295039 132154461302912 Broadcasting player join: {'game_status': 'waiting', 'player_count': 1, 'players': [{'id': 1, 'name': 'Test Player', 'joined_at': '23:21:19', 'total_score': 0}], 'message': 'Test Player joined the game!'}
+INFO 2025-07-03 23:21:19,859 websocket_utils 295039 132154461302912 Broadcasting game_update to group game_QER0DG: {'game_status': 'waiting', 'player_count': 1, 'players': [{'id': 1, 'name': 'Test Player', 'joined_at': '23:21:19', 'total_score': 0}], 'message': 'Test Player joined the game!'}
+INFO 2025-07-03 23:21:19,864 websocket_utils 295039 132154461302912 Successfully broadcast game_update to game_QER0DG
+INFO 2025-07-03 23:21:19,888 services 295039 132154461302912 Player Player 1 created for game CAB7Y0
+INFO 2025-07-03 23:21:19,889 services 295039 132154461302912 Player Player 1 joined game CAB7Y0. Total players: 1
+DEBUG 2025-07-03 23:21:19,891 cache_service 295039 132154461302912 Cached game state for CAB7Y0: waiting, 1 players
+DEBUG 2025-07-03 23:21:19,891 cache_service 295039 132154461302912 Cached 1 connected players for game CAB7Y0
+INFO 2025-07-03 23:21:19,892 services 295039 132154461302912 Broadcasting player join: {'game_status': 'waiting', 'player_count': 1, 'players': [{'id': 1, 'name': 'Player 1', 'joined_at': '23:21:19', 'total_score': 0}], 'message': 'Player 1 joined the game!'}
+INFO 2025-07-03 23:21:19,892 websocket_utils 295039 132154461302912 Broadcasting game_update to group game_CAB7Y0: {'game_status': 'waiting', 'player_count': 1, 'players': [{'id': 1, 'name': 'Player 1', 'joined_at': '23:21:19', 'total_score': 0}], 'message': 'Player 1 joined the game!'}
+INFO 2025-07-03 23:21:19,896 websocket_utils 295039 132154461302912 Successfully broadcast game_update to game_CAB7Y0
+INFO 2025-07-03 23:21:19,901 services 295039 132154461302912 Player Player 2 created for game CAB7Y0
+INFO 2025-07-03 23:21:19,902 services 295039 132154461302912 Player Player 2 joined game CAB7Y0. Total players: 2
+DEBUG 2025-07-03 23:21:19,903 cache_service 295039 132154461302912 Cached game state for CAB7Y0: waiting, 2 players
+DEBUG 2025-07-03 23:21:19,903 cache_service 295039 132154461302912 Cached 2 connected players for game CAB7Y0
+INFO 2025-07-03 23:21:19,903 services 295039 132154461302912 Broadcasting player join: {'game_status': 'waiting', 'player_count': 2, 'players': [{'id': 1, 'name': 'Player 1', 'joined_at': '23:21:19', 'total_score': 0}, {'id': 2, 'name': 'Player 2', 'joined_at': '23:21:19', 'total_score': 0}], 'message': 'Player 2 joined the game!'}
+INFO 2025-07-03 23:21:19,903 websocket_utils 295039 132154461302912 Broadcasting game_update to group game_CAB7Y0: {'game_status': 'waiting', 'player_count': 2, 'players': [{'id': 1, 'name': 'Player 1', 'joined_at': '23:21:19', 'total_score': 0}, {'id': 2, 'name': 'Player 2', 'joined_at': '23:21:19', 'total_score': 0}], 'message': 'Player 2 joined the game!'}
+INFO 2025-07-03 23:21:19,904 websocket_utils 295039 132154461302912 Successfully broadcast game_update to game_CAB7Y0
+INFO 2025-07-03 23:21:19,911 consumers 295039 132154412418752 WebSocket connecting to game L10R2E
+INFO 2025-07-03 23:21:19,911 consumers 295039 132154412418752 WebSocket connected to game L10R2E (channel: specific..inmemory!LeFOMmdzyqpc)
+DEBUG 2025-07-03 23:21:19,913 cache_service 295039 132154461302912 Cached 0 connected players for game L10R2E
+DEBUG 2025-07-03 23:21:19,914 cache_service 295039 132154461302912 Cached game state for L10R2E: waiting, 0 players
+INFO 2025-07-03 23:21:19,914 consumers 295039 132154412418752 Sending initial game state to new connection for L10R2E
+INFO 2025-07-03 23:21:19,915 consumers 295039 132154412418752 WebSocket disconnecting from game L10R2E
+WARNING 2025-07-03 23:21:19,916 consumers 295039 132154461302912 WebSocket disconnect without player identification for game L10R2E
+INFO 2025-07-03 23:21:19,921 consumers 295039 132154461302912 WebSocket connecting to game CI3FRP
+INFO 2025-07-03 23:21:19,921 consumers 295039 132154461302912 WebSocket connected to game CI3FRP (channel: specific..inmemory!NbufUWQAzZPL)
+ERROR 2025-07-03 23:21:19,922 consumers 295039 132154412418752 Error getting game state for CI3FRP: database table is locked: game_sessions_gamesession
+INFO 2025-07-03 23:21:19,923 consumers 295039 132154461302912 Sending initial game state to new connection for CI3FRP
+INFO 2025-07-03 23:21:19,928 consumers 295039 132154323363520 WebSocket connecting to game 1FTNOR
+INFO 2025-07-03 23:21:19,928 consumers 295039 132154323363520 WebSocket connected to game 1FTNOR (channel: specific..inmemory!gEkExpJYYBOC)
+DEBUG 2025-07-03 23:21:19,931 cache_service 295039 132154461302912 Cached 0 connected players for game 1FTNOR
+DEBUG 2025-07-03 23:21:19,932 cache_service 295039 132154461302912 Cached game state for 1FTNOR: waiting, 0 players
+INFO 2025-07-03 23:21:19,932 consumers 295039 132154323363520 Sending initial game state to new connection for 1FTNOR
+INFO 2025-07-03 23:21:19,932 websocket_utils 295039 132154323363520 Broadcasting game_update to group game_1FTNOR: {'game_status': 'waiting', 'player_count': 0, 'message': 'Game restarted! Get ready for a new game.'}
+ERROR 2025-07-03 23:21:19,932 websocket_utils 295039 132154323363520 Failed to broadcast game_update to game_1FTNOR: You cannot use AsyncToSync in the same thread as an async event loop - just await the async function directly.
+ERROR 2025-07-03 23:21:20,033 websocket_utils 295039 132154323363520 Failed to broadcast game_update to game_1FTNOR on retry: You cannot use AsyncToSync in the same thread as an async event loop - just await the async function directly.
+INFO 2025-07-03 23:21:20,057 websocket_utils 295039 132154420811456 Broadcasting game_restart_confirmation to group game_8UE938: {'game_status': 'waiting', 'player_count': 0, 'message': "Game restarted! Please return to lobby if you haven't already.", 'force_redirect': True, 'restart_timestamp': 1751584880}
+INFO 2025-07-03 23:21:20,059 websocket_utils 295039 132154420811456 Successfully broadcast game_restart_confirmation to game_8UE938
+INFO 2025-07-03 23:21:20,215 websocket_utils 295039 132154331756224 Broadcasting game_restart_confirmation to group game_XRDCTO: {'game_status': 'waiting', 'player_count': 0, 'message': "Game restarted! Please return to lobby if you haven't already.", 'force_redirect': True, 'restart_timestamp': 1751584880}
+INFO 2025-07-03 23:21:20,217 websocket_utils 295039 132154331756224 Successfully broadcast game_restart_confirmation to game_XRDCTO
+INFO 2025-07-03 23:21:21,050 consumers 295039 132154461302912 WebSocket connecting to game EMXTUV
+INFO 2025-07-03 23:21:21,051 consumers 295039 132154461302912 WebSocket connected to game EMXTUV (channel: specific..inmemory!DcCRHeIvjhNe)
+ERROR 2025-07-03 23:21:21,053 consumers 295039 132154412418752 Error getting game state for EMXTUV: database table is locked: game_sessions_gamesession
+INFO 2025-07-03 23:21:21,054 consumers 295039 132154461302912 Sending initial game state to new connection for EMXTUV
+INFO 2025-07-03 23:21:21,054 websocket_utils 295039 132154461302912 Broadcasting game_update to group game_EMXTUV: {'game_status': 'waiting', 'player_count': 0, 'message': 'Game restarted! Get ready for a new game.'}
+ERROR 2025-07-03 23:21:21,055 websocket_utils 295039 132154461302912 Failed to broadcast game_update to game_EMXTUV: You cannot use AsyncToSync in the same thread as an async event loop - just await the async function directly.
+ERROR 2025-07-03 23:21:21,155 websocket_utils 295039 132154461302912 Failed to broadcast game_update to game_EMXTUV on retry: You cannot use AsyncToSync in the same thread as an async event loop - just await the async function directly.
+INFO 2025-07-03 23:21:22,171 consumers 295039 132154420811456 WebSocket connecting to game LV3DUG
+INFO 2025-07-03 23:21:22,171 consumers 295039 132154420811456 WebSocket connected to game LV3DUG (channel: specific..inmemory!uVzrrEIcHQDp)
+DEBUG 2025-07-03 23:21:22,176 cache_service 295039 132154461302912 Cached 0 connected players for game LV3DUG
+DEBUG 2025-07-03 23:21:22,177 cache_service 295039 132154461302912 Cached game state for LV3DUG: waiting, 0 players
+INFO 2025-07-03 23:21:22,177 consumers 295039 132154420811456 Sending initial game state to new connection for LV3DUG
+INFO 2025-07-03 23:21:22,178 websocket_utils 295039 132154420811456 Broadcasting game_update to group game_LV3DUG: {'game_status': 'waiting', 'player_count': 1, 'message': 'Test player joined!'}
+ERROR 2025-07-03 23:21:22,178 websocket_utils 295039 132154420811456 Failed to broadcast game_update to game_LV3DUG: You cannot use AsyncToSync in the same thread as an async event loop - just await the async function directly.
+ERROR 2025-07-03 23:21:22,279 websocket_utils 295039 132154420811456 Failed to broadcast game_update to game_LV3DUG on retry: You cannot use AsyncToSync in the same thread as an async event loop - just await the async function directly.
+INFO 2025-07-03 23:21:23,297 consumers 295039 132154461302912 WebSocket connecting to game PDX37B
+INFO 2025-07-03 23:21:23,298 consumers 295039 132154461302912 WebSocket connected to game PDX37B (channel: specific..inmemory!WJmvGQddyhHc)
+ERROR 2025-07-03 23:21:23,301 consumers 295039 132154412418752 Error getting game state for PDX37B: database table is locked: game_sessions_gamesession
+INFO 2025-07-03 23:21:23,302 consumers 295039 132154461302912 Sending initial game state to new connection for PDX37B
+INFO 2025-07-03 23:21:23,303 websocket_utils 295039 132154461302912 Broadcasting game_update to group game_PDX37B: {'game_status': 'waiting', 'player_count': 1, 'message': 'Test player joined!'}
+ERROR 2025-07-03 23:21:23,303 websocket_utils 295039 132154461302912 Failed to broadcast game_update to game_PDX37B: You cannot use AsyncToSync in the same thread as an async event loop - just await the async function directly.
+ERROR 2025-07-03 23:21:23,404 websocket_utils 295039 132154461302912 Failed to broadcast game_update to game_PDX37B on retry: You cannot use AsyncToSync in the same thread as an async event loop - just await the async function directly.
+INFO 2025-07-03 23:21:24,423 consumers 295039 132154420811456 WebSocket connecting to game 8P38CU
+INFO 2025-07-03 23:21:24,423 consumers 295039 132154420811456 WebSocket connected to game 8P38CU (channel: specific..inmemory!EURImOSvNYLT)
+DEBUG 2025-07-03 23:21:24,430 cache_service 295039 132154461302912 Cached 0 connected players for game 8P38CU
+DEBUG 2025-07-03 23:21:24,430 cache_service 295039 132154461302912 Cached game state for 8P38CU: waiting, 0 players
+INFO 2025-07-03 23:21:24,431 consumers 295039 132154420811456 Sending initial game state to new connection for 8P38CU
+DEBUG 2025-07-03 23:21:24,433 consumers 295039 132154461302912 Using cached game state for 8P38CU (age: 0.0s)
+INFO 2025-07-03 23:21:24,436 consumers 295039 132154420811456 WebSocket disconnecting from game 8P38CU
+WARNING 2025-07-03 23:21:24,438 consumers 295039 132154461302912 WebSocket disconnect without player identification for game 8P38CU
+INFO 2025-07-03 23:21:24,446 consumers 295039 132154461302912 WebSocket connecting to game WZQEDI
+INFO 2025-07-03 23:21:24,446 consumers 295039 132154461302912 WebSocket connected to game WZQEDI (channel: specific..inmemory!jGSErQSgBgqL)
+ERROR 2025-07-03 23:21:24,448 consumers 295039 132154412418752 Error getting game state for WZQEDI: database table is locked: game_sessions_gamesession
+INFO 2025-07-03 23:21:24,448 consumers 295039 132154461302912 Sending initial game state to new connection for WZQEDI
+ERROR 2025-07-03 23:21:24,450 consumers 295039 132154412418752 Error getting game state for WZQEDI: database table is locked: game_sessions_gamesession
+INFO 2025-07-03 23:21:24,451 consumers 295039 132154461302912 WebSocket disconnecting from game WZQEDI
+INFO 2025-07-03 23:21:24,483 services 295039 132154461302912 Player Player 1 created for game 07EQ3N
+INFO 2025-07-03 23:21:24,483 services 295039 132154461302912 Player Player 1 joined game 07EQ3N. Total players: 1
+DEBUG 2025-07-03 23:21:24,484 cache_service 295039 132154461302912 Cached game state for 07EQ3N: waiting, 1 players
+DEBUG 2025-07-03 23:21:24,484 cache_service 295039 132154461302912 Cached 1 connected players for game 07EQ3N
+INFO 2025-07-03 23:21:24,485 services 295039 132154461302912 Broadcasting player join: {'game_status': 'waiting', 'player_count': 1, 'players': [{'id': 1, 'name': 'Player 1', 'joined_at': '23:21:24', 'total_score': 0}], 'message': 'Player 1 joined the game!'}
+INFO 2025-07-03 23:21:24,485 websocket_utils 295039 132154461302912 Broadcasting game_update to group game_07EQ3N: {'game_status': 'waiting', 'player_count': 1, 'players': [{'id': 1, 'name': 'Player 1', 'joined_at': '23:21:24', 'total_score': 0}], 'message': 'Player 1 joined the game!'}
+INFO 2025-07-03 23:21:24,486 websocket_utils 295039 132154461302912 Successfully broadcast game_update to game_07EQ3N
+INFO 2025-07-03 23:21:24,488 services 295039 132154461302912 Player Player 2 created for game 07EQ3N
+INFO 2025-07-03 23:21:24,489 services 295039 132154461302912 Player Player 2 joined game 07EQ3N. Total players: 2
+DEBUG 2025-07-03 23:21:24,490 cache_service 295039 132154461302912 Cached game state for 07EQ3N: waiting, 2 players
+DEBUG 2025-07-03 23:21:24,490 cache_service 295039 132154461302912 Cached 2 connected players for game 07EQ3N
+INFO 2025-07-03 23:21:24,491 services 295039 132154461302912 Broadcasting player join: {'game_status': 'waiting', 'player_count': 2, 'players': [{'id': 1, 'name': 'Player 1', 'joined_at': '23:21:24', 'total_score': 0}, {'id': 2, 'name': 'Player 2', 'joined_at': '23:21:24', 'total_score': 0}], 'message': 'Player 2 joined the game!'}
+INFO 2025-07-03 23:21:24,491 websocket_utils 295039 132154461302912 Broadcasting game_update to group game_07EQ3N: {'game_status': 'waiting', 'player_count': 2, 'players': [{'id': 1, 'name': 'Player 1', 'joined_at': '23:21:24', 'total_score': 0}, {'id': 2, 'name': 'Player 2', 'joined_at': '23:21:24', 'total_score': 0}], 'message': 'Player 2 joined the game!'}
+INFO 2025-07-03 23:21:24,492 websocket_utils 295039 132154461302912 Successfully broadcast game_update to game_07EQ3N
+INFO 2025-07-03 23:21:24,497 services 295039 132154461302912 Player Test Player created for game LHTZJ1
+INFO 2025-07-03 23:21:24,498 services 295039 132154461302912 Player Test Player joined game LHTZJ1. Total players: 1
+DEBUG 2025-07-03 23:21:24,499 cache_service 295039 132154461302912 Cached game state for LHTZJ1: waiting, 1 players
+DEBUG 2025-07-03 23:21:24,499 cache_service 295039 132154461302912 Cached 1 connected players for game LHTZJ1
+INFO 2025-07-03 23:21:24,499 services 295039 132154461302912 Broadcasting player join: {'game_status': 'waiting', 'player_count': 1, 'players': [{'id': 1, 'name': 'Test Player', 'joined_at': '23:21:24', 'total_score': 0}], 'message': 'Test Player joined the game!'}
+INFO 2025-07-03 23:21:24,499 websocket_utils 295039 132154461302912 Broadcasting game_update to group game_LHTZJ1: {'game_status': 'waiting', 'player_count': 1, 'players': [{'id': 1, 'name': 'Test Player', 'joined_at': '23:21:24', 'total_score': 0}], 'message': 'Test Player joined the game!'}
+INFO 2025-07-03 23:21:24,500 websocket_utils 295039 132154461302912 Successfully broadcast game_update to game_LHTZJ1
+INFO 2025-07-03 23:21:24,504 services 295039 132154461302912 Player Test Player reconnected to game LHTZJ1
+INFO 2025-07-03 23:21:24,505 services 295039 132154461302912 Player Test Player joined game LHTZJ1. Total players: 1
+DEBUG 2025-07-03 23:21:24,506 cache_service 295039 132154461302912 Cached game state for LHTZJ1: waiting, 1 players
+DEBUG 2025-07-03 23:21:24,506 cache_service 295039 132154461302912 Cached 1 connected players for game LHTZJ1
+INFO 2025-07-03 23:21:24,507 services 295039 132154461302912 Broadcasting player join: {'game_status': 'waiting', 'player_count': 1, 'players': [{'id': 1, 'name': 'Test Player', 'joined_at': '23:21:24', 'total_score': 0}], 'message': 'Test Player joined the game!'}
+INFO 2025-07-03 23:21:24,507 websocket_utils 295039 132154461302912 Broadcasting game_update to group game_LHTZJ1: {'game_status': 'waiting', 'player_count': 1, 'players': [{'id': 1, 'name': 'Test Player', 'joined_at': '23:21:24', 'total_score': 0}], 'message': 'Test Player joined the game!'}
+INFO 2025-07-03 23:21:24,508 websocket_utils 295039 132154461302912 Successfully broadcast game_update to game_LHTZJ1
+INFO 2025-07-03 23:21:24,515 round_handlers 295039 132154461302912 Cached FFV data for game 7RO4CT, round 1: Toys - M

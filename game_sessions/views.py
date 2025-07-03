@@ -4,10 +4,10 @@ from django.views.decorators.http import require_http_methods
 from django.contrib import messages
 from .models import GameSession, GameType, GameCategory, GameConfiguration
 from players.models import Player, PlayerAnswer
-from .websocket_utils import broadcast_round_started, broadcast_round_ended, start_timer_broadcast
+# Removed unused websocket_utils imports - functions are imported locally where needed
 import json
 import logging
-from collections import Counter
+# Removed unused Counter import
 
 logger = logging.getLogger('game_sessions')
 

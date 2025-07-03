@@ -13,16 +13,16 @@ Services handle:
 """
 
 import logging
-from typing import Dict, List, Optional, Any
+from typing import Dict, List, Any
 from django.utils import timezone
 from django.core.cache import cache
 from django.db import transaction
 
-from .models import GameSession, GameConfiguration
+from .models import GameSession
 from players.models import Player, PlayerAnswer
 from .round_handlers import get_round_handler
 from .websocket_utils import broadcast_to_game, broadcast_round_started, broadcast_round_ended, broadcast_player_results, start_timer_broadcast
-from .cache_service import get_game_cache, PlayerCacheService, ScoreCacheService
+from .cache_service import get_game_cache, PlayerCacheService
 
 logger = logging.getLogger('game_sessions')
 
