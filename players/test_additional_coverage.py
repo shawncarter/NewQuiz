@@ -17,6 +17,9 @@ class PlayerViewsTest(TestCase):
     """Test player views functionality"""
 
     def setUp(self):
+        """
+        Initializes test data for player-related view tests, including a game type, game session, configuration, and player instance.
+        """
         self.client = Client()
         self.game_type = GameType.objects.create(
             name="Flower, Fruit & Veg",
@@ -33,7 +36,9 @@ class PlayerViewsTest(TestCase):
         )
 
     def test_player_lobby_view(self):
-        """Test player lobby view"""
+        """
+        Tests that the player lobby view returns a 200 response and displays the correct game code and player name for a valid game session and player.
+        """
         url = reverse('players:player_lobby_with_id', kwargs={
             'game_code': self.game_session.game_code,
             'player_id': self.player.id
@@ -45,7 +50,9 @@ class PlayerViewsTest(TestCase):
         self.assertContains(response, self.player.name)
 
     def test_player_lobby_invalid_game(self):
-        """Test player lobby with invalid game code"""
+        """
+        Verifies that accessing the player lobby view with an invalid game code returns a 404 response.
+        """
         url = reverse('players:player_lobby_with_id', kwargs={
             'game_code': 'INVALID',
             'player_id': self.player.id
@@ -55,7 +62,9 @@ class PlayerViewsTest(TestCase):
         self.assertEqual(response.status_code, 404)
 
     def test_player_lobby_invalid_player(self):
-        """Test player lobby with invalid player ID"""
+        """
+        Tests that accessing the player lobby view with an invalid player ID returns a 404 response.
+        """
         url = reverse('players:player_lobby_with_id', kwargs={
             'game_code': self.game_session.game_code,
             'player_id': 999
@@ -65,7 +74,9 @@ class PlayerViewsTest(TestCase):
         self.assertEqual(response.status_code, 404)
 
     def test_player_lobby_redirect_when_active(self):
-        """Test player lobby redirects to game when game is active"""
+        """
+        Verifies that the player lobby view redirects to the game view when the game session is active.
+        """
         self.game_session.status = 'active'
         self.game_session.save()
 
@@ -85,7 +96,9 @@ class PlayerViewsTest(TestCase):
         self.assertRedirects(response, expected_url)
 
     def test_player_lobby_invalid_player_redirects(self):
-        """Test player lobby with invalid player redirects to join"""
+        """
+        Verify that accessing the player lobby with an invalid player ID redirects to the join game page instead of returning a 404 error.
+        """
         url = reverse('players:player_lobby_with_id', kwargs={
             'game_code': self.game_session.game_code,
             'player_id': 999
@@ -99,7 +112,9 @@ class PlayerViewsTest(TestCase):
         self.assertRedirects(response, expected_url)
 
     def test_player_game_view(self):
-        """Test player game view"""
+        """
+        Tests that the player game view returns a 200 response and displays the player's name when the game session is active.
+        """
         self.game_session.status = 'active'
         self.game_session.current_round_number = 1
         self.game_session.save()
@@ -119,6 +134,9 @@ class PlayerModelTest(TestCase):
     """Test Player model edge cases"""
 
     def setUp(self):
+        """
+        Set up a test game session and player instance for use in Player model tests.
+        """
         self.game_session = GameSession.objects.create()
         self.player = Player.objects.create(
             name="Test Player",
@@ -126,12 +144,16 @@ class PlayerModelTest(TestCase):
         )
 
     def test_player_string_representation(self):
-        """Test player string representation"""
+        """
+        Tests that the string representation of a Player instance includes the player's name and associated game code.
+        """
         expected = f"Test Player in {self.game_session.game_code}"
         self.assertEqual(str(self.player), expected)
 
     def test_player_total_score_property(self):
-        """Test player total_score property"""
+        """
+        Tests that the Player model's total_score property correctly reflects the sum of points awarded to the player.
+        """
         # Initially should be 0
         self.assertEqual(self.player.total_score, 0)
         
@@ -140,7 +162,9 @@ class PlayerModelTest(TestCase):
         self.assertEqual(self.player.total_score, 10)
 
     def test_player_answers_relationship(self):
-        """Test player answers relationship"""
+        """
+        Verifies that the Player model's answers relationship correctly tracks associated PlayerAnswer instances.
+        """
         # Initially should have no answers
         self.assertEqual(self.player.answers.count(), 0)
 
@@ -160,6 +184,9 @@ class PlayerAnswerModelTest(TestCase):
     """Test PlayerAnswer model functionality"""
 
     def setUp(self):
+        """
+        Set up a test game session and player instance for use in Player model tests.
+        """
         self.game_session = GameSession.objects.create()
         self.player = Player.objects.create(
             name="Test Player",
@@ -167,7 +194,9 @@ class PlayerAnswerModelTest(TestCase):
         )
 
     def test_player_answer_creation(self):
-        """Test creating a player answer"""
+        """
+        Verifies that a PlayerAnswer instance can be created with all fields set and that its attributes match the expected values.
+        """
         answer = PlayerAnswer.objects.create(
             player=self.player,
             round_number=1,
@@ -185,7 +214,9 @@ class PlayerAnswerModelTest(TestCase):
         self.assertEqual(answer.points_awarded, 10)
 
     def test_player_answer_string_representation(self):
-        """Test player answer string representation"""
+        """
+        Verify that the string representation of a PlayerAnswer instance includes the player name, answer text, and round number in the expected format.
+        """
         answer = PlayerAnswer.objects.create(
             player=self.player,
             round_number=1,
@@ -196,7 +227,9 @@ class PlayerAnswerModelTest(TestCase):
         self.assertEqual(str(answer), expected)
 
     def test_player_answer_defaults(self):
-        """Test player answer default values"""
+        """
+        Verify that a newly created PlayerAnswer instance has the correct default values for validity, uniqueness, points awarded, and submission timestamp.
+        """
         answer = PlayerAnswer.objects.create(
             player=self.player,
             round_number=1,
@@ -209,7 +242,9 @@ class PlayerAnswerModelTest(TestCase):
         self.assertIsNotNone(answer.submitted_at)
 
     def test_player_answer_validation_fields(self):
-        """Test player answer validation fields"""
+        """
+        Verifies that the validation and uniqueness fields of a PlayerAnswer can be updated and saved correctly.
+        """
         answer = PlayerAnswer.objects.create(
             player=self.player,
             round_number=1,
@@ -234,6 +269,9 @@ class PlayerServiceIntegrationTest(TestCase):
     """Integration tests for player-related services"""
 
     def setUp(self):
+        """
+        Initializes test data by creating a game type, game session, and associated game configuration for use in test cases.
+        """
         self.game_type = GameType.objects.create(
             name="Flower, Fruit & Veg",
             description="Test description"
@@ -245,7 +283,9 @@ class PlayerServiceIntegrationTest(TestCase):
         )
 
     def test_multiple_players_joining(self):
-        """Test multiple players joining the same game"""
+        """
+        Verifies that multiple players can successfully join the same game session and are correctly recorded in the database.
+        """
         from game_sessions.services import PlayerService
         
         # First player joins
@@ -266,7 +306,9 @@ class PlayerServiceIntegrationTest(TestCase):
         self.assertEqual(Player.objects.filter(game_session=self.game_session).count(), 2)
 
     def test_player_reconnection_flow(self):
-        """Test player reconnection flow"""
+        """
+        Tests that a player who disconnects from a game session can successfully reconnect using the same name, retaining their original player ID and connection status.
+        """
         from game_sessions.services import PlayerService
         
         # Player joins initially
@@ -297,6 +339,9 @@ class URLPatternsTest(TestCase):
     """Test URL patterns for players app"""
 
     def setUp(self):
+        """
+        Set up a test game session and player instance for use in Player model tests.
+        """
         self.game_session = GameSession.objects.create()
         self.player = Player.objects.create(
             name="Test Player",
@@ -304,7 +349,11 @@ class URLPatternsTest(TestCase):
         )
 
     def test_all_player_urls_resolve(self):
-        """Test that all player URLs resolve correctly"""
+        """
+        Verifies that all key player-related URL patterns resolve to valid paths.
+        
+        Ensures that reversing each player-related URL name with appropriate parameters returns a non-null URL that starts with '/'.
+        """
         urls_to_test = [
             ('players:player_lobby_with_id', {
                 'game_code': self.game_session.game_code,

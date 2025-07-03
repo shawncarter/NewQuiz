@@ -52,7 +52,9 @@ class PlayerModelTest(TestCase):
         self.assertEqual(str(player), expected)
 
     def test_player_disconnect_reconnect(self):
-        """Test player disconnect and reconnect functionality"""
+        """
+        Verifies that a player's connection status is correctly updated when disconnecting and reconnecting.
+        """
         player = Player.objects.create(
             name="Test Player",
             game_session=self.game_session,
@@ -68,7 +70,9 @@ class PlayerModelTest(TestCase):
         self.assertTrue(player.is_connected)
 
     def test_unique_session_per_game(self):
-        """Test that multiple players can have same session key in same game (for development)"""
+        """
+        Verify that multiple players can share the same session key within a single game session, and that players with the same session key in different game sessions are treated as distinct.
+        """
         # Create first player
         player1 = Player.objects.create(
             name="Player 1",
@@ -155,7 +159,11 @@ class PlayerAnswerModelTest(TestCase):
         self.assertEqual(str(answer), expected)
 
     def test_unique_answer_per_round(self):
-        """Test that players can only have one answer per round"""
+        """
+        Verifies that a player cannot submit more than one answer per round, enforcing uniqueness at the database level.
+        
+        Attempts to create a second answer for the same player and round are expected to raise an IntegrityError, while submitting answers for different rounds is allowed.
+        """
         from django.db import IntegrityError, transaction
 
         # Create first answer
