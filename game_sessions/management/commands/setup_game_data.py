@@ -7,6 +7,11 @@ class Command(BaseCommand):
 
     def handle(self, *args, **_options):
         # Create the Flower, Fruit and Veg game type
+        """
+        Initializes or updates game types and categories in the database for the game application.
+        
+        Creates or retrieves the "Flower, Fruit & Veg" and "Multiple Choice" game types with their respective descriptions. Migrates any existing "Letter Categories" game type and its categories to "Flower, Fruit & Veg", then deletes the old type. Ensures a predefined set of categories exists for "Flower, Fruit & Veg", reporting the number of new categories created or indicating if all already exist.
+        """
         ffv_game_type, created = GameType.objects.get_or_create(
             name="Flower, Fruit & Veg",
             defaults={

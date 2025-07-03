@@ -4,14 +4,20 @@ from django.db import migrations
 
 
 def set_default_round_values(apps, _schema_editor):
-    """Set default values for existing GameSession records"""
+    """
+    Sets default values for null fields in existing GameSession records.
+    
+    Updates all GameSession entries with a null `current_round_number` to 0 and those with a null `is_round_active` to False.
+    """
     GameSession = apps.get_model('game_sessions', 'GameSession')
     GameSession.objects.filter(current_round_number__isnull=True).update(current_round_number=0)
     GameSession.objects.filter(is_round_active__isnull=True).update(is_round_active=False)
 
 
 def reverse_default_round_values(apps, _schema_editor):
-    """Reverse operation - do nothing"""
+    """
+    No-op reverse migration function; does nothing when the migration is rolled back.
+    """
     pass
 
 

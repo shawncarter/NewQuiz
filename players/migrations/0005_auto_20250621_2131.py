@@ -5,7 +5,11 @@ from django.db.models import Sum
 
 
 def populate_current_scores(apps, _schema_editor):
-    """Populate current_score field from existing PlayerAnswer data"""
+    """
+    Updates each Player's current_score field to the sum of points_awarded from all related PlayerAnswer records.
+    
+    For every Player instance, calculates the total points awarded based on associated PlayerAnswer entries and saves the result to the current_score field. If a player has no related answers, current_score is set to 0.
+    """
     Player = apps.get_model('players', 'Player')
     PlayerAnswer = apps.get_model('players', 'PlayerAnswer')
 
@@ -19,7 +23,9 @@ def populate_current_scores(apps, _schema_editor):
 
 
 def reverse_populate_current_scores(apps, _schema_editor):
-    """Reverse migration - reset all current_score to 0"""
+    """
+    Resets the `current_score` field to 0 for all Player instances during migration rollback.
+    """
     Player = apps.get_model('players', 'Player')
     Player.objects.update(current_score=0)
 
