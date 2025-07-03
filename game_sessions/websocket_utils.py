@@ -265,7 +265,7 @@ def broadcast_score_update(game_session, player_name, points_awarded, reason="ma
     broadcast_to_game(game_session.game_code, 'score_update', data)
 
 
-def start_timer_broadcast(game_session, round_obj):
+def start_timer_broadcast(game_session, _round_obj):
     """Start broadcasting timer updates for a round"""
     import threading
     import time
