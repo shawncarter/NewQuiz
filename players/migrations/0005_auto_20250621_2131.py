@@ -4,7 +4,7 @@ from django.db import migrations
 from django.db.models import Sum
 
 
-def populate_current_scores(apps, schema_editor):
+def populate_current_scores(apps, _schema_editor):
     """Populate current_score field from existing PlayerAnswer data"""
     Player = apps.get_model('players', 'Player')
     PlayerAnswer = apps.get_model('players', 'PlayerAnswer')
@@ -18,7 +18,7 @@ def populate_current_scores(apps, schema_editor):
         player.save()
 
 
-def reverse_populate_current_scores(apps, schema_editor):
+def reverse_populate_current_scores(apps, _schema_editor):
     """Reverse migration - reset all current_score to 0"""
     Player = apps.get_model('players', 'Player')
     Player.objects.update(current_score=0)

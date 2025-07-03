@@ -9,7 +9,6 @@ import logging
 from typing import Dict, List, Optional, Any
 from django.core.cache import cache
 from django.utils import timezone
-from datetime import timedelta
 
 logger = logging.getLogger('game_sessions.cache')
 

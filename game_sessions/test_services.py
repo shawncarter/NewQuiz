@@ -7,7 +7,7 @@ separate from the HTTP layer. This makes testing faster and more focused.
 
 from django.test import TestCase
 from django.utils import timezone
-from unittest.mock import patch, MagicMock
+from unittest.mock import patch
 
 from .models import GameSession, GameType, GameCategory, GameConfiguration
 from players.models import Player, PlayerAnswer

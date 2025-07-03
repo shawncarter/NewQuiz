@@ -49,7 +49,7 @@ class GameConsumer(AsyncWebsocketConsumer):
             'data': game_state
         }))
 
-    async def disconnect(self, close_code):
+    async def disconnect(self, _close_code):
         logger.info(f"WebSocket disconnecting from game {self.game_code}")
         await self.handle_player_disconnect()
         

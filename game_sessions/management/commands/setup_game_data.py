@@ -5,7 +5,7 @@ from game_sessions.models import GameType, GameCategory
 class Command(BaseCommand):
     help = 'Set up initial game types and categories'
 
-    def handle(self, *args, **options):
+    def handle(self, *args, **_options):
         # Create the Flower, Fruit and Veg game type
         ffv_game_type, created = GameType.objects.get_or_create(
             name="Flower, Fruit & Veg",
