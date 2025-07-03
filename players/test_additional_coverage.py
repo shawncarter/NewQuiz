@@ -4,14 +4,10 @@ Additional tests to improve coverage for the players app.
 
 from django.test import TestCase, Client
 from django.urls import reverse
-from django.http import JsonResponse
-from unittest.mock import patch, MagicMock
+from unittest.mock import patch
 
 from game_sessions.models import GameSession, GameType, GameConfiguration
 from players.models import Player, PlayerAnswer
-# Import available views
-from players.views import player_lobby, player_game
-
 
 class PlayerViewsTest(TestCase):
     """Test player views functionality"""
