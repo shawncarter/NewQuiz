@@ -11,7 +11,21 @@ logger = logging.getLogger('websockets')
 
 class GameConsumer(AsyncWebsocketConsumer):
     async def connect(self):
-        self.game_code = self.scope['url_route']['kwargs']['game_code']
+        # Handle both test and production URL routing
+        if 'url_route' in self.scope and 'kwargs' in self.scope['url_route']:
+            self.game_code = self.scope['url_route']['kwargs']['game_code']
+        else:
+            # For testing, extract from path
+            path = self.scope.get('path', '')
+            import re
+            match = re.search(r'/ws/game/(\w+)/', path)
+            if match:
+                self.game_code = match.group(1)
+            else:
+                logger.error(f"Could not extract game_code from path: {path}")
+                await self.close()
+                return
+
         self.game_group_name = f'game_{self.game_code}'
         self.player_id = None  # Will be set by identify message
         self.last_game_started_time = None  # Track when game_started was sent
