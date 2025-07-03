@@ -6,12 +6,14 @@ These tests cover edge cases and scenarios not covered by the main test suite.
 from django.test import TestCase, Client
 from django.urls import reverse
 from django.core.cache import cache
-from unittest.mock import patch, MagicMock
+from django.urls import reverse
+from django.core.cache import cache
+from unittest.mock import patch
 
-from game_sessions.models import GameSession, GameType, GameCategory, GameConfiguration
+from game_sessions.models import GameSession, GameType, GameConfiguration
 from players.models import Player, PlayerAnswer
 from game_sessions.services import GameService, PlayerService
-from game_sessions.cache_service import get_game_cache, PlayerCacheService
+from game_sessions.cache_service import get_game_cache
 
 
 class CacheServiceTest(TestCase):
