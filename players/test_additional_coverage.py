@@ -192,7 +192,7 @@ class PlayerAnswerModelTest(TestCase):
             answer_text="Rose"
         )
 
-        expected = f"Test Player: Rose (Round 1)"
+        expected = "Test Player: Rose (Round 1)"
         self.assertEqual(str(answer), expected)
 
     def test_player_answer_defaults(self):
