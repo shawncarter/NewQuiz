@@ -40,58 +40,58 @@ def broadcast_to_game(game_code, message_type, data):
             logger.error(f"Failed to broadcast {message_type} to {group_name} on retry: {retry_e}")
 
 
-def broadcast_round_started(game_session, round_obj):
+def broadcast_round_started(game_session, round_info):
     """Broadcast that a round has started"""
     # Map legacy round types for WebSocket compatibility
-    mapped_round_type = round_obj['round_type']
+    mapped_round_type = round_info['round_type']
     if mapped_round_type == 'starts_with':
         mapped_round_type = 'flower_fruit_veg'
     
     data = {
-        'round_number': round_obj['round_number'],
+        'round_number': round_info['round_number'],
         'total_time': game_session.configuration.round_time_seconds,
-        'started_at': round_obj['started_at'].isoformat() if round_obj['started_at'] else None,
+        'started_at': round_info['started_at'].isoformat() if round_info['started_at'] else None,
         'round_type': mapped_round_type,  # Send the mapped round type
         'is_active': True,
         'time_remaining': game_session.configuration.round_time_seconds
     }
 
     # Handle both new and legacy round types for WebSocket compatibility
-    round_type = round_obj['round_type']
+    round_type = round_info['round_type']
     if round_type == 'starts_with':
         round_type = 'flower_fruit_veg'
     
     if round_type == 'flower_fruit_veg':
         data.update({
-            'prompt': f"A {round_obj['category'].name.lower()} that starts with '{round_obj['prompt_letter']}'",
-            'letter': round_obj['prompt_letter'],
-            'category': round_obj['category'].name,
+            'prompt': f"A {round_info['category'].name.lower()} that starts with '{round_info['prompt_letter']}'",
+            'letter': round_info['prompt_letter'],
+            'category': round_info['category'].name,
         })
-    elif round_obj['round_type'] == 'multiple_choice':
+    elif round_info['round_type'] == 'multiple_choice':
         data.update({
-            'question_text': round_obj['question_text'],
-            'choices': round_obj['choices'],
-            'category': round_obj['category'],
-            'correct_answer': round_obj.get('correct_answer'),  # Include for GM screen
+            'question_text': round_info['question_text'],
+            'choices': round_info['choices'],
+            'category': round_info['category'],
+            'correct_answer': round_info.get('correct_answer'),  # Include for GM screen
         })
 
     broadcast_to_game(game_session.game_code, 'round_started', data)
 
 
-def broadcast_round_ended(game_session, round_obj, answers_data=None):
+def broadcast_round_ended(game_session, round_info, answer_data=None):
     """Broadcast that a round has ended"""
     data = {
-        'round_number': round_obj['round_number'],
-        'round_type': round_obj['round_type'],
-        'is_final_round': round_obj['round_number'] >= game_session.configuration.num_rounds
+        'round_number': round_info['round_number'],
+        'round_type': round_info['round_type'],
+        'is_final_round': round_info['round_number'] >= game_session.configuration.num_rounds
     }
 
-    if answers_data:
-        data['answers'] = answers_data
+    if answer_data:
+        data['answers'] = answer_data
     
     # Add correct answer for multiple choice questions
-    if round_obj['round_type'] == 'multiple_choice':
-        data['correct_answer'] = round_obj.get('correct_answer')
+    if round_info['round_type'] == 'multiple_choice':
+        data['correct_answer'] = round_info.get('correct_answer')
 
     broadcast_to_game(game_session.game_code, 'round_ended', data)
 

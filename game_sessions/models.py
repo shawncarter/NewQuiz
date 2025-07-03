@@ -34,7 +34,7 @@ class GameSession(models.Model):
     started_at = models.DateTimeField(null=True, blank=True)
     finished_at = models.DateTimeField(null=True, blank=True)
 
-    # Simple counter-based round system
+    # Counter-based round system: 0=no rounds started, 1+=active round number
     current_round_number = models.IntegerField(default=0)
     is_round_active = models.BooleanField(default=False)
     current_round_started_at = models.DateTimeField(null=True, blank=True)

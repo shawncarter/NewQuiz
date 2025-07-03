@@ -11,7 +11,14 @@
       "Bash(rg:*)",
       "Bash(find:*)",
       "Bash(git commit:*)",
-      "Bash(kill:*)"
+      "Bash(kill:*)",
+      "Bash(pip install:*)",
+      "Bash(deactivate)",
+      "Bash(rm:*)",
+      "Bash(chmod:*)",
+      "Bash(coverage run:*)",
+      "Bash(coverage report:*)",
+      "Bash(exit)"
     ],
     "deny": []
   }

@@ -1,268 +1,182 @@
-Watching for file changes with StatReloader
-Not Found: /ws/game/JIV2X7/
-[23/Jun/2025 23:02:00] "GET /ws/game/JIV2X7/ HTTP/1.1" 404 5449
-[23/Jun/2025 23:02:00,631] - Broken pipe from ('127.0.0.1', 48428)
-Not Found: /ws/game/WSBB68/
-[23/Jun/2025 23:02:01] "GET /ws/game/WSBB68/ HTTP/1.1" 404 5449
-[23/Jun/2025 23:02:01,667] - Broken pipe from ('127.0.0.1', 48432)
-Not Found: /ws/game/WSBB68/
-[23/Jun/2025 23:02:01] "GET /ws/game/WSBB68/ HTTP/1.1" 404 5449
-[23/Jun/2025 23:02:01,682] - Broken pipe from ('127.0.0.1', 48444)
-Not Found: /ws/game/JIV2X7/
-[23/Jun/2025 23:02:04] "GET /ws/game/JIV2X7/ HTTP/1.1" 404 5449
-[23/Jun/2025 23:02:04,641] - Broken pipe from ('127.0.0.1', 55690)
-Not Found: /ws/game/WSBB68/
-[23/Jun/2025 23:02:04] "GET /ws/game/WSBB68/ HTTP/1.1" 404 5449
-[23/Jun/2025 23:02:04,683] - Broken pipe from ('127.0.0.1', 55706)
-Not Found: /ws/game/WSBB68/
-[23/Jun/2025 23:02:04] "GET /ws/game/WSBB68/ HTTP/1.1" 404 5449
-[23/Jun/2025 23:02:04,704] - Broken pipe from ('127.0.0.1', 55712)
-Not Found: /ws/game/WSBB68/
-[23/Jun/2025 23:02:07] "GET /ws/game/WSBB68/ HTTP/1.1" 404 5449
-[23/Jun/2025 23:02:07,707] - Broken pipe from ('127.0.0.1', 55722)
-Not Found: /ws/game/WSBB68/
-[23/Jun/2025 23:02:07] "GET /ws/game/WSBB68/ HTTP/1.1" 404 5449
-[23/Jun/2025 23:02:07,723] - Broken pipe from ('127.0.0.1', 55732)
-Not Found: /ws/game/JIV2X7/
-[23/Jun/2025 23:02:08] "GET /ws/game/JIV2X7/ HTTP/1.1" 404 5449
-[23/Jun/2025 23:02:08,628] - Broken pipe from ('127.0.0.1', 55734)
-Not Found: /ws/game/WSBB68/
-[23/Jun/2025 23:02:10] "GET /ws/game/WSBB68/ HTTP/1.1" 404 5449
-[23/Jun/2025 23:02:10,723] - Broken pipe from ('127.0.0.1', 55750)
-Not Found: /ws/game/WSBB68/
-[23/Jun/2025 23:02:10] "GET /ws/game/WSBB68/ HTTP/1.1" 404 5449
-[23/Jun/2025 23:02:10,744] - Broken pipe from ('127.0.0.1', 55766)
-Not Found: /ws/game/JIV2X7/
-[23/Jun/2025 23:02:12] "GET /ws/game/JIV2X7/ HTTP/1.1" 404 5449
-[23/Jun/2025 23:02:12,636] - Broken pipe from ('127.0.0.1', 51830)
-Not Found: /ws/game/WSBB68/
-[23/Jun/2025 23:02:13] "GET /ws/game/WSBB68/ HTTP/1.1" 404 5449
-[23/Jun/2025 23:02:13,739] - Broken pipe from ('127.0.0.1', 51842)
-Not Found: /ws/game/WSBB68/
-[23/Jun/2025 23:02:13] "GET /ws/game/WSBB68/ HTTP/1.1" 404 5449
-[23/Jun/2025 23:02:13,754] - Broken pipe from ('127.0.0.1', 51848)
-Not Found: /ws/game/JIV2X7/
-[23/Jun/2025 23:02:16] "GET /ws/game/JIV2X7/ HTTP/1.1" 404 5449
-[23/Jun/2025 23:02:16,640] - Broken pipe from ('127.0.0.1', 51856)
-Not Found: /ws/game/WSBB68/
-[23/Jun/2025 23:02:16] "GET /ws/game/WSBB68/ HTTP/1.1" 404 5449
-[23/Jun/2025 23:02:16,772] - Broken pipe from ('127.0.0.1', 51866)
-Not Found: /ws/game/WSBB68/
-[23/Jun/2025 23:02:16] "GET /ws/game/WSBB68/ HTTP/1.1" 404 5449
-[23/Jun/2025 23:02:16,800] - Broken pipe from ('127.0.0.1', 51880)
-Not Found: /ws/game/WSBB68/
-[23/Jun/2025 23:02:19] "GET /ws/game/WSBB68/ HTTP/1.1" 404 5449
-[23/Jun/2025 23:02:19,813] - Broken pipe from ('127.0.0.1', 51894)
-Not Found: /ws/game/WSBB68/
-[23/Jun/2025 23:02:19] "GET /ws/game/WSBB68/ HTTP/1.1" 404 5449
-[23/Jun/2025 23:02:19,859] - Broken pipe from ('127.0.0.1', 51898)
-Not Found: /ws/game/JIV2X7/
-[23/Jun/2025 23:02:20] "GET /ws/game/JIV2X7/ HTTP/1.1" 404 5449
-[23/Jun/2025 23:02:20,642] - Broken pipe from ('127.0.0.1', 51906)
-Not Found: /ws/game/WSBB68/
-[23/Jun/2025 23:02:22] "GET /ws/game/WSBB68/ HTTP/1.1" 404 5449
-[23/Jun/2025 23:02:22,917] - Broken pipe from ('127.0.0.1', 44892)
-Not Found: /ws/game/WSBB68/
-[23/Jun/2025 23:02:22] "GET /ws/game/WSBB68/ HTTP/1.1" 404 5449
-[23/Jun/2025 23:02:22,951] - Broken pipe from ('127.0.0.1', 44908)
-Not Found: /ws/game/JIV2X7/
-[23/Jun/2025 23:02:24] "GET /ws/game/JIV2X7/ HTTP/1.1" 404 5449
-[23/Jun/2025 23:02:24,651] - Broken pipe from ('127.0.0.1', 44910)
-Not Found: /ws/game/WSBB68/
-[23/Jun/2025 23:02:26] "GET /ws/game/WSBB68/ HTTP/1.1" 404 5449
-[23/Jun/2025 23:02:26,051] - Broken pipe from ('127.0.0.1', 44920)
-Not Found: /ws/game/WSBB68/
-[23/Jun/2025 23:02:26] "GET /ws/game/WSBB68/ HTTP/1.1" 404 5449
-[23/Jun/2025 23:02:26,079] - Broken pipe from ('127.0.0.1', 44924)
-Not Found: /ws/game/JIV2X7/
-[23/Jun/2025 23:02:28] "GET /ws/game/JIV2X7/ HTTP/1.1" 404 5449
-[23/Jun/2025 23:02:28,661] - Broken pipe from ('127.0.0.1', 44932)
-Not Found: /ws/game/WSBB68/
-[23/Jun/2025 23:02:29] "GET /ws/game/WSBB68/ HTTP/1.1" 404 5449
-[23/Jun/2025 23:02:29,190] - Broken pipe from ('127.0.0.1', 44934)
-Not Found: /ws/game/WSBB68/
-[23/Jun/2025 23:02:29] "GET /ws/game/WSBB68/ HTTP/1.1" 404 5449
-[23/Jun/2025 23:02:29,237] - Broken pipe from ('127.0.0.1', 44946)
-Not Found: /ws/game/WSBB68/
-[23/Jun/2025 23:02:32] "GET /ws/game/WSBB68/ HTTP/1.1" 404 5449
-[23/Jun/2025 23:02:32,348] - Broken pipe from ('127.0.0.1', 44962)
-Not Found: /ws/game/JIV2X7/
-[23/Jun/2025 23:02:32] "GET /ws/game/JIV2X7/ HTTP/1.1" 404 5449
-[23/Jun/2025 23:02:32,721] - Broken pipe from ('127.0.0.1', 36584)
-Not Found: /ws/game/WSBB68/
-[23/Jun/2025 23:02:32] "GET /ws/game/WSBB68/ HTTP/1.1" 404 5449
-[23/Jun/2025 23:02:32,867] - Broken pipe from ('127.0.0.1', 36596)
-Not Found: /ws/game/WSBB68/
-[23/Jun/2025 23:02:35] "GET /ws/game/WSBB68/ HTTP/1.1" 404 5449
-[23/Jun/2025 23:02:35,775] - Broken pipe from ('127.0.0.1', 36610)
-Not Found: /ws/game/WSBB68/
-[23/Jun/2025 23:02:36] "GET /ws/game/WSBB68/ HTTP/1.1" 404 5449
-[23/Jun/2025 23:02:36,676] - Broken pipe from ('127.0.0.1', 36616)
-Not Found: /ws/game/JIV2X7/
-[23/Jun/2025 23:02:36] "GET /ws/game/JIV2X7/ HTTP/1.1" 404 5449
-[23/Jun/2025 23:02:36,777] - Broken pipe from ('127.0.0.1', 36620)
-Not Found: /ws/game/WSBB68/
-[23/Jun/2025 23:02:40] "GET /ws/game/WSBB68/ HTTP/1.1" 404 5449
-[23/Jun/2025 23:02:40,958] - Broken pipe from ('127.0.0.1', 36632)
-Not Found: /ws/game/JIV2X7/
-[23/Jun/2025 23:02:40] "GET /ws/game/JIV2X7/ HTTP/1.1" 404 5449
-[23/Jun/2025 23:02:40,985] - Broken pipe from ('127.0.0.1', 36638)
-Not Found: /ws/game/WSBB68/
-[23/Jun/2025 23:02:41] "GET /ws/game/WSBB68/ HTTP/1.1" 404 5449
-[23/Jun/2025 23:02:41,007] - Broken pipe from ('127.0.0.1', 36648)
-Not Found: /ws/game/JIV2X7/
-[23/Jun/2025 23:02:45] "GET /ws/game/JIV2X7/ HTTP/1.1" 404 5449
-[23/Jun/2025 23:02:45,215] - Broken pipe from ('127.0.0.1', 43350)
-Not Found: /ws/game/WSBB68/
-[23/Jun/2025 23:02:45] "GET /ws/game/WSBB68/ HTTP/1.1" 404 5449
-[23/Jun/2025 23:02:45,389] - Broken pipe from ('127.0.0.1', 43352)
-Not Found: /ws/game/WSBB68/
-[23/Jun/2025 23:02:48] "GET /ws/game/WSBB68/ HTTP/1.1" 404 5449
-[23/Jun/2025 23:02:48,756] - Broken pipe from ('127.0.0.1', 43358)
-Not Found: /ws/game/JIV2X7/
-[23/Jun/2025 23:02:49] "GET /ws/game/JIV2X7/ HTTP/1.1" 404 5449
-[23/Jun/2025 23:02:49,072] - Broken pipe from ('127.0.0.1', 43362)
-Not Found: /ws/game/WSBB68/
-[23/Jun/2025 23:02:51] "GET /ws/game/WSBB68/ HTTP/1.1" 404 5449
-[23/Jun/2025 23:02:51,865] - Broken pipe from ('127.0.0.1', 43376)
-Not Found: /ws/game/JIV2X7/
-[23/Jun/2025 23:02:53] "GET /ws/game/JIV2X7/ HTTP/1.1" 404 5449
-[23/Jun/2025 23:02:53,929] - Broken pipe from ('127.0.0.1', 53168)
-Not Found: /ws/game/WSBB68/
-[23/Jun/2025 23:02:56] "GET /ws/game/WSBB68/ HTTP/1.1" 404 5449
-[23/Jun/2025 23:02:56,421] - Broken pipe from ('127.0.0.1', 53174)
-Not Found: /ws/game/WSBB68/
-[23/Jun/2025 23:02:56] "GET /ws/game/WSBB68/ HTTP/1.1" 404 5449
-[23/Jun/2025 23:02:56,788] - Broken pipe from ('127.0.0.1', 53180)
-Not Found: /ws/game/JIV2X7/
-[23/Jun/2025 23:03:02] "GET /ws/game/JIV2X7/ HTTP/1.1" 404 5449
-[23/Jun/2025 23:03:02,253] - Broken pipe from ('127.0.0.1', 53184)
-Not Found: /ws/game/WSBB68/
-[23/Jun/2025 23:03:02] "GET /ws/game/WSBB68/ HTTP/1.1" 404 5449
-[23/Jun/2025 23:03:02,335] - Broken pipe from ('127.0.0.1', 53200)
-Not Found: /ws/game/WSBB68/
-[23/Jun/2025 23:03:03] "GET /ws/game/WSBB68/ HTTP/1.1" 404 5449
-[23/Jun/2025 23:03:03,697] - Broken pipe from ('127.0.0.1', 39828)
-Not Found: /ws/game/JIV2X7/
-[23/Jun/2025 23:03:06] "GET /ws/game/JIV2X7/ HTTP/1.1" 404 5449
-[23/Jun/2025 23:03:06,865] - Broken pipe from ('127.0.0.1', 39836)
-Not Found: /ws/game/WSBB68/
-[23/Jun/2025 23:03:09] "GET /ws/game/WSBB68/ HTTP/1.1" 404 5449
-[23/Jun/2025 23:03:09,704] - Broken pipe from ('127.0.0.1', 39840)
-Not Found: /ws/game/WSBB68/
-[23/Jun/2025 23:03:09] "GET /ws/game/WSBB68/ HTTP/1.1" 404 5449
-[23/Jun/2025 23:03:09,931] - Broken pipe from ('127.0.0.1', 39842)
-Not Found: /ws/game/JIV2X7/
-[23/Jun/2025 23:03:12] "GET /ws/game/JIV2X7/ HTTP/1.1" 404 5449
-[23/Jun/2025 23:03:12,137] - Broken pipe from ('127.0.0.1', 39854)
-Not Found: /ws/game/WSBB68/
-[23/Jun/2025 23:03:16] "GET /ws/game/WSBB68/ HTTP/1.1" 404 5449
-[23/Jun/2025 23:03:16,095] - Broken pipe from ('127.0.0.1', 41674)
-Not Found: /ws/game/WSBB68/
-[23/Jun/2025 23:03:17] "GET /ws/game/WSBB68/ HTTP/1.1" 404 5449
-[23/Jun/2025 23:03:17,252] - Broken pipe from ('127.0.0.1', 41686)
-Not Found: /ws/game/JIV2X7/
-[23/Jun/2025 23:03:17] "GET /ws/game/JIV2X7/ HTTP/1.1" 404 5449
-[23/Jun/2025 23:03:17,412] - Broken pipe from ('127.0.0.1', 41696)
-Not Found: /ws/game/WSBB68/
-[23/Jun/2025 23:03:21] "GET /ws/game/WSBB68/ HTTP/1.1" 404 5449
-[23/Jun/2025 23:03:21,304] - Broken pipe from ('127.0.0.1', 41708)
-Not Found: /ws/game/WSBB68/
-[23/Jun/2025 23:03:24] "GET /ws/game/WSBB68/ HTTP/1.1" 404 5449
-[23/Jun/2025 23:03:24,563] - Broken pipe from ('127.0.0.1', 59762)
-Not Found: /ws/game/JIV2X7/
-[23/Jun/2025 23:03:24] "GET /ws/game/JIV2X7/ HTTP/1.1" 404 5449
-[23/Jun/2025 23:03:24,785] - Broken pipe from ('127.0.0.1', 59776)
-Not Found: /ws/game/WSBB68/
-[23/Jun/2025 23:03:26] "GET /ws/game/WSBB68/ HTTP/1.1" 404 5449
-[23/Jun/2025 23:03:26,041] - Broken pipe from ('127.0.0.1', 59788)
-Not Found: /ws/game/WSBB68/
-[23/Jun/2025 23:03:30] "GET /ws/game/WSBB68/ HTTP/1.1" 404 5449
-[23/Jun/2025 23:03:30,108] - Broken pipe from ('127.0.0.1', 59800)
-Not Found: /ws/game/WSBB68/
-[23/Jun/2025 23:03:30] "GET /ws/game/WSBB68/ HTTP/1.1" 404 5449
-[23/Jun/2025 23:03:30,557] - Broken pipe from ('127.0.0.1', 59808)
-Not Found: /ws/game/JIV2X7/
-[23/Jun/2025 23:03:31] "GET /ws/game/JIV2X7/ HTTP/1.1" 404 5449
-[23/Jun/2025 23:03:31,612] - Broken pipe from ('127.0.0.1', 59824)
-Not Found: /ws/game/WSBB68/
-[23/Jun/2025 23:03:34] "GET /ws/game/WSBB68/ HTTP/1.1" 404 5449
-[23/Jun/2025 23:03:34,815] - Broken pipe from ('127.0.0.1', 44498)
-Not Found: /ws/game/WSBB68/
-[23/Jun/2025 23:03:36] "GET /ws/game/WSBB68/ HTTP/1.1" 404 5449
-[23/Jun/2025 23:03:36,074] - Broken pipe from ('127.0.0.1', 44508)
-Not Found: /ws/game/JIV2X7/
-[23/Jun/2025 23:03:37] "GET /ws/game/JIV2X7/ HTTP/1.1" 404 5449
-[23/Jun/2025 23:03:37,679] - Broken pipe from ('127.0.0.1', 44510)
-Not Found: /ws/game/WSBB68/
-[23/Jun/2025 23:03:40] "GET /ws/game/WSBB68/ HTTP/1.1" 404 5449
-[23/Jun/2025 23:03:40,928] - Broken pipe from ('127.0.0.1', 44522)
-Not Found: /ws/game/WSBB68/
-[23/Jun/2025 23:03:43] "GET /ws/game/WSBB68/ HTTP/1.1" 404 5449
-[23/Jun/2025 23:03:43,282] - Broken pipe from ('127.0.0.1', 57862)
-Not Found: /ws/game/JIV2X7/
-[23/Jun/2025 23:03:45] "GET /ws/game/JIV2X7/ HTTP/1.1" 404 5449
-[23/Jun/2025 23:03:45,138] - Broken pipe from ('127.0.0.1', 57868)
-Not Found: /ws/game/WSBB68/
-[23/Jun/2025 23:03:45] "GET /ws/game/WSBB68/ HTTP/1.1" 404 5449
-[23/Jun/2025 23:03:45,297] - Broken pipe from ('127.0.0.1', 57882)
-Not Found: /ws/game/WSBB68/
-[23/Jun/2025 23:03:48] "GET /ws/game/WSBB68/ HTTP/1.1" 404 5449
-[23/Jun/2025 23:03:48,366] - Broken pipe from ('127.0.0.1', 57896)
-Not Found: /ws/game/WSBB68/
-[23/Jun/2025 23:03:52] "GET /ws/game/WSBB68/ HTTP/1.1" 404 5449
-[23/Jun/2025 23:03:52,097] - Broken pipe from ('127.0.0.1', 57904)
-Not Found: /ws/game/JIV2X7/
-[23/Jun/2025 23:03:52] "GET /ws/game/JIV2X7/ HTTP/1.1" 404 5449
-[23/Jun/2025 23:03:52,405] - Broken pipe from ('127.0.0.1', 57906)
-Not Found: /ws/game/WSBB68/
-[23/Jun/2025 23:03:55] "GET /ws/game/WSBB68/ HTTP/1.1" 404 5449
-[23/Jun/2025 23:03:55,269] - Broken pipe from ('127.0.0.1', 44210)
-Not Found: /ws/game/WSBB68/
-[23/Jun/2025 23:03:56] "GET /ws/game/WSBB68/ HTTP/1.1" 404 5449
-[23/Jun/2025 23:03:56,615] - Broken pipe from ('127.0.0.1', 44224)
-Not Found: /ws/game/JIV2X7/
-[23/Jun/2025 23:03:57] "GET /ws/game/JIV2X7/ HTTP/1.1" 404 5449
-[23/Jun/2025 23:03:57,323] - Broken pipe from ('127.0.0.1', 44230)
-Not Found: /ws/game/WSBB68/
-[23/Jun/2025 23:03:58] "GET /ws/game/WSBB68/ HTTP/1.1" 404 5449
-[23/Jun/2025 23:03:58,293] - Broken pipe from ('127.0.0.1', 44240)
-Not Found: /ws/game/WSBB68/
-[23/Jun/2025 23:04:01] "GET /ws/game/WSBB68/ HTTP/1.1" 404 5449
-[23/Jun/2025 23:04:01,321] - Broken pipe from ('127.0.0.1', 44252)
-Not Found: /ws/game/JIV2X7/
-[23/Jun/2025 23:04:01] "GET /ws/game/JIV2X7/ HTTP/1.1" 404 5449
-[23/Jun/2025 23:04:01,735] - Broken pipe from ('127.0.0.1', 44256)
-Not Found: /ws/game/WSBB68/
-[23/Jun/2025 23:04:03] "GET /ws/game/WSBB68/ HTTP/1.1" 404 5449
-[23/Jun/2025 23:04:03,485] - Broken pipe from ('127.0.0.1', 39046)
-Not Found: /ws/game/WSBB68/
-[23/Jun/2025 23:04:04] "GET /ws/game/WSBB68/ HTTP/1.1" 404 5449
-[23/Jun/2025 23:04:04,340] - Broken pipe from ('127.0.0.1', 39058)
-Not Found: /ws/game/WSBB68/
-[23/Jun/2025 23:04:07] "GET /ws/game/WSBB68/ HTTP/1.1" 404 5449
-[23/Jun/2025 23:04:07,366] - Broken pipe from ('127.0.0.1', 39062)
-Not Found: /ws/game/JIV2X7/
-[23/Jun/2025 23:04:09] "GET /ws/game/JIV2X7/ HTTP/1.1" 404 5449
-[23/Jun/2025 23:04:09,175] - Broken pipe from ('127.0.0.1', 39072)
-Not Found: /ws/game/WSBB68/
-[23/Jun/2025 23:04:09] "GET /ws/game/WSBB68/ HTTP/1.1" 404 5449
-[23/Jun/2025 23:04:09,364] - Broken pipe from ('127.0.0.1', 39074)
-Not Found: /ws/game/WSBB68/
-[23/Jun/2025 23:04:10] "GET /ws/game/WSBB68/ HTTP/1.1" 404 5449
-[23/Jun/2025 23:04:10,378] - Broken pipe from ('127.0.0.1', 39086)
-Not Found: /ws/game/WSBB68/
-[23/Jun/2025 23:04:13] "GET /ws/game/WSBB68/ HTTP/1.1" 404 5449
-[23/Jun/2025 23:04:13,408] - Broken pipe from ('127.0.0.1', 42164)
-Not Found: /ws/game/WSBB68/
-[23/Jun/2025 23:04:16] "GET /ws/game/WSBB68/ HTTP/1.1" 404 5449
-[23/Jun/2025 23:04:16,431] - Broken pipe from ('127.0.0.1', 42176)
-Not Found: /ws/game/WSBB68/
-[23/Jun/2025 23:04:16] "GET /ws/game/WSBB68/ HTTP/1.1" 404 5449
-[23/Jun/2025 23:04:16,539] - Broken pipe from ('127.0.0.1', 42182)
-Not Found: /ws/game/WSBB68/
-[23/Jun/2025 23:04:16] "GET /ws/game/WSBB68/ HTTP/1.1" 404 5449
-[23/Jun/2025 23:04:16,882] - Broken pipe from ('127.0.0.1', 42190)
-Not Found: /ws/game/JIV2X7/
-[23/Jun/2025 23:04:17] "GET /ws/game/JIV2X7/ HTTP/1.1" 404 5449
-[23/Jun/2025 23:04:17,180] - Broken pipe from ('127.0.0.1', 42200)
+[03/Jul/2025 20:48:04] "GET / HTTP/1.1" 200 7034
+Not Found: /favicon.ico
+[03/Jul/2025 20:48:04] "GET /favicon.ico HTTP/1.1" 404 5737
+[03/Jul/2025 20:48:05] "GET /create/ HTTP/1.1" 200 11713
+[03/Jul/2025 20:48:10] "POST /create/ HTTP/1.1" 302 0
+[03/Jul/2025 20:48:10] "GET /game/ZIJOT2/ HTTP/1.1" 200 19178
+Not Found: /ws/game/ZIJOT2/
+[03/Jul/2025 20:48:12] "GET /ws/game/ZIJOT2/ HTTP/1.1" 404 5749
+[03/Jul/2025 20:48:12,702] - Broken pipe from ('127.0.0.1', 33294)
+Not Found: /ws/game/ZIJOT2/
+[03/Jul/2025 20:48:19] "GET /ws/game/ZIJOT2/ HTTP/1.1" 404 5749
+[03/Jul/2025 20:48:19,475] - Broken pipe from ('127.0.0.1', 36474)
+Not Found: /ws/game/ZIJOT2/
+[03/Jul/2025 20:48:24] "GET /ws/game/ZIJOT2/ HTTP/1.1" 404 5749
+[03/Jul/2025 20:48:24,414] - Broken pipe from ('127.0.0.1', 36480)
+[03/Jul/2025 20:48:25] "GET / HTTP/1.1" 200 7034
+[03/Jul/2025 20:48:26] "GET /join/ HTTP/1.1" 200 4411
+Not Found: /ws/game/ZIJOT2/
+[03/Jul/2025 20:48:29] "GET /ws/game/ZIJOT2/ HTTP/1.1" 404 5749
+[03/Jul/2025 20:48:29,764] - Broken pipe from ('127.0.0.1', 59324)
+INFO 2025-07-03 20:48:31,727 views 57499 129587378394816 Player test 1 created for game ZIJOT2
+INFO 2025-07-03 20:48:31,729 views 57499 129587378394816 Player test 1 joined game ZIJOT2. Total players: 1
+INFO 2025-07-03 20:48:31,730 views 57499 129587378394816 Broadcasting player join: {'game_status': 'waiting', 'player_count': 1, 'players': [{'id': 145, 'name': 'test 1', 'joined_at': '20:48:31', 'total_score': 0}], 'message': 'test 1 joined the game!'}
+INFO 2025-07-03 20:48:31,730 websocket_utils 57499 129587378394816 Broadcasting game_update to group game_ZIJOT2: {'game_status': 'waiting', 'player_count': 1, 'players': [{'id': 145, 'name': 'test 1', 'joined_at': '20:48:31', 'total_score': 0}], 'message': 'test 1 joined the game!'}
+INFO 2025-07-03 20:48:31,731 websocket_utils 57499 129587378394816 Successfully broadcast game_update to game_ZIJOT2
+[03/Jul/2025 20:48:31] "POST /join/ HTTP/1.1" 302 0
+[03/Jul/2025 20:48:31] "GET /player/lobby/ZIJOT2/145/ HTTP/1.1" 200 9066
+Not Found: /ws/game/ZIJOT2/
+[03/Jul/2025 20:48:31] "GET /ws/game/ZIJOT2/ HTTP/1.1" 404 5749
+[03/Jul/2025 20:48:31,866] - Broken pipe from ('127.0.0.1', 59338)
+Not Found: /ws/game/ZIJOT2/
+[03/Jul/2025 20:48:34] "GET /ws/game/ZIJOT2/ HTTP/1.1" 404 5749
+[03/Jul/2025 20:48:34,772] - Broken pipe from ('127.0.0.1', 59350)
+Not Found: /ws/game/ZIJOT2/
+[03/Jul/2025 20:48:34] "GET /ws/game/ZIJOT2/ HTTP/1.1" 404 5749
+[03/Jul/2025 20:48:34,881] - Broken pipe from ('127.0.0.1', 59362)
+Not Found: /ws/game/ZIJOT2/
+[03/Jul/2025 20:48:37] "GET /ws/game/ZIJOT2/ HTTP/1.1" 404 5749
+[03/Jul/2025 20:48:37,888] - Broken pipe from ('127.0.0.1', 42304)
+Not Found: /ws/game/ZIJOT2/
+[03/Jul/2025 20:48:40] "GET /ws/game/ZIJOT2/ HTTP/1.1" 404 5749
+[03/Jul/2025 20:48:40,898] - Broken pipe from ('127.0.0.1', 42320)
+Not Found: /ws/game/ZIJOT2/
+[03/Jul/2025 20:48:41] "GET /ws/game/ZIJOT2/ HTTP/1.1" 404 5749
+[03/Jul/2025 20:48:41,699] - Broken pipe from ('127.0.0.1', 42332)
+Not Found: /ws/game/ZIJOT2/
+[03/Jul/2025 20:48:43] "GET /ws/game/ZIJOT2/ HTTP/1.1" 404 5749
+[03/Jul/2025 20:48:43,907] - Broken pipe from ('127.0.0.1', 42344)
+[03/Jul/2025 20:48:44] "GET / HTTP/1.1" 200 7033
+[03/Jul/2025 20:48:45] "GET /join/ HTTP/1.1" 200 4411
+Not Found: /ws/game/ZIJOT2/
+[03/Jul/2025 20:48:46] "GET /ws/game/ZIJOT2/ HTTP/1.1" 404 5749
+[03/Jul/2025 20:48:46,923] - Broken pipe from ('127.0.0.1', 44428)
+Not Found: /ws/game/ZIJOT2/
+[03/Jul/2025 20:48:47] "GET /ws/game/ZIJOT2/ HTTP/1.1" 404 5749
+[03/Jul/2025 20:48:47,003] - Broken pipe from ('127.0.0.1', 44432)
+Not Found: /ws/game/ZIJOT2/
+[03/Jul/2025 20:48:49] "GET /ws/game/ZIJOT2/ HTTP/1.1" 404 5749
+[03/Jul/2025 20:48:49,945] - Broken pipe from ('127.0.0.1', 44442)
+INFO 2025-07-03 20:48:51,194 views 57499 129587378394816 Player Test 2 created for game ZIJOT2
+INFO 2025-07-03 20:48:51,195 views 57499 129587378394816 Player Test 2 joined game ZIJOT2. Total players: 2
+INFO 2025-07-03 20:48:51,196 views 57499 129587378394816 Broadcasting player join: {'game_status': 'waiting', 'player_count': 2, 'players': [{'id': 145, 'name': 'test 1', 'joined_at': '20:48:31', 'total_score': 0}, {'id': 146, 'name': 'Test 2', 'joined_at': '20:48:51', 'total_score': 0}], 'message': 'Test 2 joined the game!'}
+INFO 2025-07-03 20:48:51,196 websocket_utils 57499 129587378394816 Broadcasting game_update to group game_ZIJOT2: {'game_status': 'waiting', 'player_count': 2, 'players': [{'id': 145, 'name': 'test 1', 'joined_at': '20:48:31', 'total_score': 0}, {'id': 146, 'name': 'Test 2', 'joined_at': '20:48:51', 'total_score': 0}], 'message': 'Test 2 joined the game!'}
+INFO 2025-07-03 20:48:51,197 websocket_utils 57499 129587378394816 Successfully broadcast game_update to game_ZIJOT2
+[03/Jul/2025 20:48:51] "POST /join/ HTTP/1.1" 302 0
+[03/Jul/2025 20:48:51] "GET /player/lobby/ZIJOT2/146/ HTTP/1.1" 200 9297
+Not Found: /ws/game/ZIJOT2/
+[03/Jul/2025 20:48:51] "GET /ws/game/ZIJOT2/ HTTP/1.1" 404 5749
+[03/Jul/2025 20:48:51,325] - Broken pipe from ('127.0.0.1', 44444)
+Not Found: /ws/game/ZIJOT2/
+[03/Jul/2025 20:48:52] "GET /ws/game/ZIJOT2/ HTTP/1.1" 404 5749
+[03/Jul/2025 20:48:52,962] - Broken pipe from ('127.0.0.1', 44452)
+Not Found: /ws/game/ZIJOT2/
+[03/Jul/2025 20:48:54] "GET /ws/game/ZIJOT2/ HTTP/1.1" 404 5749
+[03/Jul/2025 20:48:54,344] - Broken pipe from ('127.0.0.1', 44456)
+Not Found: /ws/game/ZIJOT2/
+[03/Jul/2025 20:48:54] "GET /ws/game/ZIJOT2/ HTTP/1.1" 404 5749
+[03/Jul/2025 20:48:54,955] - Broken pipe from ('127.0.0.1', 44462)
+Not Found: /ws/game/ZIJOT2/
+[03/Jul/2025 20:48:56] "GET /ws/game/ZIJOT2/ HTTP/1.1" 404 5749
+[03/Jul/2025 20:48:56,009] - Broken pipe from ('127.0.0.1', 55114)
+Not Found: /ws/game/ZIJOT2/
+[03/Jul/2025 20:48:57] "GET /ws/game/ZIJOT2/ HTTP/1.1" 404 5749
+[03/Jul/2025 20:48:57,352] - Broken pipe from ('127.0.0.1', 55124)
+Not Found: /ws/game/ZIJOT2/
+[03/Jul/2025 20:48:59] "GET /ws/game/ZIJOT2/ HTTP/1.1" 404 5749
+Not Found: /ws/game/ZIJOT2/
+[03/Jul/2025 20:49:00] "GET /ws/game/ZIJOT2/ HTTP/1.1" 404 5749
+[03/Jul/2025 20:49:00,362] - Broken pipe from ('127.0.0.1', 55138)
+Not Found: /ws/game/ZIJOT2/
+[03/Jul/2025 20:49:00] "GET /ws/game/ZIJOT2/ HTTP/1.1" 404 5749
+[03/Jul/2025 20:49:00,641] - Broken pipe from ('127.0.0.1', 55140)
+Not Found: /ws/game/ZIJOT2/
+[03/Jul/2025 20:49:02] "GET /ws/game/ZIJOT2/ HTTP/1.1" 404 5749
+[03/Jul/2025 20:49:02,178] - Broken pipe from ('127.0.0.1', 55152)
+Not Found: /ws/game/ZIJOT2/
+[03/Jul/2025 20:49:03] "GET /ws/game/ZIJOT2/ HTTP/1.1" 404 5749
+[03/Jul/2025 20:49:03,373] - Broken pipe from ('127.0.0.1', 55154)
+Not Found: /ws/game/ZIJOT2/
+[03/Jul/2025 20:49:05] "GET /ws/game/ZIJOT2/ HTTP/1.1" 404 5749
+[03/Jul/2025 20:49:05,387] - Broken pipe from ('127.0.0.1', 55162)
+Not Found: /ws/game/ZIJOT2/
+[03/Jul/2025 20:49:06] "GET /ws/game/ZIJOT2/ HTTP/1.1" 404 5749
+[03/Jul/2025 20:49:06,387] - Broken pipe from ('127.0.0.1', 43136)
+Not Found: /ws/game/ZIJOT2/
+[03/Jul/2025 20:49:08] "GET /ws/game/ZIJOT2/ HTTP/1.1" 404 5749
+[03/Jul/2025 20:49:08,472] - Broken pipe from ('127.0.0.1', 43144)
+Not Found: /ws/game/ZIJOT2/
+[03/Jul/2025 20:49:08] "GET /ws/game/ZIJOT2/ HTTP/1.1" 404 5749
+[03/Jul/2025 20:49:08,904] - Broken pipe from ('127.0.0.1', 43152)
+Not Found: /ws/game/ZIJOT2/
+[03/Jul/2025 20:49:09] "GET /ws/game/ZIJOT2/ HTTP/1.1" 404 5749
+[03/Jul/2025 20:49:09,409] - Broken pipe from ('127.0.0.1', 43164)
+Not Found: /ws/game/ZIJOT2/
+[03/Jul/2025 20:49:12] "GET /ws/game/ZIJOT2/ HTTP/1.1" 404 5749
+[03/Jul/2025 20:49:12,434] - Broken pipe from ('127.0.0.1', 43180)
+Not Found: /ws/game/ZIJOT2/
+[03/Jul/2025 20:49:12] "GET /ws/game/ZIJOT2/ HTTP/1.1" 404 5749
+[03/Jul/2025 20:49:12,505] - Broken pipe from ('127.0.0.1', 43184)
+Not Found: /ws/game/ZIJOT2/
+[03/Jul/2025 20:49:14] "GET /ws/game/ZIJOT2/ HTTP/1.1" 404 5749
+[03/Jul/2025 20:49:14,599] - Broken pipe from ('127.0.0.1', 43198)
+Not Found: /ws/game/ZIJOT2/
+[03/Jul/2025 20:49:15] "GET /ws/game/ZIJOT2/ HTTP/1.1" 404 5749
+[03/Jul/2025 20:49:15,485] - Broken pipe from ('127.0.0.1', 43200)
+Not Found: /ws/game/ZIJOT2/
+[03/Jul/2025 20:49:17] "GET /ws/game/ZIJOT2/ HTTP/1.1" 404 5749
+[03/Jul/2025 20:49:17,422] - Broken pipe from ('127.0.0.1', 48388)
+Not Found: /ws/game/ZIJOT2/
+[03/Jul/2025 20:49:18] "GET /ws/game/ZIJOT2/ HTTP/1.1" 404 5749
+[03/Jul/2025 20:49:18,509] - Broken pipe from ('127.0.0.1', 48396)
+Not Found: /ws/game/ZIJOT2/
+[03/Jul/2025 20:49:21] "GET /ws/game/ZIJOT2/ HTTP/1.1" 404 5749
+Not Found: /ws/game/ZIJOT2/
+[03/Jul/2025 20:49:22] "GET /ws/game/ZIJOT2/ HTTP/1.1" 404 5749
+[03/Jul/2025 20:49:22,246] - Broken pipe from ('127.0.0.1', 48422)
+Not Found: /ws/game/ZIJOT2/
+[03/Jul/2025 20:49:22] "GET /ws/game/ZIJOT2/ HTTP/1.1" 404 5749
+[03/Jul/2025 20:49:22,506] - Broken pipe from ('127.0.0.1', 48424)
+Not Found: /ws/game/ZIJOT2/
+[03/Jul/2025 20:49:24] "GET /ws/game/ZIJOT2/ HTTP/1.1" 404 5749
+[03/Jul/2025 20:49:24,709] - Broken pipe from ('127.0.0.1', 48428)
+Not Found: /ws/game/ZIJOT2/
+[03/Jul/2025 20:49:26] "GET /ws/game/ZIJOT2/ HTTP/1.1" 404 5749
+[03/Jul/2025 20:49:26,612] - Broken pipe from ('127.0.0.1', 38414)
+Not Found: /ws/game/ZIJOT2/
+[03/Jul/2025 20:49:27] "GET /ws/game/ZIJOT2/ HTTP/1.1" 404 5749
+[03/Jul/2025 20:49:27,413] - Broken pipe from ('127.0.0.1', 38418)
+Not Found: /ws/game/ZIJOT2/
+[03/Jul/2025 20:49:28] "GET /ws/game/ZIJOT2/ HTTP/1.1" 404 5749
+[03/Jul/2025 20:49:28,259] - Broken pipe from ('127.0.0.1', 38426)
+Not Found: /ws/game/ZIJOT2/
+[03/Jul/2025 20:49:32] "GET /ws/game/ZIJOT2/ HTTP/1.1" 404 5749
+[03/Jul/2025 20:49:32,095] - Broken pipe from ('127.0.0.1', 38434)
+Not Found: /ws/game/ZIJOT2/
+[03/Jul/2025 20:49:32] "GET /ws/game/ZIJOT2/ HTTP/1.1" 404 5749
+[03/Jul/2025 20:49:32,359] - Broken pipe from ('127.0.0.1', 38438)
+Not Found: /ws/game/ZIJOT2/
+[03/Jul/2025 20:49:32] "GET /ws/game/ZIJOT2/ HTTP/1.1" 404 5749
+[03/Jul/2025 20:49:32,403] - Broken pipe from ('127.0.0.1', 38446)
+Not Found: /ws/game/ZIJOT2/
+[03/Jul/2025 20:49:36] "GET /ws/game/ZIJOT2/ HTTP/1.1" 404 5749
+[03/Jul/2025 20:49:36,358] - Broken pipe from ('127.0.0.1', 37198)
+[03/Jul/2025 20:49:36] "GET / HTTP/1.1" 200 7034
+Not Found: /ws/game/ZIJOT2/
+[03/Jul/2025 20:49:38] "GET /ws/game/ZIJOT2/ HTTP/1.1" 404 5749
+[03/Jul/2025 20:49:38,813] - Broken pipe from ('127.0.0.1', 37224)
+Not Found: /ws/game/ZIJOT2/
+[03/Jul/2025 20:49:39] "GET /ws/game/ZIJOT2/ HTTP/1.1" 404 5749
+[03/Jul/2025 20:49:39,637] - Broken pipe from ('127.0.0.1', 37240)
+Not Found: /ws/game/ZIJOT2/
+[03/Jul/2025 20:49:40] "GET /ws/game/ZIJOT2/ HTTP/1.1" 404 5749
+[03/Jul/2025 20:49:40,421] - Broken pipe from ('127.0.0.1', 37244)
+Not Found: /ws/game/ZIJOT2/
+[03/Jul/2025 20:49:44] "GET /ws/game/ZIJOT2/ HTTP/1.1" 404 5749
+[03/Jul/2025 20:49:44,421] - Broken pipe from ('127.0.0.1', 37246)
+Not Found: /ws/game/ZIJOT2/
+[03/Jul/2025 20:49:44] "GET /ws/game/ZIJOT2/ HTTP/1.1" 404 5749
+[03/Jul/2025 20:49:44,872] - Broken pipe from ('127.0.0.1', 37250)
+Not Found: /ws/game/ZIJOT2/
+[03/Jul/2025 20:49:46] "GET /ws/game/ZIJOT2/ HTTP/1.1" 404 5749
+[03/Jul/2025 20:49:46,490] - Broken pipe from ('127.0.0.1', 51562)

@@ -54,35 +54,49 @@ class GameConsumer(AsyncWebsocketConsumer):
             logger.info(f"Removed player {self.player_id} from individual group")
 
     async def receive(self, text_data):
-        data = json.loads(text_data)
-        message_type = data.get('type')
+        try:
+            data = json.loads(text_data)
+            message_type = data.get('type')
 
-        if message_type == 'identify':
-            # Set player_id for this connection
-            self.player_id = data.get('player_id')
-            logger.info(f"Player identified as {self.player_id} for game {self.game_code}")
-            
-            # Add player to their individual group for personalized messages
-            if self.player_id:
-                await self.channel_layer.group_add(
-                    f'player_{self.player_id}',
-                    self.channel_name
-                )
-                logger.info(f"Added player {self.player_id} to individual group")
-            
-            # Mark player as connected when they identify
-            await self.mark_player_connected()
+            if message_type == 'identify':
+                # Set player_id for this connection
+                self.player_id = data.get('player_id')
+                logger.info(f"Player identified as {self.player_id} for game {self.game_code}")
+                
+                # Add player to their individual group for personalized messages
+                if self.player_id:
+                    await self.channel_layer.group_add(
+                        f'player_{self.player_id}',
+                        self.channel_name
+                    )
+                    logger.info(f"Added player {self.player_id} to individual group")
+                
+                # Mark player as connected when they identify
+                await self.mark_player_connected()
 
-        elif message_type == 'ping':
-            # Respond with current game state
-            game_state = await self.get_game_state()
+            elif message_type == 'ping':
+                # Respond with current game state
+                game_state = await self.get_game_state()
+                await self.send(text_data=json.dumps({
+                    'type': 'game_state',
+                    'data': game_state
+                }))
+
+            elif message_type == 'submit_answer':
+                await self.handle_submit_answer(data.get('data', {}))
+                
+        except json.JSONDecodeError as e:
+            logger.error(f"Invalid JSON received in game {self.game_code}: {e}")
             await self.send(text_data=json.dumps({
-                'type': 'game_state',
-                'data': game_state
+                'type': 'error',
+                'data': {'message': 'Invalid message format'}
             }))
-
-        elif message_type == 'submit_answer':
-            await self.handle_submit_answer(data.get('data', {}))
+        except Exception as e:
+            logger.error(f"Error handling WebSocket message in game {self.game_code}: {e}")
+            await self.send(text_data=json.dumps({
+                'type': 'error', 
+                'data': {'message': 'Server error processing message'}
+            }))
 
     # Receive message from game group
     async def game_update(self, event):
@@ -165,11 +179,11 @@ class GameConsumer(AsyncWebsocketConsumer):
             return
 
         round_number = current_round['round_number']
-        cache_key = f'game_{self.game_code}_round_{round_number}_answers'
         
-        answers = cache.get(cache_key, {})
-        answers[str(player_id)] = answer_text
-        cache.set(cache_key, answers, timeout=3600)
+        # Use new cache service for better answer management
+        from .cache_service import get_game_cache
+        game_cache = get_game_cache(self.game_code)
+        game_cache.cache_player_answer(round_number, player_id, answer_text)
 
         logger.info(f"Player {player_id} submitted answer for round {round_number} in game {self.game_code}")
 
@@ -178,63 +192,117 @@ class GameConsumer(AsyncWebsocketConsumer):
     @database_sync_to_async
     def get_game_state(self):
         try:
+            # Try to get cached game state first
+            from .cache_service import get_game_cache, PlayerCacheService
+            game_cache = get_game_cache(self.game_code)
+            cached_state = game_cache.get_cached_game_state()
+            
+            if cached_state:
+                # Use cached state if recent (less than 2 minutes old)
+                import time
+                cache_age = time.time() - cached_state.get('updated_at', 0)
+                if cache_age < 120:  # 2 minutes
+                    data = {
+                        'game_status': cached_state['status'],
+                        'player_count': cached_state['player_count'],
+                        'players': cached_state['players'],
+                    }
+                    logger.debug(f"Using cached game state for {self.game_code} (age: {cache_age:.1f}s)")
+                    
+                    # Get round info separately if needed
+                    game_session = GameSession.objects.get(game_code=self.game_code)
+                    if game_session.current_round_number > 0:
+                        self._add_round_info_to_data(data, game_session, game_cache)
+                    
+                    return data
+            
+            # Fallback to database query
             game_session = GameSession.objects.get(game_code=self.game_code)
             
-            # Get connected players with their details
-            connected_players = game_session.players.filter(is_connected=True).order_by('joined_at')
-            players_data = []
-            for player in connected_players:
-                players_data.append({
-                    'id': player.id,
-                    'name': player.name,
-                    'joined_at': player.joined_at.strftime('%H:%M:%S'),
-                    'total_score': player.current_score,
-                })
+            # Check for cached connected players
+            cached_players = PlayerCacheService.get_cached_connected_players(self.game_code)
+            if cached_players:
+                players_data = cached_players
+                player_count = len(cached_players)
+            else:
+                # Get connected players with their details
+                connected_players = game_session.players.filter(is_connected=True).order_by('joined_at')
+                players_data = []
+                for player in connected_players:
+                    players_data.append({
+                        'id': player.id,
+                        'name': player.name,
+                        'joined_at': player.joined_at.strftime('%H:%M:%S'),
+                        'total_score': player.current_score,
+                    })
+                player_count = len(players_data)
+                
+                # Cache the players data
+                PlayerCacheService.cache_connected_players(self.game_code, players_data)
 
             data = {
                 'game_status': game_session.status,
-                'player_count': connected_players.count(),
+                'player_count': player_count,
                 'players': players_data,
             }
+            
+            # Cache the game state
+            game_cache.cache_game_state(game_session, players_data)
 
             # Only include round info if we have an active game with rounds started
             if game_session.current_round_number > 0:
-                # Use round handler to get consistent round info (with caching)
+                self._add_round_info_to_data(data, game_session, game_cache)
+
+            return data
+        except Exception as e:
+            logger.error(f"Error getting game state for {self.game_code}: {e}")
+            return {
+                'game_status': 'error',
+                'player_count': 0,
+                'players': [],
+                'error': str(e)
+            }
+    
+    def _add_round_info_to_data(self, data, game_session, game_cache):
+        """Helper method to add round info to game state data"""
+        try:
+            # Try cached round state first
+            cached_round_state = game_cache.get_cached_round_state(game_session.current_round_number)
+            if cached_round_state and cached_round_state.get('round_info'):
+                current_round_info = cached_round_state['round_info']
+            else:
+                # Fallback to round handler
                 from .round_handlers import get_round_handler
                 round_handler = get_round_handler(game_session, game_session.current_round_number)
                 current_round_info = round_handler.get_round_info()
                 
-                if current_round_info:
-                    # Map legacy round types for WebSocket compatibility
-                    mapped_round_type = current_round_info['round_type']
-                    if mapped_round_type == 'starts_with':
-                        mapped_round_type = 'flower_fruit_veg'
-                    
-                    current_round_data = {
-                        'round_number': current_round_info['round_number'],
-                        'is_active': current_round_info['is_active'],
-                        'time_remaining': int(current_round_info['time_remaining']),
-                        'total_time': game_session.configuration.round_time_seconds,
-                        'round_type': mapped_round_type,  # Send the mapped round type
-                        'category': current_round_info['category'].name if hasattr(current_round_info['category'], 'name') else current_round_info['category'],
-                    }
-                    if mapped_round_type == 'flower_fruit_veg':
-                        current_round_data.update({
-                            'prompt': f"A {current_round_info['category'].name.lower()} that starts with '{current_round_info['prompt_letter']}'",
-                            'letter': current_round_info['prompt_letter'],
-                        })
-                    elif mapped_round_type == 'multiple_choice':
-                        current_round_data.update({
-                            'question_text': current_round_info['question_text'],
-                            'choices': current_round_info['choices'],
-                        })
-                    data.update({
-                        'current_round': current_round_data
+            if current_round_info:
+                # Map legacy round types for WebSocket compatibility
+                mapped_round_type = current_round_info['round_type']
+                if mapped_round_type == 'starts_with':
+                    mapped_round_type = 'flower_fruit_veg'
+                
+                current_round_data = {
+                    'round_number': current_round_info['round_number'],
+                    'is_active': current_round_info['is_active'],
+                    'time_remaining': int(current_round_info['time_remaining']),
+                    'total_time': game_session.configuration.round_time_seconds,
+                    'round_type': mapped_round_type,  # Send the mapped round type
+                    'category': current_round_info['category'].name if hasattr(current_round_info['category'], 'name') else current_round_info['category'],
+                }
+                if mapped_round_type == 'flower_fruit_veg':
+                    current_round_data.update({
+                        'prompt': f"A {current_round_info['category'].name.lower()} that starts with '{current_round_info['prompt_letter']}'",
+                        'letter': current_round_info['prompt_letter'],
                     })
-
-            return data
-        except GameSession.DoesNotExist:
-            return {'error': 'Game not found'}
+                elif mapped_round_type == 'multiple_choice':
+                    current_round_data.update({
+                        'question_text': current_round_info['question_text'],
+                        'choices': current_round_info['choices'],
+                    })
+                data['current_round'] = current_round_data
+        except Exception as e:
+            logger.error(f"Error adding round info for {game_session.game_code}: {e}")
 
     @database_sync_to_async
     def handle_player_disconnect(self):
@@ -325,4 +393,6 @@ class GameConsumer(AsyncWebsocketConsumer):
                     'message': f'{player.name} reconnected'
                 })
         except GameSession.DoesNotExist:
-            pass
+            logger.warning(f"Game {self.game_code} not found when marking player {self.player_id} as connected")
+        except Exception as e:
+            logger.error(f"Error marking player {self.player_id} as connected in game {self.game_code}: {e}")

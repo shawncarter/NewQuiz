@@ -12,73 +12,6 @@ from collections import Counter
 logger = logging.getLogger('game_sessions')
 
 
-def start_round_internal(game_session):
-    """Internal function to start any round using round handler system"""
-    from django.utils import timezone
-    from .round_handlers import get_round_handler
-    
-    # Increment round number (for first round: 0 -> 1, for subsequent: N -> N+1)
-    game_session.current_round_number += 1
-    game_session.is_round_active = True
-    game_session.current_round_started_at = timezone.now()
-    game_session.save()
-
-    # Get the round handler for this round
-    round_handler = get_round_handler(game_session, game_session.current_round_number)
-    
-    # Get the round info from the handler
-    round_info = round_handler.get_round_info()
-    if not round_info:
-        return JsonResponse({'error': 'Could not generate round information'}, status=400)
-
-    # Broadcast round started to all connected clients
-    broadcast_round_started(game_session, round_info)
-
-    # Start timer broadcasting
-    start_timer_broadcast(game_session, round_info)
-
-    import time
-    
-    # Build response with round-specific data
-    response_data = {
-        'status': 'success',
-        'round_number': round_info['round_number'],
-        'time_seconds': game_session.configuration.round_time_seconds,
-        'started_at': time.time(),  # Current timestamp for synchronization
-        'round_type': round_info['round_type'],
-    }
-    
-    # Add round type specific data
-    if round_info['round_type'] == 'flower_fruit_veg':
-        response_data.update({
-            'prompt': round_info.get('prompt'),
-            'letter': round_info.get('prompt_letter'),
-            'category': round_info.get('category', {}).name if hasattr(round_info.get('category'), 'name') else str(round_info.get('category', '')),
-        })
-    elif round_info['round_type'] == 'multiple_choice':
-        response_data.update({
-            'question_text': round_info.get('question_text'),
-            'choices': round_info.get('choices'),
-            'category': round_info.get('category'),
-            'correct_answer': round_info.get('correct_answer'),  # Include for GM screen
-        })
-    
-    return JsonResponse(response_data)
-
-
-def perform_automatic_scoring(game_session, answers):
-    """Perform automatic scoring using round handler system"""
-    if not answers:
-        return
-
-    from .round_handlers import get_round_handler
-    
-    # Get the round handler for this round
-    round_handler = get_round_handler(game_session, game_session.current_round_number)
-    
-    # Delegate scoring to the appropriate handler
-    round_handler.perform_automatic_scoring(answers)
-
 
 def home(request):
     """Home page with options to create or join a game"""
@@ -197,91 +130,30 @@ def game_master(request, game_code):
 def start_game(request, game_code):
     """Start the game session"""
     game_session = get_object_or_404(GameSession, game_code=game_code)
-
-    if game_session.status != 'waiting':
-        return JsonResponse({'error': 'Game is not in waiting state'}, status=400)
-
-    if game_session.player_count == 0:
-        return JsonResponse({'error': 'No players have joined yet'}, status=400)
-
-    game_session.start_game()
-
-    # Broadcast game activation to all connected clients
-    from .websocket_utils import broadcast_to_game
-    broadcast_to_game(game_session.game_code, 'game_started', {
-        'game_status': 'active',
-        'message': 'Game has started! Get ready for the first round.',
-        'player_count': game_session.player_count
-    })
-
-    return JsonResponse({'status': 'success', 'message': 'Game started! Ready for first round.'})
+    
+    from .services import GameService
+    game_service = GameService(game_session)
+    result = game_service.start_game()
+    
+    if result['success']:
+        return JsonResponse({'status': 'success', 'message': result['message']})
+    else:
+        return JsonResponse({'error': result['error']}, status=400)
 
 
 @require_http_methods(["POST"])
 def restart_game(request, game_code):
     """Restart the game session for development/testing"""
     game_session = get_object_or_404(GameSession, game_code=game_code)
-
-    # Only allow restart if game is active or finished
-    if game_session.status not in ['active', 'finished']:
-        return JsonResponse({'error': 'Game can only be restarted when active or finished'}, status=400)
-
-    game_session.restart_game()
-
-    # Clean up any duplicate players (keep the first occurrence of each name)
-    seen_names = set()
-    players_to_keep = []
-    players_to_remove = []
     
-    for player in game_session.players.all().order_by('joined_at'):
-        if player.name in seen_names:
-            players_to_remove.append(player)
-        else:
-            seen_names.add(player.name)
-            players_to_keep.append(player)
+    from .services import GameService
+    game_service = GameService(game_session)
+    result = game_service.restart_game()
     
-    # Remove duplicates
-    for duplicate_player in players_to_remove:
-        logger.info(f"Removing duplicate player {duplicate_player.name} (id={duplicate_player.id}) during restart")
-        duplicate_player.delete()
-    
-    # Reset scores for remaining players and ensure they're connected
-    for player in players_to_keep:
-        player.current_score = 0
-        player.correct_answer_streak = 0  # Reset answer streak for new game
-        player.is_connected = True  # Mark all players as connected for restart
-        player.save()
-
-    # Broadcast game restart to all connected clients (redirect to lobby)
-    from .websocket_utils import broadcast_to_game
-    import time
-    
-    # First broadcast - immediate restart notification
-    broadcast_to_game(game_session.game_code, 'game_update', {
-        'game_status': 'waiting',
-        'player_count': game_session.players.count(),
-        'message': 'Game restarted! Ready for next game.',
-        'current_round': None,  # Explicitly set to None to trigger lobby redirect
-        'restart_timestamp': int(time.time())  # Add timestamp for uniqueness
-    })
-    
-    # Second broadcast after short delay to ensure delivery
-    import threading
-    def delayed_broadcast():
-        time.sleep(0.5)  # 500ms delay
-        broadcast_to_game(game_session.game_code, 'game_restart_confirmation', {
-            'game_status': 'waiting',
-            'player_count': game_session.players.count(),
-            'message': 'Game restarted! Please return to lobby if you haven\'t already.',
-            'force_redirect': True,
-            'restart_timestamp': int(time.time())
-        })
-    
-    thread = threading.Thread(target=delayed_broadcast)
-    thread.daemon = True
-    thread.start()
-
-    return JsonResponse({'status': 'success', 'message': 'Game restarted successfully.'})
+    if result['success']:
+        return JsonResponse({'status': 'success', 'message': result['message']})
+    else:
+        return JsonResponse({'error': result['error']}, status=400)
 
 
 def configure_game(request, game_code):
@@ -398,135 +270,30 @@ def configure_game(request, game_code):
 def start_round(request, game_code):
     """Start the next round using simple counter system"""
     game_session = get_object_or_404(GameSession, game_code=game_code)
-
-    if game_session.status != 'active':
-        return JsonResponse({'error': 'Game is not active'}, status=400)
-
-    # End current round if active
-    if game_session.is_round_active:
-        game_session.is_round_active = False
-        game_session.save()
-
-    # Check if game is complete
-    if game_session.current_round_number >= game_session.configuration.num_rounds:
-        # Game is finished, return final scores
-        final_scores = game_session.get_final_scores()
-        game_session.status = 'finished'
-        from django.utils import timezone
-        game_session.ended_at = timezone.now()
-        game_session.save()
-
-        # Broadcast game completion to all connected clients
-        from .websocket_utils import broadcast_to_game
-        broadcast_to_game(game_session.game_code, 'game_complete', {
-            'game_status': 'finished',
-            'final_scores': final_scores,
-            'message': 'Game completed! Here are the final scores.'
-        })
-
-        return JsonResponse({
-            'status': 'game_complete',
-            'final_scores': final_scores,
-            'message': 'Game completed! Here are the final scores.'
-        })
-
-    # Use unified round start logic for all rounds (first and subsequent)
-    return start_round_internal(game_session)
+    
+    from .services import GameService
+    game_service = GameService(game_session)
+    result = game_service.start_round()
+    
+    if result['success']:
+        return JsonResponse(result)
+    else:
+        return JsonResponse({'error': result['error']}, status=400)
 
 
 @require_http_methods(["POST"])
 def end_round(request, game_code):
     """End the current round and calculate scores"""
     game_session = get_object_or_404(GameSession, game_code=game_code)
-
-    if not game_session.is_round_active:
-        return JsonResponse({'error': 'No active round'}, status=400)
-
-    # End the round
-    game_session.is_round_active = False
-    game_session.save()
-
-    # Get current round info
-    round_info = game_session.get_current_round_info()
-    if not round_info:
-        return JsonResponse({'error': 'Could not get round information'}, status=400)
-
-    # First, get answers from cache and create PlayerAnswer objects if they don't exist
-    from django.core.cache import cache
-    from players.models import PlayerAnswer, Player
     
-    cache_key = f'game_{game_session.game_code}_round_{game_session.current_round_number}_answers'
-    cached_answers = cache.get(cache_key, {})
+    from .services import GameService
+    game_service = GameService(game_session)
+    result = game_service.end_round()
     
-    # Create PlayerAnswer objects for any cached answers that don't exist in DB
-    # Only process answers from currently connected players
-    for player_id_str, answer_text in cached_answers.items():
-        try:
-            player_id = int(player_id_str)
-            player = Player.objects.get(id=player_id, game_session=game_session, is_connected=True)
-            
-            # Check if answer already exists in database
-            existing_answer = PlayerAnswer.objects.filter(
-                player=player,
-                round_number=game_session.current_round_number
-            ).first()
-            
-            if not existing_answer and answer_text.strip():
-                # Use round handler to create appropriate PlayerAnswer
-                from .round_handlers import get_round_handler
-                round_handler = get_round_handler(game_session, game_session.current_round_number)
-                round_handler.create_player_answer(player, answer_text.strip())
-                logger.info(f"Created PlayerAnswer for connected player {player.name}: {answer_text}")
-        except (ValueError, Player.DoesNotExist) as e:
-            logger.warning(f"Could not create PlayerAnswer for player_id {player_id_str} (player may be disconnected): {e}")
-    
-    # Clear the cache for this round
-    cache.delete(cache_key)
-
-    # Now get all answers for this round from database (only from connected players)
-    answers = PlayerAnswer.objects.filter(
-        player__game_session=game_session,
-        player__is_connected=True,
-        round_number=game_session.current_round_number
-    ).select_related('player').order_by('?')  # Random order
-
-    # Perform automatic scoring using new system
-    perform_automatic_scoring(game_session, answers)
-
-    # Send individual results to each player based on round handler behavior
-    from .round_handlers import get_round_handler
-    round_handler = get_round_handler(game_session, game_session.current_round_number)
-    
-    if round_handler.should_send_immediate_feedback():
-        from .websocket_utils import broadcast_player_results
-        broadcast_player_results(game_session, round_info, answers)
-
-    answer_data = []
-    for answer in answers:
-        answer_data.append({
-            'player_name': answer.player.name,
-            'answer_text': answer.answer_text,
-            'points_awarded': answer.points_awarded,
-            'is_valid': answer.is_valid,
-            'is_unique': getattr(answer, 'is_unique', False),
-        })
-
-    # Broadcast round ended to all connected clients
-    broadcast_round_ended(game_session, round_info, answer_data)
-
-    response_data = {
-        'status': 'success',
-        'answers': answer_data,
-        'round_number': game_session.current_round_number,
-        'round_type': round_info['round_type'],
-        'is_final_round': game_session.current_round_number >= game_session.configuration.num_rounds
-    }
-    
-    # Add correct answer for multiple choice questions
-    if round_info['round_type'] == 'multiple_choice':
-        response_data['correct_answer'] = round_info.get('correct_answer')
-    
-    return JsonResponse(response_data)
+    if result['success']:
+        return JsonResponse(result)
+    else:
+        return JsonResponse({'error': result['error']}, status=400)
 
 
 
@@ -536,68 +303,17 @@ def join_game(request):
         game_code = request.POST.get('game_code', '').upper()
         player_name = request.POST.get('player_name', '').strip()
 
-        if not game_code or not player_name:
-            messages.error(request, 'Please provide both game code and your name.')
-            return render(request, 'game_sessions/join_game.html')
-
-        try:
-            game_session = GameSession.objects.get(game_code=game_code)
-        except GameSession.DoesNotExist:
-            messages.error(request, 'Game not found. Please check the game code.')
-            return render(request, 'game_sessions/join_game.html')
-
-        if not game_session.can_join:
-            messages.error(request, 'Cannot join this game. It may be full or already started.')
-            return render(request, 'game_sessions/join_game.html')
-
-        # Check if player already exists in this game (for reconnection after restart)
-        existing_player = Player.objects.filter(
-            name=player_name,
-            game_session=game_session
-        ).first()
+        from .services import PlayerService
+        result = PlayerService.join_game(game_code, player_name)
         
-        if existing_player:
-            # Reconnect existing player
-            existing_player.is_connected = True
-            existing_player.save()
-            player = existing_player
-            logger.info(f"Player {player_name} reconnected to game {game_code}")
+        if result['success']:
+            messages.success(request, result['message'])
+            return redirect('players:player_lobby_with_id', 
+                          game_code=game_code, 
+                          player_id=result['player'].id)
         else:
-            # Create new player
-            player = Player.objects.create(
-                name=player_name,
-                game_session=game_session,
-                session_key=None  # Not using sessions for now
-            )
-            logger.info(f"Player {player_name} created for game {game_code}")
-
-        # Broadcast player join to all connected clients
-        connected_players = game_session.players.filter(is_connected=True).order_by('joined_at')
-        player_count = connected_players.count()
-        logger.info(f"Player {player_name} joined game {game_code}. Total players: {player_count}")
-
-        # Get players data for broadcast
-        players_data = []
-        for p in connected_players:
-            players_data.append({
-                'id': p.id,
-                'name': p.name,
-                'joined_at': p.joined_at.strftime('%H:%M:%S'),
-                'total_score': p.current_score,
-            })
-
-        from .websocket_utils import broadcast_to_game
-        broadcast_data = {
-            'game_status': game_session.status,
-            'player_count': player_count,
-            'players': players_data,
-            'message': f'{player_name} joined the game!'
-        }
-        logger.info(f"Broadcasting player join: {broadcast_data}")
-        broadcast_to_game(game_session.game_code, 'game_update', broadcast_data)
-
-        messages.success(request, f'Joined game {game_code} as {player_name}!')
-        return redirect('players:player_lobby_with_id', game_code=game_code, player_id=player.id)
+            messages.error(request, result['error'])
+            return render(request, 'game_sessions/join_game.html')
 
     return render(request, 'game_sessions/join_game.html')
 

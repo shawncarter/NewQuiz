@@ -102,7 +102,7 @@ class PlayerAnswer(models.Model):
     """A player's answer for a specific round"""
 
     player = models.ForeignKey(Player, on_delete=models.CASCADE, related_name='answers')
-    round_number = models.IntegerField(default=1)  # Simple counter-based round tracking
+    round_number = models.IntegerField()  # Matches GameSession.current_round_number (1-based after game starts)
     answer_text = models.CharField(max_length=100)
     submitted_at = models.DateTimeField(auto_now_add=True)
 
