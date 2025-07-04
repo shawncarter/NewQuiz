@@ -267,8 +267,8 @@ body {
 }
 
 .answer-card {
-    background: white;
-    border: 2px solid #ddd;
+    background: #f8f9fa;
+    border: 2px solid #6c757d;
     border-radius: 8px;
     padding: 8px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
@@ -317,6 +317,7 @@ body {
     font-weight: bold;
     font-size: 1em;
     margin: 8px 0;
+    color: #6c757d;
 }
 
 .points.unique { color: #28a745; }
@@ -1307,7 +1308,16 @@ function showNextAnswer() {
     }
 
     const answerCard = document.createElement('div');
-    answerCard.className = `answer-card ${answer.is_unique ? 'unique' : (answer.is_valid ? 'valid' : 'invalid')}`;
+    
+    // For flower_fruit_veg rounds, show all answers as neutral until manually validated
+    // For other rounds, use automatic scoring to determine appearance
+    let cardClass = 'answer-card';
+    if (currentRoundType === 'flower_fruit_veg') {
+        cardClass = 'answer-card'; // Neutral styling - no validation indicator
+    } else {
+        cardClass = `answer-card ${answer.is_unique ? 'unique' : (answer.is_valid ? 'valid' : 'invalid')}`;
+    }
+    answerCard.className = cardClass;
     answerCard.dataset.answerId = answerIndex;
 
     // Only show validation controls for "flower_fruit_veg" rounds (use global variable)
@@ -1325,10 +1335,18 @@ function showNextAnswer() {
         </div>
     ` : '';
 
+    // For flower_fruit_veg rounds, show neutral points styling until manually validated
+    let pointsClass = 'points';
+    if (currentRoundType === 'flower_fruit_veg') {
+        pointsClass = 'points'; // Neutral styling
+    } else {
+        pointsClass = `points ${answer.is_unique ? 'unique' : (answer.is_valid ? 'valid' : 'invalid')}`;
+    }
+    
     answerCard.innerHTML = `
         <div class="player-name">${answer.player_name}</div>
         <div class="player-answer">${answer.answer || answer.answer_text || 'No answer'}</div>
-        <div class="points ${answer.is_unique ? 'unique' : (answer.is_valid ? 'valid' : 'invalid')}">
+        <div class="${pointsClass}">
             +${answer.points_awarded} points
         </div>
         ${validationControlsHtml}

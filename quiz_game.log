@@ -7581,3 +7581,1179 @@ INFO 2025-07-04 17:12:21,972 websocket_utils 390486 129610637375168 Broadcasting
 INFO 2025-07-04 17:12:21,974 websocket_utils 390486 129610637375168 Successfully broadcast round_ended to game_TTPJSC
 INFO 2025-07-04 17:12:22,394 websocket_utils 390486 129610628982464 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 9}
 INFO 2025-07-04 17:12:22,398 websocket_utils 390486 129610628982464 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:41:48,075 round_handlers 390486 129610628982464 Cached FFV data for game TTPJSC, round 4: Girls Names - P
+DEBUG 2025-07-04 17:41:48,076 cache_service 390486 129610628982464 Cached round state for round 4: flower_fruit_veg
+DEBUG 2025-07-04 17:41:48,077 cache_service 390486 129610628982464 Invalidated game state cache for TTPJSC
+INFO 2025-07-04 17:41:48,077 websocket_utils 390486 129610628982464 Broadcasting round_started to group game_TTPJSC: {'round_number': 4, 'total_time': 30, 'started_at': '2025-07-04T17:41:48.061993+00:00', 'round_type': 'flower_fruit_veg', 'is_active': True, 'time_remaining': 30, 'prompt': "A girls names that starts with 'P'", 'letter': 'P', 'category': 'Girls Names'}
+INFO 2025-07-04 17:41:48,080 websocket_utils 390486 129610628982464 Successfully broadcast round_started to game_TTPJSC
+INFO 2025-07-04 17:41:48,083 websocket_utils 390486 129610637375168 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 29}
+INFO 2025-07-04 17:41:48,084 websocket_utils 390486 129610628982464 Started timer thread for game TTPJSC with 30 seconds
+INFO 2025-07-04 17:41:48,097 websocket_utils 390486 129610637375168 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:41:49,105 websocket_utils 390486 129610637375168 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 28}
+INFO 2025-07-04 17:41:49,109 websocket_utils 390486 129610637375168 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:41:50,112 websocket_utils 390486 129610637375168 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 27}
+INFO 2025-07-04 17:41:50,115 websocket_utils 390486 129610637375168 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:41:51,118 websocket_utils 390486 129610637375168 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 26}
+INFO 2025-07-04 17:41:51,122 websocket_utils 390486 129610637375168 Successfully broadcast timer_update to game_TTPJSC
+DEBUG 2025-07-04 17:41:51,278 cache_service 390486 129610728261312 Cached 2 connected players for game TTPJSC
+DEBUG 2025-07-04 17:41:51,279 cache_service 390486 129610728261312 Cached game state for TTPJSC: active, 2 players
+DEBUG 2025-07-04 17:41:51,280 cache_service 390486 129610785091712 Cached answer for player 156 in round 4: pat...
+INFO 2025-07-04 17:41:51,280 consumers 390486 129610785091712 Player 156 submitted answer for round 4 in game TTPJSC
+DEBUG 2025-07-04 17:41:51,582 consumers 390486 129610728261312 Using cached game state for TTPJSC (age: 0.3s)
+DEBUG 2025-07-04 17:41:51,591 cache_service 390486 129610785091712 Cached answer for player 156 in round 4: patr...
+INFO 2025-07-04 17:41:51,592 consumers 390486 129610785091712 Player 156 submitted answer for round 4 in game TTPJSC
+DEBUG 2025-07-04 17:41:51,940 consumers 390486 129610728261312 Using cached game state for TTPJSC (age: 0.7s)
+DEBUG 2025-07-04 17:41:51,944 cache_service 390486 129610785091712 Cached answer for player 156 in round 4: patri...
+INFO 2025-07-04 17:41:51,944 consumers 390486 129610785091712 Player 156 submitted answer for round 4 in game TTPJSC
+INFO 2025-07-04 17:41:52,125 websocket_utils 390486 129610637375168 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 25}
+INFO 2025-07-04 17:41:52,126 websocket_utils 390486 129610637375168 Successfully broadcast timer_update to game_TTPJSC
+DEBUG 2025-07-04 17:41:52,496 consumers 390486 129610728261312 Using cached game state for TTPJSC (age: 1.2s)
+DEBUG 2025-07-04 17:41:52,509 cache_service 390486 129610785091712 Cached answer for player 156 in round 4: patric...
+INFO 2025-07-04 17:41:52,510 consumers 390486 129610785091712 Player 156 submitted answer for round 4 in game TTPJSC
+DEBUG 2025-07-04 17:41:53,046 consumers 390486 129610728261312 Using cached game state for TTPJSC (age: 1.8s)
+DEBUG 2025-07-04 17:41:53,055 cache_service 390486 129610785091712 Cached answer for player 156 in round 4: patricia...
+INFO 2025-07-04 17:41:53,055 consumers 390486 129610785091712 Player 156 submitted answer for round 4 in game TTPJSC
+INFO 2025-07-04 17:41:53,128 websocket_utils 390486 129610637375168 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 24}
+INFO 2025-07-04 17:41:53,131 websocket_utils 390486 129610637375168 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:41:54,134 websocket_utils 390486 129610637375168 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 23}
+INFO 2025-07-04 17:41:54,136 websocket_utils 390486 129610637375168 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:41:55,139 websocket_utils 390486 129610637375168 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 22}
+INFO 2025-07-04 17:41:55,142 websocket_utils 390486 129610637375168 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:41:56,146 websocket_utils 390486 129610637375168 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 21}
+INFO 2025-07-04 17:41:56,149 websocket_utils 390486 129610637375168 Successfully broadcast timer_update to game_TTPJSC
+DEBUG 2025-07-04 17:41:56,389 consumers 390486 129610728261312 Using cached game state for TTPJSC (age: 5.1s)
+DEBUG 2025-07-04 17:41:56,402 cache_service 390486 129610785091712 Cached answer for player 155 in round 4: Pauline...
+INFO 2025-07-04 17:41:56,402 consumers 390486 129610785091712 Player 155 submitted answer for round 4 in game TTPJSC
+INFO 2025-07-04 17:41:57,152 websocket_utils 390486 129610637375168 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 20}
+INFO 2025-07-04 17:41:57,156 websocket_utils 390486 129610637375168 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:41:57,157 websocket_utils 390486 129610637375168 Timer update for game TTPJSC: 20 seconds remaining
+INFO 2025-07-04 17:41:58,160 websocket_utils 390486 129610637375168 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 19}
+INFO 2025-07-04 17:41:58,164 websocket_utils 390486 129610637375168 Successfully broadcast timer_update to game_TTPJSC
+DEBUG 2025-07-04 17:41:58,573 cache_service 390486 129610628982464 Marked round 4 as ended in cache
+INFO 2025-07-04 17:41:58,583 services 390486 129610628982464 Processed answer for player Joanna: patricia...
+INFO 2025-07-04 17:41:58,592 services 390486 129610628982464 Processed answer for player Lauren: Pauline...
+INFO 2025-07-04 17:41:58,595 services 390486 129610628982464 Bulk created 2 PlayerAnswer objects
+DEBUG 2025-07-04 17:41:58,595 cache_service 390486 129610628982464 Cleared cached answers for round 4
+INFO 2025-07-04 17:41:58,596 services 390486 129610628982464 Processed 2 cached answers into database
+INFO 2025-07-04 17:41:58,617 round_handlers 390486 129610628982464 Prepared 2 Flower, Fruit & Veg answers for manual validation
+DEBUG 2025-07-04 17:41:58,617 cache_service 390486 129610628982464 Invalidated game state cache for TTPJSC
+INFO 2025-07-04 17:41:58,618 websocket_utils 390486 129610628982464 Broadcasting round_ended to group game_TTPJSC: {'round_number': 4, 'round_type': 'flower_fruit_veg', 'is_final_round': False, 'answers': [{'player_name': 'Lauren', 'answer_text': 'Pauline', 'points_awarded': 0, 'is_valid': False, 'is_unique': True}, {'player_name': 'Joanna', 'answer_text': 'patricia', 'points_awarded': 0, 'is_valid': False, 'is_unique': True}]}
+INFO 2025-07-04 17:41:58,620 websocket_utils 390486 129610628982464 Successfully broadcast round_ended to game_TTPJSC
+INFO 2025-07-04 17:41:59,168 websocket_utils 390486 129610637375168 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 18}
+INFO 2025-07-04 17:41:59,171 websocket_utils 390486 129610637375168 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:42:03,813 round_handlers 390486 129610637375168 Using CACHED FFV data for game TTPJSC, round 4: Girls Names - P
+INFO 2025-07-04 17:42:03,814 round_handlers 390486 129610637375168 Using CACHED FFV data for game TTPJSC, round 4: Girls Names - P
+INFO 2025-07-04 17:42:03,816 round_handlers 390486 129610637375168 Using CACHED FFV data for game TTPJSC, round 4: Girls Names - P
+INFO 2025-07-04 17:42:03,833 consumers 390486 129610785091712 WebSocket disconnecting from game TTPJSC
+WARNING 2025-07-04 17:42:03,836 consumers 390486 129610728261312 WebSocket disconnect without player identification for game TTPJSC
+INFO 2025-07-04 17:42:03,883 consumers 390486 129610785091712 WebSocket connecting to game TTPJSC
+INFO 2025-07-04 17:42:03,883 consumers 390486 129610785091712 WebSocket connected to game TTPJSC (channel: specific..inmemory!boRhXEGVVkoc)
+DEBUG 2025-07-04 17:42:03,886 cache_service 390486 129610728261312 Cached game state for TTPJSC: active, 2 players
+INFO 2025-07-04 17:42:03,888 consumers 390486 129610785091712 Sending initial game state to new connection for TTPJSC
+INFO 2025-07-04 17:42:06,686 websocket_utils 390486 129610637375168 Broadcasting game_update to group game_TTPJSC: {'game_status': 'waiting', 'player_count': 2, 'message': 'Game restarted! Ready for next game.', 'current_round': None, 'restart_timestamp': 1751650926}
+INFO 2025-07-04 17:42:06,687 websocket_utils 390486 129610637375168 Successfully broadcast game_update to game_TTPJSC
+INFO 2025-07-04 17:42:06,688 consumers 390486 129610785091712 Broadcasting game_update to TTPJSC: {'game_status': 'waiting', 'player_count': 2, 'message': 'Game restarted! Ready for next game.', 'current_round': None, 'restart_timestamp': 1751650926}
+INFO 2025-07-04 17:42:06,688 consumers 390486 129610785091712 Broadcasting game_update to TTPJSC: {'game_status': 'waiting', 'player_count': 2, 'message': 'Game restarted! Ready for next game.', 'current_round': None, 'restart_timestamp': 1751650926}
+INFO 2025-07-04 17:42:06,689 consumers 390486 129610785091712 Broadcasting game_update to TTPJSC: {'game_status': 'waiting', 'player_count': 2, 'message': 'Game restarted! Ready for next game.', 'current_round': None, 'restart_timestamp': 1751650926}
+INFO 2025-07-04 17:42:07,193 websocket_utils 390486 129610628982464 Broadcasting game_restart_confirmation to group game_TTPJSC: {'game_status': 'waiting', 'player_count': 2, 'message': "Game restarted! Please return to lobby if you haven't already.", 'force_redirect': True, 'restart_timestamp': 1751650927}
+INFO 2025-07-04 17:42:07,194 websocket_utils 390486 129610628982464 Successfully broadcast game_restart_confirmation to game_TTPJSC
+INFO 2025-07-04 17:42:07,212 consumers 390486 129610785091712 Broadcasting game_restart_confirmation to TTPJSC: {'game_status': 'waiting', 'player_count': 2, 'message': "Game restarted! Please return to lobby if you haven't already.", 'force_redirect': True, 'restart_timestamp': 1751650927}
+INFO 2025-07-04 17:42:07,212 consumers 390486 129610785091712 Broadcasting game_restart_confirmation to TTPJSC: {'game_status': 'waiting', 'player_count': 2, 'message': "Game restarted! Please return to lobby if you haven't already.", 'force_redirect': True, 'restart_timestamp': 1751650927}
+INFO 2025-07-04 17:42:07,213 consumers 390486 129610785091712 Broadcasting game_restart_confirmation to TTPJSC: {'game_status': 'waiting', 'player_count': 2, 'message': "Game restarted! Please return to lobby if you haven't already.", 'force_redirect': True, 'restart_timestamp': 1751650927}
+INFO 2025-07-04 17:42:07,240 consumers 390486 129610785091712 WebSocket disconnecting from game TTPJSC
+WARNING 2025-07-04 17:42:07,244 consumers 390486 129610728261312 WebSocket disconnect without player identification for game TTPJSC
+INFO 2025-07-04 17:42:07,276 consumers 390486 129610785091712 WebSocket connecting to game TTPJSC
+INFO 2025-07-04 17:42:07,276 consumers 390486 129610785091712 WebSocket connected to game TTPJSC (channel: specific..inmemory!pKAekTgLMhYd)
+DEBUG 2025-07-04 17:42:07,277 consumers 390486 129610728261312 Using cached game state for TTPJSC (age: 3.4s)
+INFO 2025-07-04 17:42:07,279 consumers 390486 129610785091712 Sending initial game state to new connection for TTPJSC
+INFO 2025-07-04 17:42:08,329 consumers 390486 129610785091712 WebSocket disconnecting from game TTPJSC
+INFO 2025-07-04 17:42:08,347 consumers 390486 129610728261312 Marked player Joanna (id=156) as disconnected
+INFO 2025-07-04 17:42:08,348 websocket_utils 390486 129610728261312 Broadcasting game_update to group game_TTPJSC: {'game_status': 'waiting', 'player_count': 1, 'players': [{'id': 155, 'name': 'Lauren', 'joined_at': '16:06:54', 'total_score': 0}], 'message': 'Joanna disconnected'}
+INFO 2025-07-04 17:42:08,349 websocket_utils 390486 129610728261312 Successfully broadcast game_update to game_TTPJSC
+INFO 2025-07-04 17:42:08,350 consumers 390486 129610785091712 Removed player 156 from individual group
+INFO 2025-07-04 17:42:08,350 consumers 390486 129610785091712 WebSocket disconnecting from game TTPJSC
+INFO 2025-07-04 17:42:08,350 consumers 390486 129610785091712 Broadcasting game_update to TTPJSC: {'game_status': 'waiting', 'player_count': 1, 'players': [{'id': 155, 'name': 'Lauren', 'joined_at': '16:06:54', 'total_score': 0}], 'message': 'Joanna disconnected'}
+INFO 2025-07-04 17:42:08,360 consumers 390486 129610728261312 Marked player Lauren (id=155) as disconnected
+INFO 2025-07-04 17:42:08,364 websocket_utils 390486 129610728261312 Broadcasting game_update to group game_TTPJSC: {'game_status': 'waiting', 'player_count': 0, 'players': [], 'message': 'Lauren disconnected'}
+INFO 2025-07-04 17:42:08,364 websocket_utils 390486 129610728261312 Successfully broadcast game_update to game_TTPJSC
+INFO 2025-07-04 17:42:08,366 consumers 390486 129610785091712 Removed player 155 from individual group
+INFO 2025-07-04 17:42:08,368 consumers 390486 129610785091712 Broadcasting game_update to TTPJSC: {'game_status': 'waiting', 'player_count': 0, 'players': [], 'message': 'Lauren disconnected'}
+INFO 2025-07-04 17:42:08,369 consumers 390486 129610785091712 WebSocket connecting to game TTPJSC
+INFO 2025-07-04 17:42:08,370 consumers 390486 129610785091712 WebSocket connected to game TTPJSC (channel: specific..inmemory!UmiBlRafdirY)
+DEBUG 2025-07-04 17:42:08,370 consumers 390486 129610728261312 Using cached game state for TTPJSC (age: 4.5s)
+INFO 2025-07-04 17:42:08,374 consumers 390486 129610785091712 Sending initial game state to new connection for TTPJSC
+INFO 2025-07-04 17:42:08,385 consumers 390486 129610785091712 Player identified as 156 for game TTPJSC
+INFO 2025-07-04 17:42:08,385 consumers 390486 129610785091712 Added player 156 to individual group
+INFO 2025-07-04 17:42:08,398 consumers 390486 129610728261312 Marked player Joanna (id=156) as reconnected
+INFO 2025-07-04 17:42:08,402 websocket_utils 390486 129610728261312 Broadcasting game_update to group game_TTPJSC: {'game_status': 'waiting', 'player_count': 1, 'players': [{'id': 156, 'name': 'Joanna', 'joined_at': '16:06:56', 'total_score': 0}], 'message': 'Joanna reconnected'}
+INFO 2025-07-04 17:42:08,403 websocket_utils 390486 129610728261312 Successfully broadcast game_update to game_TTPJSC
+INFO 2025-07-04 17:42:08,409 consumers 390486 129610785091712 Broadcasting game_update to TTPJSC: {'game_status': 'waiting', 'player_count': 1, 'players': [{'id': 156, 'name': 'Joanna', 'joined_at': '16:06:56', 'total_score': 0}], 'message': 'Joanna reconnected'}
+INFO 2025-07-04 17:42:08,410 consumers 390486 129610785091712 Broadcasting game_update to TTPJSC: {'game_status': 'waiting', 'player_count': 1, 'players': [{'id': 156, 'name': 'Joanna', 'joined_at': '16:06:56', 'total_score': 0}], 'message': 'Joanna reconnected'}
+INFO 2025-07-04 17:42:08,412 consumers 390486 129610785091712 WebSocket connecting to game TTPJSC
+INFO 2025-07-04 17:42:08,413 consumers 390486 129610785091712 WebSocket connected to game TTPJSC (channel: specific..inmemory!xMPfGgHqJzId)
+DEBUG 2025-07-04 17:42:08,414 consumers 390486 129610728261312 Using cached game state for TTPJSC (age: 4.5s)
+INFO 2025-07-04 17:42:08,421 consumers 390486 129610785091712 Sending initial game state to new connection for TTPJSC
+INFO 2025-07-04 17:42:08,423 consumers 390486 129610785091712 Player identified as 155 for game TTPJSC
+INFO 2025-07-04 17:42:08,424 consumers 390486 129610785091712 Added player 155 to individual group
+INFO 2025-07-04 17:42:08,436 consumers 390486 129610728261312 Marked player Lauren (id=155) as reconnected
+INFO 2025-07-04 17:42:08,439 websocket_utils 390486 129610728261312 Broadcasting game_update to group game_TTPJSC: {'game_status': 'waiting', 'player_count': 2, 'players': [{'id': 155, 'name': 'Lauren', 'joined_at': '16:06:54', 'total_score': 0}, {'id': 156, 'name': 'Joanna', 'joined_at': '16:06:56', 'total_score': 0}], 'message': 'Lauren reconnected'}
+INFO 2025-07-04 17:42:08,441 websocket_utils 390486 129610728261312 Successfully broadcast game_update to game_TTPJSC
+INFO 2025-07-04 17:42:08,442 consumers 390486 129610785091712 Broadcasting game_update to TTPJSC: {'game_status': 'waiting', 'player_count': 2, 'players': [{'id': 155, 'name': 'Lauren', 'joined_at': '16:06:54', 'total_score': 0}, {'id': 156, 'name': 'Joanna', 'joined_at': '16:06:56', 'total_score': 0}], 'message': 'Lauren reconnected'}
+INFO 2025-07-04 17:42:08,443 consumers 390486 129610785091712 Broadcasting game_update to TTPJSC: {'game_status': 'waiting', 'player_count': 2, 'players': [{'id': 155, 'name': 'Lauren', 'joined_at': '16:06:54', 'total_score': 0}, {'id': 156, 'name': 'Joanna', 'joined_at': '16:06:56', 'total_score': 0}], 'message': 'Lauren reconnected'}
+INFO 2025-07-04 17:42:08,444 consumers 390486 129610785091712 Broadcasting game_update to TTPJSC: {'game_status': 'waiting', 'player_count': 2, 'players': [{'id': 155, 'name': 'Lauren', 'joined_at': '16:06:54', 'total_score': 0}, {'id': 156, 'name': 'Joanna', 'joined_at': '16:06:56', 'total_score': 0}], 'message': 'Lauren reconnected'}
+INFO 2025-07-04 17:42:08,725 websocket_utils 390486 129610637375168 Broadcasting game_started to group game_TTPJSC: {'game_status': 'active', 'message': 'Game has started! Get ready for the first round.', 'player_count': 2}
+INFO 2025-07-04 17:42:08,728 websocket_utils 390486 129610637375168 Successfully broadcast game_started to game_TTPJSC
+INFO 2025-07-04 17:42:08,800 consumers 390486 129610785091712 WebSocket disconnecting from game TTPJSC
+INFO 2025-07-04 17:42:08,803 consumers 390486 129610728261312 Detected likely redirect disconnect for game TTPJSC (within 5s of game_started)
+INFO 2025-07-04 17:42:08,805 consumers 390486 129610728261312 Skipping disconnect for player Joanna (id=156) - likely game start redirect
+INFO 2025-07-04 17:42:08,806 consumers 390486 129610785091712 Removed player 156 from individual group
+INFO 2025-07-04 17:42:08,828 consumers 390486 129610785091712 WebSocket disconnecting from game TTPJSC
+INFO 2025-07-04 17:42:08,830 consumers 390486 129610728261312 Detected likely redirect disconnect for game TTPJSC (within 5s of game_started)
+INFO 2025-07-04 17:42:08,833 consumers 390486 129610785091712 WebSocket disconnecting from game TTPJSC
+INFO 2025-07-04 17:42:08,835 consumers 390486 129610728261312 Detected likely redirect disconnect for game TTPJSC (within 5s of game_started)
+INFO 2025-07-04 17:42:08,838 consumers 390486 129610728261312 Skipping disconnect for player Lauren (id=155) - likely game start redirect
+INFO 2025-07-04 17:42:08,838 consumers 390486 129610785091712 Removed player 155 from individual group
+INFO 2025-07-04 17:42:08,894 consumers 390486 129610785091712 WebSocket connecting to game TTPJSC
+INFO 2025-07-04 17:42:08,895 consumers 390486 129610785091712 WebSocket connected to game TTPJSC (channel: specific..inmemory!BGSCClkgLuCk)
+DEBUG 2025-07-04 17:42:08,895 consumers 390486 129610728261312 Using cached game state for TTPJSC (age: 5.0s)
+INFO 2025-07-04 17:42:08,898 consumers 390486 129610785091712 Sending initial game state to new connection for TTPJSC
+INFO 2025-07-04 17:42:08,922 consumers 390486 129610785091712 Player identified as 156 for game TTPJSC
+INFO 2025-07-04 17:42:08,923 consumers 390486 129610785091712 Added player 156 to individual group
+INFO 2025-07-04 17:42:08,932 consumers 390486 129610785091712 WebSocket connecting to game TTPJSC
+INFO 2025-07-04 17:42:08,933 consumers 390486 129610785091712 WebSocket connected to game TTPJSC (channel: specific..inmemory!HpNFfNDaTFza)
+DEBUG 2025-07-04 17:42:08,933 consumers 390486 129610728261312 Using cached game state for TTPJSC (age: 5.0s)
+INFO 2025-07-04 17:42:08,936 consumers 390486 129610785091712 Sending initial game state to new connection for TTPJSC
+INFO 2025-07-04 17:42:08,937 consumers 390486 129610785091712 Player identified as 155 for game TTPJSC
+INFO 2025-07-04 17:42:08,937 consumers 390486 129610785091712 Added player 155 to individual group
+INFO 2025-07-04 17:42:08,948 consumers 390486 129610785091712 WebSocket connecting to game TTPJSC
+INFO 2025-07-04 17:42:08,949 consumers 390486 129610785091712 WebSocket connected to game TTPJSC (channel: specific..inmemory!FrQQMXsnNvDi)
+DEBUG 2025-07-04 17:42:08,949 consumers 390486 129610728261312 Using cached game state for TTPJSC (age: 5.1s)
+INFO 2025-07-04 17:42:08,952 consumers 390486 129610785091712 Sending initial game state to new connection for TTPJSC
+INFO 2025-07-04 17:42:10,520 round_handlers 390486 129610719868608 Using CACHED FFV data for game TTPJSC, round 1: Vegetables - R
+DEBUG 2025-07-04 17:42:10,520 cache_service 390486 129610719868608 Cached round state for round 1: flower_fruit_veg
+DEBUG 2025-07-04 17:42:10,521 cache_service 390486 129610719868608 Invalidated game state cache for TTPJSC
+INFO 2025-07-04 17:42:10,521 websocket_utils 390486 129610719868608 Broadcasting round_started to group game_TTPJSC: {'round_number': 1, 'total_time': 30, 'started_at': '2025-07-04T17:42:10.510030+00:00', 'round_type': 'flower_fruit_veg', 'is_active': True, 'time_remaining': 30, 'prompt': "A vegetables that starts with 'R'", 'letter': 'R', 'category': 'Vegetables'}
+INFO 2025-07-04 17:42:10,523 websocket_utils 390486 129610719868608 Successfully broadcast round_started to game_TTPJSC
+INFO 2025-07-04 17:42:10,526 websocket_utils 390486 129610628982464 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 29}
+INFO 2025-07-04 17:42:10,526 websocket_utils 390486 129610719868608 Started timer thread for game TTPJSC with 30 seconds
+INFO 2025-07-04 17:42:10,533 websocket_utils 390486 129610628982464 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:42:11,541 websocket_utils 390486 129610628982464 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 28}
+INFO 2025-07-04 17:42:11,544 websocket_utils 390486 129610628982464 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:42:12,548 websocket_utils 390486 129610628982464 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 27}
+INFO 2025-07-04 17:42:12,551 websocket_utils 390486 129610628982464 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:42:13,553 websocket_utils 390486 129610628982464 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 26}
+INFO 2025-07-04 17:42:13,556 websocket_utils 390486 129610628982464 Successfully broadcast timer_update to game_TTPJSC
+DEBUG 2025-07-04 17:42:14,232 cache_service 390486 129610728261312 Cached game state for TTPJSC: active, 2 players
+DEBUG 2025-07-04 17:42:14,234 cache_service 390486 129610785091712 Cached answer for player 156 in round 1: R...
+INFO 2025-07-04 17:42:14,234 consumers 390486 129610785091712 Player 156 submitted answer for round 1 in game TTPJSC
+INFO 2025-07-04 17:42:14,559 websocket_utils 390486 129610628982464 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 25}
+INFO 2025-07-04 17:42:14,561 websocket_utils 390486 129610628982464 Successfully broadcast timer_update to game_TTPJSC
+DEBUG 2025-07-04 17:42:14,941 consumers 390486 129610728261312 Using cached game state for TTPJSC (age: 0.7s)
+DEBUG 2025-07-04 17:42:14,950 cache_service 390486 129610785091712 Cached answer for player 156 in round 1: Ra...
+INFO 2025-07-04 17:42:14,951 consumers 390486 129610785091712 Player 156 submitted answer for round 1 in game TTPJSC
+INFO 2025-07-04 17:42:15,564 websocket_utils 390486 129610628982464 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 24}
+INFO 2025-07-04 17:42:15,567 websocket_utils 390486 129610628982464 Successfully broadcast timer_update to game_TTPJSC
+DEBUG 2025-07-04 17:42:16,084 consumers 390486 129610728261312 Using cached game state for TTPJSC (age: 1.9s)
+DEBUG 2025-07-04 17:42:16,093 cache_service 390486 129610785091712 Cached answer for player 156 in round 1: Radish...
+INFO 2025-07-04 17:42:16,093 consumers 390486 129610785091712 Player 156 submitted answer for round 1 in game TTPJSC
+INFO 2025-07-04 17:42:16,571 websocket_utils 390486 129610628982464 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 23}
+INFO 2025-07-04 17:42:16,575 websocket_utils 390486 129610628982464 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:42:17,579 websocket_utils 390486 129610628982464 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 22}
+INFO 2025-07-04 17:42:17,583 websocket_utils 390486 129610628982464 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:42:18,586 websocket_utils 390486 129610628982464 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 21}
+INFO 2025-07-04 17:42:18,589 websocket_utils 390486 129610628982464 Successfully broadcast timer_update to game_TTPJSC
+DEBUG 2025-07-04 17:42:18,655 consumers 390486 129610728261312 Using cached game state for TTPJSC (age: 4.4s)
+DEBUG 2025-07-04 17:42:18,658 cache_service 390486 129610785091712 Cached answer for player 155 in round 1: R...
+INFO 2025-07-04 17:42:18,659 consumers 390486 129610785091712 Player 155 submitted answer for round 1 in game TTPJSC
+INFO 2025-07-04 17:42:19,592 websocket_utils 390486 129610628982464 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 20}
+INFO 2025-07-04 17:42:19,596 websocket_utils 390486 129610628982464 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:42:19,597 websocket_utils 390486 129610628982464 Timer update for game TTPJSC: 20 seconds remaining
+INFO 2025-07-04 17:42:20,600 websocket_utils 390486 129610628982464 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 19}
+INFO 2025-07-04 17:42:20,603 websocket_utils 390486 129610628982464 Successfully broadcast timer_update to game_TTPJSC
+DEBUG 2025-07-04 17:42:21,063 consumers 390486 129610728261312 Using cached game state for TTPJSC (age: 6.8s)
+DEBUG 2025-07-04 17:42:21,074 cache_service 390486 129610785091712 Cached answer for player 155 in round 1: Ro...
+INFO 2025-07-04 17:42:21,074 consumers 390486 129610785091712 Player 155 submitted answer for round 1 in game TTPJSC
+INFO 2025-07-04 17:42:21,606 websocket_utils 390486 129610628982464 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 18}
+INFO 2025-07-04 17:42:21,610 websocket_utils 390486 129610628982464 Successfully broadcast timer_update to game_TTPJSC
+DEBUG 2025-07-04 17:42:21,740 consumers 390486 129610728261312 Using cached game state for TTPJSC (age: 7.5s)
+DEBUG 2025-07-04 17:42:21,753 cache_service 390486 129610785091712 Cached answer for player 155 in round 1: Rom...
+INFO 2025-07-04 17:42:21,754 consumers 390486 129610785091712 Player 155 submitted answer for round 1 in game TTPJSC
+INFO 2025-07-04 17:42:22,613 websocket_utils 390486 129610628982464 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 17}
+INFO 2025-07-04 17:42:22,616 websocket_utils 390486 129610628982464 Successfully broadcast timer_update to game_TTPJSC
+DEBUG 2025-07-04 17:42:22,773 consumers 390486 129610728261312 Using cached game state for TTPJSC (age: 8.5s)
+DEBUG 2025-07-04 17:42:22,780 cache_service 390486 129610785091712 Cached answer for player 155 in round 1: Romania ...
+INFO 2025-07-04 17:42:22,781 consumers 390486 129610785091712 Player 155 submitted answer for round 1 in game TTPJSC
+INFO 2025-07-04 17:42:23,620 websocket_utils 390486 129610628982464 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 16}
+INFO 2025-07-04 17:42:23,623 websocket_utils 390486 129610628982464 Successfully broadcast timer_update to game_TTPJSC
+DEBUG 2025-07-04 17:42:23,678 consumers 390486 129610728261312 Using cached game state for TTPJSC (age: 9.4s)
+DEBUG 2025-07-04 17:42:23,681 cache_service 390486 129610785091712 Cached answer for player 155 in round 1: Romania L...
+INFO 2025-07-04 17:42:23,681 consumers 390486 129610785091712 Player 155 submitted answer for round 1 in game TTPJSC
+DEBUG 2025-07-04 17:42:24,044 consumers 390486 129610728261312 Using cached game state for TTPJSC (age: 9.8s)
+DEBUG 2025-07-04 17:42:24,047 cache_service 390486 129610785091712 Cached answer for player 155 in round 1: Romania Le...
+INFO 2025-07-04 17:42:24,048 consumers 390486 129610785091712 Player 155 submitted answer for round 1 in game TTPJSC
+INFO 2025-07-04 17:42:24,626 websocket_utils 390486 129610628982464 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 15}
+INFO 2025-07-04 17:42:24,627 websocket_utils 390486 129610628982464 Successfully broadcast timer_update to game_TTPJSC
+DEBUG 2025-07-04 17:42:24,718 consumers 390486 129610728261312 Using cached game state for TTPJSC (age: 10.5s)
+DEBUG 2025-07-04 17:42:24,724 cache_service 390486 129610785091712 Cached answer for player 155 in round 1: Romania Lettu...
+INFO 2025-07-04 17:42:24,725 consumers 390486 129610785091712 Player 155 submitted answer for round 1 in game TTPJSC
+DEBUG 2025-07-04 17:42:25,368 consumers 390486 129610728261312 Using cached game state for TTPJSC (age: 11.1s)
+DEBUG 2025-07-04 17:42:25,378 cache_service 390486 129610785091712 Cached answer for player 155 in round 1: Romania Lettuce...
+INFO 2025-07-04 17:42:25,379 consumers 390486 129610785091712 Player 155 submitted answer for round 1 in game TTPJSC
+INFO 2025-07-04 17:42:25,628 websocket_utils 390486 129610628982464 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 14}
+INFO 2025-07-04 17:42:25,630 websocket_utils 390486 129610628982464 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:42:26,632 websocket_utils 390486 129610628982464 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 13}
+INFO 2025-07-04 17:42:26,634 websocket_utils 390486 129610628982464 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:42:27,635 websocket_utils 390486 129610628982464 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 12}
+INFO 2025-07-04 17:42:27,637 websocket_utils 390486 129610628982464 Successfully broadcast timer_update to game_TTPJSC
+DEBUG 2025-07-04 17:42:28,225 cache_service 390486 129610719868608 Marked round 1 as ended in cache
+INFO 2025-07-04 17:42:28,237 services 390486 129610719868608 Processed answer for player Joanna: Radish...
+INFO 2025-07-04 17:42:28,244 services 390486 129610719868608 Processed answer for player Lauren: Romania Lettuce...
+INFO 2025-07-04 17:42:28,245 services 390486 129610719868608 Bulk created 2 PlayerAnswer objects
+DEBUG 2025-07-04 17:42:28,246 cache_service 390486 129610719868608 Cleared cached answers for round 1
+INFO 2025-07-04 17:42:28,246 services 390486 129610719868608 Processed 2 cached answers into database
+INFO 2025-07-04 17:42:28,263 round_handlers 390486 129610719868608 Prepared 2 Flower, Fruit & Veg answers for manual validation
+DEBUG 2025-07-04 17:42:28,264 cache_service 390486 129610719868608 Invalidated game state cache for TTPJSC
+INFO 2025-07-04 17:42:28,265 websocket_utils 390486 129610719868608 Broadcasting round_ended to group game_TTPJSC: {'round_number': 1, 'round_type': 'flower_fruit_veg', 'is_final_round': False, 'answers': [{'player_name': 'Joanna', 'answer_text': 'Radish', 'points_awarded': 0, 'is_valid': False, 'is_unique': True}, {'player_name': 'Lauren', 'answer_text': 'Romania Lettuce', 'points_awarded': 0, 'is_valid': False, 'is_unique': True}]}
+INFO 2025-07-04 17:42:28,267 websocket_utils 390486 129610719868608 Successfully broadcast round_ended to game_TTPJSC
+INFO 2025-07-04 17:42:28,639 websocket_utils 390486 129610628982464 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 11}
+INFO 2025-07-04 17:42:28,641 websocket_utils 390486 129610628982464 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:42:36,108 round_handlers 390486 129610628982464 Using CACHED FFV data for game TTPJSC, round 2: Girls Names - S
+DEBUG 2025-07-04 17:42:36,109 cache_service 390486 129610628982464 Cached round state for round 2: flower_fruit_veg
+DEBUG 2025-07-04 17:42:36,110 cache_service 390486 129610628982464 Invalidated game state cache for TTPJSC
+INFO 2025-07-04 17:42:36,110 websocket_utils 390486 129610628982464 Broadcasting round_started to group game_TTPJSC: {'round_number': 2, 'total_time': 30, 'started_at': '2025-07-04T17:42:36.098993+00:00', 'round_type': 'flower_fruit_veg', 'is_active': True, 'time_remaining': 30, 'prompt': "A girls names that starts with 'S'", 'letter': 'S', 'category': 'Girls Names'}
+INFO 2025-07-04 17:42:36,113 websocket_utils 390486 129610628982464 Successfully broadcast round_started to game_TTPJSC
+INFO 2025-07-04 17:42:36,117 websocket_utils 390486 129610719868608 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 29}
+INFO 2025-07-04 17:42:36,120 websocket_utils 390486 129610628982464 Started timer thread for game TTPJSC with 30 seconds
+INFO 2025-07-04 17:42:36,125 websocket_utils 390486 129610719868608 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:42:37,133 websocket_utils 390486 129610719868608 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 28}
+INFO 2025-07-04 17:42:37,137 websocket_utils 390486 129610719868608 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:42:38,140 websocket_utils 390486 129610719868608 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 27}
+INFO 2025-07-04 17:42:38,144 websocket_utils 390486 129610719868608 Successfully broadcast timer_update to game_TTPJSC
+DEBUG 2025-07-04 17:42:38,219 cache_service 390486 129610728261312 Cached game state for TTPJSC: active, 2 players
+DEBUG 2025-07-04 17:42:38,226 cache_service 390486 129610785091712 Cached answer for player 156 in round 2: S...
+INFO 2025-07-04 17:42:38,226 consumers 390486 129610785091712 Player 156 submitted answer for round 2 in game TTPJSC
+DEBUG 2025-07-04 17:42:39,114 consumers 390486 129610728261312 Using cached game state for TTPJSC (age: 0.9s)
+DEBUG 2025-07-04 17:42:39,125 cache_service 390486 129610785091712 Cached answer for player 156 in round 2: Sarah...
+INFO 2025-07-04 17:42:39,125 consumers 390486 129610785091712 Player 156 submitted answer for round 2 in game TTPJSC
+INFO 2025-07-04 17:42:39,147 websocket_utils 390486 129610719868608 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 26}
+INFO 2025-07-04 17:42:39,150 websocket_utils 390486 129610719868608 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:42:40,154 websocket_utils 390486 129610719868608 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 25}
+INFO 2025-07-04 17:42:40,157 websocket_utils 390486 129610719868608 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:42:41,161 websocket_utils 390486 129610719868608 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 24}
+INFO 2025-07-04 17:42:41,162 websocket_utils 390486 129610719868608 Successfully broadcast timer_update to game_TTPJSC
+DEBUG 2025-07-04 17:42:42,115 consumers 390486 129610728261312 Using cached game state for TTPJSC (age: 3.9s)
+DEBUG 2025-07-04 17:42:42,125 cache_service 390486 129610785091712 Cached answer for player 155 in round 2: Sarah...
+INFO 2025-07-04 17:42:42,126 consumers 390486 129610785091712 Player 155 submitted answer for round 2 in game TTPJSC
+INFO 2025-07-04 17:42:42,164 websocket_utils 390486 129610719868608 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 23}
+INFO 2025-07-04 17:42:42,167 websocket_utils 390486 129610719868608 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:42:43,171 websocket_utils 390486 129610719868608 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 22}
+INFO 2025-07-04 17:42:43,172 websocket_utils 390486 129610719868608 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:42:44,173 websocket_utils 390486 129610719868608 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 21}
+INFO 2025-07-04 17:42:44,177 websocket_utils 390486 129610719868608 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:42:45,180 websocket_utils 390486 129610719868608 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 20}
+INFO 2025-07-04 17:42:45,183 websocket_utils 390486 129610719868608 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:42:45,184 websocket_utils 390486 129610719868608 Timer update for game TTPJSC: 20 seconds remaining
+INFO 2025-07-04 17:42:46,187 websocket_utils 390486 129610719868608 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 19}
+INFO 2025-07-04 17:42:46,190 websocket_utils 390486 129610719868608 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:42:47,193 websocket_utils 390486 129610719868608 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 18}
+INFO 2025-07-04 17:42:47,196 websocket_utils 390486 129610719868608 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:42:48,199 websocket_utils 390486 129610719868608 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 17}
+INFO 2025-07-04 17:42:48,202 websocket_utils 390486 129610719868608 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:42:49,205 websocket_utils 390486 129610719868608 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 16}
+INFO 2025-07-04 17:42:49,208 websocket_utils 390486 129610719868608 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:42:50,211 websocket_utils 390486 129610719868608 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 15}
+INFO 2025-07-04 17:42:50,215 websocket_utils 390486 129610719868608 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:42:51,218 websocket_utils 390486 129610719868608 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 14}
+INFO 2025-07-04 17:42:51,221 websocket_utils 390486 129610719868608 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:42:52,224 websocket_utils 390486 129610719868608 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 13}
+INFO 2025-07-04 17:42:52,227 websocket_utils 390486 129610719868608 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:42:53,230 websocket_utils 390486 129610719868608 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 12}
+INFO 2025-07-04 17:42:53,233 websocket_utils 390486 129610719868608 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:42:54,236 websocket_utils 390486 129610719868608 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 11}
+INFO 2025-07-04 17:42:54,239 websocket_utils 390486 129610719868608 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:42:55,242 websocket_utils 390486 129610719868608 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 10}
+INFO 2025-07-04 17:42:55,245 websocket_utils 390486 129610719868608 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:42:55,246 websocket_utils 390486 129610719868608 Timer update for game TTPJSC: 10 seconds remaining
+INFO 2025-07-04 17:42:56,248 websocket_utils 390486 129610719868608 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 9}
+INFO 2025-07-04 17:42:56,253 websocket_utils 390486 129610719868608 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:42:57,256 websocket_utils 390486 129610719868608 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 8}
+INFO 2025-07-04 17:42:57,260 websocket_utils 390486 129610719868608 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:42:58,263 websocket_utils 390486 129610719868608 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 7}
+INFO 2025-07-04 17:42:58,267 websocket_utils 390486 129610719868608 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:42:59,271 websocket_utils 390486 129610719868608 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 6}
+INFO 2025-07-04 17:42:59,275 websocket_utils 390486 129610719868608 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:43:00,278 websocket_utils 390486 129610719868608 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 5}
+INFO 2025-07-04 17:43:00,282 websocket_utils 390486 129610719868608 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:43:01,286 websocket_utils 390486 129610719868608 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 4}
+INFO 2025-07-04 17:43:01,289 websocket_utils 390486 129610719868608 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:43:01,290 websocket_utils 390486 129610719868608 Timer update for game TTPJSC: 4 seconds remaining
+INFO 2025-07-04 17:43:02,293 websocket_utils 390486 129610719868608 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 3}
+INFO 2025-07-04 17:43:02,296 websocket_utils 390486 129610719868608 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:43:02,297 websocket_utils 390486 129610719868608 Timer update for game TTPJSC: 3 seconds remaining
+INFO 2025-07-04 17:43:03,301 websocket_utils 390486 129610719868608 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 2}
+INFO 2025-07-04 17:43:03,305 websocket_utils 390486 129610719868608 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:43:03,306 websocket_utils 390486 129610719868608 Timer update for game TTPJSC: 2 seconds remaining
+INFO 2025-07-04 17:43:04,308 websocket_utils 390486 129610719868608 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 1}
+INFO 2025-07-04 17:43:04,311 websocket_utils 390486 129610719868608 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:43:04,311 websocket_utils 390486 129610719868608 Timer update for game TTPJSC: 1 seconds remaining
+INFO 2025-07-04 17:43:05,313 websocket_utils 390486 129610719868608 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 0}
+INFO 2025-07-04 17:43:05,317 websocket_utils 390486 129610719868608 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:43:05,318 websocket_utils 390486 129610719868608 Timer update for game TTPJSC: 0 seconds remaining
+INFO 2025-07-04 17:43:06,322 websocket_utils 390486 129610719868608 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 0}
+INFO 2025-07-04 17:43:06,325 websocket_utils 390486 129610719868608 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:43:06,326 websocket_utils 390486 129610719868608 Timer update for game TTPJSC: 0 seconds remaining
+INFO 2025-07-04 17:43:06,327 websocket_utils 390486 129610719868608 Timer expired for game TTPJSC, automatically ending round
+INFO 2025-07-04 17:43:06,342 round_handlers 390486 129610719868608 Using CACHED FFV data for game TTPJSC, round 2: Girls Names - S
+INFO 2025-07-04 17:43:06,359 websocket_utils 390486 129610719868608 Auto-end: Created PlayerAnswer for player Joanna: Sarah
+INFO 2025-07-04 17:43:06,370 websocket_utils 390486 129610719868608 Auto-end: Created PlayerAnswer for player Lauren: Sarah
+INFO 2025-07-04 17:43:06,385 round_handlers 390486 129610719868608 Prepared 2 Flower, Fruit & Veg answers for manual validation
+INFO 2025-07-04 17:43:06,386 websocket_utils 390486 129610719868608 Broadcasting round_ended to group game_TTPJSC: {'round_number': 2, 'round_type': 'flower_fruit_veg', 'is_final_round': False, 'answers': [{'player_name': 'Lauren', 'answer_text': 'Sarah', 'points_awarded': 0, 'is_valid': False, 'is_unique': False}, {'player_name': 'Joanna', 'answer_text': 'Sarah', 'points_awarded': 0, 'is_valid': False, 'is_unique': False}]}
+INFO 2025-07-04 17:43:06,387 websocket_utils 390486 129610719868608 Successfully broadcast round_ended to game_TTPJSC
+INFO 2025-07-04 17:43:06,387 websocket_utils 390486 129610719868608 Round 2 automatically ended for game TTPJSC
+INFO 2025-07-04 17:43:25,030 consumers 406268 138264684638336 WebSocket connecting to game TTPJSC
+INFO 2025-07-04 17:43:25,031 consumers 406268 138264684638336 WebSocket connected to game TTPJSC (channel: specific..inmemory!lhnOCpYiACxi)
+DEBUG 2025-07-04 17:43:25,036 cache_service 406268 138264627787456 Cached 2 connected players for game TTPJSC
+DEBUG 2025-07-04 17:43:25,037 cache_service 406268 138264627787456 Cached game state for TTPJSC: active, 2 players
+INFO 2025-07-04 17:43:25,040 round_handlers 406268 138264627787456 Cached FFV data for game TTPJSC, round 2: Girls Names - S
+INFO 2025-07-04 17:43:25,041 consumers 406268 138264684638336 Sending initial game state to new connection for TTPJSC
+INFO 2025-07-04 17:43:25,042 consumers 406268 138264684638336 Player identified as 155 for game TTPJSC
+INFO 2025-07-04 17:43:25,042 consumers 406268 138264684638336 Added player 155 to individual group
+INFO 2025-07-04 17:43:25,051 consumers 406268 138264684638336 WebSocket connecting to game TTPJSC
+INFO 2025-07-04 17:43:25,051 consumers 406268 138264684638336 WebSocket connected to game TTPJSC (channel: specific..inmemory!iRoTaBUSzNUf)
+DEBUG 2025-07-04 17:43:25,052 consumers 406268 138264627787456 Using cached game state for TTPJSC (age: 0.0s)
+INFO 2025-07-04 17:43:25,055 round_handlers 406268 138264627787456 Using CACHED FFV data for game TTPJSC, round 2: Girls Names - S
+INFO 2025-07-04 17:43:25,056 consumers 406268 138264684638336 Sending initial game state to new connection for TTPJSC
+INFO 2025-07-04 17:43:25,057 consumers 406268 138264684638336 Player identified as 156 for game TTPJSC
+INFO 2025-07-04 17:43:25,057 consumers 406268 138264684638336 Added player 156 to individual group
+INFO 2025-07-04 17:43:25,070 consumers 406268 138264684638336 WebSocket connecting to game TTPJSC
+INFO 2025-07-04 17:43:25,070 consumers 406268 138264684638336 WebSocket connected to game TTPJSC (channel: specific..inmemory!GfjwcRLWaGkM)
+DEBUG 2025-07-04 17:43:25,071 consumers 406268 138264627787456 Using cached game state for TTPJSC (age: 0.0s)
+INFO 2025-07-04 17:43:25,074 round_handlers 406268 138264627787456 Using CACHED FFV data for game TTPJSC, round 2: Girls Names - S
+INFO 2025-07-04 17:43:25,074 consumers 406268 138264684638336 Sending initial game state to new connection for TTPJSC
+INFO 2025-07-04 17:44:32,209 round_handlers 406268 138264619394752 Using CACHED FFV data for game TTPJSC, round 2: Girls Names - S
+INFO 2025-07-04 17:44:32,227 round_handlers 406268 138264619394752 Using CACHED FFV data for game TTPJSC, round 2: Girls Names - S
+INFO 2025-07-04 17:44:32,238 round_handlers 406268 138264619394752 Using CACHED FFV data for game TTPJSC, round 2: Girls Names - S
+INFO 2025-07-04 17:44:32,258 consumers 406268 138264684638336 WebSocket disconnecting from game TTPJSC
+WARNING 2025-07-04 17:44:32,261 consumers 406268 138264627787456 WebSocket disconnect without player identification for game TTPJSC
+INFO 2025-07-04 17:44:32,355 consumers 406268 138264684638336 WebSocket connecting to game TTPJSC
+INFO 2025-07-04 17:44:32,357 consumers 406268 138264684638336 WebSocket connected to game TTPJSC (channel: specific..inmemory!oQgjOpEHFxay)
+DEBUG 2025-07-04 17:44:32,362 consumers 406268 138264627787456 Using cached game state for TTPJSC (age: 67.3s)
+INFO 2025-07-04 17:44:32,375 round_handlers 406268 138264627787456 Using CACHED FFV data for game TTPJSC, round 2: Girls Names - S
+INFO 2025-07-04 17:44:32,378 consumers 406268 138264684638336 Sending initial game state to new connection for TTPJSC
+INFO 2025-07-04 17:44:34,331 round_handlers 406268 138264619394752 Using CACHED FFV data for game TTPJSC, round 2: Girls Names - S
+INFO 2025-07-04 17:44:34,347 consumers 406268 138264684638336 WebSocket disconnecting from game TTPJSC
+INFO 2025-07-04 17:44:34,361 consumers 406268 138264627787456 Marked player Joanna (id=156) as disconnected
+INFO 2025-07-04 17:44:34,364 websocket_utils 406268 138264627787456 Broadcasting game_update to group game_TTPJSC: {'game_status': 'active', 'player_count': 1, 'players': [{'id': 155, 'name': 'Lauren', 'joined_at': '16:06:54', 'total_score': 0}], 'message': 'Joanna disconnected'}
+INFO 2025-07-04 17:44:34,366 websocket_utils 406268 138264627787456 Successfully broadcast game_update to game_TTPJSC
+INFO 2025-07-04 17:44:34,367 consumers 406268 138264684638336 Removed player 156 from individual group
+INFO 2025-07-04 17:44:34,369 consumers 406268 138264684638336 Broadcasting game_update to TTPJSC: {'game_status': 'active', 'player_count': 1, 'players': [{'id': 155, 'name': 'Lauren', 'joined_at': '16:06:54', 'total_score': 0}], 'message': 'Joanna disconnected'}
+INFO 2025-07-04 17:44:34,371 consumers 406268 138264684638336 Broadcasting game_update to TTPJSC: {'game_status': 'active', 'player_count': 1, 'players': [{'id': 155, 'name': 'Lauren', 'joined_at': '16:06:54', 'total_score': 0}], 'message': 'Joanna disconnected'}
+INFO 2025-07-04 17:44:34,391 consumers 406268 138264684638336 WebSocket connecting to game TTPJSC
+INFO 2025-07-04 17:44:34,392 consumers 406268 138264684638336 WebSocket connected to game TTPJSC (channel: specific..inmemory!LTKnYWsJiTVz)
+DEBUG 2025-07-04 17:44:34,392 consumers 406268 138264627787456 Using cached game state for TTPJSC (age: 69.4s)
+INFO 2025-07-04 17:44:34,396 round_handlers 406268 138264627787456 Using CACHED FFV data for game TTPJSC, round 2: Girls Names - S
+INFO 2025-07-04 17:44:34,397 consumers 406268 138264684638336 Sending initial game state to new connection for TTPJSC
+INFO 2025-07-04 17:44:34,405 consumers 406268 138264684638336 Player identified as 156 for game TTPJSC
+INFO 2025-07-04 17:44:34,405 consumers 406268 138264684638336 Added player 156 to individual group
+INFO 2025-07-04 17:44:34,430 consumers 406268 138264627787456 Marked player Joanna (id=156) as reconnected
+INFO 2025-07-04 17:44:34,433 websocket_utils 406268 138264627787456 Broadcasting game_update to group game_TTPJSC: {'game_status': 'active', 'player_count': 2, 'players': [{'id': 155, 'name': 'Lauren', 'joined_at': '16:06:54', 'total_score': 0}, {'id': 156, 'name': 'Joanna', 'joined_at': '16:06:56', 'total_score': 0}], 'message': 'Joanna reconnected'}
+INFO 2025-07-04 17:44:34,434 websocket_utils 406268 138264627787456 Successfully broadcast game_update to game_TTPJSC
+INFO 2025-07-04 17:44:34,434 consumers 406268 138264684638336 Broadcasting game_update to TTPJSC: {'game_status': 'active', 'player_count': 2, 'players': [{'id': 155, 'name': 'Lauren', 'joined_at': '16:06:54', 'total_score': 0}, {'id': 156, 'name': 'Joanna', 'joined_at': '16:06:56', 'total_score': 0}], 'message': 'Joanna reconnected'}
+INFO 2025-07-04 17:44:34,435 consumers 406268 138264684638336 Broadcasting game_update to TTPJSC: {'game_status': 'active', 'player_count': 2, 'players': [{'id': 155, 'name': 'Lauren', 'joined_at': '16:06:54', 'total_score': 0}, {'id': 156, 'name': 'Joanna', 'joined_at': '16:06:56', 'total_score': 0}], 'message': 'Joanna reconnected'}
+INFO 2025-07-04 17:44:34,436 consumers 406268 138264684638336 Broadcasting game_update to TTPJSC: {'game_status': 'active', 'player_count': 2, 'players': [{'id': 155, 'name': 'Lauren', 'joined_at': '16:06:54', 'total_score': 0}, {'id': 156, 'name': 'Joanna', 'joined_at': '16:06:56', 'total_score': 0}], 'message': 'Joanna reconnected'}
+INFO 2025-07-04 17:44:36,325 round_handlers 406268 138264619394752 Using CACHED FFV data for game TTPJSC, round 2: Girls Names - S
+INFO 2025-07-04 17:44:36,355 consumers 406268 138264684638336 WebSocket disconnecting from game TTPJSC
+INFO 2025-07-04 17:44:36,371 consumers 406268 138264627787456 Marked player Lauren (id=155) as disconnected
+INFO 2025-07-04 17:44:36,373 websocket_utils 406268 138264627787456 Broadcasting game_update to group game_TTPJSC: {'game_status': 'active', 'player_count': 1, 'players': [{'id': 156, 'name': 'Joanna', 'joined_at': '16:06:56', 'total_score': 0}], 'message': 'Lauren disconnected'}
+INFO 2025-07-04 17:44:36,373 websocket_utils 406268 138264627787456 Successfully broadcast game_update to game_TTPJSC
+INFO 2025-07-04 17:44:36,374 consumers 406268 138264684638336 Removed player 155 from individual group
+INFO 2025-07-04 17:44:36,375 consumers 406268 138264684638336 Broadcasting game_update to TTPJSC: {'game_status': 'active', 'player_count': 1, 'players': [{'id': 156, 'name': 'Joanna', 'joined_at': '16:06:56', 'total_score': 0}], 'message': 'Lauren disconnected'}
+INFO 2025-07-04 17:44:36,375 consumers 406268 138264684638336 Broadcasting game_update to TTPJSC: {'game_status': 'active', 'player_count': 1, 'players': [{'id': 156, 'name': 'Joanna', 'joined_at': '16:06:56', 'total_score': 0}], 'message': 'Lauren disconnected'}
+INFO 2025-07-04 17:44:36,405 consumers 406268 138264684638336 WebSocket connecting to game TTPJSC
+INFO 2025-07-04 17:44:36,406 consumers 406268 138264684638336 WebSocket connected to game TTPJSC (channel: specific..inmemory!wyosvaeFiaNy)
+DEBUG 2025-07-04 17:44:36,407 consumers 406268 138264627787456 Using cached game state for TTPJSC (age: 71.4s)
+INFO 2025-07-04 17:44:36,412 round_handlers 406268 138264627787456 Using CACHED FFV data for game TTPJSC, round 2: Girls Names - S
+INFO 2025-07-04 17:44:36,413 consumers 406268 138264684638336 Sending initial game state to new connection for TTPJSC
+INFO 2025-07-04 17:44:36,432 consumers 406268 138264684638336 Player identified as 155 for game TTPJSC
+INFO 2025-07-04 17:44:36,432 consumers 406268 138264684638336 Added player 155 to individual group
+INFO 2025-07-04 17:44:36,454 consumers 406268 138264627787456 Marked player Lauren (id=155) as reconnected
+INFO 2025-07-04 17:44:36,456 websocket_utils 406268 138264627787456 Broadcasting game_update to group game_TTPJSC: {'game_status': 'active', 'player_count': 2, 'players': [{'id': 155, 'name': 'Lauren', 'joined_at': '16:06:54', 'total_score': 0}, {'id': 156, 'name': 'Joanna', 'joined_at': '16:06:56', 'total_score': 0}], 'message': 'Lauren reconnected'}
+INFO 2025-07-04 17:44:36,459 websocket_utils 406268 138264627787456 Successfully broadcast game_update to game_TTPJSC
+INFO 2025-07-04 17:44:36,460 consumers 406268 138264684638336 Broadcasting game_update to TTPJSC: {'game_status': 'active', 'player_count': 2, 'players': [{'id': 155, 'name': 'Lauren', 'joined_at': '16:06:54', 'total_score': 0}, {'id': 156, 'name': 'Joanna', 'joined_at': '16:06:56', 'total_score': 0}], 'message': 'Lauren reconnected'}
+INFO 2025-07-04 17:44:36,461 consumers 406268 138264684638336 Broadcasting game_update to TTPJSC: {'game_status': 'active', 'player_count': 2, 'players': [{'id': 155, 'name': 'Lauren', 'joined_at': '16:06:54', 'total_score': 0}, {'id': 156, 'name': 'Joanna', 'joined_at': '16:06:56', 'total_score': 0}], 'message': 'Lauren reconnected'}
+INFO 2025-07-04 17:44:36,462 consumers 406268 138264684638336 Broadcasting game_update to TTPJSC: {'game_status': 'active', 'player_count': 2, 'players': [{'id': 155, 'name': 'Lauren', 'joined_at': '16:06:54', 'total_score': 0}, {'id': 156, 'name': 'Joanna', 'joined_at': '16:06:56', 'total_score': 0}], 'message': 'Lauren reconnected'}
+INFO 2025-07-04 17:44:38,116 websocket_utils 406268 138264619394752 Broadcasting game_update to group game_TTPJSC: {'game_status': 'waiting', 'player_count': 2, 'message': 'Game restarted! Ready for next game.', 'current_round': None, 'restart_timestamp': 1751651078}
+INFO 2025-07-04 17:44:38,119 websocket_utils 406268 138264619394752 Successfully broadcast game_update to game_TTPJSC
+INFO 2025-07-04 17:44:38,121 consumers 406268 138264684638336 Broadcasting game_update to TTPJSC: {'game_status': 'waiting', 'player_count': 2, 'message': 'Game restarted! Ready for next game.', 'current_round': None, 'restart_timestamp': 1751651078}
+INFO 2025-07-04 17:44:38,123 consumers 406268 138264684638336 Broadcasting game_update to TTPJSC: {'game_status': 'waiting', 'player_count': 2, 'message': 'Game restarted! Ready for next game.', 'current_round': None, 'restart_timestamp': 1751651078}
+INFO 2025-07-04 17:44:38,124 consumers 406268 138264684638336 Broadcasting game_update to TTPJSC: {'game_status': 'waiting', 'player_count': 2, 'message': 'Game restarted! Ready for next game.', 'current_round': None, 'restart_timestamp': 1751651078}
+INFO 2025-07-04 17:44:38,625 websocket_utils 406268 138264392496832 Broadcasting game_restart_confirmation to group game_TTPJSC: {'game_status': 'waiting', 'player_count': 2, 'message': "Game restarted! Please return to lobby if you haven't already.", 'force_redirect': True, 'restart_timestamp': 1751651078}
+INFO 2025-07-04 17:44:38,629 websocket_utils 406268 138264392496832 Successfully broadcast game_restart_confirmation to game_TTPJSC
+INFO 2025-07-04 17:44:38,664 consumers 406268 138264684638336 Broadcasting game_restart_confirmation to TTPJSC: {'game_status': 'waiting', 'player_count': 2, 'message': "Game restarted! Please return to lobby if you haven't already.", 'force_redirect': True, 'restart_timestamp': 1751651078}
+INFO 2025-07-04 17:44:38,664 consumers 406268 138264684638336 Broadcasting game_restart_confirmation to TTPJSC: {'game_status': 'waiting', 'player_count': 2, 'message': "Game restarted! Please return to lobby if you haven't already.", 'force_redirect': True, 'restart_timestamp': 1751651078}
+INFO 2025-07-04 17:44:38,664 consumers 406268 138264684638336 Broadcasting game_restart_confirmation to TTPJSC: {'game_status': 'waiting', 'player_count': 2, 'message': "Game restarted! Please return to lobby if you haven't already.", 'force_redirect': True, 'restart_timestamp': 1751651078}
+INFO 2025-07-04 17:44:38,692 consumers 406268 138264684638336 WebSocket disconnecting from game TTPJSC
+WARNING 2025-07-04 17:44:38,695 consumers 406268 138264627787456 WebSocket disconnect without player identification for game TTPJSC
+INFO 2025-07-04 17:44:38,746 consumers 406268 138264684638336 WebSocket connecting to game TTPJSC
+INFO 2025-07-04 17:44:38,746 consumers 406268 138264684638336 WebSocket connected to game TTPJSC (channel: specific..inmemory!JXWpDOcibzge)
+DEBUG 2025-07-04 17:44:38,747 consumers 406268 138264627787456 Using cached game state for TTPJSC (age: 73.7s)
+INFO 2025-07-04 17:44:38,749 consumers 406268 138264684638336 Sending initial game state to new connection for TTPJSC
+INFO 2025-07-04 17:44:39,784 consumers 406268 138264684638336 WebSocket disconnecting from game TTPJSC
+INFO 2025-07-04 17:44:39,795 consumers 406268 138264627787456 Marked player Lauren (id=155) as disconnected
+INFO 2025-07-04 17:44:39,798 websocket_utils 406268 138264627787456 Broadcasting game_update to group game_TTPJSC: {'game_status': 'waiting', 'player_count': 1, 'players': [{'id': 156, 'name': 'Joanna', 'joined_at': '16:06:56', 'total_score': 0}], 'message': 'Lauren disconnected'}
+INFO 2025-07-04 17:44:39,800 websocket_utils 406268 138264627787456 Successfully broadcast game_update to game_TTPJSC
+INFO 2025-07-04 17:44:39,802 consumers 406268 138264684638336 Removed player 155 from individual group
+INFO 2025-07-04 17:44:39,803 consumers 406268 138264684638336 Broadcasting game_update to TTPJSC: {'game_status': 'waiting', 'player_count': 1, 'players': [{'id': 156, 'name': 'Joanna', 'joined_at': '16:06:56', 'total_score': 0}], 'message': 'Lauren disconnected'}
+INFO 2025-07-04 17:44:39,804 consumers 406268 138264684638336 Broadcasting game_update to TTPJSC: {'game_status': 'waiting', 'player_count': 1, 'players': [{'id': 156, 'name': 'Joanna', 'joined_at': '16:06:56', 'total_score': 0}], 'message': 'Lauren disconnected'}
+INFO 2025-07-04 17:44:39,822 consumers 406268 138264684638336 WebSocket disconnecting from game TTPJSC
+INFO 2025-07-04 17:44:39,833 consumers 406268 138264627787456 Marked player Joanna (id=156) as disconnected
+INFO 2025-07-04 17:44:39,835 websocket_utils 406268 138264627787456 Broadcasting game_update to group game_TTPJSC: {'game_status': 'waiting', 'player_count': 0, 'players': [], 'message': 'Joanna disconnected'}
+INFO 2025-07-04 17:44:39,836 websocket_utils 406268 138264627787456 Successfully broadcast game_update to game_TTPJSC
+INFO 2025-07-04 17:44:39,837 consumers 406268 138264684638336 Removed player 156 from individual group
+INFO 2025-07-04 17:44:39,838 consumers 406268 138264684638336 Broadcasting game_update to TTPJSC: {'game_status': 'waiting', 'player_count': 0, 'players': [], 'message': 'Joanna disconnected'}
+INFO 2025-07-04 17:44:39,856 consumers 406268 138264684638336 WebSocket connecting to game TTPJSC
+INFO 2025-07-04 17:44:39,856 consumers 406268 138264684638336 WebSocket connected to game TTPJSC (channel: specific..inmemory!OxuKTliOsMzH)
+DEBUG 2025-07-04 17:44:39,857 consumers 406268 138264627787456 Using cached game state for TTPJSC (age: 74.8s)
+INFO 2025-07-04 17:44:39,860 consumers 406268 138264684638336 Sending initial game state to new connection for TTPJSC
+INFO 2025-07-04 17:44:39,869 consumers 406268 138264684638336 Player identified as 155 for game TTPJSC
+INFO 2025-07-04 17:44:39,869 consumers 406268 138264684638336 Added player 155 to individual group
+INFO 2025-07-04 17:44:39,887 consumers 406268 138264627787456 Marked player Lauren (id=155) as reconnected
+INFO 2025-07-04 17:44:39,888 websocket_utils 406268 138264627787456 Broadcasting game_update to group game_TTPJSC: {'game_status': 'waiting', 'player_count': 1, 'players': [{'id': 155, 'name': 'Lauren', 'joined_at': '16:06:54', 'total_score': 0}], 'message': 'Lauren reconnected'}
+INFO 2025-07-04 17:44:39,890 websocket_utils 406268 138264627787456 Successfully broadcast game_update to game_TTPJSC
+INFO 2025-07-04 17:44:39,893 consumers 406268 138264684638336 Broadcasting game_update to TTPJSC: {'game_status': 'waiting', 'player_count': 1, 'players': [{'id': 155, 'name': 'Lauren', 'joined_at': '16:06:54', 'total_score': 0}], 'message': 'Lauren reconnected'}
+INFO 2025-07-04 17:44:39,894 consumers 406268 138264684638336 Broadcasting game_update to TTPJSC: {'game_status': 'waiting', 'player_count': 1, 'players': [{'id': 155, 'name': 'Lauren', 'joined_at': '16:06:54', 'total_score': 0}], 'message': 'Lauren reconnected'}
+INFO 2025-07-04 17:44:39,894 consumers 406268 138264684638336 WebSocket connecting to game TTPJSC
+INFO 2025-07-04 17:44:39,895 consumers 406268 138264684638336 WebSocket connected to game TTPJSC (channel: specific..inmemory!VghtydVqNJhp)
+DEBUG 2025-07-04 17:44:39,895 consumers 406268 138264627787456 Using cached game state for TTPJSC (age: 74.9s)
+INFO 2025-07-04 17:44:39,898 consumers 406268 138264684638336 Sending initial game state to new connection for TTPJSC
+INFO 2025-07-04 17:44:39,900 consumers 406268 138264684638336 Player identified as 156 for game TTPJSC
+INFO 2025-07-04 17:44:39,901 consumers 406268 138264684638336 Added player 156 to individual group
+INFO 2025-07-04 17:44:39,910 consumers 406268 138264627787456 Marked player Joanna (id=156) as reconnected
+INFO 2025-07-04 17:44:39,911 websocket_utils 406268 138264627787456 Broadcasting game_update to group game_TTPJSC: {'game_status': 'waiting', 'player_count': 2, 'players': [{'id': 155, 'name': 'Lauren', 'joined_at': '16:06:54', 'total_score': 0}, {'id': 156, 'name': 'Joanna', 'joined_at': '16:06:56', 'total_score': 0}], 'message': 'Joanna reconnected'}
+INFO 2025-07-04 17:44:39,912 websocket_utils 406268 138264627787456 Successfully broadcast game_update to game_TTPJSC
+INFO 2025-07-04 17:44:39,913 consumers 406268 138264684638336 Broadcasting game_update to TTPJSC: {'game_status': 'waiting', 'player_count': 2, 'players': [{'id': 155, 'name': 'Lauren', 'joined_at': '16:06:54', 'total_score': 0}, {'id': 156, 'name': 'Joanna', 'joined_at': '16:06:56', 'total_score': 0}], 'message': 'Joanna reconnected'}
+INFO 2025-07-04 17:44:39,913 consumers 406268 138264684638336 Broadcasting game_update to TTPJSC: {'game_status': 'waiting', 'player_count': 2, 'players': [{'id': 155, 'name': 'Lauren', 'joined_at': '16:06:54', 'total_score': 0}, {'id': 156, 'name': 'Joanna', 'joined_at': '16:06:56', 'total_score': 0}], 'message': 'Joanna reconnected'}
+INFO 2025-07-04 17:44:39,914 consumers 406268 138264684638336 Broadcasting game_update to TTPJSC: {'game_status': 'waiting', 'player_count': 2, 'players': [{'id': 155, 'name': 'Lauren', 'joined_at': '16:06:54', 'total_score': 0}, {'id': 156, 'name': 'Joanna', 'joined_at': '16:06:56', 'total_score': 0}], 'message': 'Joanna reconnected'}
+INFO 2025-07-04 17:44:41,294 websocket_utils 406268 138264619394752 Broadcasting game_started to group game_TTPJSC: {'game_status': 'active', 'message': 'Game has started! Get ready for the first round.', 'player_count': 2}
+INFO 2025-07-04 17:44:41,294 websocket_utils 406268 138264619394752 Successfully broadcast game_started to game_TTPJSC
+INFO 2025-07-04 17:44:41,390 consumers 406268 138264684638336 WebSocket disconnecting from game TTPJSC
+INFO 2025-07-04 17:44:41,393 consumers 406268 138264627787456 Detected likely redirect disconnect for game TTPJSC (within 5s of game_started)
+INFO 2025-07-04 17:44:41,398 consumers 406268 138264627787456 Skipping disconnect for player Joanna (id=156) - likely game start redirect
+INFO 2025-07-04 17:44:41,401 consumers 406268 138264684638336 Removed player 156 from individual group
+INFO 2025-07-04 17:44:41,431 consumers 406268 138264684638336 WebSocket disconnecting from game TTPJSC
+INFO 2025-07-04 17:44:41,434 consumers 406268 138264627787456 Detected likely redirect disconnect for game TTPJSC (within 5s of game_started)
+INFO 2025-07-04 17:44:41,441 consumers 406268 138264684638336 WebSocket disconnecting from game TTPJSC
+INFO 2025-07-04 17:44:41,444 consumers 406268 138264627787456 Detected likely redirect disconnect for game TTPJSC (within 5s of game_started)
+INFO 2025-07-04 17:44:41,446 consumers 406268 138264627787456 Skipping disconnect for player Lauren (id=155) - likely game start redirect
+INFO 2025-07-04 17:44:41,447 consumers 406268 138264684638336 Removed player 155 from individual group
+INFO 2025-07-04 17:44:41,484 consumers 406268 138264684638336 WebSocket connecting to game TTPJSC
+INFO 2025-07-04 17:44:41,486 consumers 406268 138264684638336 WebSocket connected to game TTPJSC (channel: specific..inmemory!FOiCzuoZryfV)
+DEBUG 2025-07-04 17:44:41,487 consumers 406268 138264627787456 Using cached game state for TTPJSC (age: 76.5s)
+INFO 2025-07-04 17:44:41,490 consumers 406268 138264684638336 Sending initial game state to new connection for TTPJSC
+INFO 2025-07-04 17:44:41,526 consumers 406268 138264684638336 Player identified as 156 for game TTPJSC
+INFO 2025-07-04 17:44:41,529 consumers 406268 138264684638336 Added player 156 to individual group
+INFO 2025-07-04 17:44:41,541 consumers 406268 138264684638336 WebSocket connecting to game TTPJSC
+INFO 2025-07-04 17:44:41,541 consumers 406268 138264684638336 WebSocket connected to game TTPJSC (channel: specific..inmemory!rpXRMzOiqdaa)
+DEBUG 2025-07-04 17:44:41,542 consumers 406268 138264627787456 Using cached game state for TTPJSC (age: 76.5s)
+INFO 2025-07-04 17:44:41,545 consumers 406268 138264684638336 Sending initial game state to new connection for TTPJSC
+INFO 2025-07-04 17:44:41,546 consumers 406268 138264684638336 Player identified as 155 for game TTPJSC
+INFO 2025-07-04 17:44:41,546 consumers 406268 138264684638336 Added player 155 to individual group
+INFO 2025-07-04 17:44:41,560 consumers 406268 138264684638336 WebSocket connecting to game TTPJSC
+INFO 2025-07-04 17:44:41,560 consumers 406268 138264684638336 WebSocket connected to game TTPJSC (channel: specific..inmemory!MEqoPPGEmwiS)
+DEBUG 2025-07-04 17:44:41,561 consumers 406268 138264627787456 Using cached game state for TTPJSC (age: 76.5s)
+INFO 2025-07-04 17:44:41,564 consumers 406268 138264684638336 Sending initial game state to new connection for TTPJSC
+INFO 2025-07-04 17:44:43,552 round_handlers 406268 138264384104128 Cached FFV data for game TTPJSC, round 1: Vegetables - R
+DEBUG 2025-07-04 17:44:43,553 cache_service 406268 138264384104128 Cached round state for round 1: flower_fruit_veg
+DEBUG 2025-07-04 17:44:43,554 cache_service 406268 138264384104128 Invalidated game state cache for TTPJSC
+INFO 2025-07-04 17:44:43,554 websocket_utils 406268 138264384104128 Broadcasting round_started to group game_TTPJSC: {'round_number': 1, 'total_time': 30, 'started_at': '2025-07-04T17:44:43.539046+00:00', 'round_type': 'flower_fruit_veg', 'is_active': True, 'time_remaining': 30, 'prompt': "A vegetables that starts with 'R'", 'letter': 'R', 'category': 'Vegetables'}
+INFO 2025-07-04 17:44:43,557 websocket_utils 406268 138264384104128 Successfully broadcast round_started to game_TTPJSC
+INFO 2025-07-04 17:44:43,562 websocket_utils 406268 138264619394752 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 29}
+INFO 2025-07-04 17:44:43,563 websocket_utils 406268 138264384104128 Started timer thread for game TTPJSC with 30 seconds
+INFO 2025-07-04 17:44:43,590 websocket_utils 406268 138264619394752 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:44:44,595 websocket_utils 406268 138264619394752 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 28}
+INFO 2025-07-04 17:44:44,599 websocket_utils 406268 138264619394752 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:44:45,603 websocket_utils 406268 138264619394752 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 27}
+INFO 2025-07-04 17:44:45,607 websocket_utils 406268 138264619394752 Successfully broadcast timer_update to game_TTPJSC
+DEBUG 2025-07-04 17:44:46,431 cache_service 406268 138264627787456 Cached game state for TTPJSC: active, 2 players
+DEBUG 2025-07-04 17:44:46,436 cache_service 406268 138264684638336 Cached answer for player 156 in round 1: R...
+INFO 2025-07-04 17:44:46,437 consumers 406268 138264684638336 Player 156 submitted answer for round 1 in game TTPJSC
+INFO 2025-07-04 17:44:46,611 websocket_utils 406268 138264619394752 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 26}
+INFO 2025-07-04 17:44:46,612 websocket_utils 406268 138264619394752 Successfully broadcast timer_update to game_TTPJSC
+DEBUG 2025-07-04 17:44:47,090 consumers 406268 138264627787456 Using cached game state for TTPJSC (age: 0.7s)
+DEBUG 2025-07-04 17:44:47,099 cache_service 406268 138264684638336 Cached answer for player 156 in round 1: Ro...
+INFO 2025-07-04 17:44:47,100 consumers 406268 138264684638336 Player 156 submitted answer for round 1 in game TTPJSC
+INFO 2025-07-04 17:44:47,613 websocket_utils 406268 138264619394752 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 25}
+INFO 2025-07-04 17:44:47,617 websocket_utils 406268 138264619394752 Successfully broadcast timer_update to game_TTPJSC
+DEBUG 2025-07-04 17:44:47,849 consumers 406268 138264627787456 Using cached game state for TTPJSC (age: 1.4s)
+DEBUG 2025-07-04 17:44:47,858 cache_service 406268 138264684638336 Cached answer for player 156 in round 1: Roma...
+INFO 2025-07-04 17:44:47,858 consumers 406268 138264684638336 Player 156 submitted answer for round 1 in game TTPJSC
+INFO 2025-07-04 17:44:48,620 websocket_utils 406268 138264619394752 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 24}
+INFO 2025-07-04 17:44:48,623 websocket_utils 406268 138264619394752 Successfully broadcast timer_update to game_TTPJSC
+DEBUG 2025-07-04 17:44:48,634 consumers 406268 138264627787456 Using cached game state for TTPJSC (age: 2.2s)
+DEBUG 2025-07-04 17:44:48,640 cache_service 406268 138264684638336 Cached answer for player 156 in round 1: Romania...
+INFO 2025-07-04 17:44:48,641 consumers 406268 138264684638336 Player 156 submitted answer for round 1 in game TTPJSC
+DEBUG 2025-07-04 17:44:49,584 consumers 406268 138264627787456 Using cached game state for TTPJSC (age: 3.2s)
+DEBUG 2025-07-04 17:44:49,598 cache_service 406268 138264684638336 Cached answer for player 156 in round 1: Romanian ...
+INFO 2025-07-04 17:44:49,599 consumers 406268 138264684638336 Player 156 submitted answer for round 1 in game TTPJSC
+INFO 2025-07-04 17:44:49,627 websocket_utils 406268 138264619394752 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 23}
+INFO 2025-07-04 17:44:49,630 websocket_utils 406268 138264619394752 Successfully broadcast timer_update to game_TTPJSC
+DEBUG 2025-07-04 17:44:50,088 consumers 406268 138264627787456 Using cached game state for TTPJSC (age: 3.7s)
+DEBUG 2025-07-04 17:44:50,099 cache_service 406268 138264684638336 Cached answer for player 156 in round 1: Romanian Le...
+INFO 2025-07-04 17:44:50,100 consumers 406268 138264684638336 Player 156 submitted answer for round 1 in game TTPJSC
+INFO 2025-07-04 17:44:50,633 websocket_utils 406268 138264619394752 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 22}
+INFO 2025-07-04 17:44:50,637 websocket_utils 406268 138264619394752 Successfully broadcast timer_update to game_TTPJSC
+DEBUG 2025-07-04 17:44:51,010 consumers 406268 138264627787456 Using cached game state for TTPJSC (age: 4.6s)
+DEBUG 2025-07-04 17:44:51,025 cache_service 406268 138264684638336 Cached answer for player 156 in round 1: Romanian Lettu...
+INFO 2025-07-04 17:44:51,025 consumers 406268 138264684638336 Player 156 submitted answer for round 1 in game TTPJSC
+DEBUG 2025-07-04 17:44:51,622 consumers 406268 138264627787456 Using cached game state for TTPJSC (age: 5.2s)
+DEBUG 2025-07-04 17:44:51,626 cache_service 406268 138264684638336 Cached answer for player 156 in round 1: Romanian Lettuce...
+INFO 2025-07-04 17:44:51,626 consumers 406268 138264684638336 Player 156 submitted answer for round 1 in game TTPJSC
+INFO 2025-07-04 17:44:51,641 websocket_utils 406268 138264619394752 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 21}
+INFO 2025-07-04 17:44:51,643 websocket_utils 406268 138264619394752 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:44:52,644 websocket_utils 406268 138264619394752 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 20}
+INFO 2025-07-04 17:44:52,645 websocket_utils 406268 138264619394752 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:44:52,646 websocket_utils 406268 138264619394752 Timer update for game TTPJSC: 20 seconds remaining
+INFO 2025-07-04 17:44:53,646 websocket_utils 406268 138264619394752 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 19}
+INFO 2025-07-04 17:44:53,648 websocket_utils 406268 138264619394752 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:44:54,651 websocket_utils 406268 138264619394752 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 18}
+INFO 2025-07-04 17:44:54,651 websocket_utils 406268 138264619394752 Successfully broadcast timer_update to game_TTPJSC
+DEBUG 2025-07-04 17:44:55,066 consumers 406268 138264627787456 Using cached game state for TTPJSC (age: 8.6s)
+DEBUG 2025-07-04 17:44:55,077 cache_service 406268 138264684638336 Cached answer for player 155 in round 1: R...
+INFO 2025-07-04 17:44:55,077 consumers 406268 138264684638336 Player 155 submitted answer for round 1 in game TTPJSC
+INFO 2025-07-04 17:44:55,653 websocket_utils 406268 138264619394752 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 17}
+INFO 2025-07-04 17:44:55,654 websocket_utils 406268 138264619394752 Successfully broadcast timer_update to game_TTPJSC
+DEBUG 2025-07-04 17:44:56,565 consumers 406268 138264627787456 Using cached game state for TTPJSC (age: 10.1s)
+DEBUG 2025-07-04 17:44:56,578 cache_service 406268 138264684638336 Cached answer for player 155 in round 1: Ra...
+INFO 2025-07-04 17:44:56,579 consumers 406268 138264684638336 Player 155 submitted answer for round 1 in game TTPJSC
+INFO 2025-07-04 17:44:56,655 websocket_utils 406268 138264619394752 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 16}
+INFO 2025-07-04 17:44:56,657 websocket_utils 406268 138264619394752 Successfully broadcast timer_update to game_TTPJSC
+DEBUG 2025-07-04 17:44:56,971 consumers 406268 138264627787456 Using cached game state for TTPJSC (age: 10.5s)
+DEBUG 2025-07-04 17:44:56,985 cache_service 406268 138264684638336 Cached answer for player 155 in round 1: Rad...
+INFO 2025-07-04 17:44:56,986 consumers 406268 138264684638336 Player 155 submitted answer for round 1 in game TTPJSC
+INFO 2025-07-04 17:44:57,658 websocket_utils 406268 138264619394752 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 15}
+INFO 2025-07-04 17:44:57,659 websocket_utils 406268 138264619394752 Successfully broadcast timer_update to game_TTPJSC
+DEBUG 2025-07-04 17:44:57,918 consumers 406268 138264627787456 Using cached game state for TTPJSC (age: 11.5s)
+DEBUG 2025-07-04 17:44:57,923 cache_service 406268 138264684638336 Cached answer for player 155 in round 1: Radish...
+INFO 2025-07-04 17:44:57,924 consumers 406268 138264684638336 Player 155 submitted answer for round 1 in game TTPJSC
+INFO 2025-07-04 17:44:58,661 websocket_utils 406268 138264619394752 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 14}
+INFO 2025-07-04 17:44:58,662 websocket_utils 406268 138264619394752 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:44:59,663 websocket_utils 406268 138264619394752 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 13}
+INFO 2025-07-04 17:44:59,664 websocket_utils 406268 138264619394752 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:45:00,665 websocket_utils 406268 138264619394752 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 12}
+INFO 2025-07-04 17:45:00,666 websocket_utils 406268 138264619394752 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:45:01,667 websocket_utils 406268 138264619394752 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 11}
+INFO 2025-07-04 17:45:01,668 websocket_utils 406268 138264619394752 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:45:02,669 websocket_utils 406268 138264619394752 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 10}
+INFO 2025-07-04 17:45:02,670 websocket_utils 406268 138264619394752 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:45:02,670 websocket_utils 406268 138264619394752 Timer update for game TTPJSC: 10 seconds remaining
+INFO 2025-07-04 17:45:03,671 websocket_utils 406268 138264619394752 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 9}
+INFO 2025-07-04 17:45:03,673 websocket_utils 406268 138264619394752 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:45:04,674 websocket_utils 406268 138264619394752 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 8}
+INFO 2025-07-04 17:45:04,675 websocket_utils 406268 138264619394752 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:45:05,676 websocket_utils 406268 138264619394752 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 7}
+INFO 2025-07-04 17:45:05,677 websocket_utils 406268 138264619394752 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:45:06,678 websocket_utils 406268 138264619394752 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 6}
+INFO 2025-07-04 17:45:06,682 websocket_utils 406268 138264619394752 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:45:07,685 websocket_utils 406268 138264619394752 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 5}
+INFO 2025-07-04 17:45:07,687 websocket_utils 406268 138264619394752 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:45:08,688 websocket_utils 406268 138264619394752 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 4}
+INFO 2025-07-04 17:45:08,689 websocket_utils 406268 138264619394752 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:45:08,689 websocket_utils 406268 138264619394752 Timer update for game TTPJSC: 4 seconds remaining
+INFO 2025-07-04 17:45:09,690 websocket_utils 406268 138264619394752 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 3}
+INFO 2025-07-04 17:45:09,694 websocket_utils 406268 138264619394752 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:45:09,696 websocket_utils 406268 138264619394752 Timer update for game TTPJSC: 3 seconds remaining
+INFO 2025-07-04 17:45:10,700 websocket_utils 406268 138264619394752 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 2}
+INFO 2025-07-04 17:45:10,703 websocket_utils 406268 138264619394752 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:45:10,705 websocket_utils 406268 138264619394752 Timer update for game TTPJSC: 2 seconds remaining
+INFO 2025-07-04 17:45:11,709 websocket_utils 406268 138264619394752 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 1}
+INFO 2025-07-04 17:45:11,713 websocket_utils 406268 138264619394752 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:45:11,714 websocket_utils 406268 138264619394752 Timer update for game TTPJSC: 1 seconds remaining
+INFO 2025-07-04 17:45:12,718 websocket_utils 406268 138264619394752 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 0}
+INFO 2025-07-04 17:45:12,720 websocket_utils 406268 138264619394752 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:45:12,721 websocket_utils 406268 138264619394752 Timer update for game TTPJSC: 0 seconds remaining
+INFO 2025-07-04 17:45:13,722 websocket_utils 406268 138264619394752 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 0}
+INFO 2025-07-04 17:45:13,726 websocket_utils 406268 138264619394752 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:45:13,728 websocket_utils 406268 138264619394752 Timer update for game TTPJSC: 0 seconds remaining
+INFO 2025-07-04 17:45:13,729 websocket_utils 406268 138264619394752 Timer expired for game TTPJSC, automatically ending round
+INFO 2025-07-04 17:45:13,751 round_handlers 406268 138264619394752 Using CACHED FFV data for game TTPJSC, round 1: Vegetables - R
+INFO 2025-07-04 17:45:13,771 websocket_utils 406268 138264619394752 Auto-end: Created PlayerAnswer for player Joanna: Romanian Lettuce
+INFO 2025-07-04 17:45:13,785 websocket_utils 406268 138264619394752 Auto-end: Created PlayerAnswer for player Lauren: Radish
+INFO 2025-07-04 17:45:13,801 round_handlers 406268 138264619394752 Prepared 2 Flower, Fruit & Veg answers for manual validation
+INFO 2025-07-04 17:45:13,801 websocket_utils 406268 138264619394752 Broadcasting round_ended to group game_TTPJSC: {'round_number': 1, 'round_type': 'flower_fruit_veg', 'is_final_round': False, 'answers': [{'player_name': 'Joanna', 'answer_text': 'Romanian Lettuce', 'points_awarded': 0, 'is_valid': False, 'is_unique': True}, {'player_name': 'Lauren', 'answer_text': 'Radish', 'points_awarded': 0, 'is_valid': False, 'is_unique': True}]}
+INFO 2025-07-04 17:45:13,804 websocket_utils 406268 138264619394752 Successfully broadcast round_ended to game_TTPJSC
+INFO 2025-07-04 17:45:13,804 websocket_utils 406268 138264619394752 Round 1 automatically ended for game TTPJSC
+INFO 2025-07-04 17:45:21,728 websocket_utils 406268 138264384104128 Broadcasting score_update to group game_TTPJSC: {'player_name': 'Lauren', 'player_id': 155, 'points_awarded': 10, 'points': 10, 'reason': 'Answer validation', 'message': 'Lauren received 10 points!'}
+INFO 2025-07-04 17:45:21,730 websocket_utils 406268 138264384104128 Successfully broadcast score_update to game_TTPJSC
+INFO 2025-07-04 17:45:21,731 round_handlers 406268 138264384104128 Using CACHED FFV data for game TTPJSC, round 1: Vegetables - R
+INFO 2025-07-04 17:45:21,733 websocket_utils 406268 138264384104128 Sending individual validation result to player Lauren: {'round_number': 1, 'message': '🌟 Unique answer! You earned 10 points.\n\nYour answer: Radish', 'points_earned': 10, 'is_correct': True, 'player_answer': 'Radish', 'round_type': 'flower_fruit_veg'}
+INFO 2025-07-04 17:45:21,735 websocket_utils 406268 138264384104128 Successfully sent individual player_result to player_155
+INFO 2025-07-04 17:45:21,736 consumers 406268 138264684638336 Forwarding player_result to player 155: {'round_number': 1, 'message': '🌟 Unique answer! You earned 10 points.\n\nYour answer: Radish', 'points_earned': 10, 'is_correct': True, 'player_answer': 'Radish', 'round_type': 'flower_fruit_veg'}
+INFO 2025-07-04 17:45:23,596 websocket_utils 406268 138264384104128 Broadcasting score_update to group game_TTPJSC: {'player_name': 'Joanna', 'player_id': 156, 'points_awarded': 0, 'points': 0, 'reason': 'Answer correction', 'message': 'Joanna received 0 points!'}
+INFO 2025-07-04 17:45:23,600 websocket_utils 406268 138264384104128 Successfully broadcast score_update to game_TTPJSC
+INFO 2025-07-04 17:45:23,602 round_handlers 406268 138264384104128 Using CACHED FFV data for game TTPJSC, round 1: Vegetables - R
+INFO 2025-07-04 17:45:23,606 websocket_utils 406268 138264384104128 Sending individual validation result to player Joanna: {'round_number': 1, 'message': '❌ Invalid answer. No points awarded.\n\nYour answer: Romanian Lettuce', 'points_earned': 0, 'is_correct': False, 'player_answer': 'Romanian Lettuce', 'round_type': 'flower_fruit_veg'}
+INFO 2025-07-04 17:45:23,610 websocket_utils 406268 138264384104128 Successfully sent individual player_result to player_156
+INFO 2025-07-04 17:45:23,612 consumers 406268 138264684638336 Forwarding player_result to player 156: {'round_number': 1, 'message': '❌ Invalid answer. No points awarded.\n\nYour answer: Romanian Lettuce', 'points_earned': 0, 'is_correct': False, 'player_answer': 'Romanian Lettuce', 'round_type': 'flower_fruit_veg'}
+INFO 2025-07-04 17:45:29,382 round_handlers 406268 138264384104128 Using CACHED FFV data for game TTPJSC, round 2: Girls Names - S
+DEBUG 2025-07-04 17:45:29,383 cache_service 406268 138264384104128 Cached round state for round 2: flower_fruit_veg
+DEBUG 2025-07-04 17:45:29,383 cache_service 406268 138264384104128 Invalidated game state cache for TTPJSC
+INFO 2025-07-04 17:45:29,384 websocket_utils 406268 138264384104128 Broadcasting round_started to group game_TTPJSC: {'round_number': 2, 'total_time': 30, 'started_at': '2025-07-04T17:45:29.371186+00:00', 'round_type': 'flower_fruit_veg', 'is_active': True, 'time_remaining': 30, 'prompt': "A girls names that starts with 'S'", 'letter': 'S', 'category': 'Girls Names'}
+INFO 2025-07-04 17:45:29,387 websocket_utils 406268 138264384104128 Successfully broadcast round_started to game_TTPJSC
+INFO 2025-07-04 17:45:29,388 websocket_utils 406268 138264619394752 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 29}
+INFO 2025-07-04 17:45:29,389 websocket_utils 406268 138264384104128 Started timer thread for game TTPJSC with 30 seconds
+INFO 2025-07-04 17:45:29,400 websocket_utils 406268 138264619394752 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:45:30,414 websocket_utils 406268 138264619394752 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 28}
+INFO 2025-07-04 17:45:30,418 websocket_utils 406268 138264619394752 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:45:31,421 websocket_utils 406268 138264619394752 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 27}
+INFO 2025-07-04 17:45:31,424 websocket_utils 406268 138264619394752 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:45:32,429 websocket_utils 406268 138264619394752 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 26}
+INFO 2025-07-04 17:45:32,432 websocket_utils 406268 138264619394752 Successfully broadcast timer_update to game_TTPJSC
+DEBUG 2025-07-04 17:45:33,012 cache_service 406268 138264627787456 Cached game state for TTPJSC: active, 2 players
+DEBUG 2025-07-04 17:45:33,014 cache_service 406268 138264684638336 Cached answer for player 156 in round 2: Sa...
+INFO 2025-07-04 17:45:33,015 consumers 406268 138264684638336 Player 156 submitted answer for round 2 in game TTPJSC
+INFO 2025-07-04 17:45:33,436 websocket_utils 406268 138264619394752 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 25}
+INFO 2025-07-04 17:45:33,440 websocket_utils 406268 138264619394752 Successfully broadcast timer_update to game_TTPJSC
+DEBUG 2025-07-04 17:45:33,601 consumers 406268 138264627787456 Using cached game state for TTPJSC (age: 0.6s)
+DEBUG 2025-07-04 17:45:33,605 cache_service 406268 138264684638336 Cached answer for player 156 in round 2: Sar...
+INFO 2025-07-04 17:45:33,605 consumers 406268 138264684638336 Player 156 submitted answer for round 2 in game TTPJSC
+DEBUG 2025-07-04 17:45:34,044 consumers 406268 138264627787456 Using cached game state for TTPJSC (age: 1.0s)
+DEBUG 2025-07-04 17:45:34,053 cache_service 406268 138264684638336 Cached answer for player 156 in round 2: Sarah...
+INFO 2025-07-04 17:45:34,054 consumers 406268 138264684638336 Player 156 submitted answer for round 2 in game TTPJSC
+INFO 2025-07-04 17:45:34,443 websocket_utils 406268 138264619394752 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 24}
+INFO 2025-07-04 17:45:34,447 websocket_utils 406268 138264619394752 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:45:35,451 websocket_utils 406268 138264619394752 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 23}
+INFO 2025-07-04 17:45:35,452 websocket_utils 406268 138264619394752 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:45:36,457 websocket_utils 406268 138264619394752 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 22}
+INFO 2025-07-04 17:45:36,460 websocket_utils 406268 138264619394752 Successfully broadcast timer_update to game_TTPJSC
+DEBUG 2025-07-04 17:45:36,901 consumers 406268 138264627787456 Using cached game state for TTPJSC (age: 3.9s)
+DEBUG 2025-07-04 17:45:36,912 cache_service 406268 138264684638336 Cached answer for player 155 in round 2: Sarah...
+INFO 2025-07-04 17:45:36,913 consumers 406268 138264684638336 Player 155 submitted answer for round 2 in game TTPJSC
+INFO 2025-07-04 17:45:37,463 websocket_utils 406268 138264619394752 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 21}
+INFO 2025-07-04 17:45:37,467 websocket_utils 406268 138264619394752 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:45:38,470 websocket_utils 406268 138264619394752 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 20}
+INFO 2025-07-04 17:45:38,474 websocket_utils 406268 138264619394752 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:45:38,474 websocket_utils 406268 138264619394752 Timer update for game TTPJSC: 20 seconds remaining
+DEBUG 2025-07-04 17:45:38,624 cache_service 406268 138264384104128 Marked round 2 as ended in cache
+INFO 2025-07-04 17:45:38,633 services 406268 138264384104128 Processed answer for player Joanna: Sarah...
+INFO 2025-07-04 17:45:38,640 services 406268 138264384104128 Processed answer for player Lauren: Sarah...
+INFO 2025-07-04 17:45:38,642 services 406268 138264384104128 Bulk created 2 PlayerAnswer objects
+DEBUG 2025-07-04 17:45:38,643 cache_service 406268 138264384104128 Cleared cached answers for round 2
+INFO 2025-07-04 17:45:38,643 services 406268 138264384104128 Processed 2 cached answers into database
+INFO 2025-07-04 17:45:38,665 round_handlers 406268 138264384104128 Prepared 2 Flower, Fruit & Veg answers for manual validation
+DEBUG 2025-07-04 17:45:38,666 cache_service 406268 138264384104128 Invalidated game state cache for TTPJSC
+INFO 2025-07-04 17:45:38,666 websocket_utils 406268 138264384104128 Broadcasting round_ended to group game_TTPJSC: {'round_number': 2, 'round_type': 'flower_fruit_veg', 'is_final_round': False, 'answers': [{'player_name': 'Joanna', 'answer_text': 'Sarah', 'points_awarded': 0, 'is_valid': False, 'is_unique': False}, {'player_name': 'Lauren', 'answer_text': 'Sarah', 'points_awarded': 0, 'is_valid': False, 'is_unique': False}]}
+INFO 2025-07-04 17:45:38,669 websocket_utils 406268 138264384104128 Successfully broadcast round_ended to game_TTPJSC
+INFO 2025-07-04 17:45:39,477 websocket_utils 406268 138264619394752 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 19}
+INFO 2025-07-04 17:45:39,479 websocket_utils 406268 138264619394752 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:45:44,829 websocket_utils 406268 138264619394752 Broadcasting score_update to group game_TTPJSC: {'player_name': 'Lauren', 'player_id': 155, 'points_awarded': 5, 'points': 15, 'reason': 'Answer validation', 'message': 'Lauren received 5 points!'}
+INFO 2025-07-04 17:45:44,831 websocket_utils 406268 138264619394752 Successfully broadcast score_update to game_TTPJSC
+INFO 2025-07-04 17:45:44,831 round_handlers 406268 138264619394752 Using CACHED FFV data for game TTPJSC, round 2: Girls Names - S
+INFO 2025-07-04 17:45:44,832 websocket_utils 406268 138264619394752 Sending individual validation result to player Lauren: {'round_number': 2, 'message': '✅ Valid answer! You earned 5 points.\n\nYour answer: Sarah', 'points_earned': 5, 'is_correct': True, 'player_answer': 'Sarah', 'round_type': 'flower_fruit_veg'}
+INFO 2025-07-04 17:45:44,834 websocket_utils 406268 138264619394752 Successfully sent individual player_result to player_155
+INFO 2025-07-04 17:45:44,835 consumers 406268 138264684638336 Forwarding player_result to player 155: {'round_number': 2, 'message': '✅ Valid answer! You earned 5 points.\n\nYour answer: Sarah', 'points_earned': 5, 'is_correct': True, 'player_answer': 'Sarah', 'round_type': 'flower_fruit_veg'}
+INFO 2025-07-04 17:45:44,863 websocket_utils 406268 138264384104128 Broadcasting score_update to group game_TTPJSC: {'player_name': 'Joanna', 'player_id': 156, 'points_awarded': 5, 'points': 5, 'reason': 'Answer validation', 'message': 'Joanna received 5 points!'}
+INFO 2025-07-04 17:45:44,865 websocket_utils 406268 138264384104128 Successfully broadcast score_update to game_TTPJSC
+INFO 2025-07-04 17:45:44,866 round_handlers 406268 138264384104128 Using CACHED FFV data for game TTPJSC, round 2: Girls Names - S
+INFO 2025-07-04 17:45:44,866 websocket_utils 406268 138264384104128 Sending individual validation result to player Joanna: {'round_number': 2, 'message': '✅ Valid answer! You earned 5 points.\n\nYour answer: Sarah', 'points_earned': 5, 'is_correct': True, 'player_answer': 'Sarah', 'round_type': 'flower_fruit_veg'}
+INFO 2025-07-04 17:45:44,870 websocket_utils 406268 138264384104128 Successfully sent individual player_result to player_156
+INFO 2025-07-04 17:45:44,871 consumers 406268 138264684638336 Forwarding player_result to player 156: {'round_number': 2, 'message': '✅ Valid answer! You earned 5 points.\n\nYour answer: Sarah', 'points_earned': 5, 'is_correct': True, 'player_answer': 'Sarah', 'round_type': 'flower_fruit_veg'}
+INFO 2025-07-04 17:45:58,999 round_handlers 406268 138264384104128 Cached FFV data for game TTPJSC, round 3: Vegetables - L
+DEBUG 2025-07-04 17:45:58,999 cache_service 406268 138264384104128 Cached round state for round 3: flower_fruit_veg
+DEBUG 2025-07-04 17:45:59,000 cache_service 406268 138264384104128 Invalidated game state cache for TTPJSC
+INFO 2025-07-04 17:45:59,000 websocket_utils 406268 138264384104128 Broadcasting round_started to group game_TTPJSC: {'round_number': 3, 'total_time': 30, 'started_at': '2025-07-04T17:45:58.986415+00:00', 'round_type': 'flower_fruit_veg', 'is_active': True, 'time_remaining': 30, 'prompt': "A vegetables that starts with 'L'", 'letter': 'L', 'category': 'Vegetables'}
+INFO 2025-07-04 17:45:59,004 websocket_utils 406268 138264384104128 Successfully broadcast round_started to game_TTPJSC
+INFO 2025-07-04 17:45:59,006 websocket_utils 406268 138264619394752 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 29}
+INFO 2025-07-04 17:45:59,006 websocket_utils 406268 138264384104128 Started timer thread for game TTPJSC with 30 seconds
+INFO 2025-07-04 17:45:59,017 websocket_utils 406268 138264619394752 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:46:00,028 websocket_utils 406268 138264619394752 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 28}
+INFO 2025-07-04 17:46:00,031 websocket_utils 406268 138264619394752 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:46:01,035 websocket_utils 406268 138264619394752 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 27}
+INFO 2025-07-04 17:46:01,036 websocket_utils 406268 138264619394752 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:46:02,038 websocket_utils 406268 138264619394752 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 26}
+INFO 2025-07-04 17:46:02,039 websocket_utils 406268 138264619394752 Successfully broadcast timer_update to game_TTPJSC
+DEBUG 2025-07-04 17:46:02,541 cache_service 406268 138264627787456 Cached game state for TTPJSC: active, 2 players
+DEBUG 2025-07-04 17:46:02,547 cache_service 406268 138264684638336 Cached answer for player 156 in round 3: Leek...
+INFO 2025-07-04 17:46:02,548 consumers 406268 138264684638336 Player 156 submitted answer for round 3 in game TTPJSC
+INFO 2025-07-04 17:46:03,041 websocket_utils 406268 138264619394752 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 25}
+INFO 2025-07-04 17:46:03,044 websocket_utils 406268 138264619394752 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:46:04,048 websocket_utils 406268 138264619394752 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 24}
+INFO 2025-07-04 17:46:04,051 websocket_utils 406268 138264619394752 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:46:05,054 websocket_utils 406268 138264619394752 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 23}
+INFO 2025-07-04 17:46:05,057 websocket_utils 406268 138264619394752 Successfully broadcast timer_update to game_TTPJSC
+DEBUG 2025-07-04 17:46:05,751 consumers 406268 138264627787456 Using cached game state for TTPJSC (age: 3.2s)
+DEBUG 2025-07-04 17:46:05,763 cache_service 406268 138264684638336 Cached answer for player 155 in round 3: Lemon...
+INFO 2025-07-04 17:46:05,764 consumers 406268 138264684638336 Player 155 submitted answer for round 3 in game TTPJSC
+INFO 2025-07-04 17:46:06,060 websocket_utils 406268 138264619394752 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 22}
+INFO 2025-07-04 17:46:06,064 websocket_utils 406268 138264619394752 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:46:07,067 websocket_utils 406268 138264619394752 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 21}
+INFO 2025-07-04 17:46:07,070 websocket_utils 406268 138264619394752 Successfully broadcast timer_update to game_TTPJSC
+DEBUG 2025-07-04 17:46:07,566 consumers 406268 138264627787456 Using cached game state for TTPJSC (age: 5.0s)
+DEBUG 2025-07-04 17:46:07,580 cache_service 406268 138264684638336 Cached answer for player 155 in round 3: Lemongra...
+INFO 2025-07-04 17:46:07,581 consumers 406268 138264684638336 Player 155 submitted answer for round 3 in game TTPJSC
+DEBUG 2025-07-04 17:46:08,048 consumers 406268 138264627787456 Using cached game state for TTPJSC (age: 5.5s)
+DEBUG 2025-07-04 17:46:08,060 cache_service 406268 138264684638336 Cached answer for player 155 in round 3: Lemongrass...
+INFO 2025-07-04 17:46:08,060 consumers 406268 138264684638336 Player 155 submitted answer for round 3 in game TTPJSC
+INFO 2025-07-04 17:46:08,073 websocket_utils 406268 138264619394752 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 20}
+INFO 2025-07-04 17:46:08,078 websocket_utils 406268 138264619394752 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:46:08,079 websocket_utils 406268 138264619394752 Timer update for game TTPJSC: 20 seconds remaining
+INFO 2025-07-04 17:46:09,083 websocket_utils 406268 138264619394752 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 19}
+INFO 2025-07-04 17:46:09,087 websocket_utils 406268 138264619394752 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:46:10,091 websocket_utils 406268 138264619394752 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 18}
+INFO 2025-07-04 17:46:10,093 websocket_utils 406268 138264619394752 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:46:11,095 websocket_utils 406268 138264619394752 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 17}
+INFO 2025-07-04 17:46:11,098 websocket_utils 406268 138264619394752 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:46:12,101 websocket_utils 406268 138264619394752 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 16}
+INFO 2025-07-04 17:46:12,104 websocket_utils 406268 138264619394752 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:46:13,108 websocket_utils 406268 138264619394752 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 15}
+INFO 2025-07-04 17:46:13,111 websocket_utils 406268 138264619394752 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:46:14,115 websocket_utils 406268 138264619394752 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 14}
+INFO 2025-07-04 17:46:14,118 websocket_utils 406268 138264619394752 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:46:15,121 websocket_utils 406268 138264619394752 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 13}
+INFO 2025-07-04 17:46:15,124 websocket_utils 406268 138264619394752 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:46:16,127 websocket_utils 406268 138264619394752 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 12}
+INFO 2025-07-04 17:46:16,128 websocket_utils 406268 138264619394752 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:46:17,129 websocket_utils 406268 138264619394752 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 11}
+INFO 2025-07-04 17:46:17,132 websocket_utils 406268 138264619394752 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:46:18,135 websocket_utils 406268 138264619394752 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 10}
+INFO 2025-07-04 17:46:18,138 websocket_utils 406268 138264619394752 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:46:18,139 websocket_utils 406268 138264619394752 Timer update for game TTPJSC: 10 seconds remaining
+INFO 2025-07-04 17:46:19,141 websocket_utils 406268 138264619394752 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 9}
+INFO 2025-07-04 17:46:19,144 websocket_utils 406268 138264619394752 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:46:20,147 websocket_utils 406268 138264619394752 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 8}
+INFO 2025-07-04 17:46:20,149 websocket_utils 406268 138264619394752 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:46:21,151 websocket_utils 406268 138264619394752 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 7}
+INFO 2025-07-04 17:46:21,154 websocket_utils 406268 138264619394752 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:46:22,158 websocket_utils 406268 138264619394752 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 6}
+INFO 2025-07-04 17:46:22,162 websocket_utils 406268 138264619394752 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:46:23,165 websocket_utils 406268 138264619394752 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 5}
+INFO 2025-07-04 17:46:23,169 websocket_utils 406268 138264619394752 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:46:24,173 websocket_utils 406268 138264619394752 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 4}
+INFO 2025-07-04 17:46:24,177 websocket_utils 406268 138264619394752 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:46:24,178 websocket_utils 406268 138264619394752 Timer update for game TTPJSC: 4 seconds remaining
+INFO 2025-07-04 17:46:25,182 websocket_utils 406268 138264619394752 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 3}
+INFO 2025-07-04 17:46:25,185 websocket_utils 406268 138264619394752 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:46:25,186 websocket_utils 406268 138264619394752 Timer update for game TTPJSC: 3 seconds remaining
+INFO 2025-07-04 17:46:26,189 websocket_utils 406268 138264619394752 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 2}
+INFO 2025-07-04 17:46:26,193 websocket_utils 406268 138264619394752 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:46:26,194 websocket_utils 406268 138264619394752 Timer update for game TTPJSC: 2 seconds remaining
+INFO 2025-07-04 17:46:27,198 websocket_utils 406268 138264619394752 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 1}
+INFO 2025-07-04 17:46:27,201 websocket_utils 406268 138264619394752 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:46:27,202 websocket_utils 406268 138264619394752 Timer update for game TTPJSC: 1 seconds remaining
+INFO 2025-07-04 17:46:28,205 websocket_utils 406268 138264619394752 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 0}
+INFO 2025-07-04 17:46:28,209 websocket_utils 406268 138264619394752 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:46:28,210 websocket_utils 406268 138264619394752 Timer update for game TTPJSC: 0 seconds remaining
+INFO 2025-07-04 17:46:29,213 websocket_utils 406268 138264619394752 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 0}
+INFO 2025-07-04 17:46:29,216 websocket_utils 406268 138264619394752 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:46:29,217 websocket_utils 406268 138264619394752 Timer update for game TTPJSC: 0 seconds remaining
+INFO 2025-07-04 17:46:29,218 websocket_utils 406268 138264619394752 Timer expired for game TTPJSC, automatically ending round
+INFO 2025-07-04 17:46:29,245 round_handlers 406268 138264619394752 Using CACHED FFV data for game TTPJSC, round 3: Vegetables - L
+INFO 2025-07-04 17:46:29,261 websocket_utils 406268 138264619394752 Auto-end: Created PlayerAnswer for player Joanna: Leek
+INFO 2025-07-04 17:46:29,273 websocket_utils 406268 138264619394752 Auto-end: Created PlayerAnswer for player Lauren: Lemongrass
+INFO 2025-07-04 17:46:29,287 round_handlers 406268 138264619394752 Prepared 2 Flower, Fruit & Veg answers for manual validation
+INFO 2025-07-04 17:46:29,287 websocket_utils 406268 138264619394752 Broadcasting round_ended to group game_TTPJSC: {'round_number': 3, 'round_type': 'flower_fruit_veg', 'is_final_round': False, 'answers': [{'player_name': 'Lauren', 'answer_text': 'Lemongrass', 'points_awarded': 0, 'is_valid': False, 'is_unique': True}, {'player_name': 'Joanna', 'answer_text': 'Leek', 'points_awarded': 0, 'is_valid': False, 'is_unique': True}]}
+INFO 2025-07-04 17:46:29,289 websocket_utils 406268 138264619394752 Successfully broadcast round_ended to game_TTPJSC
+INFO 2025-07-04 17:46:29,289 websocket_utils 406268 138264619394752 Round 3 automatically ended for game TTPJSC
+INFO 2025-07-04 17:46:34,688 websocket_utils 406268 138264619394752 Broadcasting score_update to group game_TTPJSC: {'player_name': 'Joanna', 'player_id': 156, 'points_awarded': 10, 'points': 15, 'reason': 'Answer validation', 'message': 'Joanna received 10 points!'}
+INFO 2025-07-04 17:46:34,689 websocket_utils 406268 138264619394752 Successfully broadcast score_update to game_TTPJSC
+INFO 2025-07-04 17:46:34,690 round_handlers 406268 138264619394752 Using CACHED FFV data for game TTPJSC, round 3: Vegetables - L
+INFO 2025-07-04 17:46:34,690 websocket_utils 406268 138264619394752 Sending individual validation result to player Joanna: {'round_number': 3, 'message': '🌟 Unique answer! You earned 10 points.\n\nYour answer: Leek', 'points_earned': 10, 'is_correct': True, 'player_answer': 'Leek', 'round_type': 'flower_fruit_veg'}
+INFO 2025-07-04 17:46:34,692 websocket_utils 406268 138264619394752 Successfully sent individual player_result to player_156
+INFO 2025-07-04 17:46:34,692 consumers 406268 138264684638336 Forwarding player_result to player 156: {'round_number': 3, 'message': '🌟 Unique answer! You earned 10 points.\n\nYour answer: Leek', 'points_earned': 10, 'is_correct': True, 'player_answer': 'Leek', 'round_type': 'flower_fruit_veg'}
+INFO 2025-07-04 17:46:39,068 websocket_utils 406268 138264619394752 Broadcasting score_update to group game_TTPJSC: {'player_name': 'Lauren', 'player_id': 155, 'points_awarded': 0, 'points': 15, 'reason': 'Answer correction', 'message': 'Lauren received 0 points!'}
+INFO 2025-07-04 17:46:39,072 websocket_utils 406268 138264619394752 Successfully broadcast score_update to game_TTPJSC
+INFO 2025-07-04 17:46:39,078 round_handlers 406268 138264619394752 Using CACHED FFV data for game TTPJSC, round 3: Vegetables - L
+INFO 2025-07-04 17:46:39,080 websocket_utils 406268 138264619394752 Sending individual validation result to player Lauren: {'round_number': 3, 'message': '❌ Invalid answer. No points awarded.\n\nYour answer: Lemongrass', 'points_earned': 0, 'is_correct': False, 'player_answer': 'Lemongrass', 'round_type': 'flower_fruit_veg'}
+INFO 2025-07-04 17:46:39,083 websocket_utils 406268 138264619394752 Successfully sent individual player_result to player_155
+INFO 2025-07-04 17:46:39,084 consumers 406268 138264684638336 Forwarding player_result to player 155: {'round_number': 3, 'message': '❌ Invalid answer. No points awarded.\n\nYour answer: Lemongrass', 'points_earned': 0, 'is_correct': False, 'player_answer': 'Lemongrass', 'round_type': 'flower_fruit_veg'}
+INFO 2025-07-04 17:46:51,032 websocket_utils 406268 138264619394752 Broadcasting game_update to group game_TTPJSC: {'game_status': 'waiting', 'player_count': 2, 'message': 'Game restarted! Ready for next game.', 'current_round': None, 'restart_timestamp': 1751651211}
+INFO 2025-07-04 17:46:51,034 websocket_utils 406268 138264619394752 Successfully broadcast game_update to game_TTPJSC
+INFO 2025-07-04 17:46:51,036 consumers 406268 138264684638336 Broadcasting game_update to TTPJSC: {'game_status': 'waiting', 'player_count': 2, 'message': 'Game restarted! Ready for next game.', 'current_round': None, 'restart_timestamp': 1751651211}
+INFO 2025-07-04 17:46:51,038 consumers 406268 138264684638336 Broadcasting game_update to TTPJSC: {'game_status': 'waiting', 'player_count': 2, 'message': 'Game restarted! Ready for next game.', 'current_round': None, 'restart_timestamp': 1751651211}
+INFO 2025-07-04 17:46:51,039 consumers 406268 138264684638336 Broadcasting game_update to TTPJSC: {'game_status': 'waiting', 'player_count': 2, 'message': 'Game restarted! Ready for next game.', 'current_round': None, 'restart_timestamp': 1751651211}
+INFO 2025-07-04 17:46:51,542 websocket_utils 406268 138264384104128 Broadcasting game_restart_confirmation to group game_TTPJSC: {'game_status': 'waiting', 'player_count': 2, 'message': "Game restarted! Please return to lobby if you haven't already.", 'force_redirect': True, 'restart_timestamp': 1751651211}
+INFO 2025-07-04 17:46:51,544 websocket_utils 406268 138264384104128 Successfully broadcast game_restart_confirmation to game_TTPJSC
+INFO 2025-07-04 17:46:51,604 consumers 406268 138264684638336 Broadcasting game_restart_confirmation to TTPJSC: {'game_status': 'waiting', 'player_count': 2, 'message': "Game restarted! Please return to lobby if you haven't already.", 'force_redirect': True, 'restart_timestamp': 1751651211}
+INFO 2025-07-04 17:46:51,604 consumers 406268 138264684638336 Broadcasting game_restart_confirmation to TTPJSC: {'game_status': 'waiting', 'player_count': 2, 'message': "Game restarted! Please return to lobby if you haven't already.", 'force_redirect': True, 'restart_timestamp': 1751651211}
+INFO 2025-07-04 17:46:51,605 consumers 406268 138264684638336 Broadcasting game_restart_confirmation to TTPJSC: {'game_status': 'waiting', 'player_count': 2, 'message': "Game restarted! Please return to lobby if you haven't already.", 'force_redirect': True, 'restart_timestamp': 1751651211}
+INFO 2025-07-04 17:46:51,644 consumers 406268 138264684638336 WebSocket disconnecting from game TTPJSC
+WARNING 2025-07-04 17:46:51,647 consumers 406268 138264627787456 WebSocket disconnect without player identification for game TTPJSC
+INFO 2025-07-04 17:46:51,700 consumers 406268 138264684638336 WebSocket connecting to game TTPJSC
+INFO 2025-07-04 17:46:51,701 consumers 406268 138264684638336 WebSocket connected to game TTPJSC (channel: specific..inmemory!dZtfHXvtglFq)
+DEBUG 2025-07-04 17:46:51,701 consumers 406268 138264627787456 Using cached game state for TTPJSC (age: 49.2s)
+INFO 2025-07-04 17:46:51,705 consumers 406268 138264684638336 Sending initial game state to new connection for TTPJSC
+INFO 2025-07-04 17:46:52,730 consumers 406268 138264684638336 WebSocket disconnecting from game TTPJSC
+INFO 2025-07-04 17:46:52,748 consumers 406268 138264627787456 Marked player Joanna (id=156) as disconnected
+INFO 2025-07-04 17:46:52,749 websocket_utils 406268 138264627787456 Broadcasting game_update to group game_TTPJSC: {'game_status': 'waiting', 'player_count': 1, 'players': [{'id': 155, 'name': 'Lauren', 'joined_at': '16:06:54', 'total_score': 0}], 'message': 'Joanna disconnected'}
+INFO 2025-07-04 17:46:52,751 websocket_utils 406268 138264627787456 Successfully broadcast game_update to game_TTPJSC
+INFO 2025-07-04 17:46:52,753 consumers 406268 138264684638336 Removed player 156 from individual group
+INFO 2025-07-04 17:46:52,755 consumers 406268 138264684638336 WebSocket disconnecting from game TTPJSC
+INFO 2025-07-04 17:46:52,756 consumers 406268 138264684638336 Broadcasting game_update to TTPJSC: {'game_status': 'waiting', 'player_count': 1, 'players': [{'id': 155, 'name': 'Lauren', 'joined_at': '16:06:54', 'total_score': 0}], 'message': 'Joanna disconnected'}
+INFO 2025-07-04 17:46:52,770 consumers 406268 138264627787456 Marked player Lauren (id=155) as disconnected
+INFO 2025-07-04 17:46:52,772 websocket_utils 406268 138264627787456 Broadcasting game_update to group game_TTPJSC: {'game_status': 'waiting', 'player_count': 0, 'players': [], 'message': 'Lauren disconnected'}
+INFO 2025-07-04 17:46:52,778 websocket_utils 406268 138264627787456 Successfully broadcast game_update to game_TTPJSC
+INFO 2025-07-04 17:46:52,783 consumers 406268 138264684638336 Removed player 155 from individual group
+INFO 2025-07-04 17:46:52,785 consumers 406268 138264684638336 Broadcasting game_update to TTPJSC: {'game_status': 'waiting', 'player_count': 0, 'players': [], 'message': 'Lauren disconnected'}
+INFO 2025-07-04 17:46:52,787 consumers 406268 138264684638336 WebSocket connecting to game TTPJSC
+INFO 2025-07-04 17:46:52,789 consumers 406268 138264684638336 WebSocket connected to game TTPJSC (channel: specific..inmemory!VARLOWrPLZmR)
+DEBUG 2025-07-04 17:46:52,791 consumers 406268 138264627787456 Using cached game state for TTPJSC (age: 50.3s)
+INFO 2025-07-04 17:46:52,796 consumers 406268 138264684638336 Sending initial game state to new connection for TTPJSC
+INFO 2025-07-04 17:46:52,810 consumers 406268 138264684638336 Player identified as 156 for game TTPJSC
+INFO 2025-07-04 17:46:52,810 consumers 406268 138264684638336 Added player 156 to individual group
+INFO 2025-07-04 17:46:52,821 consumers 406268 138264627787456 Marked player Joanna (id=156) as reconnected
+INFO 2025-07-04 17:46:52,823 websocket_utils 406268 138264627787456 Broadcasting game_update to group game_TTPJSC: {'game_status': 'waiting', 'player_count': 1, 'players': [{'id': 156, 'name': 'Joanna', 'joined_at': '16:06:56', 'total_score': 0}], 'message': 'Joanna reconnected'}
+INFO 2025-07-04 17:46:52,824 websocket_utils 406268 138264627787456 Successfully broadcast game_update to game_TTPJSC
+INFO 2025-07-04 17:46:52,826 consumers 406268 138264684638336 Broadcasting game_update to TTPJSC: {'game_status': 'waiting', 'player_count': 1, 'players': [{'id': 156, 'name': 'Joanna', 'joined_at': '16:06:56', 'total_score': 0}], 'message': 'Joanna reconnected'}
+INFO 2025-07-04 17:46:52,827 consumers 406268 138264684638336 Broadcasting game_update to TTPJSC: {'game_status': 'waiting', 'player_count': 1, 'players': [{'id': 156, 'name': 'Joanna', 'joined_at': '16:06:56', 'total_score': 0}], 'message': 'Joanna reconnected'}
+INFO 2025-07-04 17:46:52,827 consumers 406268 138264684638336 WebSocket connecting to game TTPJSC
+INFO 2025-07-04 17:46:52,828 consumers 406268 138264684638336 WebSocket connected to game TTPJSC (channel: specific..inmemory!nMcCVOoCCIHj)
+DEBUG 2025-07-04 17:46:52,829 consumers 406268 138264627787456 Using cached game state for TTPJSC (age: 50.3s)
+INFO 2025-07-04 17:46:52,831 consumers 406268 138264684638336 Sending initial game state to new connection for TTPJSC
+INFO 2025-07-04 17:46:52,833 consumers 406268 138264684638336 Player identified as 155 for game TTPJSC
+INFO 2025-07-04 17:46:52,833 consumers 406268 138264684638336 Added player 155 to individual group
+INFO 2025-07-04 17:46:52,841 consumers 406268 138264627787456 Marked player Lauren (id=155) as reconnected
+INFO 2025-07-04 17:46:52,843 websocket_utils 406268 138264627787456 Broadcasting game_update to group game_TTPJSC: {'game_status': 'waiting', 'player_count': 2, 'players': [{'id': 155, 'name': 'Lauren', 'joined_at': '16:06:54', 'total_score': 0}, {'id': 156, 'name': 'Joanna', 'joined_at': '16:06:56', 'total_score': 0}], 'message': 'Lauren reconnected'}
+INFO 2025-07-04 17:46:52,846 websocket_utils 406268 138264627787456 Successfully broadcast game_update to game_TTPJSC
+INFO 2025-07-04 17:46:52,846 consumers 406268 138264684638336 Broadcasting game_update to TTPJSC: {'game_status': 'waiting', 'player_count': 2, 'players': [{'id': 155, 'name': 'Lauren', 'joined_at': '16:06:54', 'total_score': 0}, {'id': 156, 'name': 'Joanna', 'joined_at': '16:06:56', 'total_score': 0}], 'message': 'Lauren reconnected'}
+INFO 2025-07-04 17:46:52,847 consumers 406268 138264684638336 Broadcasting game_update to TTPJSC: {'game_status': 'waiting', 'player_count': 2, 'players': [{'id': 155, 'name': 'Lauren', 'joined_at': '16:06:54', 'total_score': 0}, {'id': 156, 'name': 'Joanna', 'joined_at': '16:06:56', 'total_score': 0}], 'message': 'Lauren reconnected'}
+INFO 2025-07-04 17:46:52,848 consumers 406268 138264684638336 Broadcasting game_update to TTPJSC: {'game_status': 'waiting', 'player_count': 2, 'players': [{'id': 155, 'name': 'Lauren', 'joined_at': '16:06:54', 'total_score': 0}, {'id': 156, 'name': 'Joanna', 'joined_at': '16:06:56', 'total_score': 0}], 'message': 'Lauren reconnected'}
+INFO 2025-07-04 17:46:52,987 consumers 406268 138264684638336 WebSocket disconnecting from game TTPJSC
+WARNING 2025-07-04 17:46:52,990 consumers 406268 138264627787456 WebSocket disconnect without player identification for game TTPJSC
+INFO 2025-07-04 17:46:59,601 consumers 406268 138264684638336 WebSocket connecting to game TTPJSC
+INFO 2025-07-04 17:46:59,601 consumers 406268 138264684638336 WebSocket connected to game TTPJSC (channel: specific..inmemory!EZtmmBhHJiRG)
+DEBUG 2025-07-04 17:46:59,602 consumers 406268 138264627787456 Using cached game state for TTPJSC (age: 57.1s)
+INFO 2025-07-04 17:46:59,605 consumers 406268 138264684638336 Sending initial game state to new connection for TTPJSC
+INFO 2025-07-04 17:47:01,375 websocket_utils 406268 138264619394752 Broadcasting game_started to group game_TTPJSC: {'game_status': 'active', 'message': 'Game has started! Get ready for the first round.', 'player_count': 2}
+INFO 2025-07-04 17:47:01,379 websocket_utils 406268 138264619394752 Successfully broadcast game_started to game_TTPJSC
+INFO 2025-07-04 17:47:01,491 consumers 406268 138264684638336 WebSocket disconnecting from game TTPJSC
+INFO 2025-07-04 17:47:01,494 consumers 406268 138264627787456 Detected likely redirect disconnect for game TTPJSC (within 5s of game_started)
+INFO 2025-07-04 17:47:01,496 consumers 406268 138264627787456 Skipping disconnect for player Joanna (id=156) - likely game start redirect
+INFO 2025-07-04 17:47:01,497 consumers 406268 138264684638336 Removed player 156 from individual group
+INFO 2025-07-04 17:47:01,511 consumers 406268 138264684638336 WebSocket disconnecting from game TTPJSC
+INFO 2025-07-04 17:47:01,513 consumers 406268 138264627787456 Detected likely redirect disconnect for game TTPJSC (within 5s of game_started)
+INFO 2025-07-04 17:47:01,562 consumers 406268 138264684638336 WebSocket disconnecting from game TTPJSC
+INFO 2025-07-04 17:47:01,565 consumers 406268 138264627787456 Detected likely redirect disconnect for game TTPJSC (within 5s of game_started)
+INFO 2025-07-04 17:47:01,567 consumers 406268 138264627787456 Skipping disconnect for player Lauren (id=155) - likely game start redirect
+INFO 2025-07-04 17:47:01,568 consumers 406268 138264684638336 Removed player 155 from individual group
+INFO 2025-07-04 17:47:01,587 consumers 406268 138264684638336 WebSocket connecting to game TTPJSC
+INFO 2025-07-04 17:47:01,588 consumers 406268 138264684638336 WebSocket connected to game TTPJSC (channel: specific..inmemory!qQqlbBkgsAFt)
+DEBUG 2025-07-04 17:47:01,589 consumers 406268 138264627787456 Using cached game state for TTPJSC (age: 59.0s)
+INFO 2025-07-04 17:47:01,591 consumers 406268 138264684638336 Sending initial game state to new connection for TTPJSC
+INFO 2025-07-04 17:47:01,629 consumers 406268 138264684638336 Player identified as 156 for game TTPJSC
+INFO 2025-07-04 17:47:01,631 consumers 406268 138264684638336 Added player 156 to individual group
+INFO 2025-07-04 17:47:01,638 consumers 406268 138264684638336 WebSocket connecting to game TTPJSC
+INFO 2025-07-04 17:47:01,641 consumers 406268 138264684638336 WebSocket connected to game TTPJSC (channel: specific..inmemory!rLxEDgzyiXTQ)
+DEBUG 2025-07-04 17:47:01,643 consumers 406268 138264627787456 Using cached game state for TTPJSC (age: 59.1s)
+INFO 2025-07-04 17:47:01,648 consumers 406268 138264684638336 Sending initial game state to new connection for TTPJSC
+INFO 2025-07-04 17:47:01,650 consumers 406268 138264684638336 Player identified as 155 for game TTPJSC
+INFO 2025-07-04 17:47:01,651 consumers 406268 138264684638336 Added player 155 to individual group
+INFO 2025-07-04 17:47:01,661 consumers 406268 138264684638336 WebSocket connecting to game TTPJSC
+INFO 2025-07-04 17:47:01,661 consumers 406268 138264684638336 WebSocket connected to game TTPJSC (channel: specific..inmemory!fJzKmRQSxwbX)
+DEBUG 2025-07-04 17:47:01,662 consumers 406268 138264627787456 Using cached game state for TTPJSC (age: 59.1s)
+INFO 2025-07-04 17:47:01,664 consumers 406268 138264684638336 Sending initial game state to new connection for TTPJSC
+INFO 2025-07-04 17:47:03,488 round_handlers 406268 138264392496832 Using fallback questions for game TTPJSC, round 1
+INFO 2025-07-04 17:47:03,488 round_handlers 406268 138264392496832 Using FALLBACK question data for game TTPJSC, round 1: What is the largest bone in the human body?
+DEBUG 2025-07-04 17:47:03,489 cache_service 406268 138264392496832 Cached round state for round 1: multiple_choice
+DEBUG 2025-07-04 17:47:03,489 cache_service 406268 138264392496832 Invalidated game state cache for TTPJSC
+INFO 2025-07-04 17:47:03,489 websocket_utils 406268 138264392496832 Broadcasting round_started to group game_TTPJSC: {'round_number': 1, 'total_time': 30, 'started_at': '2025-07-04T17:47:03.477568+00:00', 'round_type': 'multiple_choice', 'is_active': True, 'time_remaining': 30, 'question_text': 'What is the largest bone in the human body?', 'choices': ['Femur', 'Tibia', 'Humerus', 'Fibula'], 'category': 'Science', 'correct_answer': 'Femur'}
+INFO 2025-07-04 17:47:03,490 websocket_utils 406268 138264392496832 Successfully broadcast round_started to game_TTPJSC
+INFO 2025-07-04 17:47:03,491 websocket_utils 406268 138264384104128 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 29}
+INFO 2025-07-04 17:47:03,491 websocket_utils 406268 138264392496832 Started timer thread for game TTPJSC with 30 seconds
+INFO 2025-07-04 17:47:03,496 websocket_utils 406268 138264384104128 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:47:04,504 websocket_utils 406268 138264384104128 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 28}
+INFO 2025-07-04 17:47:04,508 websocket_utils 406268 138264384104128 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:47:05,513 websocket_utils 406268 138264384104128 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 27}
+INFO 2025-07-04 17:47:05,517 websocket_utils 406268 138264384104128 Successfully broadcast timer_update to game_TTPJSC
+DEBUG 2025-07-04 17:47:06,045 cache_service 406268 138264627787456 Cached game state for TTPJSC: active, 2 players
+DEBUG 2025-07-04 17:47:06,051 cache_service 406268 138264684638336 Cached answer for player 156 in round 1: Femur...
+INFO 2025-07-04 17:47:06,051 consumers 406268 138264684638336 Player 156 submitted answer for round 1 in game TTPJSC
+INFO 2025-07-04 17:47:06,522 websocket_utils 406268 138264384104128 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 26}
+INFO 2025-07-04 17:47:06,524 websocket_utils 406268 138264384104128 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:47:07,527 websocket_utils 406268 138264384104128 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 25}
+INFO 2025-07-04 17:47:07,528 websocket_utils 406268 138264384104128 Successfully broadcast timer_update to game_TTPJSC
+DEBUG 2025-07-04 17:47:07,859 consumers 406268 138264627787456 Using cached game state for TTPJSC (age: 1.8s)
+DEBUG 2025-07-04 17:47:07,862 cache_service 406268 138264684638336 Cached answer for player 155 in round 1: Femur...
+INFO 2025-07-04 17:47:07,862 consumers 406268 138264684638336 Player 155 submitted answer for round 1 in game TTPJSC
+INFO 2025-07-04 17:47:08,529 websocket_utils 406268 138264384104128 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 24}
+INFO 2025-07-04 17:47:08,531 websocket_utils 406268 138264384104128 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:47:09,534 websocket_utils 406268 138264384104128 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 23}
+INFO 2025-07-04 17:47:09,537 websocket_utils 406268 138264384104128 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:47:10,541 websocket_utils 406268 138264384104128 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 22}
+INFO 2025-07-04 17:47:10,545 websocket_utils 406268 138264384104128 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:47:11,548 websocket_utils 406268 138264384104128 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 21}
+INFO 2025-07-04 17:47:11,552 websocket_utils 406268 138264384104128 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:47:12,554 websocket_utils 406268 138264384104128 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 20}
+INFO 2025-07-04 17:47:12,558 websocket_utils 406268 138264384104128 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:47:12,559 websocket_utils 406268 138264384104128 Timer update for game TTPJSC: 20 seconds remaining
+INFO 2025-07-04 17:47:13,562 websocket_utils 406268 138264384104128 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 19}
+INFO 2025-07-04 17:47:13,565 websocket_utils 406268 138264384104128 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:47:14,569 websocket_utils 406268 138264384104128 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 18}
+INFO 2025-07-04 17:47:14,572 websocket_utils 406268 138264384104128 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:47:15,575 websocket_utils 406268 138264384104128 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 17}
+INFO 2025-07-04 17:47:15,578 websocket_utils 406268 138264384104128 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:47:16,581 websocket_utils 406268 138264384104128 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 16}
+INFO 2025-07-04 17:47:16,582 websocket_utils 406268 138264384104128 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:47:17,584 websocket_utils 406268 138264384104128 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 15}
+INFO 2025-07-04 17:47:17,587 websocket_utils 406268 138264384104128 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:47:18,590 websocket_utils 406268 138264384104128 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 14}
+INFO 2025-07-04 17:47:18,593 websocket_utils 406268 138264384104128 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:47:19,596 websocket_utils 406268 138264384104128 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 13}
+INFO 2025-07-04 17:47:19,599 websocket_utils 406268 138264384104128 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:47:20,602 websocket_utils 406268 138264384104128 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 12}
+INFO 2025-07-04 17:47:20,605 websocket_utils 406268 138264384104128 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:47:21,608 websocket_utils 406268 138264384104128 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 11}
+INFO 2025-07-04 17:47:21,609 websocket_utils 406268 138264384104128 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:47:22,610 websocket_utils 406268 138264384104128 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 10}
+INFO 2025-07-04 17:47:22,613 websocket_utils 406268 138264384104128 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:47:22,614 websocket_utils 406268 138264384104128 Timer update for game TTPJSC: 10 seconds remaining
+INFO 2025-07-04 17:47:23,617 websocket_utils 406268 138264384104128 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 9}
+INFO 2025-07-04 17:47:23,621 websocket_utils 406268 138264384104128 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:47:24,626 websocket_utils 406268 138264384104128 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 8}
+INFO 2025-07-04 17:47:24,628 websocket_utils 406268 138264384104128 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:47:25,630 websocket_utils 406268 138264384104128 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 7}
+INFO 2025-07-04 17:47:25,632 websocket_utils 406268 138264384104128 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:47:26,635 websocket_utils 406268 138264384104128 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 6}
+INFO 2025-07-04 17:47:26,637 websocket_utils 406268 138264384104128 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:47:27,638 websocket_utils 406268 138264384104128 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 5}
+INFO 2025-07-04 17:47:27,640 websocket_utils 406268 138264384104128 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:47:28,644 websocket_utils 406268 138264384104128 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 4}
+INFO 2025-07-04 17:47:28,646 websocket_utils 406268 138264384104128 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:47:28,646 websocket_utils 406268 138264384104128 Timer update for game TTPJSC: 4 seconds remaining
+INFO 2025-07-04 17:47:29,647 websocket_utils 406268 138264384104128 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 3}
+INFO 2025-07-04 17:47:29,648 websocket_utils 406268 138264384104128 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:47:29,648 websocket_utils 406268 138264384104128 Timer update for game TTPJSC: 3 seconds remaining
+INFO 2025-07-04 17:47:30,649 websocket_utils 406268 138264384104128 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 2}
+INFO 2025-07-04 17:47:30,650 websocket_utils 406268 138264384104128 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:47:30,651 websocket_utils 406268 138264384104128 Timer update for game TTPJSC: 2 seconds remaining
+INFO 2025-07-04 17:47:31,652 websocket_utils 406268 138264384104128 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 1}
+INFO 2025-07-04 17:47:31,653 websocket_utils 406268 138264384104128 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:47:31,653 websocket_utils 406268 138264384104128 Timer update for game TTPJSC: 1 seconds remaining
+INFO 2025-07-04 17:47:32,655 websocket_utils 406268 138264384104128 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 0}
+INFO 2025-07-04 17:47:32,657 websocket_utils 406268 138264384104128 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:47:32,657 websocket_utils 406268 138264384104128 Timer update for game TTPJSC: 0 seconds remaining
+INFO 2025-07-04 17:47:33,659 websocket_utils 406268 138264384104128 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 0}
+INFO 2025-07-04 17:47:33,660 websocket_utils 406268 138264384104128 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:47:33,660 websocket_utils 406268 138264384104128 Timer update for game TTPJSC: 0 seconds remaining
+INFO 2025-07-04 17:47:33,660 websocket_utils 406268 138264384104128 Timer expired for game TTPJSC, automatically ending round
+INFO 2025-07-04 17:47:33,673 round_handlers 406268 138264384104128 Using CACHED question data for game TTPJSC, round 1: What is the largest bone in the human body?
+INFO 2025-07-04 17:47:33,682 websocket_utils 406268 138264384104128 Auto-end: Created PlayerAnswer for player Joanna: Femur
+INFO 2025-07-04 17:47:33,691 websocket_utils 406268 138264384104128 Auto-end: Created PlayerAnswer for player Lauren: Femur
+INFO 2025-07-04 17:47:33,692 round_handlers 406268 138264384104128 Using CACHED question data for game TTPJSC, round 1: What is the largest bone in the human body?
+INFO 2025-07-04 17:47:33,752 websocket_utils 406268 138264384104128 Broadcasting player results for game TTPJSC, round 1
+INFO 2025-07-04 17:47:33,753 websocket_utils 406268 138264384104128 Round type: multiple_choice
+INFO 2025-07-04 17:47:33,753 websocket_utils 406268 138264384104128 Correct answer for multiple choice: Femur
+INFO 2025-07-04 17:47:33,755 websocket_utils 406268 138264384104128 Processing result for player Lauren (ID: 155)
+INFO 2025-07-04 17:47:33,756 websocket_utils 406268 138264384104128 Player answer found: Femur
+INFO 2025-07-04 17:47:33,756 websocket_utils 406268 138264384104128 Sending player result to group player_155: {'round_number': 1, 'message': '🎉 Correct! You earned 10 points.\n\nThe correct answer was: Femur\nYour answer: Femur', 'points_earned': 10, 'is_correct': True, 'correct_answer': 'Femur', 'player_answer': 'Femur', 'round_type': 'multiple_choice'}
+INFO 2025-07-04 17:47:33,759 websocket_utils 406268 138264384104128 Successfully sent player_result to player_155
+INFO 2025-07-04 17:47:33,759 websocket_utils 406268 138264384104128 Processing result for player Joanna (ID: 156)
+INFO 2025-07-04 17:47:33,760 websocket_utils 406268 138264384104128 Player answer found: Femur
+INFO 2025-07-04 17:47:33,761 websocket_utils 406268 138264384104128 Sending player result to group player_156: {'round_number': 1, 'message': '🎉 Correct! You earned 10 points.\n\nThe correct answer was: Femur\nYour answer: Femur', 'points_earned': 10, 'is_correct': True, 'correct_answer': 'Femur', 'player_answer': 'Femur', 'round_type': 'multiple_choice'}
+INFO 2025-07-04 17:47:33,762 websocket_utils 406268 138264384104128 Successfully sent player_result to player_156
+INFO 2025-07-04 17:47:33,762 websocket_utils 406268 138264384104128 Broadcasting round_ended to group game_TTPJSC: {'round_number': 1, 'round_type': 'multiple_choice', 'is_final_round': False, 'answers': [{'player_name': 'Lauren', 'answer_text': 'Femur', 'points_awarded': 10, 'is_valid': True, 'is_unique': False}, {'player_name': 'Joanna', 'answer_text': 'Femur', 'points_awarded': 10, 'is_valid': True, 'is_unique': False}], 'correct_answer': 'Femur'}
+INFO 2025-07-04 17:47:33,763 websocket_utils 406268 138264384104128 Successfully broadcast round_ended to game_TTPJSC
+INFO 2025-07-04 17:47:33,763 websocket_utils 406268 138264384104128 Round 1 automatically ended for game TTPJSC
+INFO 2025-07-04 17:47:33,801 consumers 406268 138264684638336 Forwarding player_result to player 155: {'round_number': 1, 'message': '🎉 Correct! You earned 10 points.\n\nThe correct answer was: Femur\nYour answer: Femur', 'points_earned': 10, 'is_correct': True, 'correct_answer': 'Femur', 'player_answer': 'Femur', 'round_type': 'multiple_choice'}
+INFO 2025-07-04 17:47:33,801 consumers 406268 138264684638336 Forwarding player_result to player 156: {'round_number': 1, 'message': '🎉 Correct! You earned 10 points.\n\nThe correct answer was: Femur\nYour answer: Femur', 'points_earned': 10, 'is_correct': True, 'correct_answer': 'Femur', 'player_answer': 'Femur', 'round_type': 'multiple_choice'}
+INFO 2025-07-04 17:47:49,555 round_handlers 406268 138264619394752 Using fallback questions for game TTPJSC, round 2
+INFO 2025-07-04 17:47:49,555 round_handlers 406268 138264619394752 Using FALLBACK question data for game TTPJSC, round 2: What is the largest mammal in the world?
+DEBUG 2025-07-04 17:47:49,556 cache_service 406268 138264619394752 Cached round state for round 2: multiple_choice
+DEBUG 2025-07-04 17:47:49,556 cache_service 406268 138264619394752 Invalidated game state cache for TTPJSC
+INFO 2025-07-04 17:47:49,556 websocket_utils 406268 138264619394752 Broadcasting round_started to group game_TTPJSC: {'round_number': 2, 'total_time': 30, 'started_at': '2025-07-04T17:47:49.540052+00:00', 'round_type': 'multiple_choice', 'is_active': True, 'time_remaining': 30, 'question_text': 'What is the largest mammal in the world?', 'choices': ['Blue Whale', 'African Elephant', 'Giraffe', 'Hippopotamus'], 'category': 'Animals', 'correct_answer': 'Blue Whale'}
+INFO 2025-07-04 17:47:49,559 websocket_utils 406268 138264619394752 Successfully broadcast round_started to game_TTPJSC
+INFO 2025-07-04 17:47:49,559 websocket_utils 406268 138264384104128 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 29}
+INFO 2025-07-04 17:47:49,560 websocket_utils 406268 138264619394752 Started timer thread for game TTPJSC with 30 seconds
+INFO 2025-07-04 17:47:49,561 websocket_utils 406268 138264384104128 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:47:50,572 websocket_utils 406268 138264384104128 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 28}
+INFO 2025-07-04 17:47:50,577 websocket_utils 406268 138264384104128 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:47:51,580 websocket_utils 406268 138264384104128 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 27}
+INFO 2025-07-04 17:47:51,584 websocket_utils 406268 138264384104128 Successfully broadcast timer_update to game_TTPJSC
+DEBUG 2025-07-04 17:47:51,821 cache_service 406268 138264627787456 Cached game state for TTPJSC: active, 2 players
+DEBUG 2025-07-04 17:47:51,822 cache_service 406268 138264684638336 Cached answer for player 156 in round 2: Blue Whale...
+INFO 2025-07-04 17:47:51,822 consumers 406268 138264684638336 Player 156 submitted answer for round 2 in game TTPJSC
+INFO 2025-07-04 17:47:52,589 websocket_utils 406268 138264384104128 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 26}
+INFO 2025-07-04 17:47:52,591 websocket_utils 406268 138264384104128 Successfully broadcast timer_update to game_TTPJSC
+DEBUG 2025-07-04 17:47:52,829 consumers 406268 138264627787456 Using cached game state for TTPJSC (age: 1.0s)
+DEBUG 2025-07-04 17:47:52,839 cache_service 406268 138264684638336 Cached answer for player 155 in round 2: Blue Whale...
+INFO 2025-07-04 17:47:52,840 consumers 406268 138264684638336 Player 155 submitted answer for round 2 in game TTPJSC
+INFO 2025-07-04 17:47:53,594 websocket_utils 406268 138264384104128 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 25}
+INFO 2025-07-04 17:47:53,599 websocket_utils 406268 138264384104128 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:47:54,604 websocket_utils 406268 138264384104128 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 24}
+INFO 2025-07-04 17:47:54,608 websocket_utils 406268 138264384104128 Successfully broadcast timer_update to game_TTPJSC
+DEBUG 2025-07-04 17:47:54,849 cache_service 406268 138264619394752 Marked round 2 as ended in cache
+INFO 2025-07-04 17:47:54,859 services 406268 138264619394752 Processed answer for player Joanna: Blue Whale...
+INFO 2025-07-04 17:47:54,868 services 406268 138264619394752 Processed answer for player Lauren: Blue Whale...
+INFO 2025-07-04 17:47:54,869 services 406268 138264619394752 Bulk created 2 PlayerAnswer objects
+DEBUG 2025-07-04 17:47:54,870 cache_service 406268 138264619394752 Cleared cached answers for round 2
+INFO 2025-07-04 17:47:54,870 services 406268 138264619394752 Processed 2 cached answers into database
+INFO 2025-07-04 17:47:54,872 round_handlers 406268 138264619394752 Using CACHED question data for game TTPJSC, round 2: What is the largest mammal in the world?
+INFO 2025-07-04 17:47:54,943 websocket_utils 406268 138264619394752 Broadcasting player results for game TTPJSC, round 2
+INFO 2025-07-04 17:47:54,943 websocket_utils 406268 138264619394752 Round type: multiple_choice
+INFO 2025-07-04 17:47:54,943 websocket_utils 406268 138264619394752 Correct answer for multiple choice: Blue Whale
+INFO 2025-07-04 17:47:54,945 websocket_utils 406268 138264619394752 Processing result for player Lauren (ID: 155)
+INFO 2025-07-04 17:47:54,946 websocket_utils 406268 138264619394752 Player answer found: Blue Whale
+INFO 2025-07-04 17:47:54,946 websocket_utils 406268 138264619394752 Sending player result to group player_155: {'round_number': 2, 'message': '🎉 Correct! You earned 15 points. (2 answer streak!)\n\nThe correct answer was: Blue Whale\nYour answer: Blue Whale', 'points_earned': 15, 'is_correct': True, 'correct_answer': 'Blue Whale', 'player_answer': 'Blue Whale', 'round_type': 'multiple_choice'}
+INFO 2025-07-04 17:47:54,947 websocket_utils 406268 138264619394752 Successfully sent player_result to player_155
+INFO 2025-07-04 17:47:54,947 websocket_utils 406268 138264619394752 Processing result for player Joanna (ID: 156)
+INFO 2025-07-04 17:47:54,948 consumers 406268 138264684638336 Forwarding player_result to player 155: {'round_number': 2, 'message': '🎉 Correct! You earned 15 points. (2 answer streak!)\n\nThe correct answer was: Blue Whale\nYour answer: Blue Whale', 'points_earned': 15, 'is_correct': True, 'correct_answer': 'Blue Whale', 'player_answer': 'Blue Whale', 'round_type': 'multiple_choice'}
+INFO 2025-07-04 17:47:54,949 websocket_utils 406268 138264619394752 Player answer found: Blue Whale
+INFO 2025-07-04 17:47:54,950 websocket_utils 406268 138264619394752 Sending player result to group player_156: {'round_number': 2, 'message': '🎉 Correct! You earned 15 points. (2 answer streak!)\n\nThe correct answer was: Blue Whale\nYour answer: Blue Whale', 'points_earned': 15, 'is_correct': True, 'correct_answer': 'Blue Whale', 'player_answer': 'Blue Whale', 'round_type': 'multiple_choice'}
+INFO 2025-07-04 17:47:54,951 websocket_utils 406268 138264619394752 Successfully sent player_result to player_156
+INFO 2025-07-04 17:47:54,951 consumers 406268 138264684638336 Forwarding player_result to player 156: {'round_number': 2, 'message': '🎉 Correct! You earned 15 points. (2 answer streak!)\n\nThe correct answer was: Blue Whale\nYour answer: Blue Whale', 'points_earned': 15, 'is_correct': True, 'correct_answer': 'Blue Whale', 'player_answer': 'Blue Whale', 'round_type': 'multiple_choice'}
+DEBUG 2025-07-04 17:47:54,951 cache_service 406268 138264619394752 Invalidated game state cache for TTPJSC
+INFO 2025-07-04 17:47:54,952 websocket_utils 406268 138264619394752 Broadcasting round_ended to group game_TTPJSC: {'round_number': 2, 'round_type': 'multiple_choice', 'is_final_round': False, 'answers': [{'player_name': 'Joanna', 'answer_text': 'Blue Whale', 'points_awarded': 15, 'is_valid': True, 'is_unique': False}, {'player_name': 'Lauren', 'answer_text': 'Blue Whale', 'points_awarded': 15, 'is_valid': True, 'is_unique': False}], 'correct_answer': 'Blue Whale'}
+INFO 2025-07-04 17:47:54,953 websocket_utils 406268 138264619394752 Successfully broadcast round_ended to game_TTPJSC
+INFO 2025-07-04 17:47:55,612 websocket_utils 406268 138264384104128 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 23}
+INFO 2025-07-04 17:47:55,613 websocket_utils 406268 138264384104128 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:48:00,237 round_handlers 406268 138264384104128 Using fallback questions for game TTPJSC, round 3
+INFO 2025-07-04 17:48:00,238 round_handlers 406268 138264384104128 Using FALLBACK question data for game TTPJSC, round 3: What is the largest bone in the human body?
+DEBUG 2025-07-04 17:48:00,239 cache_service 406268 138264384104128 Cached round state for round 3: multiple_choice
+DEBUG 2025-07-04 17:48:00,240 cache_service 406268 138264384104128 Invalidated game state cache for TTPJSC
+INFO 2025-07-04 17:48:00,240 websocket_utils 406268 138264384104128 Broadcasting round_started to group game_TTPJSC: {'round_number': 3, 'total_time': 30, 'started_at': '2025-07-04T17:48:00.225737+00:00', 'round_type': 'multiple_choice', 'is_active': True, 'time_remaining': 30, 'question_text': 'What is the largest bone in the human body?', 'choices': ['Femur', 'Tibia', 'Humerus', 'Fibula'], 'category': 'Science', 'correct_answer': 'Femur'}
+INFO 2025-07-04 17:48:00,243 websocket_utils 406268 138264384104128 Successfully broadcast round_started to game_TTPJSC
+INFO 2025-07-04 17:48:00,245 websocket_utils 406268 138264619394752 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 29}
+INFO 2025-07-04 17:48:00,248 websocket_utils 406268 138264384104128 Started timer thread for game TTPJSC with 30 seconds
+INFO 2025-07-04 17:48:00,261 websocket_utils 406268 138264619394752 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:48:01,272 websocket_utils 406268 138264619394752 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 28}
+INFO 2025-07-04 17:48:01,277 websocket_utils 406268 138264619394752 Successfully broadcast timer_update to game_TTPJSC
+DEBUG 2025-07-04 17:48:02,120 cache_service 406268 138264627787456 Cached game state for TTPJSC: active, 2 players
+DEBUG 2025-07-04 17:48:02,125 cache_service 406268 138264684638336 Cached answer for player 156 in round 3: Femur...
+INFO 2025-07-04 17:48:02,126 consumers 406268 138264684638336 Player 156 submitted answer for round 3 in game TTPJSC
+INFO 2025-07-04 17:48:02,283 websocket_utils 406268 138264619394752 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 27}
+INFO 2025-07-04 17:48:02,284 websocket_utils 406268 138264619394752 Successfully broadcast timer_update to game_TTPJSC
+DEBUG 2025-07-04 17:48:02,872 consumers 406268 138264627787456 Using cached game state for TTPJSC (age: 0.8s)
+DEBUG 2025-07-04 17:48:02,877 cache_service 406268 138264684638336 Cached answer for player 155 in round 3: Femur...
+INFO 2025-07-04 17:48:02,877 consumers 406268 138264684638336 Player 155 submitted answer for round 3 in game TTPJSC
+INFO 2025-07-04 17:48:03,286 websocket_utils 406268 138264619394752 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 26}
+INFO 2025-07-04 17:48:03,290 websocket_utils 406268 138264619394752 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:48:04,293 websocket_utils 406268 138264619394752 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 25}
+INFO 2025-07-04 17:48:04,297 websocket_utils 406268 138264619394752 Successfully broadcast timer_update to game_TTPJSC
+DEBUG 2025-07-04 17:48:04,483 cache_service 406268 138264384104128 Marked round 3 as ended in cache
+INFO 2025-07-04 17:48:04,492 services 406268 138264384104128 Processed answer for player Joanna: Femur...
+INFO 2025-07-04 17:48:04,499 services 406268 138264384104128 Processed answer for player Lauren: Femur...
+INFO 2025-07-04 17:48:04,501 services 406268 138264384104128 Bulk created 2 PlayerAnswer objects
+DEBUG 2025-07-04 17:48:04,504 cache_service 406268 138264384104128 Cleared cached answers for round 3
+INFO 2025-07-04 17:48:04,505 services 406268 138264384104128 Processed 2 cached answers into database
+INFO 2025-07-04 17:48:04,507 round_handlers 406268 138264384104128 Using CACHED question data for game TTPJSC, round 3: What is the largest bone in the human body?
+INFO 2025-07-04 17:48:04,570 websocket_utils 406268 138264384104128 Broadcasting player results for game TTPJSC, round 3
+INFO 2025-07-04 17:48:04,571 websocket_utils 406268 138264384104128 Round type: multiple_choice
+INFO 2025-07-04 17:48:04,571 websocket_utils 406268 138264384104128 Correct answer for multiple choice: Femur
+INFO 2025-07-04 17:48:04,572 websocket_utils 406268 138264384104128 Processing result for player Lauren (ID: 155)
+INFO 2025-07-04 17:48:04,573 websocket_utils 406268 138264384104128 Player answer found: Femur
+INFO 2025-07-04 17:48:04,574 websocket_utils 406268 138264384104128 Sending player result to group player_155: {'round_number': 3, 'message': '🎉 Correct! You earned 20 points. (3 answer streak!)\n\nThe correct answer was: Femur\nYour answer: Femur', 'points_earned': 20, 'is_correct': True, 'correct_answer': 'Femur', 'player_answer': 'Femur', 'round_type': 'multiple_choice'}
+INFO 2025-07-04 17:48:04,574 websocket_utils 406268 138264384104128 Successfully sent player_result to player_155
+INFO 2025-07-04 17:48:04,575 websocket_utils 406268 138264384104128 Processing result for player Joanna (ID: 156)
+INFO 2025-07-04 17:48:04,575 consumers 406268 138264684638336 Forwarding player_result to player 155: {'round_number': 3, 'message': '🎉 Correct! You earned 20 points. (3 answer streak!)\n\nThe correct answer was: Femur\nYour answer: Femur', 'points_earned': 20, 'is_correct': True, 'correct_answer': 'Femur', 'player_answer': 'Femur', 'round_type': 'multiple_choice'}
+INFO 2025-07-04 17:48:04,577 websocket_utils 406268 138264384104128 Player answer found: Femur
+INFO 2025-07-04 17:48:04,578 websocket_utils 406268 138264384104128 Sending player result to group player_156: {'round_number': 3, 'message': '🎉 Correct! You earned 20 points. (3 answer streak!)\n\nThe correct answer was: Femur\nYour answer: Femur', 'points_earned': 20, 'is_correct': True, 'correct_answer': 'Femur', 'player_answer': 'Femur', 'round_type': 'multiple_choice'}
+INFO 2025-07-04 17:48:04,579 websocket_utils 406268 138264384104128 Successfully sent player_result to player_156
+DEBUG 2025-07-04 17:48:04,579 cache_service 406268 138264384104128 Invalidated game state cache for TTPJSC
+INFO 2025-07-04 17:48:04,580 websocket_utils 406268 138264384104128 Broadcasting round_ended to group game_TTPJSC: {'round_number': 3, 'round_type': 'multiple_choice', 'is_final_round': False, 'answers': [{'player_name': 'Lauren', 'answer_text': 'Femur', 'points_awarded': 20, 'is_valid': True, 'is_unique': False}, {'player_name': 'Joanna', 'answer_text': 'Femur', 'points_awarded': 20, 'is_valid': True, 'is_unique': False}], 'correct_answer': 'Femur'}
+INFO 2025-07-04 17:48:04,580 consumers 406268 138264684638336 Forwarding player_result to player 156: {'round_number': 3, 'message': '🎉 Correct! You earned 20 points. (3 answer streak!)\n\nThe correct answer was: Femur\nYour answer: Femur', 'points_earned': 20, 'is_correct': True, 'correct_answer': 'Femur', 'player_answer': 'Femur', 'round_type': 'multiple_choice'}
+INFO 2025-07-04 17:48:04,583 websocket_utils 406268 138264384104128 Successfully broadcast round_ended to game_TTPJSC
+INFO 2025-07-04 17:48:05,300 websocket_utils 406268 138264619394752 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 24}
+INFO 2025-07-04 17:48:05,304 websocket_utils 406268 138264619394752 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:48:09,922 round_handlers 406268 138264619394752 Using fallback questions for game TTPJSC, round 4
+INFO 2025-07-04 17:48:09,923 round_handlers 406268 138264619394752 Using FALLBACK question data for game TTPJSC, round 4: What is the smallest country in the world?
+DEBUG 2025-07-04 17:48:09,924 cache_service 406268 138264619394752 Cached round state for round 4: multiple_choice
+DEBUG 2025-07-04 17:48:09,924 cache_service 406268 138264619394752 Invalidated game state cache for TTPJSC
+INFO 2025-07-04 17:48:09,925 websocket_utils 406268 138264619394752 Broadcasting round_started to group game_TTPJSC: {'round_number': 4, 'total_time': 30, 'started_at': '2025-07-04T17:48:09.910877+00:00', 'round_type': 'multiple_choice', 'is_active': True, 'time_remaining': 30, 'question_text': 'What is the smallest country in the world?', 'choices': ['Monaco', 'Vatican City', 'San Marino', 'Liechtenstein'], 'category': 'Geography', 'correct_answer': 'Vatican City'}
+INFO 2025-07-04 17:48:09,928 websocket_utils 406268 138264619394752 Successfully broadcast round_started to game_TTPJSC
+INFO 2025-07-04 17:48:09,929 websocket_utils 406268 138264384104128 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 29}
+INFO 2025-07-04 17:48:09,930 websocket_utils 406268 138264619394752 Started timer thread for game TTPJSC with 30 seconds
+INFO 2025-07-04 17:48:09,944 websocket_utils 406268 138264384104128 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:48:10,952 websocket_utils 406268 138264384104128 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 28}
+INFO 2025-07-04 17:48:10,955 websocket_utils 406268 138264384104128 Successfully broadcast timer_update to game_TTPJSC
+DEBUG 2025-07-04 17:48:11,958 cache_service 406268 138264627787456 Cached game state for TTPJSC: active, 2 players
+INFO 2025-07-04 17:48:11,958 websocket_utils 406268 138264384104128 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 27}
+INFO 2025-07-04 17:48:11,961 websocket_utils 406268 138264384104128 Successfully broadcast timer_update to game_TTPJSC
+DEBUG 2025-07-04 17:48:11,962 cache_service 406268 138264684638336 Cached answer for player 156 in round 4: Vatican City...
+INFO 2025-07-04 17:48:11,963 consumers 406268 138264684638336 Player 156 submitted answer for round 4 in game TTPJSC
+INFO 2025-07-04 17:48:12,962 websocket_utils 406268 138264384104128 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 26}
+INFO 2025-07-04 17:48:12,966 websocket_utils 406268 138264384104128 Successfully broadcast timer_update to game_TTPJSC
+DEBUG 2025-07-04 17:48:13,129 consumers 406268 138264627787456 Using cached game state for TTPJSC (age: 1.2s)
+DEBUG 2025-07-04 17:48:13,132 cache_service 406268 138264684638336 Cached answer for player 155 in round 4: Vatican City...
+INFO 2025-07-04 17:48:13,133 consumers 406268 138264684638336 Player 155 submitted answer for round 4 in game TTPJSC
+INFO 2025-07-04 17:48:13,970 websocket_utils 406268 138264384104128 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 25}
+INFO 2025-07-04 17:48:13,974 websocket_utils 406268 138264384104128 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:48:14,979 websocket_utils 406268 138264384104128 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 24}
+INFO 2025-07-04 17:48:14,983 websocket_utils 406268 138264384104128 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:48:15,987 websocket_utils 406268 138264384104128 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 23}
+INFO 2025-07-04 17:48:15,990 websocket_utils 406268 138264384104128 Successfully broadcast timer_update to game_TTPJSC
+DEBUG 2025-07-04 17:48:16,852 cache_service 406268 138264619394752 Marked round 4 as ended in cache
+INFO 2025-07-04 17:48:16,862 services 406268 138264619394752 Processed answer for player Joanna: Vatican City...
+INFO 2025-07-04 17:48:16,878 services 406268 138264619394752 Processed answer for player Lauren: Vatican City...
+INFO 2025-07-04 17:48:16,880 services 406268 138264619394752 Bulk created 2 PlayerAnswer objects
+DEBUG 2025-07-04 17:48:16,880 cache_service 406268 138264619394752 Cleared cached answers for round 4
+INFO 2025-07-04 17:48:16,880 services 406268 138264619394752 Processed 2 cached answers into database
+INFO 2025-07-04 17:48:16,883 round_handlers 406268 138264619394752 Using CACHED question data for game TTPJSC, round 4: What is the smallest country in the world?
+INFO 2025-07-04 17:48:16,951 websocket_utils 406268 138264619394752 Broadcasting player results for game TTPJSC, round 4
+INFO 2025-07-04 17:48:16,951 websocket_utils 406268 138264619394752 Round type: multiple_choice
+INFO 2025-07-04 17:48:16,951 websocket_utils 406268 138264619394752 Correct answer for multiple choice: Vatican City
+INFO 2025-07-04 17:48:16,954 websocket_utils 406268 138264619394752 Processing result for player Lauren (ID: 155)
+INFO 2025-07-04 17:48:16,956 websocket_utils 406268 138264619394752 Player answer found: Vatican City
+INFO 2025-07-04 17:48:16,956 websocket_utils 406268 138264619394752 Sending player result to group player_155: {'round_number': 4, 'message': '🎉 Correct! You earned 25 points. (4 answer streak!)\n\nThe correct answer was: Vatican City\nYour answer: Vatican City', 'points_earned': 25, 'is_correct': True, 'correct_answer': 'Vatican City', 'player_answer': 'Vatican City', 'round_type': 'multiple_choice'}
+INFO 2025-07-04 17:48:16,957 websocket_utils 406268 138264619394752 Successfully sent player_result to player_155
+INFO 2025-07-04 17:48:16,958 websocket_utils 406268 138264619394752 Processing result for player Joanna (ID: 156)
+INFO 2025-07-04 17:48:16,958 consumers 406268 138264684638336 Forwarding player_result to player 155: {'round_number': 4, 'message': '🎉 Correct! You earned 25 points. (4 answer streak!)\n\nThe correct answer was: Vatican City\nYour answer: Vatican City', 'points_earned': 25, 'is_correct': True, 'correct_answer': 'Vatican City', 'player_answer': 'Vatican City', 'round_type': 'multiple_choice'}
+INFO 2025-07-04 17:48:16,959 websocket_utils 406268 138264619394752 Player answer found: Vatican City
+INFO 2025-07-04 17:48:16,960 websocket_utils 406268 138264619394752 Sending player result to group player_156: {'round_number': 4, 'message': '🎉 Correct! You earned 25 points. (4 answer streak!)\n\nThe correct answer was: Vatican City\nYour answer: Vatican City', 'points_earned': 25, 'is_correct': True, 'correct_answer': 'Vatican City', 'player_answer': 'Vatican City', 'round_type': 'multiple_choice'}
+INFO 2025-07-04 17:48:16,961 websocket_utils 406268 138264619394752 Successfully sent player_result to player_156
+INFO 2025-07-04 17:48:16,961 consumers 406268 138264684638336 Forwarding player_result to player 156: {'round_number': 4, 'message': '🎉 Correct! You earned 25 points. (4 answer streak!)\n\nThe correct answer was: Vatican City\nYour answer: Vatican City', 'points_earned': 25, 'is_correct': True, 'correct_answer': 'Vatican City', 'player_answer': 'Vatican City', 'round_type': 'multiple_choice'}
+DEBUG 2025-07-04 17:48:16,962 cache_service 406268 138264619394752 Invalidated game state cache for TTPJSC
+INFO 2025-07-04 17:48:16,962 websocket_utils 406268 138264619394752 Broadcasting round_ended to group game_TTPJSC: {'round_number': 4, 'round_type': 'multiple_choice', 'is_final_round': False, 'answers': [{'player_name': 'Joanna', 'answer_text': 'Vatican City', 'points_awarded': 25, 'is_valid': True, 'is_unique': False}, {'player_name': 'Lauren', 'answer_text': 'Vatican City', 'points_awarded': 25, 'is_valid': True, 'is_unique': False}], 'correct_answer': 'Vatican City'}
+INFO 2025-07-04 17:48:16,963 websocket_utils 406268 138264619394752 Successfully broadcast round_ended to game_TTPJSC
+INFO 2025-07-04 17:48:16,993 websocket_utils 406268 138264384104128 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 22}
+INFO 2025-07-04 17:48:16,995 websocket_utils 406268 138264384104128 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:48:24,934 round_handlers 406268 138264384104128 Using fallback questions for game TTPJSC, round 5
+INFO 2025-07-04 17:48:24,935 round_handlers 406268 138264384104128 Using FALLBACK question data for game TTPJSC, round 5: What is the largest mammal in the world?
+DEBUG 2025-07-04 17:48:24,935 cache_service 406268 138264384104128 Cached round state for round 5: multiple_choice
+DEBUG 2025-07-04 17:48:24,936 cache_service 406268 138264384104128 Invalidated game state cache for TTPJSC
+INFO 2025-07-04 17:48:24,936 websocket_utils 406268 138264384104128 Broadcasting round_started to group game_TTPJSC: {'round_number': 5, 'total_time': 30, 'started_at': '2025-07-04T17:48:24.925423+00:00', 'round_type': 'multiple_choice', 'is_active': True, 'time_remaining': 30, 'question_text': 'What is the largest mammal in the world?', 'choices': ['Blue Whale', 'African Elephant', 'Giraffe', 'Hippopotamus'], 'category': 'Animals', 'correct_answer': 'Blue Whale'}
+INFO 2025-07-04 17:48:24,938 websocket_utils 406268 138264384104128 Successfully broadcast round_started to game_TTPJSC
+INFO 2025-07-04 17:48:24,939 websocket_utils 406268 138264619394752 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 29}
+INFO 2025-07-04 17:48:24,939 websocket_utils 406268 138264384104128 Started timer thread for game TTPJSC with 30 seconds
+INFO 2025-07-04 17:48:24,953 websocket_utils 406268 138264619394752 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:48:25,958 websocket_utils 406268 138264619394752 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 28}
+INFO 2025-07-04 17:48:25,959 websocket_utils 406268 138264619394752 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:48:26,961 websocket_utils 406268 138264619394752 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 27}
+INFO 2025-07-04 17:48:26,964 websocket_utils 406268 138264619394752 Successfully broadcast timer_update to game_TTPJSC
+DEBUG 2025-07-04 17:48:27,655 cache_service 406268 138264627787456 Cached 2 connected players for game TTPJSC
+DEBUG 2025-07-04 17:48:27,656 cache_service 406268 138264627787456 Cached game state for TTPJSC: active, 2 players
+DEBUG 2025-07-04 17:48:27,657 cache_service 406268 138264684638336 Cached answer for player 156 in round 5: Blue Whale...
+INFO 2025-07-04 17:48:27,657 consumers 406268 138264684638336 Player 156 submitted answer for round 5 in game TTPJSC
+INFO 2025-07-04 17:48:27,968 websocket_utils 406268 138264619394752 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 26}
+INFO 2025-07-04 17:48:27,973 websocket_utils 406268 138264619394752 Successfully broadcast timer_update to game_TTPJSC
+DEBUG 2025-07-04 17:48:28,518 consumers 406268 138264627787456 Using cached game state for TTPJSC (age: 0.9s)
+DEBUG 2025-07-04 17:48:28,533 cache_service 406268 138264684638336 Cached answer for player 155 in round 5: Blue Whale...
+INFO 2025-07-04 17:48:28,534 consumers 406268 138264684638336 Player 155 submitted answer for round 5 in game TTPJSC
+INFO 2025-07-04 17:48:28,977 websocket_utils 406268 138264619394752 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 25}
+INFO 2025-07-04 17:48:28,979 websocket_utils 406268 138264619394752 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:48:29,982 websocket_utils 406268 138264619394752 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 24}
+INFO 2025-07-04 17:48:29,985 websocket_utils 406268 138264619394752 Successfully broadcast timer_update to game_TTPJSC
+DEBUG 2025-07-04 17:48:30,398 cache_service 406268 138264384104128 Marked round 5 as ended in cache
+INFO 2025-07-04 17:48:30,425 services 406268 138264384104128 Processed answer for player Joanna: Blue Whale...
+INFO 2025-07-04 17:48:30,436 services 406268 138264384104128 Processed answer for player Lauren: Blue Whale...
+INFO 2025-07-04 17:48:30,439 services 406268 138264384104128 Bulk created 2 PlayerAnswer objects
+DEBUG 2025-07-04 17:48:30,440 cache_service 406268 138264384104128 Cleared cached answers for round 5
+INFO 2025-07-04 17:48:30,441 services 406268 138264384104128 Processed 2 cached answers into database
+INFO 2025-07-04 17:48:30,449 round_handlers 406268 138264384104128 Using CACHED question data for game TTPJSC, round 5: What is the largest mammal in the world?
+INFO 2025-07-04 17:48:30,521 websocket_utils 406268 138264384104128 Broadcasting player results for game TTPJSC, round 5
+INFO 2025-07-04 17:48:30,522 websocket_utils 406268 138264384104128 Round type: multiple_choice
+INFO 2025-07-04 17:48:30,522 websocket_utils 406268 138264384104128 Correct answer for multiple choice: Blue Whale
+INFO 2025-07-04 17:48:30,524 websocket_utils 406268 138264384104128 Processing result for player Lauren (ID: 155)
+INFO 2025-07-04 17:48:30,527 websocket_utils 406268 138264384104128 Player answer found: Blue Whale
+INFO 2025-07-04 17:48:30,527 websocket_utils 406268 138264384104128 Sending player result to group player_155: {'round_number': 5, 'message': '🎉 Correct! You earned 30 points. (5 answer streak!)\n\nThe correct answer was: Blue Whale\nYour answer: Blue Whale', 'points_earned': 30, 'is_correct': True, 'correct_answer': 'Blue Whale', 'player_answer': 'Blue Whale', 'round_type': 'multiple_choice'}
+INFO 2025-07-04 17:48:30,528 websocket_utils 406268 138264384104128 Successfully sent player_result to player_155
+INFO 2025-07-04 17:48:30,528 websocket_utils 406268 138264384104128 Processing result for player Joanna (ID: 156)
+INFO 2025-07-04 17:48:30,530 websocket_utils 406268 138264384104128 Player answer found: Blue Whale
+INFO 2025-07-04 17:48:30,530 websocket_utils 406268 138264384104128 Sending player result to group player_156: {'round_number': 5, 'message': '🎉 Correct! You earned 30 points. (5 answer streak!)\n\nThe correct answer was: Blue Whale\nYour answer: Blue Whale', 'points_earned': 30, 'is_correct': True, 'correct_answer': 'Blue Whale', 'player_answer': 'Blue Whale', 'round_type': 'multiple_choice'}
+INFO 2025-07-04 17:48:30,530 consumers 406268 138264684638336 Forwarding player_result to player 155: {'round_number': 5, 'message': '🎉 Correct! You earned 30 points. (5 answer streak!)\n\nThe correct answer was: Blue Whale\nYour answer: Blue Whale', 'points_earned': 30, 'is_correct': True, 'correct_answer': 'Blue Whale', 'player_answer': 'Blue Whale', 'round_type': 'multiple_choice'}
+INFO 2025-07-04 17:48:30,532 consumers 406268 138264684638336 Forwarding player_result to player 156: {'round_number': 5, 'message': '🎉 Correct! You earned 30 points. (5 answer streak!)\n\nThe correct answer was: Blue Whale\nYour answer: Blue Whale', 'points_earned': 30, 'is_correct': True, 'correct_answer': 'Blue Whale', 'player_answer': 'Blue Whale', 'round_type': 'multiple_choice'}
+INFO 2025-07-04 17:48:30,532 websocket_utils 406268 138264384104128 Successfully sent player_result to player_156
+DEBUG 2025-07-04 17:48:30,533 cache_service 406268 138264384104128 Invalidated game state cache for TTPJSC
+INFO 2025-07-04 17:48:30,533 websocket_utils 406268 138264384104128 Broadcasting round_ended to group game_TTPJSC: {'round_number': 5, 'round_type': 'multiple_choice', 'is_final_round': True, 'answers': [{'player_name': 'Lauren', 'answer_text': 'Blue Whale', 'points_awarded': 30, 'is_valid': True, 'is_unique': False}, {'player_name': 'Joanna', 'answer_text': 'Blue Whale', 'points_awarded': 30, 'is_valid': True, 'is_unique': False}], 'correct_answer': 'Blue Whale'}
+INFO 2025-07-04 17:48:30,536 websocket_utils 406268 138264384104128 Successfully broadcast round_ended to game_TTPJSC
+INFO 2025-07-04 17:48:30,989 websocket_utils 406268 138264619394752 Broadcasting timer_update to group game_TTPJSC: {'time_remaining': 23}
+INFO 2025-07-04 17:48:30,992 websocket_utils 406268 138264619394752 Successfully broadcast timer_update to game_TTPJSC
+INFO 2025-07-04 17:48:39,474 websocket_utils 406268 138264619394752 Broadcasting game_complete to group game_TTPJSC: {'game_status': 'finished', 'final_scores': [{'player_name': 'Lauren', 'total_score': 100}, {'player_name': 'Joanna', 'total_score': 100}], 'message': 'Game completed! Here are the final scores.'}
+INFO 2025-07-04 17:48:39,477 websocket_utils 406268 138264619394752 Successfully broadcast game_complete to game_TTPJSC
