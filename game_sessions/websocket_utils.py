@@ -270,6 +270,13 @@ def start_timer_broadcast(game_session, _round_obj):
     import threading
     import time
 
+    # Check if a timer thread is already running for this game
+    thread_name = f"timer_{game_session.game_code}"
+    existing_threads = [t for t in threading.enumerate() if t.name == thread_name]
+    if existing_threads:
+        logger.warning(f"Timer thread already running for game {game_session.game_code}, not starting new one")
+        return
+
     def timer_worker():
         total_time = game_session.configuration.round_time_seconds
         start_time = timezone.now()
@@ -280,6 +287,10 @@ def start_timer_broadcast(game_session, _round_obj):
 
             # Broadcast timer update
             broadcast_timer_update(game_session.game_code, int(time_remaining))
+            
+            # Log timer updates every 10 seconds for debugging
+            if int(time_remaining) % 10 == 0 or time_remaining <= 5:
+                logger.info(f"Timer update for game {game_session.game_code}: {int(time_remaining)} seconds remaining")
 
             # Stop if time is up and automatically end the round
             if time_remaining <= 0:
@@ -289,7 +300,6 @@ def start_timer_broadcast(game_session, _round_obj):
                 # Import here to avoid circular imports
                 from .models import GameSession
                 from players.models import PlayerAnswer
-                from .views import perform_automatic_scoring
 
                 try:
                     # Refresh game session and check if round is still active
@@ -339,8 +349,10 @@ def start_timer_broadcast(game_session, _round_obj):
                                 round_number=current_game.current_round_number
                             ).select_related('player').order_by('?')  # Random order
 
-                            # Perform automatic scoring
-                            perform_automatic_scoring(current_game, answers)
+                            # Perform automatic scoring using round handler
+                            from .round_handlers import get_round_handler
+                            round_handler = get_round_handler(current_game, current_game.current_round_number)
+                            round_handler.perform_automatic_scoring(answers)
 
                             # Prepare answer data for broadcast
                             answer_data = []
@@ -375,6 +387,7 @@ def start_timer_broadcast(game_session, _round_obj):
             time.sleep(1)  # Update every second
 
     # Start timer in background thread
-    timer_thread = threading.Thread(target=timer_worker, name=f"timer_{game_session.game_code}")
+    timer_thread = threading.Thread(target=timer_worker, name=thread_name)
     timer_thread.daemon = True
     timer_thread.start()
+    logger.info(f"Started timer thread for game {game_session.game_code} with {game_session.configuration.round_time_seconds} seconds")

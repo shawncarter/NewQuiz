@@ -73,7 +73,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'quiz_game.wsgi.application'
+# WSGI_APPLICATION = 'quiz_game.wsgi.application'  # Not used - we use ASGI for WebSocket support
 
 
 # Database

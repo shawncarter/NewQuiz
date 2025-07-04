@@ -118,12 +118,8 @@ def game_master(request, game_code):
         'next_round': None,  # Not needed with counter system
     }
 
-    # Choose template based on whether rounds have actually started
-    # Only use the game_active.html template when rounds have begun
-    if game_session.current_round_number > 0:
-        return render(request, 'game_sessions/game_active.html', context)
-    else:
-        return render(request, 'game_sessions/game_master.html', context)
+    # Always use game_active.html template - it now handles all game states
+    return render(request, 'game_sessions/game_active.html', context)
 
 
 @require_http_methods(["POST"])

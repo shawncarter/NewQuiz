@@ -38,7 +38,65 @@ body {
 </style>
 
 <div id="game-state">
-    {% if game_session.current_round_number > 0 %}
+    {% if game_session.status == 'waiting' %}
+        <!-- Pre-game waiting state -->
+        <div class="text-center">
+            <h2>🎯 Game Master Dashboard</h2>
+            <div class="game-code" style="background: #e3f2fd; padding: 20px; border-radius: 10px; margin: 20px 0;">
+                <h3>Game Code: {{ game_session.game_code }}</h3>
+            </div>
+            
+            {% if config %}
+                <div class="game-config" style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin: 20px 0;">
+                    <h4>🎯 Game Configuration</h4>
+                    <p><strong>Game Type:</strong> {{ config.game_type.name }}</p>
+                    <p><strong>Rounds:</strong> {{ config.num_rounds }} | <strong>Time per Round:</strong> {{ config.round_time_seconds }}s</p>
+                </div>
+                
+                <div style="margin: 20px 0;">
+                    <div id="start-game-container">
+                        <button id="start-game-btn" class="btn btn-success" {% if player_count == 0 %}style="display: none;"{% endif %}>
+                            🚀 Start Game
+                        </button>
+                        <button id="waiting-for-players-btn" class="btn" disabled {% if player_count > 0 %}style="display: none;"{% endif %}>
+                            Waiting for players to join...
+                        </button>
+                    </div>
+                    <a href="{% url 'game_sessions:configure_game' game_session.game_code %}" class="btn">
+                        ⚙️ Reconfigure Game
+                    </a>
+                </div>
+            {% else %}
+                <div style="margin: 20px 0;">
+                    <a href="{% url 'game_sessions:configure_game' game_session.game_code %}" class="btn btn-success">
+                        ⚙️ Configure Game First
+                    </a>
+                </div>
+            {% endif %}
+            
+            <div class="player-list" style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin: 20px 0;">
+                <h4>Connected Players (<span class="player-count">{{ player_count }}</span>/{{ game_session.max_players }})</h4>
+                <div id="player-list-content">
+                    {% if players %}
+                        {% for player in players %}
+                            <div class="player-item" style="padding: 5px 0; border-bottom: 1px solid #eee;">
+                                <strong>{{ player.name }}</strong>
+                                <small style="color: #666;"> - Joined {{ player.joined_at|date:"H:i:s" }}</small>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <p style="color: #666; font-style: italic;">No players have joined yet.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    {% elif game_session.status == 'finished' %}
+        <!-- Game finished state -->
+        <div class="text-center">
+            <h2>🏁 Game Finished!</h2>
+            <p>Thank you for playing!</p>
+        </div>
+    {% elif game_session.current_round_number > 0 %}
         {% with round_info=game_session.get_current_round_info %}
             <div id="round-display">
                 <div class="round-header">
@@ -172,8 +230,32 @@ body {
     font-size: 2em;
     font-weight: bold;
     text-align: center;
-    color: #dc3545;
+    color: #007bff;
     margin: 20px 0;
+    background: #f8f9fa;
+    border: 2px solid #007bff;
+    border-radius: 10px;
+    padding: 15px;
+    transition: all 0.3s ease;
+}
+
+.countdown.timer-warning {
+    border-color: #ffc107;
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.countdown.timer-danger {
+    border-color: #dc3545;
+    background-color: #f8d7da;
+    color: #721c24;
+    animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.7; }
+    100% { opacity: 1; }
 }
 
 .answers-grid {
@@ -385,14 +467,18 @@ function initWebSocket() {
 
 // Handle WebSocket messages
 function handleWebSocketMessage(data) {
+    console.log('🔍 WebSocket message received:', data.type, data);
     switch(data.type) {
         case 'timer_update':
+            console.log('🔍 Timer update:', data.data.time_remaining);
             updateTimer(data.data.time_remaining);
             break;
         case 'round_started':
+            console.log('🔍 Round started:', data.data);
             updateRoundDisplay(data.data);
             break;
         case 'round_ended':
+            console.log('🔍 Round ended:', data.data);
             handleRoundEnded(data.data);
             break;
         case 'score_update':
@@ -444,13 +530,36 @@ function handleScoreUpdate(data) {
 // Update timer display
 function updateTimer(timeRemaining) {
     const timerElement = document.getElementById('countdown-timer');
+    const countdownDisplay = document.getElementById('countdown-display');
+    
     if (timerElement) {
-        timerElement.textContent = timeRemaining;
+        const minutes = Math.floor(timeRemaining / 60);
+        const seconds = timeRemaining % 60;
+        const formattedTime = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+        
+        timerElement.textContent = formattedTime;
+        
+        // Update countdown styling based on time remaining
+        if (countdownDisplay) {
+            countdownDisplay.classList.remove('timer-warning', 'timer-danger');
+            
+            if (timeRemaining <= 10) {
+                countdownDisplay.classList.add('timer-danger');
+                countdownDisplay.innerHTML = `<span id="countdown-timer" style="color: #dc3545; font-weight: bold;">${formattedTime}</span> seconds remaining`;
+            } else if (timeRemaining <= 30) {
+                countdownDisplay.classList.add('timer-warning');
+                countdownDisplay.innerHTML = `<span id="countdown-timer" style="color: #ffc107; font-weight: bold;">${formattedTime}</span> seconds remaining`;
+            } else {
+                countdownDisplay.innerHTML = `<span id="countdown-timer">${formattedTime}</span> seconds remaining`;
+            }
+        }
 
-        // Auto-end round if time is up
+        // Timer reaching zero is handled automatically by the server
         if (timeRemaining <= 0) {
             clearInterval(countdownInterval);
-            endRound();
+            if (timerElement) {
+                timerElement.textContent = "Time's Up!";
+            }
         }
     }
 }
@@ -495,104 +604,84 @@ function updateRoundDisplay(data) {
             choices: roundData.choices
         });
         
-        // Update the round header (Round X of Y)
-        const roundTitle = document.querySelector('.round-title h2');
-        if (roundTitle) {
-            roundTitle.textContent = `Round ${roundData.round_number} of {{ config.num_rounds }}`;
+        // Replace the entire game state content with the active round display
+        const gameState = document.getElementById('game-state');
+        if (!gameState) {
+            console.error('Game state element not found!');
+            return;
         }
         
-        // Update the round details based on round type
-        const categorySpan = document.querySelector('.round-details .category');
-        const letterSpan = document.querySelector('.round-details .letter');
+        // Build round details HTML based on round type
+        let roundDetailsHtml = '';
+        let gamePromptHtml = '';
         
         if (currentRoundType === 'flower_fruit_veg') {
-            if (categorySpan && letterSpan) {
-                // Handle both string categories and category objects with .name
-                const categoryName = roundData.category?.name || roundData.category || roundData.category_name || 'Category';
-                categorySpan.textContent = categoryName;
-                letterSpan.textContent = `Letter: ${roundData.letter || roundData.prompt_letter}`;
-                letterSpan.style.display = 'inline-block';
-            }
+            const categoryName = roundData.category?.name || roundData.category || roundData.category_name || 'Category';
+            const letter = roundData.letter || roundData.prompt_letter;
             
-            // Update the game prompt for flower_fruit_veg
-            const gamePrompt = document.querySelector('.game-prompt');
-            if (gamePrompt) {
-                const categoryName = roundData.category?.name || roundData.category || roundData.category_name || 'items';
-                gamePrompt.innerHTML = `${categoryName} that start with ${roundData.letter || roundData.prompt_letter}`;
-            }
+            roundDetailsHtml = `
+                <span class="category">${categoryName}</span>
+                <span class="letter">Letter: ${letter}</span>
+            `;
+            gamePromptHtml = `${categoryName} that start with ${letter}`;
         } else if (currentRoundType === 'multiple_choice') {
-            if (categorySpan) {
-                categorySpan.textContent = roundData.category || 'Multiple Choice';
-            }
-            if (letterSpan) {
-                letterSpan.style.display = 'none'; // Hide letter for multiple choice
-            }
+            const category = roundData.category || 'Multiple Choice';
+            const questionText = roundData.question_text || roundData.question || 'Question not available';
             
-            // Update the game prompt for multiple choice
-            const gamePrompt = document.querySelector('.game-prompt');
-            if (gamePrompt) {
-                const questionText = roundData.question_text || roundData.question || 'Question not available';
-                let choicesHtml = '';
-                if (roundData.choices && Array.isArray(roundData.choices)) {
-                    choicesHtml = '<ul class="multiple-choice-options">' + 
-                        roundData.choices.map(choice => `<li>${choice}</li>`).join('') + 
-                        '</ul>';
-                } else {
-                    console.error('No choices available for multiple choice question:', roundData);
-                }
-                gamePrompt.innerHTML = `${questionText}${choicesHtml}`;
+            roundDetailsHtml = `<span class="category">${category}</span>`;
+            
+            let choicesHtml = '';
+            if (roundData.choices && Array.isArray(roundData.choices)) {
+                choicesHtml = '<ul class="multiple-choice-options">' + 
+                    roundData.choices.map(choice => `<li>${choice}</li>`).join('') + 
+                    '</ul>';
+            } else {
+                console.error('No choices available for multiple choice question:', roundData);
             }
-        } else {
-            console.error('Unknown round type:', currentRoundType, 'Data:', roundData);
+            gamePromptHtml = `${questionText}${choicesHtml}`;
         }
+        
+        // Replace the game state content with active round HTML
+        const initialTime = roundData.time_remaining || roundData.total_time || 30;
+        const minutes = Math.floor(initialTime / 60);
+        const seconds = initialTime % 60;
+        const formattedTime = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+        
+        gameState.innerHTML = `
+            <div id="round-display">
+                <div class="round-header">
+                    <div class="round-title">
+                        <h2>Round ${roundData.round_number} of {{ config.num_rounds }}</h2>
+                        <span class="player-count">{{ player_count }} players</span>
+                    </div>
+                    <div class="round-details">
+                        ${roundDetailsHtml}
+                    </div>
+                </div>
+                <div class="game-prompt">
+                    ${gamePromptHtml}
+                </div>
+                <div id="countdown-display" class="countdown">
+                    <span id="countdown-timer">${formattedTime}</span> seconds remaining
+                </div>
+                <button id="end-round-btn" class="btn">⏹️ End Round Early</button>
+            </div>
+        `;
+        
+        // Re-attach event listener to the new end round button
+        const newEndRoundBtn = document.getElementById('end-round-btn');
+        if (newEndRoundBtn) {
+            newEndRoundBtn.addEventListener('click', endRound);
+        }
+        
+        console.log('🔍 ROUND START: Replaced game state content with active round display');
     }
 
-    // Show round controls - create them if they don't exist
-    let countdownDisplay = document.getElementById('countdown-display');
-    let endRoundBtn = document.getElementById('end-round-btn');
-    
-    if (!countdownDisplay) {
-        // Create countdown display
-        countdownDisplay = document.createElement('div');
-        countdownDisplay.id = 'countdown-display';
-        countdownDisplay.className = 'countdown';
-        countdownDisplay.innerHTML = '<span id="countdown-timer">30</span> seconds remaining';
-        
-        // Insert after game prompt
-        const gamePrompt = document.querySelector('.game-prompt');
-        if (gamePrompt) {
-            gamePrompt.parentNode.insertBefore(countdownDisplay, gamePrompt.nextSibling);
-        }
-    }
-    
-    if (!endRoundBtn) {
-        // Create end round button
-        endRoundBtn = document.createElement('button');
-        endRoundBtn.id = 'end-round-btn';
-        endRoundBtn.className = 'btn';
-        endRoundBtn.innerHTML = '⏹️ End Round Early';
-        endRoundBtn.addEventListener('click', endRound);
-        
-        // Insert after countdown display
-        if (countdownDisplay) {
-            countdownDisplay.parentNode.insertBefore(endRoundBtn, countdownDisplay.nextSibling);
-        }
-    }
-    
-    countdownDisplay.style.display = 'block';
-    endRoundBtn.style.display = 'inline-block';
-
-    // Hide answers display if it exists but don't clear the element itself
+    // Hide answers display if it exists 
     const answersDisplay = document.getElementById('answers-display');
     if (answersDisplay) {
         answersDisplay.style.display = 'none';
-        // Don't clear innerHTML here - let showAnswers() handle it when called
         console.log('🔍 NEW ROUND: Hidden answers display, preserving element');
-    }
-
-    // Start countdown timer
-    if (data.current_round && data.current_round.time_remaining) {
-        startCountdown(data.current_round.time_remaining);
     }
 }
 
@@ -653,6 +742,30 @@ function startCountdown(seconds) {
     // which gets accurate time remaining from server
     console.log('Timer will be synchronized with server');
 }
+
+// Start game (from waiting state)
+document.getElementById('start-game-btn')?.addEventListener('click', function() {
+    fetch('{% url "game_sessions:start_game" game_session.game_code %}', {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': '{{ csrf_token }}',
+            'Content-Type': 'application/json',
+        },
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
+            console.log('Game started successfully');
+            // Page will be updated via WebSocket, or reload to get active template
+            window.location.reload();
+        } else {
+            console.log('Error: ' + data.error);
+        }
+    })
+    .catch(error => {
+        console.log('Error starting game: ' + error);
+    });
+});
 
 // Start round (works for first round and subsequent rounds)
 document.getElementById('start-round-btn')?.addEventListener('click', function() {
