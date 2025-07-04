@@ -711,15 +711,33 @@ document.addEventListener('DOMContentLoaded', () => {
             const playerResult = data.final_scores.find(score => score.player_name === currentPlayerName);
             if (playerResult) {
                 finalScore = playerResult.total_score;
-                playerRank = data.final_scores.indexOf(playerResult) + 1;
+                
+                // Calculate proper ranking with tie handling
+                let currentRank = 1;
+                for (let i = 0; i < data.final_scores.length; i++) {
+                    if (data.final_scores[i].player_name === currentPlayerName) {
+                        playerRank = currentRank;
+                        break;
+                    }
+                    // Only increment rank if next player has lower score
+                    if (i < data.final_scores.length - 1 && data.final_scores[i].total_score !== data.final_scores[i + 1].total_score) {
+                        currentRank = i + 2;
+                    }
+                }
             }
             
-            // Create leaderboard display
-            allScores = data.final_scores.map((score, index) => 
-                `<div style="margin: 5px 0; ${score.player_name === currentPlayerName ? 'font-weight: bold; color: #007bff;' : ''}">
-                    ${index + 1}. ${escapeHTML(score.player_name)}: ${score.total_score} points
-                </div>`
-            ).join('');
+            // Create leaderboard display with proper ranking
+            let displayRank = 1;
+            allScores = data.final_scores.map((score, index) => {
+                // Update display rank only when score changes
+                if (index > 0 && data.final_scores[index].total_score !== data.final_scores[index - 1].total_score) {
+                    displayRank = index + 1;
+                }
+                
+                return `<div style="margin: 5px 0; ${score.player_name === currentPlayerName ? 'font-weight: bold; color: #007bff;' : ''}">
+                    ${displayRank}. ${escapeHTML(score.player_name)}: ${score.total_score} points
+                </div>`;
+            }).join('');
         }
         
         gameInterface.innerHTML = `
