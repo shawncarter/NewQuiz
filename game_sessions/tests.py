@@ -97,7 +97,9 @@ class GameCreationViewTest(TestCase):
     """Test game creation through web interface"""
 
     def setUp(self):
-        """Set up test data"""
+        """
+        Initializes the test client and creates a game type with two associated categories for use in test cases.
+        """
         self.client = Client()
         self.game_type = GameType.objects.create(
             name="Flower, Fruit & Veg",
@@ -113,7 +115,9 @@ class GameCreationViewTest(TestCase):
         )
 
     def test_create_game_get(self):
-        """Test GET request to create game page"""
+        """
+        Verifies that the game creation page renders successfully and displays the expected form elements and available game types and categories.
+        """
         response = self.client.get(reverse('game_sessions:create_game'))
 
         self.assertEqual(response.status_code, 200)
@@ -123,7 +127,9 @@ class GameCreationViewTest(TestCase):
         self.assertContains(response, self.category2.name)
 
     def test_create_game_post_success(self):
-        """Test successful game creation via POST"""
+        """
+        Test that posting valid data to the game creation endpoint successfully creates a new game session and configuration, then redirects to the game master page.
+        """
         response = self.client.post(reverse('game_sessions:create_game'), {
             'game_type': 'flower_fruit_veg',
             'categories': [self.category1.id, self.category2.id],
@@ -150,7 +156,9 @@ class GameCreationViewTest(TestCase):
         self.assertRedirects(response, expected_url)
 
     def test_create_game_post_minimal(self):
-        """Test game creation with minimal data"""
+        """
+        Test that a game can be created with only the required fields, and that default configuration values are applied for unspecified options.
+        """
         response = self.client.post(reverse('game_sessions:create_game'), {
             'game_type': self.game_type.id,
             'categories': [self.category1.id],
@@ -191,7 +199,9 @@ class PlayerJoiningTest(TestCase):
         self.config.categories.add(self.category)
 
     def test_join_game_get(self):
-        """Test GET request to join game page"""
+        """
+        Test that a GET request to the join game page returns a 200 response and contains the expected form fields.
+        """
         response = self.client.get(reverse('game_sessions:join_game'))
 
         self.assertEqual(response.status_code, 200)
@@ -200,7 +210,11 @@ class PlayerJoiningTest(TestCase):
         self.assertContains(response, 'Your Name')
 
     def test_join_game_success(self):
-        """Test successful player joining"""
+        """
+        Test that a player can successfully join a game session via POST request.
+        
+        Verifies that a new player is created, marked as connected, and redirected to the player lobby. Also checks that the game session's player count is updated accordingly.
+        """
         response = self.client.post(reverse('game_sessions:join_game'), {
             'game_code': self.game_session.game_code,
             'player_name': 'Test Player'
@@ -224,7 +238,9 @@ class PlayerJoiningTest(TestCase):
         self.assertEqual(self.game_session.player_count, 1)
 
     def test_join_game_invalid_code(self):
-        """Test joining with invalid game code"""
+        """
+        Test that submitting an invalid game code when joining a game returns an error message and does not create a player.
+        """
         response = self.client.post(reverse('game_sessions:join_game'), {
             'game_code': 'INVALID',
             'player_name': 'Test Player'
@@ -237,7 +253,9 @@ class PlayerJoiningTest(TestCase):
         self.assertEqual(Player.objects.count(), 0)
 
     def test_join_game_empty_name(self):
-        """Test joining with empty player name"""
+        """
+        Test that submitting an empty player name when joining a game returns an error message and does not create a player.
+        """
         response = self.client.post(reverse('game_sessions:join_game'), {
             'game_code': self.game_session.game_code,
             'player_name': ''
@@ -250,7 +268,11 @@ class PlayerJoiningTest(TestCase):
         self.assertEqual(Player.objects.count(), 0)
 
     def test_join_game_duplicate_name(self):
-        """Test joining with duplicate player name in same game"""
+        """
+        Test that joining a game with a duplicate player name reconnects the existing player instead of creating a new one.
+        
+        Verifies that submitting a join request with a player name already present in the game session results in reconnecting the existing player, maintains a single player record, and marks the player as connected.
+        """
         # Create first player
         Player.objects.create(
             name="Test Player",
@@ -275,7 +297,9 @@ class PlayerJoiningTest(TestCase):
         self.assertTrue(player.is_connected)
 
     def test_join_game_full_capacity(self):
-        """Test joining when game is at full capacity"""
+        """
+        Verifies that attempting to join a game session at full player capacity fails and does not create a new player.
+        """
         # Set max players to 2
         self.game_session.max_players = 2
         self.game_session.save()
@@ -304,7 +328,11 @@ class PlayerJoiningTest(TestCase):
         self.assertEqual(Player.objects.count(), 2)
 
     def test_join_active_game(self):
-        """Test joining a game that has already started"""
+        """
+        Verify that attempting to join a game session with status 'active' fails and does not create a player.
+        
+        Ensures the join attempt returns an appropriate error message and no new player is added to the session.
+        """
         self.game_session.status = 'active'
         self.game_session.save()
 
@@ -320,7 +348,9 @@ class PlayerJoiningTest(TestCase):
         self.assertEqual(Player.objects.count(), 0)
 
     def test_multiple_players_joining(self):
-        """Test multiple players joining the same game"""
+        """
+        Verifies that multiple players can join the same game session using separate clients, and that both players are created and counted correctly.
+        """
         # First player
         response1 = self.client.post(reverse('game_sessions:join_game'), {
             'game_code': self.game_session.game_code,
@@ -371,7 +401,9 @@ class WebSocketGameTest(TestCase):
         self.config.categories.add(self.category)
 
     async def test_websocket_connection(self):
-        """Test WebSocket connection to game"""
+        """
+        Tests that a WebSocket connection to the game endpoint can be established and receives the initial game state sync message with expected fields.
+        """
         communicator = WebsocketCommunicator(
             GameConsumer.as_asgi(),
             f"/ws/game/{self.game_session.game_code}/"
@@ -419,7 +451,9 @@ class WebSocketGameTest(TestCase):
         asyncio.run(self.test_websocket_connection())
 
     async def test_websocket_game_updates(self):
-        """Test WebSocket game update broadcasts"""
+        """
+        Tests that the WebSocket connection receives broadcasted game update messages, such as player join notifications, for the associated game session.
+        """
         communicator = WebsocketCommunicator(
             GameConsumer.as_asgi(),
             f"/ws/game/{self.game_session.game_code}/"
@@ -523,7 +557,9 @@ class GameStartTest(TestCase):
         )
 
     def test_start_game_success(self):
-        """Test successfully starting a game"""
+        """
+        Verifies that starting a game via the start endpoint succeeds, updates the game session status to 'active', sets the start time, and returns a success response.
+        """
         url = reverse('game_sessions:start_game', kwargs={'game_code': self.game_session.game_code})
         response = self.client.post(url)
 
@@ -540,7 +576,9 @@ class GameStartTest(TestCase):
         self.assertIsNotNone(self.game_session.started_at)
 
     def test_start_game_no_players(self):
-        """Test starting game with no players"""
+        """
+        Verify that attempting to start a game session with no players returns a 400 error and leaves the session in the 'waiting' state.
+        """
         # Remove the player
         self.player.delete()
 
@@ -557,7 +595,9 @@ class GameStartTest(TestCase):
         self.assertEqual(self.game_session.status, 'waiting')
 
     def test_start_already_active_game(self):
-        """Test starting a game that's already active"""
+        """
+        Test that attempting to start a game session that is already active returns a 400 response with an appropriate error message.
+        """
         self.game_session.status = 'active'
         self.game_session.save()
 

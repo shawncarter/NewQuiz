@@ -12,6 +12,17 @@ logger = logging.getLogger('websockets')
 class GameConsumer(AsyncWebsocketConsumer):
     async def connect(self):
         # Handle both test and production URL routing
+        """
+        Establishes a WebSocket connection for a game session, joining the
+        appropriate group and sending the initial game state to the client.
+        
+        Attempts to extract the game code from the connection scope, supporting
+        both standard URL routing and test path extraction. If the game code
+        cannot be determined, the connection is closed. Upon successful
+        connection, the consumer joins the game group, accepts the WebSocket,
+        and transmits the current game state to the client.
+        """
+        # Handle both test and production URL routing
         if 'url_route' in self.scope and 'kwargs' in self.scope['url_route']:
             self.game_code = self.scope['url_route']['kwargs']['game_code']
         else:
