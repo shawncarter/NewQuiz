@@ -354,6 +354,11 @@ def start_timer_broadcast(game_session, _round_obj):
                             round_handler = get_round_handler(current_game, current_game.current_round_number)
                             round_handler.perform_automatic_scoring(answers)
 
+                            # Send individual results to each player only if round type supports immediate feedback
+                            # (same logic as manual end round)
+                            if round_handler.should_send_immediate_feedback():
+                                broadcast_player_results(current_game, round_info, answers)
+
                             # Prepare answer data for broadcast
                             answer_data = []
                             for answer in answers:

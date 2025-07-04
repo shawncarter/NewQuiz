@@ -420,6 +420,7 @@ let currentCorrectAnswer = ''; // Will be set when rounds start
 let currentRoundNumber = {{ game_session.current_round_number|default:0 }};
 let totalRounds = {{ config.num_rounds|default:10 }};
 let roundEndedViaWebSocket = false; // Track if WebSocket already handled round end
+let autoEndRoundTimeout = null; // Track the auto-end timeout
 console.log('🔍 DEBUG: Initialized currentRoundType to:', currentRoundType);
 console.log('🔍 DEBUG: Initialized currentCorrectAnswer to:', currentCorrectAnswer);
 
@@ -560,6 +561,18 @@ function updateTimer(timeRemaining) {
             if (timerElement) {
                 timerElement.textContent = "Time's Up!";
             }
+            console.log('🔍 TIMER: Timer reached zero, waiting for server to end round automatically');
+            
+            // Fallback: If server doesn't send round_ended within 3 seconds, manually trigger end round
+            autoEndRoundTimeout = setTimeout(() => {
+                if (!roundEndedViaWebSocket) {
+                    console.log('🔍 TIMER: Server did not send round_ended message, manually ending round');
+                    endRound();
+                } else {
+                    console.log('🔍 TIMER: WebSocket round_ended already received, no manual intervention needed');
+                }
+                autoEndRoundTimeout = null;
+            }, 3000);
         }
     }
 }
@@ -570,8 +583,12 @@ function updateRoundDisplay(data) {
     const roundData = data.current_round || data;
     
     if (roundData && roundData.round_number) {
-        // Reset WebSocket flag for new round
+        // Reset WebSocket flag for new round and clear any pending timeouts
         roundEndedViaWebSocket = false;
+        if (autoEndRoundTimeout) {
+            clearTimeout(autoEndRoundTimeout);
+            autoEndRoundTimeout = null;
+        }
         
         // Clear the correct answer from previous round when new round starts
         const oldCorrectAnswer = currentCorrectAnswer;
@@ -687,8 +704,15 @@ function updateRoundDisplay(data) {
 
 // Handle round ended via WebSocket
 function handleRoundEnded(data) {
-    // Mark that WebSocket handled the round end
+    console.log('🔍 WEBSOCKET: handleRoundEnded called with data:', data);
+    
+    // Mark that WebSocket handled the round end and clear fallback timeout
     roundEndedViaWebSocket = true;
+    if (autoEndRoundTimeout) {
+        clearTimeout(autoEndRoundTimeout);
+        autoEndRoundTimeout = null;
+        console.log('🔍 WEBSOCKET: Cleared auto-end timeout since WebSocket handled round end');
+    }
     
     // Always handle round end, even if no answers
     currentAnswers = data.answers || [];
