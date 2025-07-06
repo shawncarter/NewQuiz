@@ -40,4 +40,3 @@ vulture==2.14
 watchdog==6.0.0
 zope.interface==7.2
 openai==1.54.4
-python-dotenv==1.0.1

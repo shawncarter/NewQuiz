@@ -700,7 +700,12 @@ class MastermindRoundHandler(BaseRoundHandler):
         round_state['used_question_ids'] = []
         
         self._save_round_state(round_state)
-        
+
+        # Broadcast state change
+        from .websocket_utils import broadcast_mastermind_state_change
+        round_info = self.get_round_info()
+        broadcast_mastermind_state_change(self.game_session, round_info)
+
         return {
             'success': True,
             'message': f'Selected {player.name} for their specialist round on {player.specialist_subject}'
@@ -731,7 +736,12 @@ class MastermindRoundHandler(BaseRoundHandler):
             round_state['used_question_ids'] = []
             
             self._save_round_state(round_state)
-            
+
+            # Broadcast state change to playing
+            from .websocket_utils import broadcast_mastermind_state_change
+            round_info = self.get_round_info()
+            broadcast_mastermind_state_change(self.game_session, round_info)
+
             return {
                 'success': True,
                 'message': f'Starting rapid-fire specialist round! {len(questions) if current_player_id else self.questions_per_player} questions in 90 seconds!'
@@ -740,9 +750,14 @@ class MastermindRoundHandler(BaseRoundHandler):
             # Player not ready, go back to player selection
             round_state['state'] = 'waiting_for_player_selection'
             round_state['current_player_id'] = None
-            
+
             self._save_round_state(round_state)
-            
+
+            # Broadcast state change back to player selection
+            from .websocket_utils import broadcast_mastermind_state_change
+            round_info = self.get_round_info()
+            broadcast_mastermind_state_change(self.game_session, round_info)
+
             return {
                 'success': True,
                 'message': 'Player not ready, select another player or try again later'
