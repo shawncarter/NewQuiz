@@ -673,7 +673,17 @@ class MastermindRoundHandler(BaseRoundHandler):
         cache.delete(cache_key)
     
     def select_player(self, player_id: int) -> Dict[str, Any]:
-        """GM selects which player goes next"""
+        """
+        Selects a player to begin their specialist round in Mastermind and updates the round state.
+        
+        Verifies the player exists, is connected, and has a specialist subject. Prevents selection if the player has already completed their round. Updates the round state to initiate the ready check for the selected player and broadcasts the state change.
+        
+        Parameters:
+            player_id (int): The ID of the player to select.
+        
+        Returns:
+            Dict[str, Any]: A dictionary indicating success or failure, and an error message or confirmation message.
+        """
         round_state = self._get_round_state()
         
         # Verify player exists and has specialist subject
@@ -712,7 +722,17 @@ class MastermindRoundHandler(BaseRoundHandler):
         }
     
     def player_ready_response(self, is_ready: bool) -> Dict[str, Any]:
-        """Process player's ready response"""
+        """
+        Processes the player's response to the readiness prompt in a Mastermind round.
+        
+        If the player is ready, preloads specialist questions and transitions the round state to the rapid-fire session, broadcasting the update. If not ready, reverts to player selection and broadcasts the change.
+        
+        Parameters:
+            is_ready (bool): Indicates whether the player is ready to begin the rapid-fire round.
+        
+        Returns:
+            Dict[str, Any]: A dictionary indicating success or failure, with an appropriate message or error.
+        """
         round_state = self._get_round_state()
         
         if round_state.get('state') != 'asking_ready':

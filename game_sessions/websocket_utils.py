@@ -7,7 +7,11 @@ logger = logging.getLogger('websockets')
 
 
 def broadcast_to_game(game_code, message_type, data):
-    """Broadcast a message to all clients connected to a game"""
+    """
+    Broadcasts a message to all clients connected to the specified game group.
+    
+    Automatically detects whether it is called from an asynchronous or synchronous context and delegates the broadcast accordingly.
+    """
     import asyncio
 
     # Check if we're in an async context
@@ -21,7 +25,11 @@ def broadcast_to_game(game_code, message_type, data):
 
 
 async def _async_broadcast_to_game(game_code, message_type, data):
-    """Internal async broadcast function"""
+    """
+    Asynchronously broadcasts a message to all clients in the specified game group via Django Channels.
+    
+    Attempts to send the message to the group; if the initial attempt fails, retries once after a brief delay.
+    """
     channel_layer = get_channel_layer()
     group_name = f'game_{game_code}'
 
@@ -54,12 +62,23 @@ async def _async_broadcast_to_game(game_code, message_type, data):
 
 
 def broadcast_to_game_sync(game_code, message_type, data):
-    """Synchronous broadcast function for use in sync contexts"""
+    """
+    Broadcasts a message to all clients in a game group synchronously.
+    
+    Intended for use in synchronous contexts to send a message of the specified type and data to all clients connected to the game identified by `game_code`.
+    """
     async_to_sync(_async_broadcast_to_game)(game_code, message_type, data)
 
 
 def broadcast_round_started(game_session, round_info):
-    """Broadcast that a round has started"""
+    """
+    Broadcasts a "round_started" event to all clients in the game session with detailed round information.
+    
+    The broadcasted data includes round number, total time, start time, round type (with legacy types mapped for compatibility), active status, and time remaining. Additional fields are included depending on the round type:
+    - For "flower_fruit_veg": prompt, letter, and category.
+    - For "multiple_choice": question text, choices, category, correct answer (for GM screen), and AI-generated flag.
+    - For "mastermind": state, phase, current player info, question details (if available), and other MasterMind-specific fields.
+    """
     # Map legacy round types for WebSocket compatibility
     mapped_round_type = round_info['round_type']
     if mapped_round_type == 'starts_with':
@@ -295,7 +314,11 @@ def broadcast_individual_player_result(game_session, player, answer, points_awar
 
 
 def broadcast_score_update(game_session, player_name, points_awarded, reason="manual_validation"):
-    """Broadcast score update to all clients"""
+    """
+    Broadcasts a score update event to all clients in the game session.
+    
+    If the player is found, includes their ID and current total score in the broadcast data. Otherwise, sends a minimal score update message.
+    """
     # Find the player to get their ID and current score
     try:
         from players.models import Player
@@ -321,7 +344,15 @@ def broadcast_score_update(game_session, player_name, points_awarded, reason="ma
 
 
 def broadcast_mastermind_player_completed(game_session, player_name, correct_answers, total_questions, points_earned):
-    """Broadcast mastermind player completion"""
+    """
+    Broadcasts a "mastermind_player_completed" event to all clients in the game session when a player finishes their specialist round.
+    
+    Parameters:
+        player_name (str): The name of the player who completed the round.
+        correct_answers (int): The number of correct answers the player achieved.
+        total_questions (int): The total number of questions in the round.
+        points_earned (int): The number of points the player earned for the round.
+    """
     data = {
         'player_name': player_name,
         'correct_answers': correct_answers,
@@ -333,7 +364,11 @@ def broadcast_mastermind_player_completed(game_session, player_name, correct_ans
 
 
 def broadcast_mastermind_progress_update(game_session, player_name, current_question, total_questions, correct_answers):
-    """Broadcast mastermind progress update during rapid-fire session"""
+    """
+    Broadcasts a progress update for a player during a MasterMind rapid-fire session.
+    
+    Sends the player's current question number, total questions, and correct answers to all clients in the game session.
+    """
     data = {
         'player_name': player_name,
         'current_question': current_question,
@@ -345,12 +380,20 @@ def broadcast_mastermind_progress_update(game_session, player_name, current_ques
 
 
 def broadcast_mastermind_state_change(game_session, round_info):
-    """Broadcast mastermind state changes to all clients"""
+    """
+    Broadcasts a MasterMind round state change event to all clients in the game session.
+    
+    Sends the updated round information to all connected clients using the "round_update" message type.
+    """
     broadcast_to_game(game_session.game_code, 'round_update', round_info)
 
 
 def start_timer_broadcast(game_session, round_info, mastermind_duration=None):
-    """Start broadcasting timer updates for a round"""
+    """
+    Starts a background thread to broadcast timer updates for a game round, automatically ending the round and processing results when time expires.
+    
+    If a timer thread for the game is already running, no new thread is started. The timer broadcasts remaining time every second to all clients. When time runs out, the function ends the round, transfers any cached answers to the database, performs automatic scoring, sends individual results if applicable, and broadcasts the round ended event to all connected clients.
+    """
     import threading
     import time
 
