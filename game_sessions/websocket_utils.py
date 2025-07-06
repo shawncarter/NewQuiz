@@ -8,13 +8,27 @@ logger = logging.getLogger('websockets')
 
 def broadcast_to_game(game_code, message_type, data):
     """Broadcast a message to all clients connected to a game"""
+    import asyncio
+
+    # Check if we're in an async context
+    try:
+        loop = asyncio.get_running_loop()
+        # We're in an async context, schedule the broadcast
+        asyncio.create_task(_async_broadcast_to_game(game_code, message_type, data))
+    except RuntimeError:
+        # We're in a sync context, use async_to_sync
+        async_to_sync(_async_broadcast_to_game)(game_code, message_type, data)
+
+
+async def _async_broadcast_to_game(game_code, message_type, data):
+    """Internal async broadcast function"""
     channel_layer = get_channel_layer()
     group_name = f'game_{game_code}'
 
     logger.info(f"Broadcasting {message_type} to group {group_name}: {data}")
 
     try:
-        async_to_sync(channel_layer.group_send)(
+        await channel_layer.group_send(
             group_name,
             {
                 'type': message_type,
@@ -25,10 +39,9 @@ def broadcast_to_game(game_code, message_type, data):
     except Exception as e:
         logger.error(f"Failed to broadcast {message_type} to {group_name}: {e}")
         # Retry once after a short delay
-        import time
-        time.sleep(0.1)
+        await asyncio.sleep(0.1)
         try:
-            async_to_sync(channel_layer.group_send)(
+            await channel_layer.group_send(
                 group_name,
                 {
                     'type': message_type,
@@ -38,6 +51,11 @@ def broadcast_to_game(game_code, message_type, data):
             logger.info(f"Successfully broadcast {message_type} to {group_name} on retry")
         except Exception as retry_e:
             logger.error(f"Failed to broadcast {message_type} to {group_name} on retry: {retry_e}")
+
+
+def broadcast_to_game_sync(game_code, message_type, data):
+    """Synchronous broadcast function for use in sync contexts"""
+    async_to_sync(_async_broadcast_to_game)(game_code, message_type, data)
 
 
 def broadcast_round_started(game_session, round_info):
@@ -300,6 +318,35 @@ def broadcast_score_update(game_session, player_name, points_awarded, reason="ma
         }
 
     broadcast_to_game(game_session.game_code, 'score_update', data)
+
+
+def broadcast_mastermind_player_completed(game_session, player_name, correct_answers, total_questions, points_earned):
+    """Broadcast mastermind player completion"""
+    data = {
+        'player_name': player_name,
+        'correct_answers': correct_answers,
+        'total_questions': total_questions,
+        'points_earned': points_earned,
+        'message': f'{player_name} completed their specialist round! {correct_answers}/{total_questions} correct ({points_earned} points)'
+    }
+    broadcast_to_game(game_session.game_code, 'mastermind_player_completed', data)
+
+
+def broadcast_mastermind_progress_update(game_session, player_name, current_question, total_questions, correct_answers):
+    """Broadcast mastermind progress update during rapid-fire session"""
+    data = {
+        'player_name': player_name,
+        'current_question': current_question,
+        'total_questions': total_questions,
+        'correct_answers': correct_answers,
+        'message': f'{player_name} is answering rapid-fire questions'
+    }
+    broadcast_to_game(game_session.game_code, 'mastermind_progress_update', data)
+
+
+def broadcast_mastermind_state_change(game_session, round_info):
+    """Broadcast mastermind state changes to all clients"""
+    broadcast_to_game(game_session.game_code, 'round_update', round_info)
 
 
 def start_timer_broadcast(game_session, round_info, mastermind_duration=None):
