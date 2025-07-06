@@ -26,7 +26,9 @@ class MastermindRoundHandlerTest(TestCase):
     """Test MastermindRoundHandler business logic"""
 
     def setUp(self):
-        """Set up test data"""
+        """
+        Initializes test data for Mastermind round tests, including game type, session, configuration, players, specialist questions, and the round handler.
+        """
         self.game_type = GameType.objects.create(
             name="Quiz Game",
             description="Multiple choice quiz game"
@@ -73,11 +75,15 @@ class MastermindRoundHandlerTest(TestCase):
         self.handler = MastermindRoundHandler(self.game_session, 1)
 
     def tearDown(self):
-        """Clean up cache after each test"""
+        """
+        Clears the Django cache after each test to ensure test isolation.
+        """
         cache.clear()
 
     def test_initial_state(self):
-        """Test initial mastermind round state"""
+        """
+        Verifies that the initial state of a mastermind round is set to 'waiting_for_player_selection' with the correct available and all players listed.
+        """
         round_data = self.handler.generate_round_data()
         
         self.assertEqual(round_data['state'], 'waiting_for_player_selection')
@@ -86,7 +92,9 @@ class MastermindRoundHandlerTest(TestCase):
         self.assertEqual(len(round_data['available_players']), 2)
 
     def test_player_selection(self):
-        """Test selecting a player for mastermind round"""
+        """
+        Tests that selecting a player in the mastermind round updates the round state and sets the current player correctly.
+        """
         # Select player 1
         result = self.handler.select_player(self.player1.id)
         
@@ -99,7 +107,9 @@ class MastermindRoundHandlerTest(TestCase):
         self.assertEqual(round_data['current_player']['name'], 'Alice')
 
     def test_player_ready_response_yes(self):
-        """Test player responding ready=yes"""
+        """
+        Verifies that when a player responds ready with 'yes', the round transitions to the 'playing' state and the first question is loaded.
+        """
         # First select a player
         self.handler.select_player(self.player1.id)
         
@@ -125,7 +135,9 @@ class MastermindRoundHandlerTest(TestCase):
         self.assertIn('question_text', round_data)
 
     def test_player_ready_response_no(self):
-        """Test player responding ready=no"""
+        """
+        Tests that when a player responds not ready, the round returns to the player selection state.
+        """
         # First select a player
         self.handler.select_player(self.player1.id)
         
@@ -139,7 +151,9 @@ class MastermindRoundHandlerTest(TestCase):
         self.assertEqual(round_data['state'], 'waiting_for_player_selection')
 
     def test_advance_to_next_question(self):
-        """Test advancing through rapid-fire questions"""
+        """
+        Verifies that advancing to the next question during a mastermind round correctly updates the current question index and question text.
+        """
         # Set up playing state
         self.handler.select_player(self.player1.id)
         
@@ -158,7 +172,11 @@ class MastermindRoundHandlerTest(TestCase):
         self.assertEqual(round_data['question_text'], 'Q2')
 
     def test_player_completion(self):
-        """Test player completing their rapid-fire round"""
+        """
+        Verifies that a player is marked as complete after finishing all rapid-fire questions in a mastermind round.
+        
+        Simulates a player selecting themselves, responding ready, answering the only available question, and checks that the round state updates to 'player_complete' and the player's ID is recorded as completed.
+        """
         # Set up playing state with only 1 question
         self.handler.select_player(self.player1.id)
         
@@ -176,7 +194,9 @@ class MastermindRoundHandlerTest(TestCase):
         self.assertIn(self.player1.id, round_data['completed_players'])
 
     def test_all_players_complete(self):
-        """Test when all players have completed their rounds"""
+        """
+        Verifies that the round state and phase are correctly updated when all players have completed their mastermind rounds.
+        """
         # Mark both players as complete
         state = self.handler._get_round_state()
         state['completed_players'] = [self.player1.id, self.player2.id]
@@ -188,7 +208,11 @@ class MastermindRoundHandlerTest(TestCase):
         self.assertEqual(round_data['phase'], 'general_knowledge')
 
     def test_question_preloading(self):
-        """Test question pre-loading for players"""
+        """
+        Tests that the correct number of specialist questions are preloaded and cached for a player in a mastermind round.
+        
+        Verifies that the preloaded questions are returned as a list of the expected length and that they are stored in the cache under the appropriate key.
+        """
         # Create enough questions for the test
         for i in range(25):
             MultipleChoiceQuestion.objects.create(
@@ -215,7 +239,9 @@ class MastermindWebSocketTest(TestCase):
     """Test WebSocket communication for mastermind rounds"""
 
     def setUp(self):
-        """Set up test data"""
+        """
+        Initializes test data for MastermindWebSocketTest, including game type, game session, configuration, and a player.
+        """
         self.game_type = GameType.objects.create(
             name="Quiz Game",
             description="Multiple choice quiz game"
@@ -237,11 +263,15 @@ class MastermindWebSocketTest(TestCase):
         )
 
     def tearDown(self):
-        """Clean up cache after each test"""
+        """
+        Clears the Django cache after each test to ensure test isolation.
+        """
         cache.clear()
 
     async def test_mastermind_select_player_message(self):
-        """Test mastermind player selection via WebSocket"""
+        """
+        Tests that selecting a player for the mastermind round via WebSocket updates the round state and returns the expected response.
+        """
         # Set up active game and round
         self.game_session.status = 'active'
         self.game_session.current_round_number = 1
@@ -274,12 +304,24 @@ class MastermindWebSocketTest(TestCase):
 
     @staticmethod
     def sync_to_async_save(obj):
-        """Helper to save objects in async context"""
+        """
+        Save a Django model instance asynchronously within an async context.
+        
+        Parameters:
+        	obj: The Django model instance to be saved.
+        
+        Returns:
+        	A coroutine that saves the object and returns None upon completion.
+        """
         from asgiref.sync import sync_to_async
         return sync_to_async(obj.save)()
 
     async def test_mastermind_ready_response_message(self):
-        """Test mastermind ready response via WebSocket"""
+        """
+        Tests that sending a ready response for a mastermind round via WebSocket triggers the correct server response and state update.
+        
+        Simulates a player indicating readiness after selection, mocks question preloading, and verifies that the server responds with either a 'round_started' or 'round_update' message.
+        """
         # Set up active game and round
         self.game_session.status = 'active'
         self.game_session.current_round_number = 1
@@ -320,11 +362,15 @@ class MastermindWebSocketTest(TestCase):
         await communicator.disconnect()
 
     def test_mastermind_select_player_sync(self):
-        """Synchronous wrapper for mastermind player selection test"""
+        """
+        Runs the asynchronous mastermind player selection WebSocket test in a synchronous context.
+        """
         asyncio.run(self.test_mastermind_select_player_message())
 
     def test_mastermind_ready_response_sync(self):
-        """Synchronous wrapper for mastermind ready response test"""
+        """
+        Runs the asynchronous mastermind ready response WebSocket test in a synchronous context.
+        """
         asyncio.run(self.test_mastermind_ready_response_message())
 
 
@@ -332,7 +378,9 @@ class MastermindIntegrationTest(TestCase):
     """Integration tests for complete mastermind flows"""
 
     def setUp(self):
-        """Set up test data"""
+        """
+        Initializes test data for Mastermind round tests, including game type, session, configuration, and two players with different specialist subjects.
+        """
         self.game_type = GameType.objects.create(
             name="Quiz Game",
             description="Multiple choice quiz game"
@@ -359,11 +407,17 @@ class MastermindIntegrationTest(TestCase):
         )
 
     def tearDown(self):
-        """Clean up cache after each test"""
+        """
+        Clears the Django cache after each test to ensure test isolation.
+        """
         cache.clear()
 
     def test_complete_mastermind_flow(self):
-        """Test complete mastermind round from start to finish"""
+        """
+        Simulates and verifies the complete flow of a mastermind round, from game start through player selection, readiness, question answering, and player completion.
+        
+        This integration test ensures that the mastermind round logic transitions through all expected states, including round start, player selection, readiness confirmation, rapid-fire question progression, and marking the player as complete.
+        """
         # Start the game
         self.game_session.status = 'active'
         self.game_session.save()
