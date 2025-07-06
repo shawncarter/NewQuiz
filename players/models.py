@@ -15,6 +15,7 @@ class Player(models.Model):
     is_connected = models.BooleanField(default=True)
     current_score = models.IntegerField(default=0)
     correct_answer_streak = models.IntegerField(default=0)
+    specialist_subject = models.CharField(max_length=100, blank=True, null=True, help_text="Player's specialist subject for Mastermind rounds")
 
     # For local testing - we'll use a simple session identifier
     session_key = models.CharField(max_length=40, null=True, blank=True)

@@ -73,7 +73,36 @@ def broadcast_round_started(game_session, round_info):
             'choices': round_info['choices'],
             'category': round_info['category'],
             'correct_answer': round_info.get('correct_answer'),  # Include for GM screen
+            'is_ai_generated': round_info.get('is_ai_generated', False),  # Include for AI/DB badge
         })
+    elif round_info['round_type'] == 'mastermind':
+        # MasterMind has different states with different data structures
+        mastermind_data = {
+            'state': round_info.get('state', 'waiting_for_player_selection'),
+            'phase': round_info.get('phase'),
+            'current_player': round_info.get('current_player'),
+            'current_player_index': round_info.get('current_player_index'),
+            'total_players': round_info.get('total_players'),
+            'current_question_index': round_info.get('current_question_index'),
+            'questions_per_player': round_info.get('questions_per_player'),
+            'available_players': round_info.get('available_players'),
+            'completed_players': round_info.get('completed_players'),
+            'message': round_info.get('message'),
+        }
+        
+        # Only add question-related fields if we have a question (playing state)
+        if round_info.get('question_text'):
+            mastermind_data.update({
+                'question_text': round_info['question_text'],
+                'choices': round_info['choices'],
+                'category': round_info['category'],
+                'correct_answer': round_info.get('correct_answer'),
+                'is_ai_generated': round_info.get('is_ai_generated', False),
+                'rapid_fire_mode': round_info.get('rapid_fire_mode', False),
+                'all_questions': round_info.get('all_questions', []),
+            })
+        
+        data.update(mastermind_data)
 
     broadcast_to_game(game_session.game_code, 'round_started', data)
 
@@ -92,6 +121,14 @@ def broadcast_round_ended(game_session, round_info, answer_data=None):
     # Add correct answer for multiple choice questions
     if round_info['round_type'] == 'multiple_choice':
         data['correct_answer'] = round_info.get('correct_answer')
+    elif round_info['round_type'] == 'mastermind':
+        # Add MasterMind-specific data
+        data.update({
+            'state': round_info.get('state'),
+            'phase': round_info.get('phase'),
+            'current_player': round_info.get('current_player'),
+            'correct_answer': round_info.get('correct_answer')
+        })
 
     broadcast_to_game(game_session.game_code, 'round_ended', data)
 
@@ -265,7 +302,7 @@ def broadcast_score_update(game_session, player_name, points_awarded, reason="ma
     broadcast_to_game(game_session.game_code, 'score_update', data)
 
 
-def start_timer_broadcast(game_session, _round_obj):
+def start_timer_broadcast(game_session, round_info, mastermind_duration=None):
     """Start broadcasting timer updates for a round"""
     import threading
     import time
@@ -277,8 +314,16 @@ def start_timer_broadcast(game_session, _round_obj):
         logger.warning(f"Timer thread already running for game {game_session.game_code}, not starting new one")
         return
 
+    # Capture the round_info in the closure
+    captured_round_info = round_info
+
     def timer_worker():
-        total_time = game_session.configuration.round_time_seconds
+        # Use MasterMind duration if provided, otherwise use default
+        if mastermind_duration and captured_round_info and captured_round_info.get('round_type') == 'mastermind':
+            total_time = mastermind_duration
+            logger.info(f"Starting MasterMind timer for {total_time} seconds")
+        else:
+            total_time = game_session.configuration.round_time_seconds
         start_time = timezone.now()
 
         while True:

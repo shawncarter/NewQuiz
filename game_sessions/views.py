@@ -46,6 +46,8 @@ def create_game(request):
             sequence = ['flower_fruit_veg'] * num_rounds
         elif game_type == 'multiple_choice':
             sequence = ['multiple_choice'] * num_rounds
+        elif game_type == 'mastermind':
+            sequence = ['mastermind'] * num_rounds
         else:
             # Default fallback
             sequence = ['flower_fruit_veg'] * num_rounds
@@ -60,6 +62,11 @@ def create_game(request):
             game_type_obj, created = GameType.objects.get_or_create(
                 name="Multiple Choice",
                 defaults={'description': "Players answer multiple choice questions from various categories"}
+            )
+        elif game_type == 'mastermind':
+            game_type_obj, created = GameType.objects.get_or_create(
+                name="Mastermind",
+                defaults={'description': "Players answer questions on their specialist subjects, then general knowledge"}
             )
         else:
             # Default fallback to FFV
@@ -109,6 +116,10 @@ def game_master(request, game_code):
     # Get current round info using new counter system
     current_round_info = game_session.get_current_round_info()
 
+    # Generate QR code for game joining
+    from .utils import generate_qr_code
+    qr_data = generate_qr_code(game_code)
+
     context = {
         'game_session': game_session,
         'players': players,
@@ -116,6 +127,9 @@ def game_master(request, game_code):
         'config': config,
         'current_round': current_round_info,  # Use dynamic round info
         'next_round': None,  # Not needed with counter system
+        'qr_code_base64': qr_data['qr_code_base64'],
+        'join_url': qr_data['join_url'],
+        'server_ip': qr_data['server_ip'],
     }
 
     # Always use game_active.html template - it now handles all game states
@@ -177,6 +191,8 @@ def configure_game(request, game_code):
                 sequence = ['flower_fruit_veg'] * num_rounds
             elif selected_game_type.name == 'Multiple Choice':
                 sequence = ['multiple_choice'] * num_rounds
+            elif selected_game_type.name == 'Mastermind':
+                sequence = ['mastermind'] * num_rounds
             else:
                 # Default to flower_fruit_veg
                 sequence = ['flower_fruit_veg'] * num_rounds
@@ -298,9 +314,10 @@ def join_game(request):
     if request.method == 'POST':
         game_code = request.POST.get('game_code', '').upper()
         player_name = request.POST.get('player_name', '').strip()
+        specialist_subject = request.POST.get('specialist_subject', '').strip()
 
         from .services import PlayerService
-        result = PlayerService.join_game(game_code, player_name)
+        result = PlayerService.join_game(game_code, player_name, specialist_subject)
         
         if result['success']:
             messages.success(request, result['message'])
@@ -309,9 +326,11 @@ def join_game(request):
                           player_id=result['player'].id)
         else:
             messages.error(request, result['error'])
-            return render(request, 'game_sessions/join_game.html')
+            return render(request, 'game_sessions/join_game.html', {'game_code': game_code})
 
-    return render(request, 'game_sessions/join_game.html')
+    # GET request - extract game code from URL parameter
+    game_code = request.GET.get('code', '').upper()
+    return render(request, 'game_sessions/join_game.html', {'game_code': game_code})
 
 
 def game_status(request, game_code):

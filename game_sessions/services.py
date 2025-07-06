@@ -179,9 +179,10 @@ class GameService:
         # Broadcast round started to all connected clients
         broadcast_round_started(self.game_session, round_info)
         
-        # Start timer broadcasting
-        from .websocket_utils import start_timer_broadcast
-        start_timer_broadcast(self.game_session, round_info)
+        # Start timer broadcasting (but not for MasterMind rounds - they start timer when player is ready)
+        if round_info.get('round_type') != 'mastermind':
+            from .websocket_utils import start_timer_broadcast
+            start_timer_broadcast(self.game_session, round_info)
         
         import time
         
@@ -387,12 +388,84 @@ class GameService:
         thread.daemon = True
         thread.start()
 
+    def mastermind_select_player(self, player_id: int) -> Dict[str, Any]:
+        """GM selects a player for mastermind round"""
+        if self.game_session.current_round_number == 0:
+            return {'success': False, 'error': 'No active round'}
+        
+        from .round_handlers import get_round_handler
+        round_handler = get_round_handler(self.game_session, self.game_session.current_round_number)
+        
+        if round_handler.ROUND_TYPE != 'mastermind':
+            return {'success': False, 'error': 'Not a mastermind round'}
+        
+        if hasattr(round_handler, 'select_player'):
+            result = round_handler.select_player(player_id)
+            if result['success']:
+                # Broadcast updated round data
+                round_info = round_handler.get_round_info()
+                broadcast_to_game(self.game_session.game_code, 'round_update', round_info)
+            return result
+        else:
+            return {'success': False, 'error': 'Round handler does not support player selection'}
+    
+    def mastermind_ready_response(self, is_ready: bool) -> Dict[str, Any]:
+        """Process GM's ready response for mastermind round"""
+        if self.game_session.current_round_number == 0:
+            return {'success': False, 'error': 'No active round'}
+        
+        from .round_handlers import get_round_handler
+        round_handler = get_round_handler(self.game_session, self.game_session.current_round_number)
+        
+        if round_handler.ROUND_TYPE != 'mastermind':
+            return {'success': False, 'error': 'Not a mastermind round'}
+        
+        if hasattr(round_handler, 'player_ready_response'):
+            result = round_handler.player_ready_response(is_ready)
+            if result['success']:
+                # Broadcast updated round data
+                round_info = round_handler.get_round_info()
+                
+                # If starting to play, send round_started instead of round_update for player interfaces
+                if round_info.get('state') == 'playing':
+                    from .websocket_utils import broadcast_round_started
+                    broadcast_round_started(self.game_session, round_info)
+                    start_timer_broadcast(self.game_session, round_info, mastermind_duration=90)
+                else:
+                    # For other state changes, send round_update (GM screen only)
+                    broadcast_to_game(self.game_session.game_code, 'round_update', round_info)
+                    
+            return result
+        else:
+            return {'success': False, 'error': 'Round handler does not support ready response'}
+    
+    def mastermind_continue_to_next_player(self) -> Dict[str, Any]:
+        """GM continues from player complete to next player selection"""
+        if self.game_session.current_round_number == 0:
+            return {'success': False, 'error': 'No active round'}
+        
+        from .round_handlers import get_round_handler
+        round_handler = get_round_handler(self.game_session, self.game_session.current_round_number)
+        
+        if round_handler.ROUND_TYPE != 'mastermind':
+            return {'success': False, 'error': 'Not a mastermind round'}
+        
+        if hasattr(round_handler, 'continue_to_next_player'):
+            result = round_handler.continue_to_next_player()
+            if result['success']:
+                # Broadcast updated round data
+                round_info = round_handler.get_round_info()
+                broadcast_to_game(self.game_session.game_code, 'round_update', round_info)
+            return result
+        else:
+            return {'success': False, 'error': 'Round handler does not support continue to next player'}
+
 
 class PlayerService:
     """Service class for player-related business logic"""
     
     @staticmethod
-    def join_game(game_code: str, player_name: str) -> Dict[str, Any]:
+    def join_game(game_code: str, player_name: str, specialist_subject: str = None) -> Dict[str, Any]:
         """Handle player joining a game session"""
         from .models import GameSession
         
@@ -417,8 +490,10 @@ class PlayerService:
         ).first()
         
         if existing_player:
-            # Reconnect existing player
+            # Reconnect existing player and update specialist subject if provided
             existing_player.is_connected = True
+            if specialist_subject and specialist_subject.strip():
+                existing_player.specialist_subject = specialist_subject.strip()
             existing_player.save()
             player = existing_player
             logger.info(f"Player {player_name} reconnected to game {game_code}")
@@ -427,9 +502,14 @@ class PlayerService:
             player = Player.objects.create(
                 name=player_name,
                 game_session=game_session,
+                specialist_subject=specialist_subject.strip() if specialist_subject else None,
                 session_key=None  # Not using sessions for now
             )
-            logger.info(f"Player {player_name} created for game {game_code}")
+            logger.info(f"Player {player_name} created for game {game_code} with specialist subject: {specialist_subject}")
+        
+        # Pre-generate specialist questions if player has a specialist subject
+        if player.specialist_subject and player.specialist_subject.strip():
+            PlayerService._ensure_specialist_questions_async(player.specialist_subject.strip())
         
         # Broadcast player join to all connected clients
         PlayerService._broadcast_player_join(game_session, player)
@@ -440,6 +520,48 @@ class PlayerService:
             'player': player,
             'game_session': game_session
         }
+    
+    @staticmethod
+    def _ensure_specialist_questions_async(specialist_subject: str):
+        """Asynchronously ensure we have enough specialist questions for MasterMind rounds"""
+        from .ai_questions import generate_specialist_questions
+        from .models import MultipleChoiceQuestion
+        from django.core.cache import cache
+        import threading
+        
+        # Check if already generating for this subject
+        generation_key = f'generating_specialist_{specialist_subject}'
+        if cache.get(generation_key):
+            logger.info(f"Already generating questions for {specialist_subject}")
+            return
+        
+        # Check if we have enough questions
+        question_count = MultipleChoiceQuestion.objects.filter(
+            category=specialist_subject,
+            is_specialist=True
+        ).count()
+        
+        if question_count < 25:  # Need 25 questions for rapid-fire
+            logger.info(f"Starting background generation of specialist questions for {specialist_subject}")
+            
+            # Mark as generating
+            cache.set(generation_key, True, timeout=300)  # 5 minutes
+            
+            def generate_questions():
+                try:
+                    generate_specialist_questions(specialist_subject, target_count=25)
+                    logger.info(f"Completed background generation for {specialist_subject}")
+                except Exception as e:
+                    logger.error(f"Failed to generate questions for {specialist_subject}: {e}")
+                finally:
+                    cache.delete(generation_key)
+            
+            # Start background thread
+            thread = threading.Thread(target=generate_questions)
+            thread.daemon = True
+            thread.start()
+        else:
+            logger.info(f"Already have {question_count} questions for {specialist_subject}")
     
     @staticmethod
     def _broadcast_player_join(game_session: GameSession, player: Player):
@@ -472,3 +594,4 @@ class PlayerService:
         }
         logger.info(f"Broadcasting player join: {broadcast_data}")
         broadcast_to_game(game_session.game_code, 'game_update', broadcast_data)
+    

@@ -3,6 +3,62 @@
 {% block title %}Create Game - Quiz Game{% endblock %}
 
 {% block content %}
+<style>
+/* Override base template for better space utilization */
+.container {
+    max-width: 1200px !important;
+    padding: 15px !important;
+}
+
+.form-group {
+    margin: 12px 0 !important;
+}
+
+.form-row {
+    display: flex;
+    gap: 20px;
+    align-items: end;
+}
+
+.form-row .form-group {
+    flex: 1;
+    margin: 0;
+}
+
+h1 {
+    margin-bottom: 20px;
+    font-size: 2.2em;
+}
+
+select, input[type="text"] {
+    padding: 8px !important;
+    font-size: 14px !important;
+}
+
+.category-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 8px;
+    max-height: 180px;
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    padding: 8px;
+    border-radius: 5px;
+}
+
+.category-option {
+    padding: 4px 0;
+}
+
+.category-option label {
+    font-weight: normal !important;
+    margin: 0 !important;
+    font-size: 0.9em;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+</style>
 <h1>🎮 Create New Game</h1>
 
 <form method="post">
@@ -14,15 +70,16 @@
             <option value="">Select a game type...</option>
             <option value="flower_fruit_veg">Flower, Fruit & Veg</option>
             <option value="multiple_choice">Multiple Choice</option>
+            <option value="mastermind">Mastermind (Specialist Subjects)</option>
         </select>
     </div>
 
     <div class="form-group" id="categories-section" style="display: none;">
         <label>Categories (select 1-3):</label>
-        <div style="max-height: 200px; overflow-y: auto; border: 1px solid #ddd; padding: 10px; border-radius: 5px;">
+        <div class="category-grid">
             {% for category in categories %}
                 <div class="category-option">
-                    <label style="font-weight: normal; margin: 5px 0;">
+                    <label>
                         <input type="checkbox" name="categories" value="{{ category.id }}" onchange="limitCategories()">
                         {{ category.name }}
                     </label>
@@ -32,24 +89,26 @@
         <small style="color: #666;">Choose the categories players will answer for (leave empty to use all available categories)</small>
     </div>
 
-    <div class="form-group">
-        <label for="num_rounds">Number of Rounds:</label>
-        <select id="num_rounds" name="num_rounds">
-            <option value="5">5 rounds</option>
-            <option value="10" selected>10 rounds</option>
-            <option value="15">15 rounds</option>
-            <option value="20">20 rounds</option>
-        </select>
-    </div>
+    <div id="rounds-time-settings" class="form-row">
+        <div class="form-group">
+            <label for="num_rounds">Number of Rounds:</label>
+            <select id="num_rounds" name="num_rounds">
+                <option value="5">5 rounds</option>
+                <option value="10" selected>10 rounds</option>
+                <option value="15">15 rounds</option>
+                <option value="20">20 rounds</option>
+            </select>
+        </div>
 
-    <div class="form-group">
-        <label for="round_time">Time per Round:</label>
-        <select id="round_time" name="round_time">
-            <option value="15">15 seconds</option>
-            <option value="30" selected>30 seconds</option>
-            <option value="45">45 seconds</option>
-            <option value="60">60 seconds</option>
-        </select>
+        <div class="form-group">
+            <label for="round_time">Time per Round:</label>
+            <select id="round_time" name="round_time">
+                <option value="15">15 seconds</option>
+                <option value="30" selected>30 seconds</option>
+                <option value="45">45 seconds</option>
+                <option value="60">60 seconds</option>
+            </select>
+        </div>
     </div>
 
 
@@ -66,6 +125,7 @@
 function updateGameTypeSettings() {
     const gameTypeSelect = document.getElementById('game_type');
     const categoriesSection = document.getElementById('categories-section');
+    const roundsTimeSettings = document.getElementById('rounds-time-settings');
     const categoryOptions = document.querySelectorAll('.category-option');
 
     // Clear all category selections
@@ -78,15 +138,22 @@ function updateGameTypeSettings() {
     if (gameTypeSelect.value === 'flower_fruit_veg') {
         // Show categories section for Flower, Fruit & Veg
         categoriesSection.style.display = 'block';
+        roundsTimeSettings.style.display = 'flex';
         categoryOptions.forEach(option => {
             option.style.display = 'block';
         });
     } else if (gameTypeSelect.value === 'multiple_choice') {
         // Hide categories section for Multiple Choice
         categoriesSection.style.display = 'none';
+        roundsTimeSettings.style.display = 'flex';
+    } else if (gameTypeSelect.value === 'mastermind') {
+        // Hide categories section and rounds/time settings for Mastermind (uses specialist subjects and fixed 90s timing)
+        categoriesSection.style.display = 'none';
+        roundsTimeSettings.style.display = 'none';
     } else {
         // No game type selected
         categoriesSection.style.display = 'none';
+        roundsTimeSettings.style.display = 'flex';
     }
 }
 

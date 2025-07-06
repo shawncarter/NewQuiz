@@ -18,7 +18,9 @@
       "Bash(chmod:*)",
       "Bash(coverage run:*)",
       "Bash(coverage report:*)",
-      "Bash(exit)"
+      "Bash(exit)",
+      "Bash(mkdir:*)",
+      "Bash(touch:*)"
     ],
     "deny": []
   }

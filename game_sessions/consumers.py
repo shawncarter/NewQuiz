@@ -109,6 +109,26 @@ class GameConsumer(AsyncWebsocketConsumer):
 
             elif message_type == 'submit_answer':
                 await self.handle_submit_answer(data.get('data', {}))
+            
+            elif message_type == 'submit_rapid_fire_answers':
+                await self.handle_submit_rapid_fire_answers(data)
+            
+            elif message_type == 'mastermind_progress_update':
+                await self.handle_mastermind_progress_update(data)
+            
+            # Mastermind GM control messages
+            elif message_type == 'mastermind_select_player':
+                await self.handle_mastermind_select_player(data)
+            
+            elif message_type == 'mastermind_gm_ready_response':
+                await self.handle_mastermind_gm_ready_response(data)
+            
+            elif message_type == 'mastermind_continue_to_next_player':
+                await self.handle_mastermind_continue_to_next_player(data)
+            
+            # Mastermind player ready response
+            elif message_type == 'mastermind_ready_response':
+                await self.handle_mastermind_player_ready_response(data)
                 
         except json.JSONDecodeError as e:
             logger.error(f"Invalid JSON received in game {self.game_code}: {e}")
@@ -175,6 +195,32 @@ class GameConsumer(AsyncWebsocketConsumer):
     async def game_complete(self, event):
         await self.send(text_data=json.dumps({
             'type': 'game_complete',
+            'data': event['data']
+        }))
+    
+    async def round_update(self, event):
+        """Handle round updates for mastermind state changes"""
+        # Convert datetime objects to strings for JSON serialization
+        data = event['data'].copy()
+        if 'started_at' in data and data['started_at']:
+            data['started_at'] = data['started_at'].isoformat()
+        
+        await self.send(text_data=json.dumps({
+            'type': 'round_update',
+            'data': data
+        }))
+
+    async def mastermind_player_completed(self, event):
+        """Handle mastermind player completion notifications"""
+        await self.send(text_data=json.dumps({
+            'type': 'mastermind_player_completed',
+            'data': event['data']
+        }))
+
+    async def mastermind_progress_update(self, event):
+        """Handle mastermind progress updates during rapid-fire sessions"""
+        await self.send(text_data=json.dumps({
+            'type': 'mastermind_progress_update',
             'data': event['data']
         }))
 
@@ -313,13 +359,18 @@ class GameConsumer(AsyncWebsocketConsumer):
                     'time_remaining': int(current_round_info['time_remaining']),
                     'total_time': game_session.configuration.round_time_seconds,
                     'round_type': mapped_round_type,  # Send the mapped round type
-                    'category': current_round_info['category'].name if hasattr(current_round_info['category'], 'name') else current_round_info['category'],
                 }
+                
+                # Only add category for round types that have it
+                if 'category' in current_round_info and current_round_info['category'] is not None:
+                    current_round_data['category'] = current_round_info['category'].name if hasattr(current_round_info['category'], 'name') else current_round_info['category']
                 if mapped_round_type == 'flower_fruit_veg':
-                    current_round_data.update({
-                        'prompt': f"A {current_round_info['category'].name.lower()} that starts with '{current_round_info['prompt_letter']}'",
-                        'letter': current_round_info['prompt_letter'],
-                    })
+                    if 'category' in current_round_info and current_round_info['category']:
+                        category_name = current_round_info['category'].name if hasattr(current_round_info['category'], 'name') else str(current_round_info['category'])
+                        current_round_data.update({
+                            'prompt': f"A {category_name.lower()} that starts with '{current_round_info['prompt_letter']}'",
+                            'letter': current_round_info['prompt_letter'],
+                        })
                 elif mapped_round_type == 'multiple_choice':
                     current_round_data.update({
                         'question_text': current_round_info['question_text'],
@@ -421,3 +472,202 @@ class GameConsumer(AsyncWebsocketConsumer):
             logger.warning(f"Game {self.game_code} not found when marking player {self.player_id} as connected")
         except Exception as e:
             logger.error(f"Error marking player {self.player_id} as connected in game {self.game_code}: {e}")
+    
+    @database_sync_to_async
+    def handle_mastermind_select_player(self, data):
+        """Handle GM selecting a player for mastermind round"""
+        try:
+            from .services import GameService
+            
+            game_session = GameSession.objects.get(game_code=self.game_code)
+            game_service = GameService(game_session)
+            
+            
+            player_id = data.get('player_id')
+            if not player_id:
+                logger.error("No player_id provided for mastermind player selection")
+                return
+            
+            result = game_service.mastermind_select_player(player_id)
+            logger.info(f"Mastermind select player result: {result}")
+            
+        except Exception as e:
+            logger.error(f"Error handling mastermind select player: {e}")
+    
+    @database_sync_to_async
+    def handle_mastermind_gm_ready_response(self, data):
+        """Handle GM's ready response for mastermind round"""
+        try:
+            from .services import GameService
+            
+            game_session = GameSession.objects.get(game_code=self.game_code)
+            game_service = GameService(game_session)
+            
+            is_ready = data.get('is_ready', False)
+            
+            result = game_service.mastermind_ready_response(is_ready)
+            logger.info(f"Mastermind GM ready response result: {result}")
+            
+        except Exception as e:
+            logger.error(f"Error handling mastermind GM ready response: {e}")
+    
+    @database_sync_to_async
+    def handle_mastermind_continue_to_next_player(self, data):
+        """Handle GM continuing to next player"""
+        try:
+            from .services import GameService
+            
+            game_session = GameSession.objects.get(game_code=self.game_code)
+            game_service = GameService(game_session)
+            
+            result = game_service.mastermind_continue_to_next_player()
+            logger.info(f"Mastermind continue to next player result: {result}")
+            
+        except Exception as e:
+            logger.error(f"Error handling mastermind continue to next player: {e}")
+    
+    @database_sync_to_async
+    def handle_mastermind_player_ready_response(self, data):
+        """Handle player's ready response for mastermind round"""
+        try:
+            from .services import GameService
+            
+            game_session = GameSession.objects.get(game_code=self.game_code)
+            game_service = GameService(game_session)
+            
+            is_ready = data.get('is_ready', False)
+            
+            # For player ready response, we use the same GM ready response method
+            # since the logic is the same - it's just triggered by player instead of GM
+            result = game_service.mastermind_ready_response(is_ready)
+            logger.info(f"Mastermind player ready response result: {result}")
+            
+        except Exception as e:
+            logger.error(f"Error handling mastermind player ready response: {e}")
+    
+    async def handle_mastermind_progress_update(self, data):
+        """Handle real-time progress updates during mastermind rapid-fire session"""
+        try:
+            from .websocket_utils import broadcast_to_game
+            
+            # Get progress data from the message
+            current_question = data.get('current_question', 1)
+            total_questions = data.get('total_questions', 25)
+            correct_answers = data.get('correct_answers', 0)
+            
+            # Get player information from the current player if available
+            player_name = 'Player'  # Default fallback
+            if hasattr(self, 'player') and self.player:
+                player_name = self.player.name
+            elif hasattr(self, 'player_id') and self.player_id:
+                # Try to get player name from database
+                try:
+                    from players.models import Player
+                    player = Player.objects.get(id=self.player_id)
+                    player_name = player.name
+                except Player.DoesNotExist:
+                    pass
+            
+            # Broadcast progress update to GM screen
+            progress_data = {
+                'player_name': player_name,
+                'current_question': current_question,
+                'total_questions': total_questions,
+                'correct_answers': correct_answers
+            }
+            
+            logger.info(f"Broadcasting mastermind progress update: {progress_data}")
+            await broadcast_to_game(self.game_code, 'mastermind_progress_update', progress_data)
+            
+        except Exception as e:
+            logger.error(f"Error handling mastermind progress update: {e}")
+    
+    @database_sync_to_async
+    def handle_submit_rapid_fire_answers(self, data):
+        """Handle submission of all rapid-fire MasterMind answers"""
+        try:
+            from .services import GameService
+            from players.models import Player, PlayerAnswer
+            from django.utils import timezone
+            
+            player_id = data.get('player_id')
+            answers = data.get('answers', [])
+            session_duration = data.get('session_duration', 0)
+            
+            if not player_id or not answers:
+                logger.error("No player_id or answers provided for rapid-fire submission")
+                return
+            
+            game_session = GameSession.objects.get(game_code=self.game_code)
+            player = Player.objects.get(id=player_id, game_session=game_session)
+            
+            logger.info(f"Processing {len(answers)} rapid-fire answers for player {player.name}")
+            
+            # Calculate summary statistics for the mastermind round
+            total_points = 0
+            correct_count = 0
+            
+            for answer_data in enumerate(answers):
+                if answer_data[1].get('is_correct'):  # answer_data is now (index, data)
+                    correct_count += 1
+                    total_points += 10  # 10 points per correct answer in MasterMind
+            
+            # Create a single PlayerAnswer object summarizing the entire mastermind round
+            summary_text = f"Mastermind: {correct_count}/{len(answers)} correct"
+            
+            # Check if player already has an answer for this round (avoid duplicates)
+            existing_answer = PlayerAnswer.objects.filter(
+                player=player,
+                round_number=game_session.current_round_number
+            ).first()
+            
+            if existing_answer:
+                # Update existing answer instead of creating new one
+                existing_answer.answer_text = summary_text
+                existing_answer.points_awarded = total_points
+                existing_answer.is_valid = correct_count > 0
+                existing_answer.save()
+            else:
+                # Create new summary answer
+                PlayerAnswer.objects.create(
+                    player=player,
+                    round_number=game_session.current_round_number,
+                    answer_text=summary_text,
+                    points_awarded=total_points,
+                    is_valid=correct_count > 0
+                )
+            
+            # Update player's total score
+            player.current_score += total_points
+            player.save()
+            
+            logger.info(f"Player {player.name} completed rapid-fire: {correct_count}/{len(answers)} correct, {total_points} points")
+            
+            # Update the round state to transition from 'playing' to 'player_complete'
+            from .round_handlers import get_round_handler
+            from .websocket_utils import broadcast_round_update
+            
+            round_handler = get_round_handler(game_session, game_session.current_round_number)
+            if hasattr(round_handler, 'advance_to_next_question'):
+                # This will mark the current player as complete and transition state
+                round_handler.advance_to_next_question()
+                logger.info(f"Advanced mastermind round state for completed player {player.name}")
+                
+                # Broadcast the round state update to all clients
+                updated_round_info = round_handler.get_round_info()
+                broadcast_round_update(game_session, updated_round_info)
+                logger.info(f"Broadcast round update for mastermind completion")
+            
+            # Notify GM that player completed their rapid-fire session
+            from .websocket_utils import broadcast_to_game
+            broadcast_to_game(self.game_code, 'mastermind_player_completed', {
+                'player_id': player_id,
+                'player_name': player.name,
+                'correct_answers': correct_count,
+                'total_questions': len(answers),
+                'points_earned': total_points,
+                'session_duration_ms': session_duration
+            })
+            
+        except Exception as e:
+            logger.error(f"Error handling rapid-fire answers submission: {e}")

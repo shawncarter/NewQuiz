@@ -14,6 +14,10 @@ class MultipleChoiceQuestion(models.Model):
     correct_answer = models.CharField(max_length=255)
     category = models.CharField(max_length=100)
     created_at = models.DateTimeField(auto_now_add=True)
+    last_used = models.DateTimeField(null=True, blank=True)
+    usage_count = models.IntegerField(default=0)
+    is_ai_generated = models.BooleanField(default=False)
+    is_specialist = models.BooleanField(default=False, help_text="True if this question is for a specialist subject (Mastermind rounds)")
 
     def __str__(self):
         return self.question_text

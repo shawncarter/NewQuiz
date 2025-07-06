@@ -7,14 +7,27 @@
 /* Override base template container constraints for full width */
 .container {
     max-width: none !important;
-    padding: 5px !important;
+    padding: 10px !important;
     margin: 0 !important;
-    width: 100% !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    box-sizing: border-box;
+    overflow-y: auto;
 }
 
 body {
-    margin: 0;
-    padding: 0;
+    margin: 0 !important;
+    padding: 0 !important;
+    height: 100vh;
+    overflow: hidden;
+    max-width: none !important;
+    width: 100vw !important;
+}
+
+/* Override any inherited width constraints */
+html, body, .container, #game-state {
+    max-width: none !important;
+    width: 100% !important;
 }
 
 /* Make round header more compact and full width */
@@ -22,18 +35,96 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
 }
 
 .round-title h2 {
     margin: 0;
-    font-size: 1.3em;
+    font-size: 1.5em;
+    font-weight: bold;
 }
 
 .player-count {
     color: #6c757d;
     font-weight: bold;
+    font-size: 1em;
+}
+
+/* Optimize pre-game layout for better space usage */
+.game-code {
+    padding: 12px !important;
+    margin: 10px 0 !important;
+    font-size: 1.6em !important;
+}
+
+.game-config {
+    padding: 8px !important;
+    margin: 10px 0 !important;
+}
+
+.player-list {
+    padding: 8px !important;
+    margin: 10px 0 !important;
+    max-height: 150px;
+    overflow-y: auto;
+}
+
+/* Larger QR code for easier scanning */
+.game-code img {
+    max-width: 250px !important;
+    width: 100%;
+    height: auto;
+}
+
+.game-code p {
+    margin: 5px 0 !important;
+    font-size: 0.8em !important;
+}
+
+/* Pre-game dashboard layout optimization */
+.pre-game-dashboard {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    align-items: start;
+}
+
+.pre-game-left {
+    display: flex;
+    flex-direction: column;
+}
+
+.pre-game-right {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Compact buttons and controls */
+.game-controls {
+    margin: 10px 0 !important;
+}
+
+.game-controls .btn {
+    margin: 3px !important;
+    padding: 8px 16px !important;
+    font-size: 0.9em !important;
+}
+
+/* Make player list more compact */
+.player-item {
+    padding: 3px 0 !important;
     font-size: 0.9em;
+}
+
+.player-list h4 {
+    margin: 0 0 8px 0 !important;
+    font-size: 1.1em;
+}
+
+/* Dashboard title more compact */
+.text-center h2 {
+    margin: 10px 0 !important;
+    font-size: 1.8em;
 }
 </style>
 
@@ -42,51 +133,79 @@ body {
         <!-- Pre-game waiting state -->
         <div class="text-center">
             <h2>🎯 Game Master Dashboard</h2>
-            <div class="game-code" style="background: #e3f2fd; padding: 20px; border-radius: 10px; margin: 20px 0;">
-                <h3>Game Code: {{ game_session.game_code }}</h3>
-            </div>
-            
-            {% if config %}
-                <div class="game-config" style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin: 20px 0;">
-                    <h4>🎯 Game Configuration</h4>
-                    <p><strong>Game Type:</strong> {{ config.game_type.name }}</p>
-                    <p><strong>Rounds:</strong> {{ config.num_rounds }} | <strong>Time per Round:</strong> {{ config.round_time_seconds }}s</p>
+        </div>
+        
+        <div class="pre-game-dashboard">
+            <div class="pre-game-left">
+                <div class="game-code" style="background: #e3f2fd; border-radius: 8px;">
+                    <h3 style="margin: 0 0 8px 0; font-size: 1.4em;">Game Code: {{ game_session.game_code }}</h3>
+                    
+                    <!-- QR Code for joining -->
+                    <div style="margin: 8px 0;">
+                        <img src="data:image/png;base64,{{ qr_code_base64 }}" alt="QR Code to join game">
+                        <p>
+                            <strong>Join URL:</strong> <a href="{{ join_url }}" target="_blank">{{ join_url }}</a>
+                        </p>
+                        <p style="color: #666;">
+                            Server: {{ server_ip }}:8000
+                        </p>
+                    </div>
                 </div>
                 
-                <div style="margin: 20px 0;">
-                    <div id="start-game-container">
-                        <button id="start-game-btn" class="btn btn-success" {% if player_count == 0 %}style="display: none;"{% endif %}>
-                            🚀 Start Game
-                        </button>
-                        <button id="waiting-for-players-btn" class="btn" disabled {% if player_count > 0 %}style="display: none;"{% endif %}>
-                            Waiting for players to join...
-                        </button>
+                {% if config %}
+                    <div class="game-config" style="background: #f8f9fa; border-radius: 6px;">
+                        <h4 style="margin: 0 0 5px 0; font-size: 1.1em;">🎯 Game Configuration</h4>
+                        <p style="margin: 3px 0;"><strong>Game Type:</strong> {{ config.game_type.name }}</p>
+                        <p style="margin: 3px 0;"><strong>Rounds:</strong> {{ config.num_rounds }} | <strong>Time per Round:</strong> {{ config.round_time_seconds }}s</p>
                     </div>
-                    <a href="{% url 'game_sessions:configure_game' game_session.game_code %}" class="btn">
-                        ⚙️ Reconfigure Game
-                    </a>
-                </div>
-            {% else %}
-                <div style="margin: 20px 0;">
-                    <a href="{% url 'game_sessions:configure_game' game_session.game_code %}" class="btn btn-success">
-                        ⚙️ Configure Game First
-                    </a>
-                </div>
-            {% endif %}
+                {% endif %}
+            </div>
             
-            <div class="player-list" style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin: 20px 0;">
-                <h4>Connected Players (<span class="player-count">{{ player_count }}</span>/{{ game_session.max_players }})</h4>
-                <div id="player-list-content">
-                    {% if players %}
-                        {% for player in players %}
-                            <div class="player-item" style="padding: 5px 0; border-bottom: 1px solid #eee;">
-                                <strong>{{ player.name }}</strong>
-                                <small style="color: #666;"> - Joined {{ player.joined_at|date:"H:i:s" }}</small>
-                            </div>
-                        {% endfor %}
-                    {% else %}
-                        <p style="color: #666; font-style: italic;">No players have joined yet.</p>
-                    {% endif %}
+            <div class="pre-game-right">
+                <div class="player-list" style="background: #f8f9fa; border-radius: 6px;">
+                    <h4>Connected Players (<span class="player-count">{{ player_count }}</span>/{{ game_session.max_players }})</h4>
+                    <div id="player-list-content">
+                        {% if players %}
+                            {% for player in players %}
+                                <div class="player-item" style="border-bottom: 1px solid #eee;">
+                                    <strong>{{ player.name }}</strong>
+                                    <small style="color: #666;"> - Joined {{ player.joined_at|date:"H:i:s" }}</small>
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            <p style="color: #666; font-style: italic; margin: 5px 0;">No players have joined yet.</p>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                {% if config %}
+                    <div class="game-controls">
+                        <div id="start-game-container">
+                            <button id="start-game-btn" class="btn btn-success" {% if player_count == 0 %}style="display: none;"{% endif %}>
+                                🚀 Start Game
+                            </button>
+                            <button id="waiting-for-players-btn" class="btn" disabled {% if player_count > 0 %}style="display: none;"{% endif %}>
+                                Waiting for players to join...
+                            </button>
+                        </div>
+                        <a href="{% url 'game_sessions:configure_game' game_session.game_code %}" class="btn">
+                            ⚙️ Reconfigure Game
+                        </a>
+                    </div>
+                {% else %}
+                    <div class="game-controls">
+                        <a href="{% url 'game_sessions:configure_game' game_session.game_code %}" class="btn btn-success">
+                            ⚙️ Configure Game First
+                        </a>
+                    </div>
+                {% endif %}
+                
+                <!-- Move dev buttons to be always visible -->
+                <div class="game-controls" style="border-top: 1px solid #dee2e6; padding-top: 8px; margin-top: 10px;">
+                    <button id="restart-game-btn" class="btn" style="font-size: 0.8em; padding: 6px 12px;">
+                        🔄 Restart Game (Dev)
+                    </button>
+                    <a href="{% url 'game_sessions:home' %}" class="btn" style="font-size: 0.8em; padding: 6px 12px;">← Back to Home</a>
                 </div>
             </div>
         </div>
@@ -105,9 +224,25 @@ body {
                         <span class="player-count">{{ player_count }} players</span>
                     </div>
                     <div class="round-details">
-                        <span class="category">{{ round_info.category.name|default:round_info.category }}</span>
                         {% if round_info.round_type == 'flower_fruit_veg' %}
+                            <span class="category">{{ round_info.category.name|default:round_info.category }}</span>
                             <span class="letter">Letter: {{ round_info.prompt_letter }}</span>
+                        {% elif round_info.round_type == 'multiple_choice' %}
+                            <span class="category">{{ round_info.category|default:"Multiple Choice" }}</span>
+                        {% elif round_info.round_type == 'mastermind' %}
+                            {% if round_info.state == 'waiting_for_player_selection' %}
+                                <span class="mastermind-state" style="background: #FF9800; color: white; padding: 5px 15px; border-radius: 20px;">⏳ Select Player</span>
+                            {% elif round_info.state == 'asking_ready' %}
+                                <span class="mastermind-state" style="background: #2196F3; color: white; padding: 5px 15px; border-radius: 20px;">❓ {{ round_info.current_player.name }} - Ready Check</span>
+                            {% elif round_info.state == 'playing' %}
+                                <span class="mastermind-player" style="background: #9C27B0; color: white; padding: 5px 15px; border-radius: 20px;">🧠 {{ round_info.current_player.name }} (Q{{ round_info.current_question_index }}/{{ round_info.questions_per_player }})</span>
+                            {% elif round_info.state == 'player_complete' %}
+                                <span class="mastermind-state" style="background: #4CAF50; color: white; padding: 5px 15px; border-radius: 20px;">✅ {{ round_info.current_player.name }} Complete</span>
+                            {% elif round_info.phase == 'general' %}
+                                <span class="mastermind-phase" style="background: #FF5722; color: white; padding: 5px 15px; border-radius: 20px;">📚 General Knowledge</span>
+                            {% else %}
+                                <span class="mastermind-state" style="background: #607D8B; color: white; padding: 5px 15px; border-radius: 20px;">🧠 Mastermind</span>
+                            {% endif %}
                         {% endif %}
                     </div>
                 </div>
@@ -115,23 +250,131 @@ body {
                     {% if round_info.round_type == 'flower_fruit_veg' %}
                         {{ round_info.category.name|default:round_info.category }} that start with {{ round_info.prompt_letter }}
                     {% elif round_info.round_type == 'multiple_choice' %}
-                        {{ round_info.question_text }}
+                        <div style="display: flex; align-items: center; justify-content: center; margin-bottom: 10px;">
+                            <span>{{ round_info.question_text }}</span>
+                            {% if round_info.is_ai_generated %}
+                                <span class="ai-badge" style="background: #4CAF50; color: white; padding: 3px 8px; border-radius: 12px; font-size: 0.8em; margin-left: 10px;">🤖 AI</span>
+                            {% else %}
+                                <span class="db-badge" style="background: #2196F3; color: white; padding: 3px 8px; border-radius: 12px; font-size: 0.8em; margin-left: 10px;">💾 DB</span>
+                            {% endif %}
+                        </div>
                         <ul class="multiple-choice-options">
                             {% for choice in round_info.choices %}
                                 <li>{{ choice }}</li>
                             {% endfor %}
                         </ul>
+                    {% elif round_info.round_type == 'mastermind' %}
+                        {% if round_info.state == 'waiting_for_player_selection' %}
+                            <div class="mastermind-player-selection">
+                                <h3>Select Next Player</h3>
+                                <div class="available-players">
+                                    {% for player in round_info.available_players %}
+                                        <div class="player-option" style="margin: 10px; padding: 15px; border: 2px solid #ddd; border-radius: 10px; display: inline-block; cursor: pointer;" 
+                                             onclick="selectMastermindPlayer({{ player.id }}, '{{ player.name }}', '{{ player.specialist_subject }}')">
+                                            <strong>{{ player.name }}</strong><br>
+                                            <span style="color: #666;">{{ player.specialist_subject }}</span>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                                {% if round_info.all_players %}
+                                    <div class="mastermind-player-status" style="margin-top: 20px;">
+                                        <h4>All Players Status</h4>
+                                        <div class="player-status-grid">
+                                            {% for player in round_info.all_players %}
+                                                {% if player.id in round_info.completed_players %}
+                                                    <div class="player-status-item completed" style="padding: 10px; margin: 5px; border: 1px solid #28a745; border-radius: 5px; background: #d4edda;">
+                                                        <span class="player-name">✅ {{ player.name }}</span>
+                                                        <span class="player-subject">{{ player.specialist_subject|default:"No Subject" }}</span>
+                                                        <span class="player-score">{{ player.current_score|default:0 }} points</span>
+                                                    </div>
+                                                {% else %}
+                                                    <div class="player-status-item waiting" style="padding: 10px; margin: 5px; border: 1px solid #6c757d; border-radius: 5px; background: #f8f9fa;">
+                                                        <span class="player-name">⏳ {{ player.name }}</span>
+                                                        <span class="player-subject">{{ player.specialist_subject|default:"No Subject Set" }}</span>
+                                                        <span class="player-status">Waiting</span>
+                                                    </div>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                {% elif round_info.completed_players %}
+                                    <div style="margin-top: 15px; color: #666;">
+                                        <small>Completed players: {{ round_info.completed_players|length }}</small>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        {% elif round_info.state == 'asking_ready' %}
+                            <div class="mastermind-ready-check">
+                                <h3>{{ round_info.current_player.name }}, are you ready?</h3>
+                                <p>Subject: <strong>{{ round_info.current_player.specialist_subject }}</strong></p>
+                                <div class="ready-controls">
+                                    <button class="btn btn-success" onclick="sendReadyResponse(true)">Player is Ready</button>
+                                    <button class="btn btn-secondary" onclick="sendReadyResponse(false)">Not Ready</button>
+                                </div>
+                            </div>
+                        {% elif round_info.state == 'playing' %}
+                            <div style="display: flex; align-items: center; justify-content: center; margin-bottom: 10px;">
+                                <span>{{ round_info.question_text }}</span>
+                                {% if round_info.is_ai_generated %}
+                                    <span class="ai-badge" style="background: #4CAF50; color: white; padding: 3px 8px; border-radius: 12px; font-size: 0.8em; margin-left: 10px;">🤖 AI</span>
+                                {% else %}
+                                    <span class="db-badge" style="background: #2196F3; color: white; padding: 3px 8px; border-radius: 12px; font-size: 0.8em; margin-left: 10px;">💾 DB</span>
+                                {% endif %}
+                                <span class="mastermind-badge" style="background: #9C27B0; color: white; padding: 3px 8px; border-radius: 12px; font-size: 0.8em; margin-left: 10px;">🧠 {{ round_info.current_player.specialist_subject }}</span>
+                            </div>
+                            <ul class="multiple-choice-options">
+                                {% for choice in round_info.choices %}
+                                    <li>{{ choice }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% elif round_info.state == 'player_complete' %}
+                            <div class="mastermind-player-complete">
+                                <h3>{{ round_info.current_player.name }} has finished!</h3>
+                                <p>They completed their specialist round on <strong>{{ round_info.current_player.specialist_subject }}</strong></p>
+                                <button class="btn btn-primary" onclick="continueToNextPlayer()">Select Next Player</button>
+                            </div>
+                        {% elif round_info.phase == 'general' %}
+                            <div style="display: flex; align-items: center; justify-content: center; margin-bottom: 10px;">
+                                <span>{{ round_info.question_text }}</span>
+                                {% if round_info.is_ai_generated %}
+                                    <span class="ai-badge" style="background: #4CAF50; color: white; padding: 3px 8px; border-radius: 12px; font-size: 0.8em; margin-left: 10px;">🤖 AI</span>
+                                {% else %}
+                                    <span class="db-badge" style="background: #2196F3; color: white; padding: 3px 8px; border-radius: 12px; font-size: 0.8em; margin-left: 10px;">💾 DB</span>
+                                {% endif %}
+                                <span class="general-badge" style="background: #FF5722; color: white; padding: 3px 8px; border-radius: 12px; font-size: 0.8em; margin-left: 10px;">📚 General Knowledge</span>
+                            </div>
+                            <ul class="multiple-choice-options">
+                                {% for choice in round_info.choices %}
+                                    <li>{{ choice }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            <div class="mastermind-waiting">
+                                <h3>🧠 Mastermind Round</h3>
+                                <p>{{ round_info.message|default:'Preparing mastermind round...' }}</p>
+                            </div>
+                        {% endif %}
                     {% endif %}
                 </div>
 
                 {% if round_info.is_active %}
-                    <div id="countdown-display" class="countdown">
-                        <span id="countdown-timer">{{ config.round_time_seconds }}</span> seconds remaining
-                    </div>
+                    {% if round_info.round_type == 'mastermind' and round_info.state == 'playing' %}
+                        <div id="countdown-display" class="countdown">
+                            <span id="countdown-timer">{{ config.round_time_seconds }}</span> seconds remaining
+                        </div>
 
-                    <button id="end-round-btn" class="btn">
-                        ⏹️ End Round Early
-                    </button>
+                        <button id="end-round-btn" class="btn">
+                            ⏹️ End Round Early
+                        </button>
+                    {% elif round_info.round_type != 'mastermind' %}
+                        <div id="countdown-display" class="countdown">
+                            <span id="countdown-timer">{{ config.round_time_seconds }}</span> seconds remaining
+                        </div>
+
+                        <button id="end-round-btn" class="btn">
+                            ⏹️ End Round Early
+                        </button>
+                    {% endif %}
                 {% else %}
                     <div class="alert alert-success">
                         Round {{ round_info.round_number }} completed!
@@ -170,13 +413,7 @@ body {
     {% endif %}
 </div>
 
-<div class="text-center" style="margin-top: 30px;">
-    <button id="restart-game-btn" class="btn">
-        🔄 Restart Game (Dev)
-    </button>
-    
-    <a href="{% url 'game_sessions:home' %}" class="btn">← Back to Home</a>
-</div>
+<!-- Removed duplicate buttons - now in pre-game dashboard -->
 
 <style>
 /* Removed redundant header styles since we removed the header */
@@ -215,15 +452,20 @@ body {
 }
 
 .game-prompt {
-    font-size: 2em;
+    font-size: 2.5em;
     font-weight: bold;
     text-align: center;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
-    padding: 25px;
+    padding: 40px 25px;
     border-radius: 15px;
-    margin: 20px 0;
+    margin: 15px 0;
     text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    min-height: 120px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .countdown {
@@ -260,23 +502,29 @@ body {
 
 .answers-grid {
     display: grid;
-    gap: 8px;
-    margin: 15px 0;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 6px;
+    margin: 10px 0;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     max-width: 100%;
+    max-height: 60vh;
+    overflow-y: auto;
 }
 
 .answer-card {
     background: #f8f9fa;
     border: 2px solid #6c757d;
-    border-radius: 8px;
-    padding: 8px;
+    border-radius: 6px;
+    padding: 6px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     opacity: 0;
     transform: translateY(20px);
     transition: all 0.5s ease;
     position: relative;
-    font-size: 0.9em;
+    font-size: 0.85em;
+    min-height: 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .answer-card.show {
@@ -301,22 +549,24 @@ body {
 
 .player-name {
     font-weight: bold;
-    font-size: 0.9em;
-    margin-bottom: 5px;
+    font-size: 0.85em;
+    margin-bottom: 3px;
     color: #495057;
 }
 
 .player-answer {
-    font-size: 1.1em;
-    margin: 8px 0;
+    font-size: 1em;
+    margin: 4px 0;
     font-weight: bold;
     color: #212529;
+    word-wrap: break-word;
+    flex-grow: 1;
 }
 
 .points {
     font-weight: bold;
-    font-size: 1em;
-    margin: 8px 0;
+    font-size: 0.9em;
+    margin: 3px 0;
     color: #6c757d;
 }
 
@@ -405,6 +655,82 @@ body {
         padding: 8px 15px;
         border-radius: 8px;
     }
+    
+    /* MasterMind Player Status Styling */
+    .mastermind-playing-status {
+        padding: 20px;
+        background: #f8f9fa;
+        border-radius: 10px;
+        margin: 20px 0;
+    }
+    
+    .current-activity {
+        text-align: center;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 20px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+    }
+    
+    .current-activity h2 {
+        margin: 0 0 10px 0;
+        font-size: 1.8em;
+    }
+    
+    .current-activity p {
+        margin: 5px 0;
+        font-size: 1.1em;
+    }
+    
+    .mastermind-player-status h3 {
+        color: #2c3e50;
+        margin-bottom: 15px;
+        font-size: 1.4em;
+    }
+    
+    .player-status-item {
+        display: grid;
+        grid-template-columns: 2fr 2fr 1fr;
+        gap: 15px;
+        padding: 12px 15px;
+        margin-bottom: 8px;
+        border-radius: 8px;
+        align-items: center;
+    }
+    
+    .player-status-item.active {
+        background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+        color: white;
+        box-shadow: 0 2px 8px rgba(76, 175, 80, 0.3);
+    }
+    
+    .player-status-item.completed {
+        background: linear-gradient(135deg, #2196F3 0%, #1976D2 100%);
+        color: white;
+        box-shadow: 0 2px 8px rgba(33, 150, 243, 0.3);
+    }
+    
+    .player-status-item.waiting {
+        background: #e9ecef;
+        color: #495057;
+        border: 2px dashed #ced4da;
+    }
+    
+    .player-name {
+        font-weight: bold;
+        font-size: 1.1em;
+    }
+    
+    .player-subject {
+        font-style: italic;
+        opacity: 0.9;
+    }
+    
+    .player-progress, .player-points, .player-status {
+        text-align: right;
+        font-weight: 500;
+    }
 </style>
 
 <script>
@@ -422,6 +748,7 @@ let currentRoundNumber = {{ game_session.current_round_number|default:0 }};
 let totalRounds = {{ config.num_rounds|default:10 }};
 let roundEndedViaWebSocket = false; // Track if WebSocket already handled round end
 let autoEndRoundTimeout = null; // Track the auto-end timeout
+
 console.log('🔍 DEBUG: Initialized currentRoundType to:', currentRoundType);
 console.log('🔍 DEBUG: Initialized currentCorrectAnswer to:', currentCorrectAnswer);
 
@@ -479,12 +806,24 @@ function handleWebSocketMessage(data) {
             console.log('🔍 Round started:', data.data);
             updateRoundDisplay(data.data);
             break;
+        case 'round_update':
+            console.log('🔍 Round update (MasterMind state change):', data.data);
+            updateRoundDisplay(data.data);
+            break;
         case 'round_ended':
             console.log('🔍 Round ended:', data.data);
             handleRoundEnded(data.data);
             break;
         case 'score_update':
             handleScoreUpdate(data.data);
+            break;
+        case 'mastermind_player_completed':
+            console.log('🔍 Mastermind player completed:', data.data);
+            handleMastermindPlayerCompleted(data.data);
+            break;
+        case 'mastermind_progress_update':
+            console.log('🔍 Mastermind progress update:', data.data);
+            handleMastermindProgressUpdate(data.data);
             break;
         case 'game_state':
         case 'game_state_sync':
@@ -499,7 +838,37 @@ function updateGameState(data) {
     // Update player count
     const playerCountElement = document.querySelector('.player-count');
     if (playerCountElement && data.player_count !== undefined) {
-        playerCountElement.textContent = `${data.player_count} players`;
+        playerCountElement.textContent = `${data.player_count}`;
+    }
+    
+    // Update player list if we have players data and we're in waiting state
+    if (data.players && Array.isArray(data.players)) {
+        const playerListContent = document.getElementById('player-list-content');
+        if (playerListContent) {
+            if (data.players.length > 0) {
+                playerListContent.innerHTML = data.players.map(player => `
+                    <div class="player-item" style="padding: 5px 0; border-bottom: 1px solid #eee;">
+                        <strong>${player.name}</strong>
+                        <small style="color: #666;"> - Joined ${player.joined_at}</small>
+                    </div>
+                `).join('');
+            } else {
+                playerListContent.innerHTML = '<p style="color: #666; font-style: italic;">No players have joined yet.</p>';
+            }
+        }
+        
+        // Update start game button visibility
+        const startGameBtn = document.getElementById('start-game-btn');
+        const waitingBtn = document.getElementById('waiting-for-players-btn');
+        if (startGameBtn && waitingBtn) {
+            if (data.player_count > 0) {
+                startGameBtn.style.display = 'inline-block';
+                waitingBtn.style.display = 'none';
+            } else {
+                startGameBtn.style.display = 'none';
+                waitingBtn.style.display = 'inline-block';
+            }
+        }
     }
     
     console.log('Game state updated:', data);
@@ -527,6 +896,50 @@ function handleScoreUpdate(data) {
     setTimeout(() => {
         document.body.removeChild(notification);
     }, 3000);
+}
+
+// Handle mastermind player completed via WebSocket
+function handleMastermindPlayerCompleted(data) {
+    console.log('🔍 Mastermind player completed:', data);
+    
+    // Show completion notification
+    showNotification(`${data.player_name} completed their specialist round! ${data.correct_answers}/${data.total_questions} correct (${data.points_earned} points)`, 'success');
+    
+    // Refresh the round display to show updated player status
+    // The server should send a round_update message after this anyway, but we can trigger a refresh
+    setTimeout(() => {
+        // The round display will be updated via the round_update WebSocket message
+        console.log('🔍 Player completion processed, waiting for round update...');
+    }, 500);
+}
+
+// Handle mastermind progress updates during rapid-fire session
+function handleMastermindProgressUpdate(data) {
+    console.log('🔍 Mastermind progress update received:', data);
+    
+    // Update the current activity display
+    const currentActivity = document.querySelector('.current-activity h2');
+    console.log('🔍 Current activity element found:', !!currentActivity);
+    if (currentActivity) {
+        currentActivity.textContent = `${data.player_name} is answering rapid-fire questions`;
+    }
+    
+    // Update the progress display
+    const progressElement = document.querySelector('.current-activity p:last-child');
+    console.log('🔍 Progress element found:', !!progressElement);
+    console.log('🔍 Progress element content before:', progressElement?.textContent);
+    
+    if (progressElement) {
+        progressElement.innerHTML = `Progress: Question ${data.current_question} of ${data.total_questions} | Correct: ${data.correct_answers}`;
+        console.log('🔍 Progress element content after:', progressElement.textContent);
+    }
+    
+    // Update any existing progress bars or counters in the player status
+    const activePlayerProgress = document.querySelector('.player-status-item.active .player-progress');
+    console.log('🔍 Active player progress element found:', !!activePlayerProgress);
+    if (activePlayerProgress) {
+        activePlayerProgress.textContent = `Question ${data.current_question}/${data.total_questions}`;
+    }
 }
 
 // Update timer display
@@ -645,6 +1058,7 @@ function updateRoundDisplay(data) {
         } else if (currentRoundType === 'multiple_choice') {
             const category = roundData.category || 'Multiple Choice';
             const questionText = roundData.question_text || roundData.question || 'Question not available';
+            const isAIGenerated = roundData.is_ai_generated;
             
             roundDetailsHtml = `<span class="category">${category}</span>`;
             
@@ -656,14 +1070,157 @@ function updateRoundDisplay(data) {
             } else {
                 console.error('No choices available for multiple choice question:', roundData);
             }
-            gamePromptHtml = `${questionText}${choicesHtml}`;
+            
+            // Add AI/DB badge
+            const badge = isAIGenerated ? 
+                '<span class="ai-badge" style="background: #4CAF50; color: white; padding: 3px 8px; border-radius: 12px; font-size: 0.8em; margin-left: 10px;">🤖 AI</span>' :
+                '<span class="db-badge" style="background: #2196F3; color: white; padding: 3px 8px; border-radius: 12px; font-size: 0.8em; margin-left: 10px;">💾 DB</span>';
+            
+            gamePromptHtml = `<div style="display: flex; align-items: center; justify-content: center; margin-bottom: 10px;">
+                <span>${questionText}</span>
+                ${badge}
+            </div>${choicesHtml}`;
+        } else if (currentRoundType === 'mastermind') {
+            // Handle MasterMind round display
+            const state = roundData.state || 'waiting_for_player_selection';
+            
+            if (state === 'waiting_for_player_selection') {
+                roundDetailsHtml = `<span class="category">🧠 Mastermind</span>`;
+                gamePromptHtml = `<div class="mastermind-player-selection">
+                    <h3>Select Next Player</h3>
+                    <div class="available-players">
+                        ${(roundData.available_players || []).map(player => `
+                            <div class="player-option" style="margin: 10px; padding: 15px; border: 2px solid #ddd; border-radius: 10px; display: inline-block; cursor: pointer;" 
+                                 onclick="selectMastermindPlayer(${player.id}, '${player.name}', '${player.specialist_subject}')">
+                                <strong>${player.name}</strong><br>
+                                <span style="color: #666;">${player.specialist_subject}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>`;
+            } else if (state === 'asking_ready') {
+                const currentPlayer = roundData.current_player;
+                roundDetailsHtml = `<span class="category">🧠 Mastermind - Ready Check</span>`;
+                gamePromptHtml = `<div class="mastermind-ready-check">
+                    <h3>${currentPlayer.name}, are you ready?</h3>
+                    <p>Subject: <strong>${currentPlayer.specialist_subject}</strong></p>
+                    <div class="ready-controls">
+                        <button class="btn btn-success" onclick="sendReadyResponse(true)">Player is Ready</button>
+                        <button class="btn btn-secondary" onclick="sendReadyResponse(false)">Not Ready</button>
+                    </div>
+                </div>`;
+            } else if (state === 'playing') {
+                const currentPlayer = roundData.current_player;
+                const questionIndex = roundData.current_question_index || 1;
+                const totalQuestions = roundData.questions_per_player || 25;
+                const completedPlayers = roundData.completed_players || [];
+                const availablePlayers = roundData.available_players || [];
+                
+                roundDetailsHtml = `<span class="category">🧠 ${currentPlayer?.name} is completing their Specialist Subject Round</span>`;
+                
+                // Build player status list
+                let playerStatusHtml = '<div class="mastermind-player-status">';
+                playerStatusHtml += '<h3>Player Status</h3>';
+                
+                // Current player (actively playing)
+                playerStatusHtml += `<div class="player-status-item active">
+                    <span class="player-name">🎯 ${currentPlayer?.name}</span>
+                    <span class="player-subject">${currentPlayer?.specialist_subject}</span>
+                    <span class="player-progress">Question ${questionIndex}/${totalQuestions}</span>
+                </div>`;
+                
+                // Completed players
+                completedPlayers.forEach(player => {
+                    const points = player.points || 0;
+                    playerStatusHtml += `<div class="player-status-item completed">
+                        <span class="player-name">✅ ${player.name}</span>
+                        <span class="player-subject">${player.specialist_subject}</span>
+                        <span class="player-points">${points} points</span>
+                    </div>`;
+                });
+                
+                // Show all connected players, indicating their mastermind status
+                // Use all_players from round data (includes all connected players)
+                const allPlayers = roundData.all_players || [];
+                
+                if (allPlayers && Array.isArray(allPlayers)) {
+                    allPlayers.forEach(player => {
+                        // Skip if this is the current player (already shown above)
+                        if (player.id === currentPlayer?.id) {
+                            return;
+                        }
+                        
+                        // Check if player has completed their mastermind round
+                        const isCompleted = completedPlayers.find(p => p.id === player.id);
+                        if (isCompleted) {
+                            // Already shown in completed players section above
+                            return;
+                        }
+                        
+                        // Show as waiting player
+                        const specialistSubject = player.specialist_subject || 'No Subject Set';
+                        playerStatusHtml += `<div class="player-status-item waiting">
+                            <span class="player-name">⏳ ${player.name}</span>
+                            <span class="player-subject">${specialistSubject}</span>
+                            <span class="player-status">Waiting</span>
+                        </div>`;
+                    });
+                } else {
+                    // Fallback to available players if all_players not available
+                    availablePlayers.forEach(player => {
+                        if (player.id !== currentPlayer?.id && !completedPlayers.find(p => p.id === player.id)) {
+                            playerStatusHtml += `<div class="player-status-item waiting">
+                                <span class="player-name">⏳ ${player.name}</span>
+                                <span class="player-subject">${player.specialist_subject || 'No Subject'}</span>
+                                <span class="player-status">Waiting</span>
+                            </div>`;
+                        }
+                    });
+                }
+                
+                playerStatusHtml += '</div>';
+                
+                gamePromptHtml = `<div class="mastermind-playing-status">
+                    <div class="current-activity">
+                        <h2>${currentPlayer?.name} is answering rapid-fire questions</h2>
+                        <p>Subject: <strong>${currentPlayer?.specialist_subject}</strong></p>
+                        <p>Progress: Question ${questionIndex} of ${totalQuestions}</p>
+                    </div>
+                    ${playerStatusHtml}
+                </div>`;
+            } else if (state === 'player_complete') {
+                const currentPlayer = roundData.current_player;
+                roundDetailsHtml = `<span class="category">🧠 Mastermind Complete</span>`;
+                gamePromptHtml = `<div class="mastermind-player-complete">
+                    <h3>${currentPlayer?.name} has finished!</h3>
+                    <p>They completed their specialist round on <strong>${currentPlayer?.specialist_subject}</strong></p>
+                    <button class="btn btn-primary" onclick="continueToNextPlayer()">Select Next Player</button>
+                </div>`;
+            } else {
+                roundDetailsHtml = `<span class="category">🧠 Mastermind</span>`;
+                gamePromptHtml = `<div>Preparing mastermind round...</div>`;
+            }
         }
         
         // Replace the game state content with active round HTML
-        const initialTime = roundData.time_remaining || roundData.total_time || 30;
+        // Use 90 seconds for MasterMind playing state, otherwise use default
+        let initialTime = roundData.time_remaining || roundData.total_time || 30;
+        if (currentRoundType === 'mastermind' && roundData.state === 'playing') {
+            initialTime = roundData.time_remaining || 90; // 90 seconds for MasterMind specialist questions
+        }
         const minutes = Math.floor(initialTime / 60);
         const seconds = initialTime % 60;
         const formattedTime = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+        
+        // Hide timer and end round button for MasterMind rounds (players manage their own 90s timer)
+        const showTimer = currentRoundType !== 'mastermind';
+        
+        const timerHtml = showTimer ? `
+            <div id="countdown-display" class="countdown">
+                <span id="countdown-timer">${formattedTime}</span> seconds remaining
+            </div>
+            <button id="end-round-btn" class="btn">⏹️ End Round Early</button>
+        ` : '';
         
         gameState.innerHTML = `
             <div id="round-display">
@@ -679,10 +1236,7 @@ function updateRoundDisplay(data) {
                 <div class="game-prompt">
                     ${gamePromptHtml}
                 </div>
-                <div id="countdown-display" class="countdown">
-                    <span id="countdown-timer">${formattedTime}</span> seconds remaining
-                </div>
-                <button id="end-round-btn" class="btn">⏹️ End Round Early</button>
+                ${timerHtml}
             </div>
         `;
         
@@ -1366,16 +1920,18 @@ function displayAnswersGrid() {
     const playerCount = currentAnswers.length;
     console.log('🔍 DISPLAY GRID: Found grid element, playerCount:', playerCount, 'after deduplication');
     
-    // Responsive grid layout optimized for different player counts
+    // Responsive grid layout optimized for different player counts on 1366x768 screen
     if (playerCount <= 2) {
         grid.style.gridTemplateColumns = `repeat(${playerCount}, 1fr)`;
     } else if (playerCount <= 4) {
         grid.style.gridTemplateColumns = 'repeat(2, 1fr)';
     } else if (playerCount <= 6) {
         grid.style.gridTemplateColumns = 'repeat(3, 1fr)';
+    } else if (playerCount <= 8) {
+        grid.style.gridTemplateColumns = 'repeat(4, 1fr)';
     } else if (playerCount <= 12) {
         grid.style.gridTemplateColumns = 'repeat(4, 1fr)';
-    } else if (playerCount <= 20) {
+    } else if (playerCount <= 16) {
         grid.style.gridTemplateColumns = 'repeat(5, 1fr)';
     } else {
         grid.style.gridTemplateColumns = 'repeat(6, 1fr)';
@@ -1645,6 +2201,45 @@ document.getElementById('restart-game-btn')?.addEventListener('click', function(
             console.log('Error restarting game: ' + error);
         });
 });
+
+// Mastermind GM Control Functions
+function selectMastermindPlayer(playerId, playerName, specialistSubject) {
+    console.log('Selecting mastermind player:', playerId, playerName, specialistSubject);
+    
+    if (gameSocket && gameSocket.readyState === WebSocket.OPEN) {
+        gameSocket.send(JSON.stringify({
+            'type': 'mastermind_select_player',
+            'player_id': playerId
+        }));
+    } else {
+        console.error('WebSocket not available for mastermind player selection');
+    }
+}
+
+function sendReadyResponse(isReady) {
+    console.log('Sending ready response:', isReady);
+    
+    if (gameSocket && gameSocket.readyState === WebSocket.OPEN) {
+        gameSocket.send(JSON.stringify({
+            'type': 'mastermind_gm_ready_response',
+            'is_ready': isReady
+        }));
+    } else {
+        console.error('WebSocket not available for ready response');
+    }
+}
+
+function continueToNextPlayer() {
+    console.log('Continuing to next player');
+    
+    if (gameSocket && gameSocket.readyState === WebSocket.OPEN) {
+        gameSocket.send(JSON.stringify({
+            'type': 'mastermind_continue_to_next_player'
+        }));
+    } else {
+        console.error('WebSocket not available for continue to next player');
+    }
+}
 
 // Initialize WebSocket connection
 initWebSocket();

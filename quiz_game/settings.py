@@ -29,7 +29,7 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-fallback-key-change-me')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG', 'False').lower() == 'true'
 
-ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'localhost,127.0.0.1,192.168.0.87,*').split(',')
 
 
 # Application definition
@@ -137,6 +137,9 @@ CHANNEL_LAYERS = {
     },
 }
 
+# AI Question Generation
+OPENAI_API_KEY = os.getenv('OPENAI_API_KEY', None) or os.getenv('OPEN_AI_KEY', None)
+
 # Logging configuration
 LOGGING = {
     'version': 1,
@@ -154,7 +157,7 @@ LOGGING = {
     'handlers': {
         'console': {
             'class': 'logging.StreamHandler',
-            'formatter': 'verbose',
+            'formatter': 'simple',
         },
         'file': {
             'class': 'logging.FileHandler',
@@ -162,20 +165,29 @@ LOGGING = {
             'formatter': 'verbose',
         },
     },
+    'root': {
+        'handlers': ['console', 'file'],
+        'level': 'INFO',
+    },
     'loggers': {
+        'django': {
+            'handlers': [],
+            'level': 'INFO',
+            'propagate': True,
+        },
         'game_sessions': {
-            'handlers': ['console', 'file'],
-            'level': 'DEBUG',
+            'handlers': [],
+            'level': 'INFO',
             'propagate': True,
         },
         'players': {
-            'handlers': ['console', 'file'],
-            'level': 'DEBUG',
+            'handlers': [],
+            'level': 'INFO',
             'propagate': True,
         },
         'websockets': {
-            'handlers': ['console', 'file'],
-            'level': 'DEBUG',
+            'handlers': [],
+            'level': 'INFO',
             'propagate': True,
         },
     },

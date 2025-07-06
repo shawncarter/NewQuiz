@@ -3,6 +3,29 @@
 {% block title %}Configure Game - {{ game_session.game_code }}{% endblock %}
 
 {% block content %}
+<style>
+/* Override base template container constraints for full width */
+.container {
+    max-width: none !important;
+    padding: 15px !important;
+    margin: 0 !important;
+    width: 100vw !important;
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0 !important;
+    padding: 0 !important;
+    max-width: none !important;
+    width: 100vw !important;
+}
+
+/* Override any inherited width constraints */
+html, body, .container {
+    max-width: none !important;
+    width: 100% !important;
+}
+</style>
 <h1>🎯 Configure Game {{ game_session.game_code }}</h1>
 
 <form method="post">

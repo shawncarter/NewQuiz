@@ -3,6 +3,29 @@
 {% block title %}Join Game - Quiz Game{% endblock %}
 
 {% block content %}
+<style>
+/* Override base template container constraints for full width */
+.container {
+    max-width: none !important;
+    padding: 15px !important;
+    margin: 0 !important;
+    width: 100vw !important;
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0 !important;
+    padding: 0 !important;
+    max-width: none !important;
+    width: 100vw !important;
+}
+
+/* Override any inherited width constraints */
+html, body, .container {
+    max-width: none !important;
+    width: 100% !important;
+}
+</style>
 <h1>🚪 Join Game</h1>
 
 <form method="post">
@@ -16,6 +39,7 @@
                placeholder="Enter 6-character game code" 
                maxlength="6" 
                style="text-transform: uppercase;"
+               value="{{ game_code }}"
                required>
     </div>
     
@@ -27,6 +51,18 @@
                placeholder="Enter your name" 
                maxlength="50"
                required>
+    </div>
+    
+    <div class="form-group">
+        <label for="specialist_subject">Specialist Subject (for Mastermind rounds):</label>
+        <input type="text" 
+               id="specialist_subject" 
+               name="specialist_subject" 
+               placeholder="e.g. Football, History, Science, Movies, etc." 
+               maxlength="100">
+        <small style="color: #666; font-size: 0.9em; display: block; margin-top: 5px;">
+            Optional: Your area of expertise for special question rounds
+        </small>
     </div>
     
     <div class="text-center">
