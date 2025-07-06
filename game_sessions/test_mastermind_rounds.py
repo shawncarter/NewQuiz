@@ -11,18 +11,16 @@ These tests cover the complete mastermind round flow including:
 """
 
 import asyncio
-import json
 from django.test import TestCase
 from django.core.cache import cache
 from channels.testing import WebsocketCommunicator
-from unittest.mock import patch, MagicMock
+from unittest.mock import patch
 
-from .models import GameSession, GameType, GameCategory, GameConfiguration, MultipleChoiceQuestion
-from players.models import Player, PlayerAnswer
+from .models import GameSession, GameType, GameConfiguration, MultipleChoiceQuestion
+from players.models import Player
 from .consumers import GameConsumer
 from .round_handlers import MastermindRoundHandler
 from .services import GameService
-
 
 class MastermindRoundHandlerTest(TestCase):
     """Test MastermindRoundHandler business logic"""
