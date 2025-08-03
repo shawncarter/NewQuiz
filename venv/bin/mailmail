@@ -1,4 +1,4 @@
-#!/home/shwan/Development/NewQuiz/venv/bin/python3
+#!/home/shwan/Development/Quiz/quizgame.django/venv/bin/python3
 # -*- coding: utf-8 -*-
 import re
 import sys

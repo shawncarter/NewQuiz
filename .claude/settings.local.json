@@ -20,7 +20,16 @@
       "Bash(coverage report:*)",
       "Bash(exit)",
       "Bash(mkdir:*)",
-      "Bash(touch:*)"
+      "Bash(touch:*)",
+      "Bash(sed:*)",
+      "Bash(cp:*)",
+      "Bash(git checkout:*)",
+      "Bash(mv:*)",
+      "Bash(venv/bin/python:*)",
+      "Bash(./venv/bin/python manage.py migrate:*)",
+      "Bash(./venv/bin/python manage.py shell:*)",
+      "Bash(./venv/bin/python:*)",
+      "Bash(TESTING=True python manage.py test mastermind.test_pregeneration.QuestionPregenerationTestCase.test_pregeneration_mocked -v 2)"
     ],
     "deny": []
   }

@@ -543,6 +543,26 @@ body {
     margin: 10px 0;
 }
 
+/* General Knowledge phase styling */
+.rapid-fire-container.general-knowledge {
+    background: linear-gradient(135deg, #2e7d32 0%, #388e3c 100%);
+}
+
+.general-knowledge-timer {
+    background: rgba(255,255,255,0.25);
+    border: 2px solid rgba(255,255,255,0.4);
+}
+
+.simultaneous-notice {
+    font-size: 1.1em;
+    opacity: 0.95;
+    margin-top: 8px;
+    padding: 8px 15px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 15px;
+    display: inline-block;
+}
+
 /* Mobile responsive adjustments */
 @media (max-width: 768px) {
     .rapid-fire-container {
@@ -707,10 +727,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (gameSocket && gameSocket.readyState === WebSocket.OPEN) {
             gameSocket.send(JSON.stringify({
                 type: 'submit_answer',
-                data: {
-                    answer: answer,
-                    player_id: PLAYER_ID_FROM_URL
-                }
+                answer: answer,
+                player_id: PLAYER_ID_FROM_URL
             }));
             showAnswerSaved();
         } else {
@@ -779,10 +797,13 @@ document.addEventListener('DOMContentLoaded', () => {
             `;
         } else if (data.round_type === 'multiple_choice' || data.round_type === 'mastermind') {
             // Check if this is rapid-fire MasterMind mode
-            if (data.round_type === 'mastermind' && data.rapid_fire_mode && data.current_player && data.current_player.id === {{ player.id }}) {
-                // This is a rapid-fire MasterMind session for this player
+            if (data.round_type === 'mastermind' && data.rapid_fire_mode && data.current_player && data.current_player.id === {{ player.id|default:"null" }}) {
+                // This is a rapid-fire MasterMind session for this player (specialist phase)
                 return handleRapidFireMasterMind(data);
-            } else if (data.round_type === 'mastermind' && data.current_player && data.current_player.id !== {{ player.id }}) {
+            } else if (data.round_type === 'mastermind' && data.state === 'general_knowledge' && data.simultaneous_play) {
+                // This is general knowledge phase - all players participate simultaneously
+                return handleGeneralKnowledgeMasterMind(data);
+            } else if (data.round_type === 'mastermind' && data.current_player && data.current_player.id !== {{ player.id|default:"null" }}) {
                 // This player is not the active player - show waiting message
                 promptHtml = `<h3>⏳ Please Wait</h3><p>It's <strong>${escapeHTML(data.current_player.name)}'s</strong> turn</p>`;
                 inputHtml = `
@@ -899,7 +920,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function handleScoreUpdate(data) {
-        if (data.player_id.toString() !== '{{ player.id }}') {
+        if (data.player_id.toString() !== '{{ player.id|default:"null" }}') {
             return; // Not for me
         }
         const scoreDisplay = document.getElementById('score-display');
@@ -1222,6 +1243,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let rapidFireAnswers = [];
     let rapidFireTimeRemaining = 90;
     let rapidFireSubmitted = false;
+    let rapidFirePhase = 'specialist'; // 'specialist' or 'general_knowledge'
 
     function handleRapidFireMasterMind(data) {
         console.log('[Player] Starting rapid-fire MasterMind session:', data);
@@ -1229,11 +1251,15 @@ document.addEventListener('DOMContentLoaded', () => {
         const gameInterface = document.getElementById('game-interface');
         if (!gameInterface) return;
 
+        // Determine phase and set appropriate timer
+        rapidFirePhase = data.phase === 'general_knowledge' ? 'general_knowledge' : 'specialist';
+        const timeLimit = rapidFirePhase === 'general_knowledge' ? 120 : 90;
+
         // Store all questions and reset state
         rapidFireQuestions = data.all_questions || [];
         currentQuestionIndex = 0;
         rapidFireAnswers = [];
-        rapidFireTimeRemaining = 90;
+        rapidFireTimeRemaining = timeLimit;
         rapidFireStartTime = Date.now();
         rapidFireSubmitted = false;
 
@@ -1260,13 +1286,21 @@ document.addEventListener('DOMContentLoaded', () => {
     function showRapidFireInterface() {
         const gameInterface = document.getElementById('game-interface');
         const currentPlayer = rapidFireQuestions.length > 0 ? '{{ player.name }}' : 'Player';
-        const specialist_subject = rapidFireQuestions.length > 0 ? rapidFireQuestions[0].category : 'Specialist Subject';
+        const subject = rapidFireQuestions.length > 0 ? rapidFireQuestions[0].category : 'Subject';
+        
+        // Different headers and styling based on phase
+        const isGeneralKnowledge = rapidFirePhase === 'general_knowledge';
+        const headerIcon = isGeneralKnowledge ? '🌟' : '🧠';
+        const headerText = isGeneralKnowledge ? 'General Knowledge Round' : 'Rapid-Fire MasterMind';
+        const containerClass = isGeneralKnowledge ? 'rapid-fire-container general-knowledge' : 'rapid-fire-container';
+        const timeDisplay = rapidFireTimeRemaining;
         
         gameInterface.innerHTML = `
-            <div class="rapid-fire-container">
+            <div class="${containerClass}">
                 <div class="rapid-fire-header">
-                    <h2>🧠 Rapid-Fire MasterMind</h2>
-                    <div class="specialist-subject">${escapeHTML(specialist_subject)}</div>
+                    <h2>${headerIcon} ${headerText}</h2>
+                    <div class="specialist-subject">${escapeHTML(subject)}</div>
+                    ${isGeneralKnowledge ? '<div class="simultaneous-notice">🤝 All players answering simultaneously!</div>' : ''}
                 </div>
                 
                 <div class="rapid-fire-progress">
@@ -1278,8 +1312,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
                 </div>
                 
-                <div class="rapid-fire-timer">
-                    <span id="rapid-timer">90</span>s remaining
+                <div class="rapid-fire-timer ${isGeneralKnowledge ? 'general-knowledge-timer' : ''}">
+                    <span id="rapid-timer">${timeDisplay}</span>s remaining
                 </div>
                 
                 <div id="rapid-question-container" class="rapid-question-container">
@@ -1490,11 +1524,48 @@ document.addEventListener('DOMContentLoaded', () => {
         if (gameSocket && gameSocket.readyState === WebSocket.OPEN) {
             gameSocket.send(JSON.stringify({
                 'type': 'submit_rapid_fire_answers',
-                'player_id': {{ player.id }},
+                'player_id': {{ player.id|default:"null" }},
                 'answers': rapidFireAnswers,
                 'session_duration': Date.now() - rapidFireStartTime
             }));
         }
+    }
+
+    function handleGeneralKnowledgeMasterMind(data) {
+        console.log('[Player] Starting general knowledge MasterMind session:', data);
+        
+        const gameInterface = document.getElementById('game-interface');
+        if (!gameInterface) return;
+
+        // Set up general knowledge phase
+        rapidFirePhase = 'general_knowledge';
+        rapidFireTimeRemaining = data.time_limit_seconds || 120;
+
+        // Store all questions and reset state
+        rapidFireQuestions = data.all_questions || [];
+        currentQuestionIndex = 0;
+        rapidFireAnswers = [];
+        rapidFireStartTime = Date.now();
+        rapidFireSubmitted = false;
+
+        if (rapidFireQuestions.length === 0) {
+            gameInterface.innerHTML = `
+                <div class="error-message">
+                    <h3>❌ Error</h3>
+                    <p>No general knowledge questions available. Please contact the game master.</p>
+                </div>
+            `;
+            return;
+        }
+
+        // Show general knowledge interface
+        showRapidFireInterface();
+        
+        // Start the 120-second timer
+        startRapidFireTimer();
+        
+        // Show first question
+        showRapidFireQuestion();
     }
 
     function attachAnswerInputListener() {
