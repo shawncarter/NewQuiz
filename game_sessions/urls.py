@@ -16,4 +16,6 @@ urlpatterns = [
     path('game/<str:game_code>/end-round/', views.end_round, name='end_round'),
     path('game/<str:game_code>/validate-answer/', views.validate_answer, name='validate_answer'),
     path('game/<str:game_code>/round-answers/', views.get_round_answers, name='get_round_answers'),
+    path('game/<str:game_code>/check-validation-status/', views.check_validation_status, name='check_validation_status'),
+    path('<str:game_code>/set-player-subjects/', views.set_player_subjects, name='set_player_subjects'),
 ]

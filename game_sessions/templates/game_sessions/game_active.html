@@ -238,8 +238,12 @@ html, body, .container, #game-state {
                                 <span class="mastermind-player" style="background: #9C27B0; color: white; padding: 5px 15px; border-radius: 20px;">🧠 {{ round_info.current_player.name }} (Q{{ round_info.current_question_index }}/{{ round_info.questions_per_player }})</span>
                             {% elif round_info.state == 'player_complete' %}
                                 <span class="mastermind-state" style="background: #4CAF50; color: white; padding: 5px 15px; border-radius: 20px;">✅ {{ round_info.current_player.name }} Complete</span>
-                            {% elif round_info.phase == 'general' %}
-                                <span class="mastermind-phase" style="background: #FF5722; color: white; padding: 5px 15px; border-radius: 20px;">📚 General Knowledge</span>
+                            {% elif round_info.state == 'general_knowledge' %}
+                                <span class="mastermind-phase" style="background: #2e7d32; color: white; padding: 5px 15px; border-radius: 20px;">🌟 General Knowledge (All Players)</span>
+                            {% elif round_info.state == 'all_complete' %}
+                                <span class="mastermind-state" style="background: #FF9800; color: white; padding: 5px 15px; border-radius: 20px;">🏁 All Complete</span>
+                            {% elif round_info.phase == 'general_knowledge' %}
+                                <span class="mastermind-phase" style="background: #2e7d32; color: white; padding: 5px 15px; border-radius: 20px;">🌟 General Knowledge</span>
                             {% else %}
                                 <span class="mastermind-state" style="background: #607D8B; color: white; padding: 5px 15px; border-radius: 20px;">🧠 Mastermind</span>
                             {% endif %}
@@ -267,15 +271,46 @@ html, body, .container, #game-state {
                         {% if round_info.state == 'waiting_for_player_selection' %}
                             <div class="mastermind-player-selection">
                                 <h3>Select Next Player</h3>
-                                <div class="available-players">
-                                    {% for player in round_info.available_players %}
-                                        <div class="player-option" style="margin: 10px; padding: 15px; border: 2px solid #ddd; border-radius: 10px; display: inline-block; cursor: pointer;" 
-                                             onclick="selectMastermindPlayer({{ player.id }}, '{{ player.name }}', '{{ player.specialist_subject }}')">
-                                            <strong>{{ player.name }}</strong><br>
-                                            <span style="color: #666;">{{ player.specialist_subject }}</span>
+                                {% if round_info.available_players %}
+                                    <div class="available-players">
+                                        {% for player in round_info.available_players %}
+                                            <div class="player-option" style="margin: 10px; padding: 15px; border: 2px solid #ddd; border-radius: 10px; display: inline-block; cursor: pointer;"
+                                                 onclick="selectMastermindPlayer({{ player.id }}, '{{ player.name|escapejs }}', '{{ player.specialist_subject|escapejs }}')">
+                                                <strong>{{ player.name }}</strong><br>
+                                                <span style="color: #666;">{{ player.specialist_subject }}</span>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                {% else %}
+                                    {% if round_info.no_specialist_subjects %}
+                                        <div class="no-specialist-subjects-error" style="padding: 20px; background: #f8d7da; border: 1px solid #dc3545; border-radius: 10px; margin: 10px 0;">
+                                            <h4 style="color: #721c24; margin: 0 0 15px 0;">🚫 Cannot Continue with Mastermind Round</h4>
+                                            <p style="color: #721c24; margin: 0 0 15px 0; font-weight: bold;">No players have specialist subjects set.</p>
+
+                                            <div style="background: #fff; padding: 15px; border-radius: 8px; margin: 15px 0;">
+                                                <h5 style="color: #333; margin: 0 0 10px 0;">Options to Continue:</h5>
+                                                <div style="margin: 10px 0;">
+                                                    <button onclick="skipMastermindRound()" style="background: #6c757d; color: white; border: none; padding: 10px 20px; border-radius: 5px; margin-right: 10px; cursor: pointer;">
+                                                        ⏭️ Skip Mastermind Round
+                                                    </button>
+                                                    <small style="color: #666;">Move to next round type</small>
+                                                </div>
+                                                <div style="margin: 10px 0;">
+                                                    <button onclick="showPlayerSubjectForm()" style="background: #007bff; color: white; border: none; padding: 10px 20px; border-radius: 5px; margin-right: 10px; cursor: pointer;">
+                                                        ✏️ Set Player Subjects
+                                                    </button>
+                                                    <small style="color: #666;">Allow players to set specialist subjects</small>
+                                                </div>
+                                            </div>
                                         </div>
-                                    {% endfor %}
-                                </div>
+                                    {% else %}
+                                        <div class="no-available-players" style="padding: 20px; background: #fff3cd; border: 1px solid #ffeaa7; border-radius: 10px; margin: 10px 0;">
+                                            <h4 style="color: #856404; margin: 0 0 10px 0;">⚠️ No Players Available</h4>
+                                            <p style="color: #856404; margin: 0;">Players need specialist subjects to participate in Mastermind rounds.</p>
+                                            <p style="color: #856404; margin: 5px 0 0 0; font-size: 0.9em;">Check the "All Players Status" section below to see which players need specialist subjects.</p>
+                                        </div>
+                                    {% endif %}
+                                {% endif %}
                                 {% if round_info.all_players %}
                                     <div class="mastermind-player-status" style="margin-top: 20px;">
                                         <h4>All Players Status</h4>
@@ -287,11 +322,17 @@ html, body, .container, #game-state {
                                                         <span class="player-subject">{{ player.specialist_subject|default:"No Subject" }}</span>
                                                         <span class="player-score">{{ player.current_score|default:0 }} points</span>
                                                     </div>
+                                                {% elif not player.specialist_subject %}
+                                                    <div class="player-status-item needs-subject" style="padding: 10px; margin: 5px; border: 1px solid #dc3545; border-radius: 5px; background: #f8d7da;">
+                                                        <span class="player-name">❌ {{ player.name }}</span>
+                                                        <span class="player-subject" style="color: #721c24;">Needs Specialist Subject</span>
+                                                        <span class="player-status" style="color: #721c24; font-size: 0.9em;">Must rejoin to participate</span>
+                                                    </div>
                                                 {% else %}
                                                     <div class="player-status-item waiting" style="padding: 10px; margin: 5px; border: 1px solid #6c757d; border-radius: 5px; background: #f8f9fa;">
                                                         <span class="player-name">⏳ {{ player.name }}</span>
-                                                        <span class="player-subject">{{ player.specialist_subject|default:"No Subject Set" }}</span>
-                                                        <span class="player-status">Waiting</span>
+                                                        <span class="player-subject">{{ player.specialist_subject }}</span>
+                                                        <span class="player-status">Ready</span>
                                                     </div>
                                                 {% endif %}
                                             {% endfor %}
@@ -332,6 +373,70 @@ html, body, .container, #game-state {
                                 <h3>{{ round_info.current_player.name }} has finished!</h3>
                                 <p>They completed their specialist round on <strong>{{ round_info.current_player.specialist_subject }}</strong></p>
                                 <button class="btn btn-primary" onclick="continueToNextPlayer()">Select Next Player</button>
+                            </div>
+                        {% elif round_info.state == 'general_knowledge' %}
+                            <div class="mastermind-general-knowledge" style="text-align: center; padding: 30px; background: linear-gradient(135deg, #2e7d32 0%, #388e3c 100%); color: white; border-radius: 15px; margin: 20px 0;">
+                                <h2 style="margin: 0 0 20px 0; font-size: 2.5em;">🌟 General Knowledge Round</h2>
+                                <h3 style="margin: 0 0 30px 0; font-size: 1.8em;">All players answer simultaneously!</h3>
+                                
+                                <div style="background: rgba(255,255,255,0.2); padding: 20px; border-radius: 10px; margin: 20px 0;">
+                                    <h4 style="margin: 0 0 15px 0;">Round Details</h4>
+                                    <p style="font-size: 1.2em; margin: 10px 0;">⏱️ Time Limit: 120 seconds (2 minutes)</p>
+                                    <p style="font-size: 1.2em; margin: 10px 0;">📝 Questions: 20 general knowledge questions</p>
+                                    <p style="font-size: 1.2em; margin: 10px 0;">🤝 All {{ round_info.player_count|default:"connected" }} players participate</p>
+                                </div>
+
+                                {% if round_info.all_players %}
+                                    <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px; margin: 20px 0;">
+                                        <h4 style="margin: 0 0 15px 0;">Connected Players</h4>
+                                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px;">
+                                            {% for player in round_info.all_players %}
+                                                <div style="background: rgba(255,255,255,0.1); padding: 10px; border-radius: 8px;">
+                                                    <div style="font-weight: bold;">{{ player.name }}</div>
+                                                    <div style="font-size: 0.9em; margin-top: 5px;">{{ player.current_score|default:0 }} points</div>
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                {% endif %}
+
+                                <div style="margin-top: 30px;">
+                                    <button onclick="startGeneralKnowledgeRound()" style="background: #4CAF50; color: white; border: none; padding: 15px 30px; border-radius: 8px; font-size: 1.2em; cursor: pointer; margin: 10px;">
+                                        ▶️ Start General Knowledge Round
+                                    </button>
+                                </div>
+                            </div>
+                        {% elif round_info.state == 'all_complete' %}
+                            <div class="mastermind-all-complete" style="text-align: center; padding: 30px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-radius: 15px; margin: 20px 0;">
+                                <h2 style="margin: 0 0 20px 0; font-size: 2.5em;">🧠 Mastermind Round</h2>
+                                <h3 style="margin: 0 0 30px 0; font-size: 1.8em;">All players have completed their specialist rounds!</h3>
+
+                                {% if round_info.all_players %}
+                                    <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px; margin: 20px 0;">
+                                        <h4 style="margin: 0 0 15px 0;">Round Summary</h4>
+                                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                                            {% for player in round_info.all_players %}
+                                                <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px;">
+                                                    <div style="font-weight: bold; margin-bottom: 5px;">{{ player.name }}</div>
+                                                    <div style="font-size: 0.9em; opacity: 0.9;">{{ player.specialist_subject|default:"No Subject" }}</div>
+                                                    <div style="font-size: 0.9em; margin-top: 5px;">{{ player.current_score|default:0 }} points</div>
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                {% endif %}
+
+                                <div style="margin-top: 30px;">
+                                    {% if round_info.round_number < config.num_rounds %}
+                                        <button onclick="startRound()" style="background: #28a745; color: white; border: none; padding: 15px 30px; border-radius: 8px; font-size: 1.2em; cursor: pointer; margin: 10px;">
+                                            ▶️ Start Next Round
+                                        </button>
+                                    {% else %}
+                                        <button onclick="showFinalScores()" style="background: #ffc107; color: #212529; border: none; padding: 15px 30px; border-radius: 8px; font-size: 1.2em; cursor: pointer; margin: 10px;">
+                                            🏆 Show Final Scores
+                                        </button>
+                                    {% endif %}
+                                </div>
                             </div>
                         {% elif round_info.phase == 'general' %}
                             <div style="display: flex; align-items: center; justify-content: center; margin-bottom: 10px;">
@@ -738,7 +843,7 @@ let countdownInterval;
 let currentAnswers = [];
 let answerIndex = 0;
 let gameSocket;
-let currentRoundType = '{{ round_info.round_type|default:"flower_fruit_veg" }}';
+let currentRoundType = '{% if round_info %}{{ round_info.round_type }}{% elif config.round_type_sequence %}{{ config.round_type_sequence.0 }}{% else %}flower_fruit_veg{% endif %}';
 // Handle legacy round types
 if (currentRoundType === 'starts_with') {
     currentRoundType = 'flower_fruit_veg';
@@ -766,7 +871,18 @@ setInterval(debugCurrentState, 5000);
 // Initialize WebSocket connection
 function initWebSocket() {
     const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-    const wsUrl = `${protocol}//${window.location.host}/ws/game/{{ game_session.game_code }}/`;
+
+    // Use different WebSocket URL based on game type
+    const gameType = '{{ config.game_type|default:"standard" }}';
+    let wsUrl;
+
+    if (gameType === 'Mastermind') {
+        wsUrl = `${protocol}//${window.location.host}/ws/mastermind/{{ game_session.game_code }}/`;
+        console.log('🎯 Connecting to Mastermind WebSocket:', wsUrl);
+    } else {
+        wsUrl = `${protocol}//${window.location.host}/ws/game/{{ game_session.game_code }}/`;
+        console.log('🎮 Connecting to Standard Game WebSocket:', wsUrl);
+    }
 
     gameSocket = new WebSocket(wsUrl);
 
@@ -798,6 +914,7 @@ function initWebSocket() {
 function handleWebSocketMessage(data) {
     console.log('🔍 WebSocket message received:', data.type, data);
     switch(data.type) {
+        // Standard game messages
         case 'timer_update':
             console.log('🔍 Timer update:', data.data.time_remaining);
             updateTimer(data.data.time_remaining);
@@ -805,6 +922,28 @@ function handleWebSocketMessage(data) {
         case 'round_started':
             console.log('🔍 Round started:', data.data);
             updateRoundDisplay(data.data);
+            break;
+
+        // Mastermind-specific messages
+        case 'mastermind_state':
+            console.log('🎯 Mastermind state:', data);
+            updateMastermindState(data);
+            break;
+        case 'question_generation_progress':
+            console.log('🎯 Question generation progress:', data);
+            updateQuestionProgress(data);
+            break;
+        case 'questions_ready':
+            console.log('🎯 Questions ready:', data);
+            handleQuestionsReady(data);
+            break;
+        case 'question_generation_failed':
+            console.log('🎯 Question generation failed:', data);
+            handleQuestionGenerationFailed(data);
+            break;
+        case 'rapid_fire_started':
+            console.log('🎯 Rapid fire started:', data);
+            handleRapidFireStarted(data);
             break;
         case 'round_update':
             console.log('🔍 Round update (MasterMind state change):', data.data);
@@ -1090,8 +1229,8 @@ function updateRoundDisplay(data) {
                     <h3>Select Next Player</h3>
                     <div class="available-players">
                         ${(roundData.available_players || []).map(player => `
-                            <div class="player-option" style="margin: 10px; padding: 15px; border: 2px solid #ddd; border-radius: 10px; display: inline-block; cursor: pointer;" 
-                                 onclick="selectMastermindPlayer(${player.id}, '${player.name}', '${player.specialist_subject}')">
+                            <div class="player-option" style="margin: 10px; padding: 15px; border: 2px solid #ddd; border-radius: 10px; display: inline-block; cursor: pointer;"
+                                 onclick="selectMastermindPlayer(${player.id}, '${player.name.replace(/'/g, '\\\'').replace(/"/g, '\\"')}', '${player.specialist_subject.replace(/'/g, '\\\'').replace(/"/g, '\\"')}')">
                                 <strong>${player.name}</strong><br>
                                 <span style="color: #666;">${player.specialist_subject}</span>
                             </div>
@@ -1195,6 +1334,60 @@ function updateRoundDisplay(data) {
                     <h3>${currentPlayer?.name} has finished!</h3>
                     <p>They completed their specialist round on <strong>${currentPlayer?.specialist_subject}</strong></p>
                     <button class="btn btn-primary" onclick="continueToNextPlayer()">Select Next Player</button>
+                </div>`;
+            } else if (state === 'general_knowledge') {
+                roundDetailsHtml = `<span class="category">🌟 General Knowledge (All Players)</span>`;
+                
+                gamePromptHtml = `<div class="mastermind-general-knowledge" style="text-align: center; padding: 30px; background: linear-gradient(135deg, #2e7d32 0%, #388e3c 100%); color: white; border-radius: 15px; margin: 20px 0;">
+                    <h2 style="margin: 0 0 20px 0; font-size: 2.5em;">🌟 General Knowledge Round</h2>
+                    <h3 style="margin: 0 0 30px 0; font-size: 1.8em;">All players answer simultaneously!</h3>
+                    
+                    <div style="background: rgba(255,255,255,0.2); padding: 20px; border-radius: 10px; margin: 20px 0;">
+                        <h4 style="margin: 0 0 15px 0;">Round Details</h4>
+                        <p style="font-size: 1.2em; margin: 10px 0;">⏱️ Time Limit: 120 seconds (2 minutes)</p>
+                        <p style="font-size: 1.2em; margin: 10px 0;">📝 Questions: 20 general knowledge questions</p>
+                        <p style="font-size: 1.2em; margin: 10px 0;">🤝 All players participate</p>
+                    </div>
+
+                    <div style="margin-top: 30px;">
+                        <button onclick="startGeneralKnowledgeRound()" style="background: #4CAF50; color: white; border: none; padding: 15px 30px; border-radius: 8px; font-size: 1.2em; cursor: pointer; margin: 10px;">
+                            ▶️ Start General Knowledge Round
+                        </button>
+                    </div>
+                </div>`;
+            } else if (state === 'all_complete') {
+                roundDetailsHtml = `<span class="category">🏁 All Complete</span>`;
+
+                let playerSummaryHtml = '';
+                if (roundData.all_players && roundData.all_players.length > 0) {
+                    playerSummaryHtml = `
+                        <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px; margin: 20px 0;">
+                            <h4 style="margin: 0 0 15px 0;">Round Summary</h4>
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                                ${roundData.all_players.map(player => `
+                                    <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px;">
+                                        <div style="font-weight: bold; margin-bottom: 5px;">${escapeHTML(player.name)}</div>
+                                        <div style="font-size: 0.9em; opacity: 0.9;">${escapeHTML(player.specialist_subject || 'No Subject')}</div>
+                                        <div style="font-size: 0.9em; margin-top: 5px;">${player.current_score || 0} points</div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    `;
+                }
+
+                const isLastRound = roundData.round_number >= {{ config.num_rounds }};
+                const buttonHtml = isLastRound
+                    ? `<button onclick="showFinalScores()" style="background: #ffc107; color: #212529; border: none; padding: 15px 30px; border-radius: 8px; font-size: 1.2em; cursor: pointer; margin: 10px;">🏆 Show Final Scores</button>`
+                    : `<button onclick="startRound()" style="background: #28a745; color: white; border: none; padding: 15px 30px; border-radius: 8px; font-size: 1.2em; cursor: pointer; margin: 10px;">▶️ Start Next Round</button>`;
+
+                gamePromptHtml = `<div class="mastermind-all-complete" style="text-align: center; padding: 30px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-radius: 15px; margin: 20px 0;">
+                    <h2 style="margin: 0 0 20px 0; font-size: 2.5em;">🧠 Mastermind Round</h2>
+                    <h3 style="margin: 0 0 30px 0; font-size: 1.8em;">All players have completed their specialist rounds!</h3>
+                    ${playerSummaryHtml}
+                    <div style="margin-top: 30px;">
+                        ${buttonHtml}
+                    </div>
                 </div>`;
             } else {
                 roundDetailsHtml = `<span class="category">🧠 Mastermind</span>`;
@@ -1669,6 +1862,8 @@ function showAnswers() {
         return;
     }
     showAnswersInProgress = true;
+
+    console.log('🔍 SHOW ANSWERS: Starting showAnswers() function');
     
     // Show answers button no longer exists - answers show automatically
     
@@ -1676,7 +1871,7 @@ function showAnswers() {
     if (!currentRoundType) {
         {% if game_session.current_round_number > 0 %}
             {% with round_info=game_session.get_current_round_info %}
-                currentRoundType = '{{ round_info.round_type }}';
+                currentRoundType = '{% if round_info %}{{ round_info.round_type }}{% elif config.round_type_sequence %}{{ config.round_type_sequence.0 }}{% else %}flower_fruit_veg{% endif %}';
                 // Handle legacy round types
                 if (currentRoundType === 'flower_fruit_veg') {
                     currentRoundType = 'flower_fruit_veg';
@@ -1857,36 +2052,9 @@ function showNoAnswersMessage() {
                 </div>
             </div>
         `;
-        
-        // Show the start next round button immediately and ensure it exists
-        let nextRoundBtn = document.getElementById('next-round-btn');
-        if (!nextRoundBtn) {
-            // Create button if it doesn't exist
-            const buttonContainer = document.createElement('div');
-            buttonContainer.className = 'text-center';
-            buttonContainer.style.marginTop = '20px';
-            const isLastRound = currentRoundNumber >= totalRounds;
-            const nextButtonText = isLastRound ? '🏆 Finish Game' : '▶️ Start Next Round';
-            buttonContainer.innerHTML = `<button id="next-round-btn" class="btn btn-success">${nextButtonText}</button>`;
-            answersDisplay.appendChild(buttonContainer);
-            nextRoundBtn = document.getElementById('next-round-btn');
-        }
-        
-        if (nextRoundBtn) {
-            // Update button text for final round
-            const isLastRound = currentRoundNumber >= totalRounds;
-            const nextButtonText = isLastRound ? '🏆 Finish Game' : '▶️ Start Next Round';
-            nextRoundBtn.textContent = nextButtonText;
-            
-            nextRoundBtn.style.display = 'inline-block';
-            // Remove any existing event listeners and add new one
-            const newBtn = nextRoundBtn.cloneNode(true);
-            nextRoundBtn.parentNode.replaceChild(newBtn, nextRoundBtn);
-            newBtn.addEventListener('click', function() {
-                console.log('Next round button clicked (no answers)');
-                startRound();
-            });
-        }
+
+        // For no answers case, check validation status (should be all validated since no answers)
+        checkValidationStatusAndShowButton();
 }
 
 function displayAnswersGrid() {
@@ -1944,25 +2112,8 @@ function displayAnswersGrid() {
 
 function showNextAnswer() {
     if (answerIndex >= currentAnswers.length) {
-        // All answers shown, show next round button
-        const nextRoundBtn = document.getElementById('next-round-btn');
-        if (nextRoundBtn) {
-            setTimeout(() => {
-                // Update button text for final round
-                const isLastRound = currentRoundNumber >= totalRounds;
-                const nextButtonText = isLastRound ? '🏆 Finish Game' : '▶️ Start Next Round';
-                nextRoundBtn.textContent = nextButtonText;
-                
-                nextRoundBtn.style.display = 'inline-block';
-                // Remove any existing event listeners and add new one
-                const newBtn = nextRoundBtn.cloneNode(true);
-                nextRoundBtn.parentNode.replaceChild(newBtn, nextRoundBtn);
-                newBtn.addEventListener('click', function() {
-                    console.log('Next round button clicked');
-                    startRound();
-                });
-            }, 500);
-        }
+        // All answers shown, check validation status before showing next round button
+        checkValidationStatusAndShowButton();
         return;
     }
 
@@ -2168,6 +2319,10 @@ function validateAnswer(answerIndex, isValid) {
     .then(data => {
         if (data.status === 'success') {
             console.log(`Answer "${answer.answer}" by ${answer.player_name} marked as ${isValid ? 'valid' : 'invalid'}`);
+            // Refresh the button state after validation
+            setTimeout(() => {
+                checkValidationStatusAndShowButton();
+            }, 100);
         } else {
             console.log('Error validating answer:', data.error);
         }
@@ -2204,24 +2359,33 @@ document.getElementById('restart-game-btn')?.addEventListener('click', function(
 
 // Mastermind GM Control Functions
 function selectMastermindPlayer(playerId, playerName, specialistSubject) {
-    console.log('Selecting mastermind player:', playerId, playerName, specialistSubject);
-    
+    console.log('🎯 Selecting mastermind player:', playerId, playerName, specialistSubject);
+
     if (gameSocket && gameSocket.readyState === WebSocket.OPEN) {
+        // First select the player
         gameSocket.send(JSON.stringify({
-            'type': 'mastermind_select_player',
+            'type': 'select_player',
             'player_id': playerId
         }));
+
+        // Then start question pre-loading
+        setTimeout(() => {
+            gameSocket.send(JSON.stringify({
+                'type': 'preload_questions',
+                'player_id': playerId
+            }));
+        }, 500);
     } else {
         console.error('WebSocket not available for mastermind player selection');
     }
 }
 
 function sendReadyResponse(isReady) {
-    console.log('Sending ready response:', isReady);
-    
+    console.log('🎯 Sending ready response:', isReady);
+
     if (gameSocket && gameSocket.readyState === WebSocket.OPEN) {
         gameSocket.send(JSON.stringify({
-            'type': 'mastermind_gm_ready_response',
+            'type': 'ready_response',
             'is_ready': isReady
         }));
     } else {
@@ -2230,14 +2394,375 @@ function sendReadyResponse(isReady) {
 }
 
 function continueToNextPlayer() {
-    console.log('Continuing to next player');
-    
+    console.log('🎯 Continuing to next player');
+
     if (gameSocket && gameSocket.readyState === WebSocket.OPEN) {
         gameSocket.send(JSON.stringify({
-            'type': 'mastermind_continue_to_next_player'
+            'type': 'continue_to_next_player'
         }));
     } else {
         console.error('WebSocket not available for continue to next player');
+    }
+}
+
+function startRapidFire() {
+    console.log('🎯 Starting rapid-fire round');
+
+    if (gameSocket && gameSocket.readyState === WebSocket.OPEN) {
+        gameSocket.send(JSON.stringify({
+            'type': 'start_rapid_fire'
+        }));
+    } else {
+        console.error('WebSocket not available for starting rapid-fire');
+    }
+}
+
+function startGeneralKnowledgeRound() {
+    console.log('🌟 Starting general knowledge round');
+
+    if (gameSocket && gameSocket.readyState === WebSocket.OPEN) {
+        gameSocket.send(JSON.stringify({
+            'type': 'start_general_knowledge'
+        }));
+    } else {
+        console.error('WebSocket not available for starting general knowledge round');
+    }
+}
+
+// Mastermind WebSocket Message Handlers
+function updateMastermindState(data) {
+    console.log('🎯 Updating mastermind state:', data);
+
+    // Update player count and list
+    if (data.players) {
+        updatePlayerList(data.players);
+    }
+
+    // Update round display
+    if (data.round_data) {
+        updateRoundDisplay(data.round_data);
+    }
+}
+
+function updateQuestionProgress(data) {
+    console.log('🎯 Question generation progress:', data);
+
+    // Find or create progress display
+    let progressDiv = document.getElementById('question-progress');
+    if (!progressDiv) {
+        progressDiv = document.createElement('div');
+        progressDiv.id = 'question-progress';
+        progressDiv.style.cssText = 'margin: 20px; padding: 15px; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #007bff;';
+
+        // Insert after player selection or at top of round info
+        const roundInfo = document.querySelector('.round-info') || document.querySelector('.game-interface');
+        if (roundInfo) {
+            roundInfo.appendChild(progressDiv);
+        }
+    }
+
+    const percentage = Math.round((data.progress / data.total) * 100);
+    progressDiv.innerHTML = `
+        <h4>🤖 Generating AI Questions for ${data.player_name}</h4>
+        <p><strong>Subject:</strong> ${data.specialist_subject}</p>
+        <div style="background: #e9ecef; border-radius: 10px; overflow: hidden; margin: 10px 0;">
+            <div style="background: #007bff; height: 20px; width: ${percentage}%; transition: width 0.3s ease;"></div>
+        </div>
+        <p><strong>${data.progress}/${data.total} questions generated</strong> (${percentage}%)</p>
+        <p style="color: #666; font-size: 0.9em;">Please wait while we generate specialist questions...</p>
+    `;
+}
+
+function handleQuestionsReady(data) {
+    console.log('🎯 Questions ready:', data);
+
+    // Update progress display to show ready state
+    const progressDiv = document.getElementById('question-progress');
+    if (progressDiv) {
+        progressDiv.innerHTML = `
+            <h4>✅ Questions Ready for ${data.player_name}!</h4>
+            <p><strong>Subject:</strong> ${data.specialist_subject}</p>
+            <p><strong>${data.total_questions} questions generated</strong></p>
+            <button onclick="startRapidFire()" class="btn btn-success" style="margin-top: 10px;">
+                🚀 Start 90-Second Rapid Fire Round
+            </button>
+        `;
+    }
+
+    // Show notification
+    showNotification(`Questions ready for ${data.player_name}! Click "Start Rapid Fire" to begin.`, 'success');
+}
+
+function handleQuestionGenerationFailed(data) {
+    console.log('🎯 Question generation failed:', data);
+
+    const progressDiv = document.getElementById('question-progress');
+    if (progressDiv) {
+        progressDiv.innerHTML = `
+            <h4>❌ Question Generation Failed</h4>
+            <p><strong>Player:</strong> ${data.player_name}</p>
+            <p style="color: #dc3545;">${data.error}</p>
+            <button onclick="selectMastermindPlayer(${data.player_id}, '${data.player_name.replace(/'/g, '\\\'').replace(/"/g, '\\"')}', '${data.specialist_subject.replace(/'/g, '\\\'').replace(/"/g, '\\"')}')"
+                    class="btn btn-warning" style="margin-top: 10px;">
+                🔄 Try Again
+            </button>
+        `;
+    }
+
+    showNotification(`Failed to generate questions for ${data.player_name}. Please try again.`, 'error');
+}
+
+function handleRapidFireStarted(data) {
+    console.log('🎯 Rapid fire started:', data);
+
+    // Clear progress display
+    const progressDiv = document.getElementById('question-progress');
+    if (progressDiv) {
+        progressDiv.remove();
+    }
+
+    // Update round display
+    updateRoundDisplay(data.round_data);
+
+    showNotification(`Rapid-fire round started! ${data.duration_seconds} seconds on the clock.`, 'info');
+}
+
+function updatePlayerList(players) {
+    const playerListContent = document.getElementById('player-list-content');
+    if (playerListContent && players.length > 0) {
+        playerListContent.innerHTML = players.map(player => `
+            <div class="player-item" style="padding: 5px 0; border-bottom: 1px solid #eee;">
+                <strong>${player.name}</strong>
+                <small style="color: #666;"> - ${player.specialist_subject} - Joined ${player.joined_at}</small>
+            </div>
+        `).join('');
+    }
+
+    // Update player count
+    const playerCountElement = document.querySelector('.player-count');
+    if (playerCountElement) {
+        playerCountElement.textContent = players.length;
+    }
+}
+
+function skipMastermindRound() {
+    if (confirm('Are you sure you want to skip the Mastermind round? This will move to the next round type.')) {
+        console.log('Skipping Mastermind round');
+
+        // End the current round to move to next round type
+        fetch('{% url "game_sessions:end_round" game_session.game_code %}', {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}',
+                'Content-Type': 'application/json',
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success' || data.success) {
+                console.log('Mastermind round skipped successfully');
+                window.location.reload();
+            } else {
+                console.error('Error skipping round:', data.error);
+                alert('Error skipping round: ' + (data.error || 'Unknown error'));
+            }
+        })
+        .catch(error => {
+            console.error('Error skipping round:', error);
+            alert('Error skipping round: ' + error);
+        });
+    }
+}
+
+function showPlayerSubjectForm() {
+    // Create a modal-like overlay for setting player subjects
+    const overlay = document.createElement('div');
+    overlay.style.cssText = `
+        position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+        background: rgba(0,0,0,0.5); z-index: 1000; display: flex;
+        align-items: center; justify-content: center;
+    `;
+
+    const modal = document.createElement('div');
+    modal.style.cssText = `
+        background: white; padding: 30px; border-radius: 10px;
+        max-width: 600px; width: 90%; max-height: 80%; overflow-y: auto;
+    `;
+
+    // Get current players without specialist subjects
+    const playersData = {% if round_info and round_info.all_players %}{{ round_info.all_players|safe }}{% else %}[]{% endif %};
+    const playersWithoutSubjects = playersData.filter(p => !p.specialist_subject);
+
+    let formHtml = `
+        <h3>Set Player Specialist Subjects</h3>
+        <p>Players need specialist subjects to participate in Mastermind rounds.</p>
+        <form id="player-subjects-form">
+    `;
+
+    playersWithoutSubjects.forEach(player => {
+        formHtml += `
+            <div style="margin: 15px 0; padding: 15px; border: 1px solid #ddd; border-radius: 5px;">
+                <label style="font-weight: bold; display: block; margin-bottom: 5px;">
+                    ${player.name}:
+                </label>
+                <input type="text"
+                       name="subject_${player.id}"
+                       placeholder="e.g. Football, History, Science, Movies"
+                       style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 3px;"
+                       maxlength="100">
+            </div>
+        `;
+    });
+
+    formHtml += `
+            <div style="margin-top: 20px; text-align: center;">
+                <button type="submit" style="background: #28a745; color: white; border: none; padding: 10px 20px; border-radius: 5px; margin-right: 10px; cursor: pointer;">
+                    ✅ Set Subjects
+                </button>
+                <button type="button" onclick="this.closest('.overlay').remove()" style="background: #6c757d; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
+                    Cancel
+                </button>
+            </div>
+        </form>
+    `;
+
+    modal.innerHTML = formHtml;
+    overlay.appendChild(modal);
+    overlay.className = 'overlay';
+    document.body.appendChild(overlay);
+
+    // Handle form submission
+    document.getElementById('player-subjects-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const formData = new FormData(this);
+        const subjects = {};
+
+        for (let [key, value] of formData.entries()) {
+            if (key.startsWith('subject_') && value.trim()) {
+                const playerId = key.replace('subject_', '');
+                subjects[playerId] = value.trim();
+            }
+        }
+
+        if (Object.keys(subjects).length === 0) {
+            alert('Please set at least one specialist subject.');
+            return;
+        }
+
+        // Send subjects to server
+        fetch('{% url "game_sessions:set_player_subjects" game_session.game_code %}', {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ subjects: subjects })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                overlay.remove();
+                window.location.reload();
+            } else {
+                alert('Error setting subjects: ' + (data.error || 'Unknown error'));
+            }
+        })
+        .catch(error => {
+            console.error('Error setting subjects:', error);
+            alert('Error setting subjects: ' + error);
+        });
+    });
+}
+
+// Check validation status and show/hide next round button accordingly
+function checkValidationStatusAndShowButton() {
+    // For non-FFV rounds, always show the button
+    if (currentRoundType !== 'flower_fruit_veg') {
+        showNextRoundButton(true);
+        return;
+    }
+
+    // For FFV rounds, check if all answers have been validated
+    fetch('{% url "game_sessions:check_validation_status" game_session.game_code %}')
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                const allValidated = data.all_validated;
+                const totalAnswers = data.total_answers;
+                const validatedAnswers = data.validated_answers;
+
+                console.log(`Answer marking status: ${validatedAnswers}/${totalAnswers} answers marked (valid or invalid)`);
+
+                // Show button and set enabled/disabled state
+                showNextRoundButton(allValidated, totalAnswers, validatedAnswers);
+            } else {
+                console.error('Error checking validation status:', data);
+                // Default to showing disabled button
+                showNextRoundButton(false);
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching validation status:', error);
+            // Default to showing disabled button
+            showNextRoundButton(false);
+        });
+}
+
+function showNextRoundButton(isEnabled, totalAnswers = 0, validatedAnswers = 0) {
+    let nextRoundBtn = document.getElementById('next-round-btn');
+
+    // Create button if it doesn't exist
+    if (!nextRoundBtn) {
+        const answersDisplay = document.getElementById('answers-display');
+        if (!answersDisplay) {
+            console.error('Cannot create next round button: answers-display not found');
+            return;
+        }
+
+        const buttonContainer = document.createElement('div');
+        buttonContainer.className = 'text-center';
+        buttonContainer.style.marginTop = '20px';
+        buttonContainer.innerHTML = `<button id="next-round-btn" class="btn btn-success">▶️ Start Next Round</button>`;
+        answersDisplay.appendChild(buttonContainer);
+        nextRoundBtn = document.getElementById('next-round-btn');
+    }
+
+    if (nextRoundBtn) {
+        // Update button text for final round
+        const isLastRound = currentRoundNumber >= totalRounds;
+        const nextButtonText = isLastRound ? '🏆 Finish Game' : '▶️ Start Next Round';
+
+        // Set button state based on validation status
+        if (isEnabled) {
+            nextRoundBtn.textContent = nextButtonText;
+            nextRoundBtn.disabled = false;
+            nextRoundBtn.className = 'btn btn-success';
+            nextRoundBtn.title = '';
+        } else {
+            // Show validation progress in button text for FFV rounds
+            if (currentRoundType === 'flower_fruit_veg' && totalAnswers > 0) {
+                nextRoundBtn.textContent = `⏳ Mark Answers (${validatedAnswers}/${totalAnswers})`;
+                nextRoundBtn.title = 'All answers must be marked as valid or invalid before starting the next round';
+            } else {
+                nextRoundBtn.textContent = nextButtonText;
+                nextRoundBtn.title = 'Answer marking in progress...';
+            }
+            nextRoundBtn.disabled = true;
+            nextRoundBtn.className = 'btn btn-secondary';
+        }
+
+        nextRoundBtn.style.display = 'inline-block';
+
+        // Remove any existing event listeners and add new one (only if enabled)
+        if (isEnabled) {
+            const newBtn = nextRoundBtn.cloneNode(true);
+            nextRoundBtn.parentNode.replaceChild(newBtn, nextRoundBtn);
+            newBtn.addEventListener('click', function() {
+                console.log('Next round button clicked');
+                startRound();
+            });
+        }
     }
 }
 
@@ -2246,11 +2771,33 @@ initWebSocket();
 
 // Ensure display matches current template state (important after page refresh)
 document.addEventListener('DOMContentLoaded', function() {
-    const templateRoundType = '{{ round_info.round_type|default:"flower_fruit_veg" }}';
-    const isRoundActive = {{ round_info.is_active|yesno:"true,false" }};
-    const currentRoundNumber = {{ round_info.round_number|default:0 }};
-    
-    console.log('Page loaded with round type:', templateRoundType, 'Active:', isRoundActive, 'Round:', currentRoundNumber);
+    const templateRoundType = '{% if current_round %}{{ current_round.round_type }}{% elif config.round_type_sequence %}{{ config.round_type_sequence.0 }}{% else %}flower_fruit_veg{% endif %}';
+    const isRoundActive = {{ current_round.is_active|yesno:"true,false" }};
+    const templateRoundNumber = {{ current_round.round_number|default:0 }};
+    const gameStatus = '{{ game_session.status }}';
+
+    console.log('🔍 PAGE LOAD: round type:', templateRoundType, 'Active:', isRoundActive, 'Round:', templateRoundNumber, 'Game status:', gameStatus);
+
+    // If we have a completed round (not active) and the game is still active,
+    // we need to fetch and show the answers for that round
+    if (gameStatus === 'active' && templateRoundNumber > 0 && !isRoundActive) {
+        console.log('🔍 DETECTED: Completed round on page load, fetching answers...');
+
+        // Set the global variables for the current state
+        currentRoundType = templateRoundType;
+        currentRoundNumber = templateRoundNumber;
+        totalRounds = {{ config.num_rounds|default:10 }};
+
+        console.log('🔍 SET GLOBALS: currentRoundType =', currentRoundType, 'currentRoundNumber =', currentRoundNumber, 'totalRounds =', totalRounds);
+
+        // Fetch and show answers for the completed round
+        setTimeout(() => {
+            console.log('🔍 CALLING: showAnswers() after page refresh detection');
+            showAnswers();
+        }, 500); // Small delay to ensure page is fully loaded
+    } else {
+        console.log('🔍 NO ACTION: Not a completed round state. gameStatus:', gameStatus, 'templateRoundNumber:', templateRoundNumber, 'isRoundActive:', isRoundActive);
+    }
     
     if (templateRoundType !== currentRoundType) {
         console.log('Syncing round type from template');
@@ -2260,14 +2807,22 @@ document.addEventListener('DOMContentLoaded', function() {
         const templateData = {
             round_number: currentRoundNumber,
             round_type: templateRoundType,
-            {% if round_info.round_type == 'multiple_choice' %}
-            question_text: '{{ round_info.question_text|escapejs }}',
-            choices: {{ round_info.choices|safe }},
-            category: '{{ round_info.category|escapejs }}',
+            {% if round_info %}
+                {% if round_info.round_type == 'multiple_choice' %}
+                question_text: '{{ round_info.question_text|default:""|escapejs }}',
+                choices: {{ round_info.choices|default:"[]"|safe }},
+                category: '{{ round_info.category|default:""|escapejs }}',
+                {% else %}
+                category: '{{ round_info.category.name|default:"Category"|escapejs }}',
+                letter: '{{ round_info.prompt_letter|default:""|escapejs }}',
+                prompt_letter: '{{ round_info.prompt_letter|default:""|escapejs }}',
+                {% endif %}
             {% else %}
-            category: '{{ round_info.category.name|default:"Category"|escapejs }}',
-            letter: '{{ round_info.prompt_letter|default:""|escapejs }}',
-            prompt_letter: '{{ round_info.prompt_letter|default:""|escapejs }}',
+                question_text: '',
+                choices: [],
+                category: '',
+                letter: '',
+                prompt_letter: ''
             {% endif %}
         };
         

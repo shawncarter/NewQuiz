@@ -93,34 +93,8 @@ def broadcast_round_started(game_session, round_info):
             'correct_answer': round_info.get('correct_answer'),  # Include for GM screen
             'is_ai_generated': round_info.get('is_ai_generated', False),  # Include for AI/DB badge
         })
-    elif round_info['round_type'] == 'mastermind':
-        # MasterMind has different states with different data structures
-        mastermind_data = {
-            'state': round_info.get('state', 'waiting_for_player_selection'),
-            'phase': round_info.get('phase'),
-            'current_player': round_info.get('current_player'),
-            'current_player_index': round_info.get('current_player_index'),
-            'total_players': round_info.get('total_players'),
-            'current_question_index': round_info.get('current_question_index'),
-            'questions_per_player': round_info.get('questions_per_player'),
-            'available_players': round_info.get('available_players'),
-            'completed_players': round_info.get('completed_players'),
-            'message': round_info.get('message'),
-        }
-        
-        # Only add question-related fields if we have a question (playing state)
-        if round_info.get('question_text'):
-            mastermind_data.update({
-                'question_text': round_info['question_text'],
-                'choices': round_info['choices'],
-                'category': round_info['category'],
-                'correct_answer': round_info.get('correct_answer'),
-                'is_ai_generated': round_info.get('is_ai_generated', False),
-                'rapid_fire_mode': round_info.get('rapid_fire_mode', False),
-                'all_questions': round_info.get('all_questions', []),
-            })
-        
-        data.update(mastermind_data)
+    # Mastermind rounds now use dedicated broadcasting
+    # See: mastermind/websocket_utils.py
 
     broadcast_to_game(game_session.game_code, 'round_started', data)
 
@@ -139,14 +113,7 @@ def broadcast_round_ended(game_session, round_info, answer_data=None):
     # Add correct answer for multiple choice questions
     if round_info['round_type'] == 'multiple_choice':
         data['correct_answer'] = round_info.get('correct_answer')
-    elif round_info['round_type'] == 'mastermind':
-        # Add MasterMind-specific data
-        data.update({
-            'state': round_info.get('state'),
-            'phase': round_info.get('phase'),
-            'current_player': round_info.get('current_player'),
-            'correct_answer': round_info.get('correct_answer')
-        })
+    # Mastermind round ending now handled by dedicated mastermind app
 
     broadcast_to_game(game_session.game_code, 'round_ended', data)
 
@@ -320,36 +287,7 @@ def broadcast_score_update(game_session, player_name, points_awarded, reason="ma
     broadcast_to_game(game_session.game_code, 'score_update', data)
 
 
-def broadcast_mastermind_player_completed(game_session, player_name, correct_answers, total_questions, points_earned):
-    """Broadcast mastermind player completion"""
-    data = {
-        'player_name': player_name,
-        'correct_answers': correct_answers,
-        'total_questions': total_questions,
-        'points_earned': points_earned,
-        'message': f'{player_name} completed their specialist round! {correct_answers}/{total_questions} correct ({points_earned} points)'
-    }
-    broadcast_to_game(game_session.game_code, 'mastermind_player_completed', data)
-
-
-def broadcast_mastermind_progress_update(game_session, player_name, current_question, total_questions, correct_answers):
-    """Broadcast mastermind progress update during rapid-fire session"""
-    data = {
-        'player_name': player_name,
-        'current_question': current_question,
-        'total_questions': total_questions,
-        'correct_answers': correct_answers,
-        'message': f'{player_name} is answering rapid-fire questions'
-    }
-    broadcast_to_game(game_session.game_code, 'mastermind_progress_update', data)
-
-
-def broadcast_mastermind_state_change(game_session, round_info):
-    """Broadcast mastermind state changes to all clients"""
-    broadcast_to_game(game_session.game_code, 'round_update', round_info)
-
-
-def start_timer_broadcast(game_session, round_info, mastermind_duration=None):
+def start_timer_broadcast(game_session, round_info):
     """Start broadcasting timer updates for a round"""
     import threading
     import time
@@ -365,12 +303,7 @@ def start_timer_broadcast(game_session, round_info, mastermind_duration=None):
     captured_round_info = round_info
 
     def timer_worker():
-        # Use MasterMind duration if provided, otherwise use default
-        if mastermind_duration and captured_round_info and captured_round_info.get('round_type') == 'mastermind':
-            total_time = mastermind_duration
-            logger.info(f"Starting MasterMind timer for {total_time} seconds")
-        else:
-            total_time = game_session.configuration.round_time_seconds
+        total_time = game_session.configuration.round_time_seconds
         start_time = timezone.now()
 
         while True:
@@ -407,31 +340,69 @@ def start_timer_broadcast(game_session, round_info, mastermind_duration=None):
                             # First, transfer cached answers to database (same logic as manual end_round)
                             from django.core.cache import cache
                             from players.models import PlayerAnswer, Player
-                            
+                            from .round_handlers import get_round_handler
+
                             cache_key = f'game_{current_game.game_code}_round_{current_game.current_round_number}_answers'
                             cached_answers = cache.get(cache_key, {})
-                            
-                            # Create PlayerAnswer objects for any cached answers that don't exist in DB
-                            for player_id_str, answer_text in cached_answers.items():
-                                try:
-                                    player_id = int(player_id_str)
-                                    player = Player.objects.get(id=player_id, game_session=current_game)
-                                    
-                                    # Check if answer already exists in database
-                                    existing_answer = PlayerAnswer.objects.filter(
-                                        player=player,
+
+                            if cached_answers:
+                                # Get round handler for creating PlayerAnswer objects
+                                round_handler = get_round_handler(current_game, current_game.current_round_number)
+
+                                # Get all connected players in one query for efficiency
+                                player_ids = [int(pid) for pid in cached_answers.keys() if pid.isdigit()]
+                                connected_players = {
+                                    p.id: p for p in Player.objects.filter(
+                                        id__in=player_ids,
+                                        game_session=current_game,
+                                        is_connected=True
+                                    ).select_related('game_session')
+                                }
+
+                                # Check for existing answers to avoid duplicates
+                                existing_answers = set(
+                                    PlayerAnswer.objects.filter(
+                                        player__in=connected_players.values(),
                                         round_number=current_game.current_round_number
-                                    ).first()
-                                    
-                                    if not existing_answer and answer_text.strip():
-                                        # Use round handler to create appropriate PlayerAnswer
-                                        from .round_handlers import get_round_handler
-                                        round_handler = get_round_handler(current_game, current_game.current_round_number)
-                                        round_handler.create_player_answer(player, answer_text.strip())
-                                        logger.info(f"Auto-end: Created PlayerAnswer for player {player.name}: {answer_text}")
-                                except (ValueError, Player.DoesNotExist) as e:
-                                    logger.warning(f"Auto-end: Could not create PlayerAnswer for player_id {player_id_str}: {e}")
-                            
+                                    ).values_list('player_id', flat=True)
+                                )
+
+                                # Collect answers to create
+                                answers_to_create = []
+
+                                # Create PlayerAnswer objects for any cached answers that don't exist in DB
+                                for player_id_str, answer_text in cached_answers.items():
+                                    try:
+                                        player_id = int(player_id_str)
+                                        player = connected_players.get(player_id)
+
+                                        if player and player_id not in existing_answers and answer_text.strip():
+                                            # Use round handler to create appropriate PlayerAnswer
+                                            answer_obj = round_handler.create_player_answer(player, answer_text.strip())
+                                            if answer_obj:  # Some handlers return the object, others save directly
+                                                answers_to_create.append(answer_obj)
+                                            logger.info(f"Auto-end: Prepared PlayerAnswer for player {player.name}: {answer_text}")
+
+                                    except (ValueError, KeyError) as e:
+                                        logger.warning(f"Auto-end: Could not process answer for player_id {player_id_str}: {e}")
+
+                                # Bulk create if we have answers to create (same as manual end_round)
+                                if answers_to_create:
+                                    try:
+                                        PlayerAnswer.objects.bulk_create(answers_to_create, ignore_conflicts=True)
+                                        logger.info(f"Auto-end: Bulk created {len(answers_to_create)} PlayerAnswer objects")
+                                    except Exception as e:
+                                        logger.error(f"Auto-end: Failed to bulk create answers: {e}")
+                                        # Fallback to individual creation
+                                        for answer in answers_to_create:
+                                            try:
+                                                answer.save()
+                                                logger.info(f"Auto-end: Individually saved answer for player {answer.player.name}")
+                                            except Exception as save_e:
+                                                logger.error(f"Auto-end: Failed to save individual answer: {save_e}")
+
+                                logger.info(f"Auto-end: Processed {len(cached_answers)} cached answers into database")
+
                             # Clear the cache for this round
                             cache.delete(cache_key)
 

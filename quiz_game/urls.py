@@ -21,4 +21,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(('game_sessions.urls', 'game_sessions'), namespace='game_sessions')),
     path('player/', include('players.urls')),
+    path('mastermind/', include('mastermind.urls')),
 ]

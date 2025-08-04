@@ -42,8 +42,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'channels',
+    'shared',
     'game_sessions',
     'players',
+    'mastermind',
 ]
 
 MIDDLEWARE = [
@@ -186,6 +188,11 @@ LOGGING = {
             'propagate': True,
         },
         'websockets': {
+            'handlers': [],
+            'level': 'INFO',
+            'propagate': True,
+        },
+        'mastermind': {
             'handlers': [],
             'level': 'INFO',
             'propagate': True,

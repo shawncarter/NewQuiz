@@ -308,6 +308,59 @@ def end_round(request, game_code):
         return JsonResponse({'error': result['error']}, status=400)
 
 
+@require_http_methods(["POST"])
+def set_player_subjects(request, game_code):
+    """Set specialist subjects for players in a game session"""
+    try:
+        game_session = get_object_or_404(GameSession, game_code=game_code)
+
+        data = json.loads(request.body)
+        subjects = data.get('subjects', {})
+
+        if not subjects:
+            return JsonResponse({'success': False, 'error': 'No subjects provided'}, status=400)
+
+        updated_players = []
+
+        for player_id, subject in subjects.items():
+            try:
+                player = Player.objects.get(
+                    id=int(player_id),
+                    game_session=game_session,
+                    is_connected=True
+                )
+                player.specialist_subject = subject.strip()
+                player.save()
+                updated_players.append(player.name)
+
+                # Pre-generate specialist questions for this subject
+                from .services import PlayerService
+                PlayerService._ensure_specialist_questions_async(subject.strip())
+
+            except Player.DoesNotExist:
+                return JsonResponse({
+                    'success': False,
+                    'error': f'Player with ID {player_id} not found'
+                }, status=404)
+            except ValueError:
+                return JsonResponse({
+                    'success': False,
+                    'error': f'Invalid player ID: {player_id}'
+                }, status=400)
+
+        return JsonResponse({
+            'success': True,
+            'message': f'Updated specialist subjects for: {", ".join(updated_players)}',
+            'updated_players': updated_players
+        })
+
+    except json.JSONDecodeError:
+        return JsonResponse({'success': False, 'error': 'Invalid JSON data'}, status=400)
+    except Exception as e:
+        logger.error(f"Error setting player subjects: {e}")
+        return JsonResponse({'success': False, 'error': 'Internal server error'}, status=500)
+
+
 
 def join_game(request):
     """Join a game session"""
@@ -370,6 +423,83 @@ def game_status(request, game_code):
                 })
 
     return JsonResponse(response_data)
+
+
+@require_http_methods(["GET"])
+def check_validation_status(request, game_code):
+    """Check if all FFV answers for the current round have been validated"""
+    game_session = get_object_or_404(GameSession, game_code=game_code)
+
+    # Only relevant for FFV rounds
+    round_info = game_session.get_current_round_info()
+    if not round_info or round_info['round_type'] != 'flower_fruit_veg':
+        return JsonResponse({
+            'status': 'success',
+            'all_validated': True,  # Non-FFV rounds don't require manual validation
+            'round_type': round_info['round_type'] if round_info else 'unknown'
+        })
+
+    # Get all answers for current round
+    from players.models import PlayerAnswer
+    answers = PlayerAnswer.objects.filter(
+        player__game_session=game_session,
+        player__is_connected=True,
+        round_number=game_session.current_round_number
+    )
+
+    total_answers = answers.count()
+    if total_answers == 0:
+        # No answers to validate
+        return JsonResponse({
+            'status': 'success',
+            'all_validated': True,
+            'total_answers': 0,
+            'validated_answers': 0,
+            'round_type': 'flower_fruit_veg'
+        })
+
+    # For FFV rounds, answers start with is_valid=False and points_awarded=0
+    # An answer is considered "validated/marked" if the GM has made a decision about it
+    # This includes BOTH valid answers (marked as correct) AND invalid answers (marked as incorrect)
+    #
+    # The challenge: distinguish between "not yet marked" vs "marked as invalid"
+    #
+    # In Daphne-based FFV games:
+    # - Unmarked answers: is_valid=False, points_awarded=0 (initial state)
+    # - Marked as valid: is_valid=True, points_awarded > 0
+    # - Marked as invalid: is_valid=False, points_awarded=0 (but GM explicitly marked it)
+    #
+    # Solution: Use ScoreHistory entries to detect when GM has made ANY decision
+    # Every manual validation (valid OR invalid) creates a ScoreHistory entry
+
+    from players.models import ScoreHistory
+    validated_count = 0
+
+    for answer in answers:
+        # Check if this answer has been manually processed by the GM
+        # Method 1: ScoreHistory entry exists (most reliable)
+        has_score_history = ScoreHistory.objects.filter(
+            player=answer.player,
+            round_number=answer.round_number,
+            related_answer=answer
+        ).exists()
+
+        # Method 2: Answer was marked as valid (is_valid=True means GM marked it valid)
+        is_marked_valid = answer.is_valid
+
+        # An answer is "validated/marked" if either condition is true
+        if has_score_history or is_marked_valid:
+            validated_count += 1
+
+    all_validated = validated_count == total_answers
+
+    return JsonResponse({
+        'status': 'success',
+        'all_validated': all_validated,
+        'total_answers': total_answers,
+        'validated_answers': validated_count,
+        'round_type': 'flower_fruit_veg'
+    })
 
 
 @require_http_methods(["POST"])

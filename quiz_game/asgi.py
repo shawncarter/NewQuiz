@@ -17,14 +17,16 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'quiz_game.settings')
 
 django_asgi_app = get_asgi_application()
 
-# Import websocket routing (we'll create this later)
-from game_sessions import routing
+# Import websocket routing
+from game_sessions import routing as game_routing
+from mastermind import routing as mastermind_routing
 
 application = ProtocolTypeRouter({
     "http": django_asgi_app,
     "websocket": AuthMiddlewareStack(
         URLRouter(
-            routing.websocket_urlpatterns
+            game_routing.websocket_urlpatterns +
+            mastermind_routing.websocket_urlpatterns
         )
     ),
 })

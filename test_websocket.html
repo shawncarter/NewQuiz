@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>WebSocket Test</title>
+</head>
+<body>
+    <h1>WebSocket Connection Test</h1>
+    <div id="status">Connecting...</div>
+    <div id="messages"></div>
+    
+    <script>
+        const statusDiv = document.getElementById('status');
+        const messagesDiv = document.getElementById('messages');
+        
+        function log(message) {
+            console.log(message);
+            messagesDiv.innerHTML += `<p>${new Date().toLocaleTimeString()}: ${message}</p>`;
+        }
+        
+        // Test WebSocket connection
+        const wsUrl = 'ws://127.0.0.1:8000/ws/game/TEST123/';
+        log(`Attempting to connect to: ${wsUrl}`);
+        
+        const socket = new WebSocket(wsUrl);
+        
+        socket.onopen = function(e) {
+            statusDiv.textContent = 'Connected ✅';
+            statusDiv.style.color = 'green';
+            log('WebSocket connection opened successfully');
+            
+            // Send a test message
+            socket.send(JSON.stringify({
+                type: 'identify',
+                player_id: 'test123'
+            }));
+        };
+        
+        socket.onmessage = function(e) {
+            const data = JSON.parse(e.data);
+            log(`Received message: ${JSON.stringify(data)}`);
+        };
+        
+        socket.onclose = function(e) {
+            statusDiv.textContent = 'Disconnected ❌';
+            statusDiv.style.color = 'red';
+            log(`WebSocket connection closed. Code: ${e.code}, Reason: ${e.reason}`);
+        };
+        
+        socket.onerror = function(e) {
+            statusDiv.textContent = 'Error ❌';
+            statusDiv.style.color = 'red';
+            log(`WebSocket error: ${e}`);
+        };
+    </script>
+</body>
+</html>
